@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rootView">
-
-    <View style="@style/View_Line_Style" />
-
+    <View
+        style="@style/View_Line_Style"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
         android:background="@color/color_f6">
-
         <com.ilife.iliferobot_cn.view.MediumTextView
             style="@style/Text_14sp_ac"
             android:id="@+id/tv_week"
             android:text="@string/clock_aty_sun"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_30"
-            android:textColor="@drawable/clock_tv_color" />
-
+            android:textColor="@drawable/clock_tv_color"/>
         <com.ilife.iliferobot_cn.view.MediumTextView
             style="@style/Text_14sp_ac"
             android:id="@+id/tv_time"
@@ -29,8 +27,7 @@
             android:layout_marginStart="@dimen/dp_25"
             android:text="00:00"
             android:textColor="@drawable/clock_tv_color"
-            android:gravity="end" />
-
+            android:gravity="end"/>
         <ImageView
             android:id="@+id/image_status"
             android:layout_width="@dimen/dp_47"
@@ -39,12 +36,11 @@
             android:layout_centerVertical="true"
             android:background="@drawable/image_max_bg"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_25" />
+            android:layout_marginEnd="@dimen/dp_25"/>
     </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
-
+    <View
+        style="@style/View_Line_Style"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
+        android:layout_height="@dimen/dp_10"/>
 </LinearLayout>

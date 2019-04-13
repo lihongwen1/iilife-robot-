@@ -94,9 +94,13 @@ public class SettingActivity_x7 extends BaseActivity implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
         initView();
         initData();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_setting;
     }
 
     @Override
@@ -147,7 +151,7 @@ public class SettingActivity_x7 extends BaseActivity implements View.OnClickList
                 });
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         imageView = (ImageView) findViewById(R.id.imageView);
         dialog = DialogUtils.createLoadingDialog_(context);

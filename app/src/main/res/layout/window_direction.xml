@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootView"
     android:orientation="vertical"
     android:layout_width="wrap_content"
@@ -17,16 +18,14 @@
             android:layout_height="@dimen/dp_110"
             android:layout_toRightOf="@+id/image_left"
             android:scaleType="fitXY"
-            android:background="@drawable/map_aty_forward_bg" />
-
+            android:background="@drawable/map_aty_forward_bg"/>
         <ImageView
             android:id="@+id/image_back"
             android:layout_width="@dimen/dp_110"
             android:layout_height="@dimen/dp_110"
             android:layout_below="@+id/image_left"
             android:scaleType="fitXY"
-            android:background="@drawable/map_aty_back_bg" />
-
+            android:background="@drawable/map_aty_back_bg"/>
         <ImageView
             android:id="@+id/image_right"
             android:layout_width="@dimen/dp_110"
@@ -34,7 +33,7 @@
             android:layout_below="@+id/image_left"
             android:layout_toEndOf="@id/image_back"
             android:background="@drawable/map_aty_right_bg"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"/>
 
         <ImageView
             android:id="@+id/image_left"

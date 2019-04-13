@@ -7,6 +7,8 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
@@ -21,19 +23,51 @@ public class WifiUtils {
     public static final int WIFICIPHER_WEP = 3;
     public static final int WIFICIPHER_WPA = 2;
 
-    public static List<ScanResult> getWifiList(Context context) {
-        WifiManager manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> results = manager.getScanResults();
-//        ArrayList<String> ssidList = new ArrayList<>();
-//        if (results!=null){
-//            for (int i = 0; i <results.size(); i++) {
-//                String ssid = results.get(i).SSID;
-//                if (!TextUtils.isEmpty(ssid)){
-//                    ssidList.add(ssid);
-//                }
-//            }
-//        }
-        return results;
+    /**
+     * 查找特定的wifi
+     *
+     * @param wifiTag     such as start with robot
+     * @param wifiManager
+     * @return
+     */
+    public static String searchTargetWifi(String wifiTag, WifiManager wifiManager) {
+        String targetSsid = "";
+        wifiManager.startScan();
+        List<ScanResult> list = wifiManager.getScanResults();//get wifi list
+        for (ScanResult scResult : list) {
+            if (!TextUtils.isEmpty(scResult.SSID) && scResult.SSID.contains(wifiTag)) {
+                targetSsid = scResult.SSID;
+                break;
+            }
+        }
+        return targetSsid;
+    }
+
+
+    /**
+     * 获取wifi加密方式
+     *
+     * @param ssid
+     * @return
+     */
+    public static int getCipherType(String ssid, WifiManager wifiManager) {
+        int type = 0;
+        List<ScanResult> list = wifiManager.getScanResults();//get wifi list
+        for (ScanResult scResult : list) {
+            if (!TextUtils.isEmpty(scResult.SSID) && scResult.SSID.equals(ssid)) {
+                String capabilities = scResult.capabilities;
+                if (!TextUtils.isEmpty(capabilities)) {
+                    if (capabilities.contains("WPA") || capabilities.contains("wpa")) {
+                        type = 2;
+                    } else if (capabilities.contains("WEP") || capabilities.contains("wep")) {
+                        type = 3;
+                    } else {
+                        type = 1;
+                    }
+                }
+            }
+        }
+        return type;
     }
 
     public static WifiConfiguration isExist(WifiManager wifiManager, String ssid) {
@@ -76,12 +110,14 @@ public class WifiUtils {
         return isConnSuc;
     }
 
-    public static void connectToAp_(WifiManager wifiManager, String ssid, String pass, int type) {
-        createWifiConfig(wifiManager, ssid, pass, type);
+    public static boolean connectToAp_(WifiManager wifiManager, String ssid, String pass, int type) {
+       return createWifiConfig(wifiManager, ssid, pass, type);
     }
 
-    public static void createWifiConfig(WifiManager mWifiManager, String ssid, String password, int type) {
+    public static boolean createWifiConfig(WifiManager mWifiManager, String ssid, String password, int type) {
+        boolean isSucc = false;
         //初始化WifiConfiguration
+        mWifiManager.startScan();
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
@@ -97,7 +133,7 @@ public class WifiUtils {
         if (tempConfig != null) {
             //则清除旧有配置
 //            mWifiManager.removeNetwork(tempConfig.networkId);
-            boolean isSucc = mWifiManager.enableNetwork(tempConfig.networkId, true);
+            isSucc = mWifiManager.enableNetwork(tempConfig.networkId, true);
             Log.e(TAG, "createWifiConfig: " + isSucc);
         } else {
             //不需要密码的场景
@@ -125,9 +161,10 @@ public class WifiUtils {
             }
             int netId = mWifiManager.addNetwork(config);
             mWifiManager.disconnect();
-            boolean isSucc = mWifiManager.enableNetwork(netId, true);
+            isSucc = mWifiManager.enableNetwork(netId, true);
             Log.e(TAG, "createWifiConfig: " + isSucc);
         }
+        return isSucc;
     }
 
 //    private static WifiConfiguration isExist(String ssid) {
@@ -141,22 +178,35 @@ public class WifiUtils {
 //        return null;
 //    }
 
-    public static String getSsid(Context context) {
-        String ssid = "";
-        if (isWifiConnected(context)) {
-            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            if (wifiManager != null) {
-                WifiInfo info = wifiManager.getConnectionInfo();
-                int networkId = info.getNetworkId();
-                List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
-                for (WifiConfiguration wifiConfiguration : configuredNetworks) {
-                    if (wifiConfiguration.networkId == networkId) {
-                        ssid = wifiConfiguration.SSID;
-                        break;
-                    }
-                }
-                if (ssid.contains("\"")) {
-                    return ssid.replace("\"", "");
+    /**
+     * 获取SSID
+     *
+     * @param activity 上下文
+     * @return WIFI 的SSID
+     */
+    public static String getSsid(Context activity) {
+        String ssid = "unknown id";
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O || Build.VERSION.SDK_INT == Build.VERSION_CODES.P) {
+
+            WifiManager mWifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+            assert mWifiManager != null;
+            WifiInfo info = mWifiManager.getConnectionInfo();
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                return info.getSSID();
+            } else {
+                return info.getSSID().replace("\"", "");
+            }
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
+
+            ConnectivityManager connManager = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert connManager != null;
+            NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+            if (networkInfo.isConnected()) {
+                if (networkInfo.getExtraInfo() != null) {
+                    return networkInfo.getExtraInfo().replace("\"", "");
                 }
             }
         }

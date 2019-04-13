@@ -5,4 +5,5 @@
     android:duration="1000"
     android:fillBefore="true"
     android:repeatCount="-1"
-    android:repeatMode="reverse"></alpha>
+    android:repeatMode="reverse">
+</alpha>

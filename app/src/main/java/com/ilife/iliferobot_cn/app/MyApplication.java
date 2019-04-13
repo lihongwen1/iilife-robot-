@@ -3,10 +3,14 @@ package com.ilife.iliferobot_cn.app;
 import android.content.Context;
 import android.graphics.Typeface;
 
-import androidx.multidex.MultiDexApplication;
-
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot_cn.utils.Constants;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import androidx.multidex.MultiDexApplication;
 //import com.tencent.bugly.crashreport.CrashReport;
 //import com.tencent.bugly.crashreport.CrashReport;
 //import com.umeng.message.IUmengRegisterCallback;
@@ -23,12 +27,12 @@ public class MyApplication extends MultiDexApplication {
     public Typeface tf_regular;
     public Typeface tf_medium;
     public Typeface tf_itca;
-
     @Override
     public void onCreate() {
         super.onCreate();
         //国内测试环境
         AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
+        closeAndroidPDialog();
         //国内生产
 //        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
         //欧洲生产
@@ -61,8 +65,10 @@ public class MyApplication extends MultiDexApplication {
         tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
         tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
         tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
-        tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
+        tf_itca = Typeface.createFromAsset(getAssets(),"fonts/ITCAvantGardeStd-Demi.ttf");
     }
+
+
 
     @Override
     public void onTerminate() {
@@ -78,5 +84,30 @@ public class MyApplication extends MultiDexApplication {
 
     public static MyApplication getInstance() {
         return instance;
+    }
+
+
+    private void closeAndroidPDialog(){
+//        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.P){
+//            return;
+//        }
+        try {
+            Class aClass = Class.forName("android.content.pm.PackageParser$Package");
+            Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
+            declaredConstructor.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Class cls = Class.forName("android.app.ActivityThread");
+            Method declaredMethod = cls.getDeclaredMethod("currentActivityThread");
+            declaredMethod.setAccessible(true);
+            Object activityThread = declaredMethod.invoke(null);
+            Field mHiddenApiWarningShown = cls.getDeclaredField("mHiddenApiWarningShown");
+            mHiddenApiWarningShown.setAccessible(true);
+            mHiddenApiWarningShown.setBoolean(activityThread, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

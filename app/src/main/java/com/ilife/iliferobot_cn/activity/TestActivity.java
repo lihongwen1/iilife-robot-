@@ -33,11 +33,15 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
         initView();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_test;
+    }
+
+    public void initView() {
         context = this;
         editText = (EditText) findViewById(R.id.editText);
         bt_connect = (Button) findViewById(R.id.bt_connect);

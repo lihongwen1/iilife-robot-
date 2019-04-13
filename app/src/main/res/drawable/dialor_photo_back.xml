@@ -7,7 +7,7 @@
         android:left="1dp">
         <shape android:shape="rectangle">
             <solid android:color="#ffffff" /> <!--主体颜色-->
-            <corners android:radius="5dp" /> <!--边角弧度-->
+            <corners android:radius="5dp"/> <!--边角弧度-->
         </shape>
     </item>
 </layer-list>

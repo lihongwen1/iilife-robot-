@@ -5,31 +5,26 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.accloud.cloudservice.AC;
-import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
+import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.adapter.DevListAdapter;
 import com.ilife.iliferobot_cn.base.BaseActivity;
+import com.ilife.iliferobot_cn.contract.MainContract;
+import com.ilife.iliferobot_cn.presenter.MainPresenter;
 import com.ilife.iliferobot_cn.ui.MyRelativeLayout;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -41,8 +36,14 @@ import com.ilife.iliferobot_cn.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+public class MainActivity extends BaseActivity<MainPresenter> implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, MainContract.View {
     private final String TAG = MainActivity.class.getSimpleName();
     public static List<ACUserDevice> mAcUserDevices;
     public static final String KEY_PHYCIALID = "KEY_PHYCIALID";
@@ -50,36 +51,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public static final String KEY_DEVICEID = "KEY_DEVICEID";
     public static final String KEY_DEVNAME = "KEY_DEVNAME";
     public static final String KEY_OWNER = "KEY_OWNER";
-    public static Activity activity;
     final int TAG_REFRESH_OVER = 0x01;
+    public static Activity activity;
     Context context;
+    @BindView(R.id.bt_add)
     Button bt_add;
+    @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.tv_notice)
     TextView tv_notice;
-    long exitTime;
     ImageView addImage;
     //    ImageView image_add;
+    @BindView(R.id.image_personal)
     ImageView image_personal;
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
 
     DevListAdapter adapter;
     AlertDialog alertDialog;
-    Dialog dialog;
+    Dialog loadingDialog;
     LinearLayoutManager llm;
-    RelativeLayout rootView;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
+    @BindView(R.id.container)
     MyRelativeLayout container;
-    RelativeLayout layout_no_device;
+    @BindView(R.id.layout_no_device)
+    LinearLayout layout_no_device;
     RelativeLayout.LayoutParams params;
     RelativeLayout.LayoutParams lp_center;
     RelativeLayout.LayoutParams lp_below;
     RelativeLayout.LayoutParams lp_bottom;
     int downX, downY, margin;
     Rect rect;
-    Handler handler = new Handler() {
+    private WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_REFRESH_OVER:
                     if (refreshLayout != null && refreshLayout.isRefreshing()) {
@@ -87,46 +95,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     }
                     break;
             }
+            return true;
         }
-    };
+    });
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        init();
+    public void setRefreshOver() {
+        handler.sendEmptyMessageDelayed(TAG_REFRESH_OVER, 1000);
+    }
+
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (SecondActivity.activity != null) {
-            SecondActivity.activity.finish();
-        }
-        if (LoginActivity.activity != null) {
-            LoginActivity.activity.finish();
-        }
-        if (RegisterActivity.activity != null) {
-            RegisterActivity.activity.finish();
-        }
-        if (AC.accountMgr().isLogin()) {
-            dialog.show();
-            getDeviceList();
-        } else {
-            showButton();
-        }
-        AC.deviceDataMgr().unSubscribeAllProperty();
-        AC.classDataMgr().unSubscribeAll();
+    public void attachPresenter() {
+        mPresenter = new MainPresenter();
+        mPresenter.attachView(this);
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-    }
-
-    private void init() {
-        context = this;
-        activity = this;
+    public void initView() {
+        activity=this;
+        context=this;
         initAddImage();
         rect = new Rect();
         llm = new LinearLayoutManager(context);
@@ -135,10 +128,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         params.addRule(RelativeLayout.BELOW, R.id.recyclerView);
         params.setMargins(0, (int) getResources().getDimension(R.dimen.dp_30), 0, 0);
-        dialog = DialogUtils.createLoadingDialog_(context);
+        loadingDialog = DialogUtils.createLoadingDialog_(context);
 
         mAcUserDevices = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(llm);
         adapter = new DevListAdapter(context, mAcUserDevices);
         recyclerView.setAdapter(adapter);
@@ -150,15 +142,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        bt_add = (Button) findViewById(R.id.bt_add);
-        tv_notice = (TextView) findViewById(R.id.tv_notice);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-//        image_add = (ImageView) findViewById(R.id.image_add);
-        image_personal = (ImageView) findViewById(R.id.image_personal);
-        rootView = (RelativeLayout) findViewById(R.id.rootView);
-        container = (MyRelativeLayout) findViewById(R.id.container);
-        layout_no_device = (RelativeLayout) findViewById(R.id.layout_no_device);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setColorSchemeColors(getResources()
                 .getColor(android.R.color.holo_blue_bright));
         bt_add.setOnClickListener(this);
@@ -169,30 +152,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         adapter.setOnClickListener(new DevListAdapter.OnClickListener() {
             @Override
             public void onMenuClick(final int position) {
-                dialog.show();
+                loadingDialog.show();
                 AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
                     @Override
                     public void success() {
-//                        mAcUserDevices.remove(position);
-//                        adapter.notifyDataSetChanged();
-//                        if (mAcUserDevices.size()==0){
-//                            showButton();
-//                        }
-//                        DialogUtils.closeDialog(dialog);
-                        getDeviceList();
+                        mAcUserDevices.remove(position);
+                        adapter.notifyDataSetChanged();
+                        if (mAcUserDevices.size() == 0) {
+                            showButton();
+                        }
+                        DialogUtils.closeDialog(loadingDialog);
                     }
 
                     @Override
                     public void error(ACException e) {
                         ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
-                        DialogUtils.closeDialog(dialog);
+                        DialogUtils.closeDialog(loadingDialog);
                     }
                 });
             }
 
             @Override
             public void onContentClick(int position) {
-                if (isDevOnline(mAcUserDevices, position)) {
+                if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
                     Intent i;
                     String subdomain = mAcUserDevices.get(position).getSubDomain();
                     SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
@@ -206,7 +188,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         i = new Intent(context, MapActivity_X9_.class);
                     } else {
                         i = new Intent(context, MapActivity_X7_.class);
-//                        i = new Intent(context,MapActivity_A7_.class);
                     }
                     startActivity(i);
                 } else {
@@ -215,26 +196,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (mAcUserDevices.size() >= 4) {
-                    addImage.setLayoutParams(lp_bottom);
-                } else {
-                    addImage.setLayoutParams(lp_below);
-                }
-                if (container.getChildCount() == 3) {
-                    container.removeView(addImage);
-                }
-                container.addView(addImage);
-                rect.top = addImage.getTop();
-                rect.left = addImage.getLeft();
-                rect.right = addImage.getRight();
-                rect.bottom = addImage.getBottom();
-                container.setmRect(rect);
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            if (mAcUserDevices.size() >= 4) {
+                addImage.setLayoutParams(lp_bottom);
+            } else {
+                addImage.setLayoutParams(lp_below);
             }
+            if (container.getChildCount() == 3) {
+                container.removeView(addImage);
+            }
+            container.addView(addImage);
+            rect.top = addImage.getTop();
+            rect.left = addImage.getLeft();
+            rect.right = addImage.getRight();
+            rect.bottom = addImage.getBottom();
+            container.setmRect(rect);
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (QuickLoginActivity.activity != null) {
+            QuickLoginActivity.activity.finish();
+        }
+        if (LoginActivity.activity != null) {
+            LoginActivity.activity.finish();
+        }
+        if (RegisterActivity.activity != null) {
+            RegisterActivity.activity.finish();
+        }
+        if (AC.accountMgr().isLogin()) {
+            loadingDialog.show();
+            mPresenter.getDeviceList();
+        } else {
+            showButton();
+        }
+        AC.deviceDataMgr().unSubscribeAllProperty();
+        AC.classDataMgr().unSubscribeAll();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
+
 
     public void initAddImage() {
         addImage = new ImageView(context);
@@ -259,38 +265,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         lp_center.addRule(RelativeLayout.CENTER_IN_PARENT);
     }
 
-    public void getDeviceList() {
-        AC.bindMgr().listDevicesWithStatus(new PayloadCallback<List<ACUserDevice>>() {
-            @Override
-            public void success(List<ACUserDevice> acUserDevices) {
-                mAcUserDevices.clear();
-                if (acUserDevices.size() == 0) {
-                    showButton();
-                } else {
-                    MyLog.e(TAG, "getDeviceList success " + acUserDevices.get(0).getPhysicalDeviceId());
-                    for (ACUserDevice device : acUserDevices) {
-                        mAcUserDevices.add(device);
-                    }
-                    showList();
-                }
-                handler.sendEmptyMessageDelayed(TAG_REFRESH_OVER, 1000);
-            }
-
-            @Override
-            public void error(ACException e) {
-                MyLog.e(TAG, "getDeviceList e " + e.toString());
-                handler.sendEmptyMessageDelayed(TAG_REFRESH_OVER, 1000);
-            }
-        });
+    @Override
+    public void updateDeviceList(List<ACUserDevice> acUserDevices) {
+        mAcUserDevices.clear();
+        if (acUserDevices.size() == 0) {
+            showButton();
+        } else {
+            MyLog.e(TAG, "getDeviceList success " + acUserDevices.get(0).getPhysicalDeviceId());
+            mAcUserDevices.addAll(acUserDevices);
+            showList();
+        }
     }
+
+
 
     @Override
     public void onClick(View v) {
         Intent i;
         switch (v.getId()) {
             case R.id.bt_add:
+                //TODO 进入选择activity
                 if (AC.accountMgr().isLogin()) {
-                    i = new Intent(context, SelectActivity.class);
+                    i = new Intent(context, SelectActivity_x.class);
                     startActivity(i);
                 } else {
                     i = new Intent(context, LoginActivity.class);
@@ -311,37 +307,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
-
     public void showButton() {
-        refreshLayout.setVisibility(View.INVISIBLE);
+        refreshLayout.setVisibility(View.GONE);
         layout_no_device.setVisibility(View.VISIBLE);
 //        addImage.setVisibility(View.GONE);
-        DialogUtils.closeDialog(dialog);
+        DialogUtils.closeDialog(loadingDialog);
     }
 
     public void showList() {
         layout_no_device.setVisibility(View.GONE);
         refreshLayout.setVisibility(View.VISIBLE);
         adapter.notifyDataSetChanged();
-        DialogUtils.closeDialog(dialog);
+        DialogUtils.closeDialog(loadingDialog);
     }
 
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefresh() {
-        getDeviceList();
-//        if (mAcUserDevices.size()>0){
-//            mAcUserDevices.add(mAcUserDevices.get(0));
-//        }
-//        adapter.notifyDataSetChanged();
-//        refreshLayout.setRefreshing(false);
+        mPresenter.getDeviceList();
     }
 
-    public boolean isDevOnline(List<ACUserDevice> mAcUserDevices, int position) {
-        if (mAcUserDevices.get(position).getStatus() == 0) {
-            return false;
-        }
-        return true;
-    }
+
 
     private void showOfflineDialog() {
         View view = LayoutInflater.from(context).inflate(R.layout.offline_dialog, null);
@@ -352,14 +340,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         alertDialog = AlertDialogUtils.showDialog(context, view, width, height);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() - exitTime >= 2000) {
-            ToastUtils.showToast(context, getString(R.string.main_aty_press_exit));
-            exitTime = System.currentTimeMillis();
-        } else {
-            super.onBackPressed();
-        }
-        MyLog.e(TAG, "onBackPressed====");
-    }
+
 }

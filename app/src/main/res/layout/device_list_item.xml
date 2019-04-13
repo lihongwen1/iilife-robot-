@@ -1,46 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_120">
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_e2"
         android:id="@+id/view5" />
-
     <com.ilife.iliferobot_cn.ui.SlidingMenu
         android:id="@+id/slidingMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/view5">
-
         <LinearLayout
             android:id="@+id/item_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
             <RelativeLayout
                 android:id="@+id/item_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <ImageView
                     android:id="@+id/image_product"
                     android:layout_width="@dimen/dp_78"
                     android:layout_height="@dimen/dp_78"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp_30" />
-
+                    android:layout_marginStart="@dimen/dp_30"/>
                 <com.ilife.iliferobot_cn.view.MediumTextView
-                    style="@style/Text_14sp_33"
+                    style="@style/Text_16sp_33"
                     android:id="@+id/tv_name"
                     android:layout_toEndOf="@+id/image_product"
                     android:layout_marginStart="@dimen/dp_40"
-                    android:layout_marginTop="@dimen/dp_45" />
-
+                    android:layout_marginTop="@dimen/dp_45"/>
                 <com.ilife.iliferobot_cn.view.LightTextView
                     style="@style/Text_12sp_33"
                     android:id="@+id/tv_status1"
@@ -48,14 +42,12 @@
                     android:layout_marginStart="@dimen/dp_40"
                     android:layout_below="@+id/tv_name"
                     android:layout_marginTop="@dimen/dp_9"
-                    android:text="@string/device_adapter_device_status" />
-
+                    android:text="@string/device_adapter_device_status"/>
                 <com.ilife.iliferobot_cn.view.LightTextView
                     style="@style/Text_12sp_33"
                     android:id="@+id/tv_status2"
                     android:layout_toEndOf="@+id/tv_status1"
-                    android:layout_alignBottom="@+id/tv_status1" />
-
+                    android:layout_alignBottom="@+id/tv_status1"/>
                 <ImageView
                     android:id="@+id/image_go"
                     android:layout_width="@dimen/dp_9"
@@ -63,9 +55,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/dp_30"
                     android:background="@drawable/n_btn_forward"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
-
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/item_delete"
                 android:layout_width="@dimen/dp_84"
@@ -74,7 +65,7 @@
                 android:gravity="center"
                 android:text="@string/main_aty_unbind"
                 android:textColor="@color/color_ff"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"/>
         </LinearLayout>
     </com.ilife.iliferobot_cn.ui.SlidingMenu>
 </RelativeLayout>

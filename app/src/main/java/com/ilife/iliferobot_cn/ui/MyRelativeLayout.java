@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.ilife.iliferobot_cn.activity.SelectActivity;
+import com.ilife.iliferobot_cn.activity.SelectActivity_x;
 import com.ilife.iliferobot_cn.utils.MyLog;
 
 public class MyRelativeLayout extends RelativeLayout {
@@ -61,7 +62,7 @@ public class MyRelativeLayout extends RelativeLayout {
                 MyLog.e(TAG, "ACTION_UP upX = " + upX + " upY = " + upY);
                 if (mRect.contains(downX, downY) &&
                         mRect.contains(upX, upY)) {
-                    Intent i = new Intent(mContext, SelectActivity.class);
+                    Intent i = new Intent(mContext, SelectActivity_x.class);
                     mContext.startActivity(i);
                 }
 //                else {

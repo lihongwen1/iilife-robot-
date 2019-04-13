@@ -94,11 +94,15 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ota_update);
         initView();
         showLoadingDialog();
         initData();
         startTimer();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_ota_update;
     }
 
     public void showLoadingDialog() {
@@ -139,7 +143,7 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tv_progress = (TextView) findViewById(R.id.tv_progress);

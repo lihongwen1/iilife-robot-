@@ -17,8 +17,12 @@ public class SelectActivity_w extends BaseActivity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_w);
         initView();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_select_w;
     }
 
     public void initView() {

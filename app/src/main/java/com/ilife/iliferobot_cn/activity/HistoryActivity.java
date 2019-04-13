@@ -53,13 +53,17 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
         initView();
         initData();
         getHistoryRecord();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_history;
+    }
+
+    public void initView() {
         context = this;
         dialog = DialogUtils.createLoadingDialog(context);
         image_back = (ImageView) findViewById(R.id.image_back);

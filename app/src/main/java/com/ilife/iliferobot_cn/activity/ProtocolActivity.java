@@ -22,11 +22,15 @@ public class ProtocolActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_protocol);
         initView();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_protocol;
+    }
+
+    public void initView() {
         String lan = Locale.getDefault().getLanguage();
         String fileName;
         if (lan.equals("zh")) {

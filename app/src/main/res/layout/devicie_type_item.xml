@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_type"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/rl_top_back">
-
     <ImageView
         android:id="@+id/image_product"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp" />
-
+        android:layout_marginLeft="20dp"/>
     <TextView
         android:id="@+id/tv_product"
         android:layout_width="wrap_content"
@@ -19,8 +18,7 @@
         android:textSize="20sp"
         android:layout_toRightOf="@+id/image_product"
         android:layout_marginLeft="30dp"
-        android:layout_centerVertical="true" />
-
+        android:layout_centerVertical="true"/>
     <ImageView
         android:id="@+id/image_go"
         android:layout_width="10dp"
@@ -28,12 +26,11 @@
         android:background="@drawable/select_aty_go"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp" />
-
+        android:layout_marginRight="20dp"/>
     <View
         android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DCDCDC"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

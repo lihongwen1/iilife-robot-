@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ilife.iliferobot_cn.activity.MainActivity"
     android:id="@+id/rootView">
-
     <RelativeLayout
         style="@style/Aty_top_rl_bg"
         android:id="@+id/rl_top">
-
         <ImageView
             android:id="@+id/image_back"
             style="@style/Image_Back_Style"
-            android:visibility="gone" />
-
+            android:visibility="gone"/>
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_title"
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
-            android:text="@string/main_aty_my_robot" />
-
+            android:text="@string/main_aty_my_robot"/>
         <ImageView
             android:id="@+id/image_personal"
             android:layout_width="@dimen/dp_30"
@@ -28,31 +25,25 @@
             android:background="@drawable/n_icon_personal"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_30" />
+            android:layout_marginEnd="@dimen/dp_30"/>
     </RelativeLayout>
-
-    <View
-        style="@style/View_Line_Style"
+    <View style="@style/View_Line_Style"
         android:id="@+id/view"
-        android:layout_below="@+id/rl_top" />
-
+        android:layout_below="@+id/rl_top"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         android:layout_below="@+id/view">
-
         <RelativeLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"/>
             <ImageView
                 android:id="@+id/image_add"
                 android:layout_width="@dimen/dp_40"
@@ -61,7 +52,7 @@
                 android:layout_below="@+id/recyclerView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_30"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -70,19 +61,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/view">
-
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:id="@+id/tv_notice"
             android:text="@string/main_aty_no_robot"
             android:layout_marginTop="@dimen/dp_360"
-            android:layout_centerHorizontal="true" />
-
+            android:layout_centerHorizontal="true"/>
         <com.ilife.iliferobot_cn.view.RegularButton
             style="@style/Button_Style"
             android:id="@+id/bt_add"
             android:layout_below="@+id/tv_notice"
             android:text="@string/main_aty_add_robot"
-            android:layout_marginTop="@dimen/dp_40" />
+            android:layout_marginTop="@dimen/dp_40"/>
     </RelativeLayout>
 </RelativeLayout>

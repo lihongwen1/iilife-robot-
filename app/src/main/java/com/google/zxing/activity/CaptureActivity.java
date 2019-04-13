@@ -82,7 +82,6 @@ public class CaptureActivity extends BaseActivity implements Callback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanner);
         //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_content);
@@ -265,6 +264,16 @@ public class CaptureActivity extends BaseActivity implements Callback {
     protected void onDestroy() {
         inactivityTimer.shutdown();
         super.onDestroy();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_scanner;
+    }
+
+    @Override
+    public void initView() {
+
     }
 
     /**

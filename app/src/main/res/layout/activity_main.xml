@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.ilife.iliferobot_cn.activity.MainActivity"
-    android:id="@+id/rootView">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        style="@style/Aty_top_rl_bg"
-        android:id="@+id/rl_top">
-
-        <ImageView
-            android:id="@+id/image_back"
-            style="@style/Image_Back_Style"
-            android:visibility="gone" />
+    <RelativeLayout style="@style/Aty_top_rl_bg"
+        >
 
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_title"
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
             android:text="@string/main_aty_my_robot" />
 
@@ -25,23 +19,22 @@
             android:id="@+id/image_personal"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:background="@drawable/n_icon_personal"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_30" />
+            android:layout_marginEnd="@dimen/dp_30"
+            android:background="@drawable/n_icon_personal"
+            android:contentDescription="@null" />
     </RelativeLayout>
 
     <View
-        style="@style/View_Line_Style"
         android:id="@+id/view"
-        android:layout_below="@+id/rl_top" />
+        style="@style/View_Line_Style" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:layout_below="@+id/view">
+        android:visibility="gone">
 
         <com.ilife.iliferobot_cn.ui.MyRelativeLayout
             android:id="@+id/container"
@@ -49,6 +42,7 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:background="@color/white"
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -57,32 +51,41 @@
                 android:id="@+id/image_add"
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
-                android:background="@drawable/n_btn_add"
                 android:layout_below="@+id/recyclerView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/n_btn_add"
                 android:visibility="gone" />
         </com.ilife.iliferobot_cn.ui.MyRelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_253"
+        android:orientation="vertical"
         android:id="@+id/layout_no_device"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/view">
+        android:layout_height="wrap_content">
 
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33"
+            android:id="@+id/tv_notice_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_device_tip_hi"
+            android:textColor="#fff08300"
+            android:textSize="24sp" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
             android:id="@+id/tv_notice"
-            android:text="@string/main_aty_no_robot"
-            android:layout_marginTop="@dimen/dp_360"
-            android:layout_centerHorizontal="true" />
+            style="@style/Text_16sp_33"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@string/no_device_tip_cleaning" />
 
         <com.ilife.iliferobot_cn.view.RegularButton
-            style="@style/Button_Style"
             android:id="@+id/bt_add"
-            android:layout_below="@+id/tv_notice"
-            android:text="@string/main_aty_add_robot"
-            android:layout_marginTop="@dimen/dp_40" />
-    </RelativeLayout>
-</RelativeLayout>
+            style="@style/Button_Style"
+            android:layout_marginTop="@dimen/dp_225"
+            android:text="@string/main_aty_add_robot" />
+    </LinearLayout>
+</LinearLayout>

@@ -7,10 +7,8 @@
         android:left="1dp">
         <shape android:shape="rectangle">
             <solid android:color="#f1f1f1" /> <!--主体颜色-->
-            <stroke
-                android:width="1dp"
-                android:color="#AB82FF" /><!-- 描边，边框宽度、颜色 -->
-            <corners android:radius="5dp" /> <!--边角弧度-->
+            <stroke android:width="1dp" android:color="#AB82FF"/><!-- 描边，边框宽度、颜色 -->
+            <corners android:radius="5dp"/> <!--边角弧度-->
         </shape>
     </item>
 </layer-list>

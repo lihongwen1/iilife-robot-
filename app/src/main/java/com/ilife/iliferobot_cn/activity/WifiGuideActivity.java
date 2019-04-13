@@ -24,11 +24,15 @@ public class WifiGuideActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_wifi_guide);
         initView();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.layout_wifi_guide;
+    }
+
+    public void initView() {
         context = this;
         image_back = (ImageView) findViewById(R.id.image_back);
         bt_do = (Button) findViewById(R.id.bt_do);

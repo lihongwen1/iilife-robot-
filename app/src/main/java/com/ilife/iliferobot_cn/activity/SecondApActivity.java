@@ -41,12 +41,16 @@ public class SecondApActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ap_second);
         initView();
         initData();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_ap_second;
+    }
+
+    public void initView() {
         context = this;
         bt_next = (Button) findViewById(R.id.bt_next);
         image_scan = (ImageView) findViewById(R.id.image_scan);

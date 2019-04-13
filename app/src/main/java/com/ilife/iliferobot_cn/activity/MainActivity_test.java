@@ -87,15 +87,14 @@ public class MainActivity_test extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_test);
         init();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (SecondActivity.activity != null) {
-            SecondActivity.activity.finish();
+        if (QuickLoginActivity.activity != null) {
+            QuickLoginActivity.activity.finish();
         }
         if (LoginActivity.activity != null) {
             LoginActivity.activity.finish();
@@ -403,5 +402,15 @@ public class MainActivity_test extends BaseActivity implements View.OnClickListe
             super.onBackPressed();
         }
         MyLog.e(TAG, "onBackPressed====");
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main_test;
+    }
+
+    @Override
+    public void initView() {
+
     }
 }

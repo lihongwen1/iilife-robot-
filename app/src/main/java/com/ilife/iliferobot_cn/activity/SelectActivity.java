@@ -24,11 +24,15 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
         initView();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_select;
+    }
+
+    public void initView() {
         context = this;
         image_back = (ImageView) findViewById(R.id.image_back);
         rl_x = (RelativeLayout) findViewById(R.id.rl_x);

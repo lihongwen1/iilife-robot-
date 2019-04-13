@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp">
-
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
-            android:textSize="18sp" />
-
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
@@ -23,8 +21,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="20dp"
             android:textSize="14sp"
-            android:layout_below="@+id/tv_date" />
-
+            android:layout_below="@+id/tv_date"/>
         <TextView
             android:id="@+id/tv_duration_"
             android:layout_width="wrap_content"
@@ -32,8 +29,7 @@
             android:layout_marginRight="20dp"
             android:textSize="14sp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
+            android:layout_centerVertical="true"/>
         <View
             android:id="@+id/view"
             android:layout_width="1dp"
@@ -42,8 +38,7 @@
             android:layout_alignTop="@+id/tv_duration_"
             android:layout_toLeftOf="@+id/tv_duration_"
             android:background="#00bdb5"
-            android:layout_marginRight="2dp" />
-
+            android:layout_marginRight="2dp"/>
         <TextView
             android:id="@+id/tv_cleanArea"
             android:layout_width="wrap_content"
@@ -51,6 +46,6 @@
             android:textSize="14sp"
             android:layout_toLeftOf="@id/view"
             android:layout_centerVertical="true"
-            android:layout_marginRight="2dp" />
+            android:layout_marginRight="2dp"/>
     </RelativeLayout>
 </RelativeLayout>

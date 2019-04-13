@@ -109,7 +109,6 @@ public class MapActivity_A7_ extends BaseActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_new);
         initData();
         initView();
 //        initReceiver();
@@ -156,11 +155,16 @@ public class MapActivity_A7_ extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    public int getLayoutId() {
+        return R.layout.activity_map_new;
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
     }
 
-    private void initView() {
+    public void initView() {
         errorPopup = new PopupWindow();
         anchorView = findViewById(R.id.rl_status);
         tv_time = (TextView) findViewById(R.id.tv_time);

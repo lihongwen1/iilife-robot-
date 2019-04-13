@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">智意机器人</string>
-    <string name="login_aty_slogan">让保洁更简单  让生活更美好</string>
     <string name="login_aty_login">登录</string>
     <string name="login_aty_register">注册账户</string>
-    <string name="login_aty_email">邮箱</string>
-    <string name="login_aty_pw">密码(6个字符以上)</string>
+    <string name="login_aty_email">邮箱/用户名</string>
+    <string name="login_aty_pw">请输入新密码(6个字符以上)</string>
+    <string name="login_aty_pw_ensure">确认新密码(6个字符以上)</string>
     <string name="login_aty_fw">忘记密码？</string>
     <string name="login_aty_input_email">请输入邮箱</string>
     <string name="login_aty_input_pw">请输入密码</string>
@@ -18,8 +18,8 @@
     <string name="register2_input_code">请输入邮箱验证码</string>
     <string name="register2_gain_code">获取验证码</string>
     <string name="register2_gain_code_second">获取验证码 %1$s</string>
-    <string name="register2_input_pass">请输入新密码 （6个字符以上）</string>
-    <string name="register2_input_pass_again">再次输入新密码</string>
+    <string name="register2_input_pass" >请输入新密码 （6个字符以上）</string>
+    <string name="register2_input_pass_again" >再次输入新密码</string>
     <string name="register2_reset_pass">忘记密码</string>
     <string name="register2_aty_obtain_suc">验证码已发送</string>
     <string name="register2_input_pw2">请再次输入密码</string>
@@ -45,10 +45,11 @@
     <string name="select_aty_w">W系列</string>
     <string name="select_aty_sd">智能扫地机器人</string>
     <string name="select_aty_xd">智能洗地机器人</string>
-    <string name="select_x_aty_add">添加扫地机器人</string>
+    <string name="select_x_aty_add">添加机器人</string>
     <string name="select_aty_w_updating">产品正在更新中&#8230;</string>
     <string name="select_aty_w_title">添加智能洗地机器人</string>
 
+    <string name="guide_ap_prepare">配网准备</string>
     <string name="guide_aty_guide">连接向导</string>
     <string name="ap_aty_first_step">第一步</string>
     <string name="guide_aty_tip1">打开机器电源，设备进入待机模式</string>
@@ -70,11 +71,16 @@
 
     <string name="ap_guide_aty_ap">AP配网模式</string>
     <string name="ap_guide_aty_tip1">待机状态下，长按机器的配网键(即机器上面的唯一按键\"开始暂停键\")</string>
+    <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关</string>
+
     <string name="ap_guide_aty_tip1_x7">待机状态下，长按机器的配网键(即机器上的\"\"\"键)</string>
     <string name="ap_guide_aty_tip2">3秒钟后\"滴\"一声不松开，继续长按，听到语音\"WIFI连接中\"后松开，机器进入AP配网模式，WIFI指示灯开始闪烁</string>
+    <string name="ap_guide_aty_tip2_x900">长按机器的启动键，3秒后听到\"滴\"的一声，继续长按听到“WIFI连接中”后松开。</string>
     <string name="ap_guide_aty_tip2_x7">3秒后\"滴\"一声不松开，继续长按，提示两声\"滴滴\"提示音后松开，机器进入AP配网模式，WIFI图标闪烁</string>
     <string name="ap_guide_aty_tip3">温馨提示：第一次使用AP配网，请按照说明书指南操作</string>
-
+    <string name="ap_guide_tip4">未听到，请重复上述操作</string>
+    <string name="ap_guide_already_open_device">已打开</string>
+    <string name="ap_guide_already_open_wifi">已听到“WiFi连接中”</string>
     <string name="ap_aty_family_wifi">家庭Wi-Fi：</string>
     <string name="ap_aty_setting">设置</string>
     <string name="ap_aty_wifi_pass">Wi-Fi密码：</string>
@@ -90,6 +96,7 @@
     <string name="ap_aty_robot_wifi">机器人Wi-Fi：</string>
     <string name="third_ap_aty_tip1">*小贴士:请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接.</string>
 
+    <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
     <string name="third_ap_aty_port">请选择机器热点</string>
     <string name="third_ap_aty_port_">请选择Robot-XXXX开头的热点</string>
     <string name="ap_aty_start_connect">开始连接</string>
@@ -106,6 +113,7 @@
     <string name="bind_aty_reName_fail">修改机器⼈昵称失败</string>
 
     <string name="wifi_guide_aty_guide">Wi-Fi连接向导</string>
+    <string name="ap_wifi_guide">连接家庭WIFI</string>
     <string name="wifi_guide_aty_tip">请确认手机是否连接家庭Wi-Fi网络</string>
     <string name="wifi_guide_aty_go">去连接</string>
     <string name="wifi_guide_aty_done">我已连接</string>
@@ -325,6 +333,17 @@
     <string name="ota_aty_cur">当前版本:%1$s</string>
     <string name="ota_aty_tar">目标版本:%1$s</string>
     <string name="ota_aty_update">立即更新</string>
+    <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
+    <string name="edit_phone_tip">+86手机号</string>
+    <string name="verification_code_tip">6位验证码</string>
+    <string name="get_ver_code_tip">获取验证码</string>
+    <string name="have_account_and_login">已有账号？请登录</string>
+    <string name="quick_login">快捷注册</string>
+    <string name="set_password">设置密码</string>
+    <string name="no_device_tip_hi">Hi，别来无恙</string>
+    <string name="no_device_tip_cleaning">开始您的清洁之旅吧~</string>
+    <string name="x_series_robot">X系列-智能扫地机器人</string>
+    <string name="login_aty_slogan">让保洁更简单  让生活更美好</string>
     <string name="register_aty_confirm">确认密码</string>
     <string name="third_aty_open_location">开启位置服务？</string>
     <string name="third_ap_aty_location">请开启位置服务</string>

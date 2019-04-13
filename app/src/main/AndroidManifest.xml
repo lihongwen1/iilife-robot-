@@ -50,9 +50,9 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SecondActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop" />
+            android:name="com.ilife.iliferobot_cn.activity.QuickLoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.ilife.iliferobot_cn.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -209,6 +209,10 @@
             android:name=".activity.HistoryActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ApWifiActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <provider
             android:authorities="com.ilife.iliferobot_cn.provider"

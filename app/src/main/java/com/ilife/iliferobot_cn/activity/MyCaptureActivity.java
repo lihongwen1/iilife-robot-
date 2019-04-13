@@ -21,7 +21,6 @@ public class MyCaptureActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mycapture);
         mDBV = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
         captureManager = new CaptureManager(this, mDBV);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
@@ -33,6 +32,16 @@ public class MyCaptureActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_mycapture;
+    }
+
+    @Override
+    public void initView() {
+
     }
 
     @Override

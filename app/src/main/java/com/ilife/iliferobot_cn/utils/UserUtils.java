@@ -17,6 +17,13 @@ import java.util.regex.Pattern;
  */
 
 public class UserUtils {
+
+    public static boolean isPhone(String phone){
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");//新加所有18段 17段
+        Matcher m = p.matcher(phone);
+        return m.matches();
+    }
+
     public static boolean isEmail(String email) {
         String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
         Pattern p = Pattern.compile(str);

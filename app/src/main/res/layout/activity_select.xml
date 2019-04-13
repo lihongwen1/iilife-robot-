@@ -3,34 +3,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout style="@style/Aty_top_rl_bg">
-
+    <RelativeLayout
+        style="@style/Aty_top_rl_bg">
         <ImageView
             android:id="@+id/image_back"
-            style="@style/Image_Back_Style" />
-
+            style="@style/Image_Back_Style"/>
         <com.ilife.iliferobot_cn.view.RegularTextView
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
-            android:text="@string/main_aty_add_robot" />
+            android:text="@string/main_aty_add_robot"/>
     </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
-
+    <View style="@style/View_Line_Style"/>
     <RelativeLayout
         android:id="@+id/rl_x"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120">
-
         <ImageView
             android:id="@+id/image_x"
             android:layout_width="@dimen/dp_70"
             android:layout_height="@dimen/dp_69"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_33"
-            android:background="@drawable/n_icon_x" />
-
+            android:background="@drawable/n_icon_x"/>
         <com.ilife.iliferobot_cn.view.MediumTextView
             android:id="@+id/tv_x"
             style="@style/Text_16sp_ef8200"
@@ -38,7 +32,6 @@
             android:layout_toEndOf="@+id/image_x"
             android:layout_marginStart="@dimen/dp_37"
             android:layout_marginTop="@dimen/dp_43" />
-
         <com.ilife.iliferobot_cn.view.LightTextView
             style="@style/Text_12sp_81"
             android:id="@+id/tv_sweep"
@@ -46,32 +39,27 @@
             android:layout_toEndOf="@+id/image_x"
             android:layout_marginStart="@dimen/dp_37"
             android:layout_below="@+id/tv_x"
-            android:layout_marginTop="@dimen/dp_8" />
-
+            android:layout_marginTop="@dimen/dp_8"/>
         <ImageView
             android:layout_width="@dimen/dp_9"
             android:layout_height="@dimen/dp_15"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/n_btn_forward" />
+            android:background="@drawable/n_btn_forward"/>
     </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
-
+    <View style="@style/View_Line_Style"/>
     <RelativeLayout
         android:id="@+id/rl_w"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120">
-
         <ImageView
             android:id="@+id/image_w"
             android:layout_width="@dimen/dp_70"
             android:layout_height="@dimen/dp_69"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_33"
-            android:background="@drawable/n_icon_w" />
-
+            android:background="@drawable/n_icon_w"/>
         <com.ilife.iliferobot_cn.view.MediumTextView
             android:id="@+id/tv_w"
             style="@style/Text_16sp_ef8200"
@@ -79,7 +67,6 @@
             android:layout_toEndOf="@+id/image_w"
             android:layout_marginStart="@dimen/dp_37"
             android:layout_marginTop="@dimen/dp_43" />
-
         <com.ilife.iliferobot_cn.view.LightTextView
             style="@style/Text_12sp_81"
             android:id="@+id/tv_wash"
@@ -87,16 +74,14 @@
             android:layout_toEndOf="@+id/image_w"
             android:layout_marginStart="@dimen/dp_37"
             android:layout_below="@+id/tv_w"
-            android:layout_marginTop="@dimen/dp_8" />
-
+            android:layout_marginTop="@dimen/dp_8"/>
         <ImageView
             android:layout_width="@dimen/dp_9"
             android:layout_height="@dimen/dp_15"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/n_btn_forward" />
+            android:background="@drawable/n_btn_forward"/>
     </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
+    <View style="@style/View_Line_Style"/>
 </LinearLayout>

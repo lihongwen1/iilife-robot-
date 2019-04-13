@@ -93,12 +93,16 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.activity_help);
         initView();
         initFile();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_help;
+    }
+
+    public void initView() {
         context = this;
         activity = this;
         dialog = DialogUtils.createLoadingDialog_(context);

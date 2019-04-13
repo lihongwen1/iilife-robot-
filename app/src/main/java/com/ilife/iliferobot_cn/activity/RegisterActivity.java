@@ -57,9 +57,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
         initView();
         initData();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_register;
     }
 
     public void initData() {
@@ -91,7 +95,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         activity = this;
         et_email = (EditText) findViewById(R.id.et_email);

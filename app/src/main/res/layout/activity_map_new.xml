@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        style="@style/Aty_top_rl_bg"
-        android:id="@+id/rl_top">
+        android:id="@+id/rl_top"
+        style="@style/Aty_top_rl_bg">
 
         <ImageView
             android:id="@+id/image_back"
@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true" />
 
         <ImageView
@@ -30,8 +30,8 @@
         android:id="@+id/rl_status"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:background="@color/color_81"
-        android:layout_below="@+id/rl_top">
+        android:layout_below="@+id/rl_top"
+        android:background="@color/color_81">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -39,20 +39,20 @@
             android:layout_weight="1">
 
             <com.ilife.iliferobot_cn.view.LightTextView
-                style="@style/Text_10sp_ff"
                 android:id="@+id/tv_1"
-                android:text="@string/map_aty_status"
+                style="@style/Text_10sp_ff"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_15"
-                android:layout_centerHorizontal="true" />
+                android:text="@string/map_aty_status" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                style="@style/Text_14sp_ff"
                 android:id="@+id/tv_status"
+                style="@style/Text_14sp_ff"
                 android:layout_below="@+id/tv_1"
-                android:layout_marginTop="@dimen/dp_7"
-                android:text="@string/map_aty_standby_mode"
                 android:layout_centerHorizontal="true"
-                android:singleLine="true" />
+                android:layout_marginTop="@dimen/dp_7"
+                android:singleLine="true"
+                android:text="@string/map_aty_standby_mode" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -61,18 +61,18 @@
             android:layout_weight="1">
 
             <com.ilife.iliferobot_cn.view.LightTextView
-                style="@style/Text_10sp_ff"
                 android:id="@+id/tv_2"
-                android:text="@string/setting_aty_area"
+                style="@style/Text_10sp_ff"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_15"
-                android:layout_centerHorizontal="true" />
+                android:text="@string/setting_aty_area" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                style="@style/Text_14sp_ff"
                 android:id="@+id/tv_area"
+                style="@style/Text_14sp_ff"
                 android:layout_below="@+id/tv_2"
-                android:layout_marginTop="@dimen/dp_7"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_7"
                 android:text="@string/map_aty_gang" />
         </RelativeLayout>
 
@@ -82,19 +82,19 @@
             android:layout_weight="1">
 
             <com.ilife.iliferobot_cn.view.LightTextView
-                style="@style/Text_10sp_ff"
                 android:id="@+id/tv_3"
-                android:layout_marginTop="@dimen/dp_15"
+                style="@style/Text_10sp_ff"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_15"
                 android:text="@string/map_aty_time" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                style="@style/Text_14sp_ff"
                 android:id="@+id/tv_time"
+                style="@style/Text_14sp_ff"
                 android:layout_below="@+id/tv_3"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_7"
-                android:text="@string/map_aty_gang"
-                android:layout_centerHorizontal="true" />
+                android:text="@string/map_aty_gang" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -102,13 +102,28 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_status"
-        android:layout_above="@+id/rl_bottom">
+        android:layout_above="@+id/rl_bottom"
+        android:layout_below="@+id/rl_status">
 
         <include
             android:id="@+id/layout_map"
             layout="@layout/layout_map"
-            android:visibility="invisible" />
+            android:visibility="gone" />
+
+        <com.ilife.iliferobot_cn.view.MapView
+            android:id="@+id/v_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/map_bg" />
+        <include
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            layout="@layout/layout_virtual_wall"
+            />
 
         <include
             android:id="@+id/layout_clean"
@@ -139,62 +154,62 @@
             android:layout_marginEnd="@dimen/dp_30" />
 
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_f08300"
             android:id="@+id/tv_use_control"
-            android:text="@string/map_aty_use_control"
-            android:layout_centerHorizontal="true"
+            style="@style/Text_14sp_f08300"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp_30"
-            android:visibility="gone"
-            android:paddingBottom="@dimen/dp_2" />
+            android:paddingBottom="@dimen/dp_2"
+            android:text="@string/map_aty_use_control"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_97"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image_control"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:background="@drawable/n_btn_control"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_31"
-                android:layout_gravity="center_horizontal" />
+                android:background="@drawable/n_btn_control" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                style="@style/Text_12sp_81"
                 android:id="@+id/tv_control"
-                android:layout_marginTop="@dimen/dp_15"
+                style="@style/Text_12sp_81"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_15"
                 android:text="@string/map_aty_remote" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image_start"
                 android:layout_width="@dimen/dp_44"
                 android:layout_height="@dimen/dp_44"
-                android:layout_marginTop="@dimen/dp_21"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_21"
                 android:background="@drawable/image_start_bg" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                style="@style/Text_12sp_81"
                 android:id="@+id/tv_start"
+                style="@style/Text_12sp_81"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_5"
                 android:text="@string/map_aty_start" />
@@ -202,23 +217,23 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image_function"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:layout_marginTop="@dimen/dp_31"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_31"
                 android:background="@drawable/n_btn_funtion" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
                 style="@style/Text_12sp_81"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_15"
-                android:text="@string/map_aty_function"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/map_aty_function" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

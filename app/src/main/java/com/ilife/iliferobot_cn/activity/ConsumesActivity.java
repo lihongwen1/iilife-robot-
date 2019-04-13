@@ -49,12 +49,16 @@ public class ConsumesActivity extends BaseActivity implements View.OnLongClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consumes);
         initView();
         initData();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_consumes;
+    }
+
+    public void initView() {
         context = this;
         inflater = LayoutInflater.from(context);
         image_back = (ImageView) findViewById(R.id.image_back);

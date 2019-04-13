@@ -1,9 +1,6 @@
 package com.ilife.iliferobot_cn.adapter;
 
 import android.content.Context;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +9,28 @@ import android.widget.TextView;
 
 import com.ilife.iliferobot_cn.R;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by chengjiaping on 2018/8/9.
  */
 //DONE
-public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyViewHolder> {
+public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyViewHolder>{
     OnItemClickListener mListener;
     LayoutInflater inflater;
     int[] drawables;
     String[] names;
-
-    public X_seriesAdapter(Context context) {
+    public X_seriesAdapter(Context context){
         inflater = LayoutInflater.from(context);
-        drawables = new int[]{R.drawable.n_x800, R.drawable.n_x787, R.drawable.n_x785};
+        drawables = new int[]{R.drawable.n_x900, R.drawable.n_x800, R.drawable.n_x787, R.drawable.n_x785};
 //        drawables = new int[]{R.drawable.n_x787,R.drawable.n_x800};
-        names = new String[]{"ILIFE X800", "ILIFE X787", "ILIFE X785"};
+        names = new String[]{"ILIFE n_x900","ILIFE X800","ILIFE X787","ILIFE X785"};
 //        names = new String[]{"A7","A9s"};
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(inflater.inflate(R.layout.x_series_item, parent, false));
+        return new MyViewHolder(inflater.inflate(R.layout.x_series_item,parent,false));
     }
 
     @Override
@@ -52,10 +50,9 @@ public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyView
         return names.length;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView image_product;
         TextView tv_product;
-
         MyViewHolder(View itemView) {
             super(itemView);
             image_product = (ImageView) itemView.findViewById(R.id.image_product);
@@ -63,11 +60,11 @@ public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyView
         }
     }
 
-    public interface OnItemClickListener {
+    public interface OnItemClickListener{
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
 }

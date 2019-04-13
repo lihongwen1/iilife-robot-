@@ -47,10 +47,14 @@ public class HistoryDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_detail);
         initView();
         getData();
         decodeData();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_history_detail;
     }
 
 
@@ -126,7 +130,7 @@ public class HistoryDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    private void initView() {
+    public void initView() {
         byteList = new ArrayList<>();
 
         imageView = (ImageView) findViewById(R.id.image_map);

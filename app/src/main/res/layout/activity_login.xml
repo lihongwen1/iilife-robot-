@@ -1,90 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/Aty_top_rl_bg">
-
-        <ImageView
-            android:id="@+id/image_back"
-            style="@style/Image_Back_Style" />
-
-        <com.ilife.iliferobot_cn.view.RegularTextView
-            style="@style/Text_14sp_33"
-            android:layout_centerInParent="true"
-            android:text="@string/login_aty_login" />
-    </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
-
-    <RelativeLayout
+    <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@color/color_f6">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_email"
-            android:layout_width="@dimen/dp_23"
-            android:layout_height="@dimen/dp_15"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_email" />
 
-        <com.ilife.iliferobot_cn.view.LightEditText
-            style="@style/EditText_14sp_ac"
+        <include
+            layout="@layout/template_top_title" />
+
+        <View
+            style="@style/View_Line_Style"
+            />
+        <com.ilife.iliferobot_cn.view.SuperEditText
             android:id="@+id/et_email"
-            android:layout_toEndOf="@+id/image_email"
-            android:layout_marginStart="@dimen/dp_19"
-            android:hint="@string/login_aty_email" />
-    </RelativeLayout>
+            style="@style/super_edit_text_16sp"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:hint="@string/login_aty_email"
+            android:inputType="phone"
+            app:ic_left_click="@drawable/n_icon_email"
+            app:ic_left_unclick="@drawable/n_icon_email"
+            app:left_height="72"
+            app:left_width="72" />
+        <View
+            android:layout_marginStart="@dimen/dp_70"
+            style="@style/View_Line_Style"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <View style="@style/View_Line_Style" />
+            <com.ilife.iliferobot_cn.view.SuperEditText
+                app:is_show_delete="false"
+                android:id="@+id/et_pass"
+                style="@style/super_edit_text_16sp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:hint="@string/login_aty_input_pw"
+                android:inputType="phone"
+                app:ic_left_click="@drawable/n_icon_password"
+                app:ic_left_unclick="@drawable/n_icon_password"
+                app:left_height="72"
+                app:left_width="72" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60">
+            <ImageView
+                android:id="@+id/image_show"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:background="@drawable/selector_image_show"
+                android:contentDescription="@null" />
+        </FrameLayout>
 
-        <ImageView
-            android:id="@+id/image_pw"
-            android:layout_width="@dimen/dp_18"
-            android:layout_height="@dimen/dp_20"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_33"
-            android:background="@drawable/n_icon_password" />
-
-        <com.ilife.iliferobot_cn.view.LightEditText
-            style="@style/EditText_14sp_ac"
-            android:id="@+id/et_pass"
-            android:layout_toEndOf="@+id/image_pw"
-            android:layout_toStartOf="@+id/image_show"
-            android:layout_marginStart="@dimen/dp_22"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:hint="@string/login_aty_pw" />
-
-        <ImageView
-            android:id="@+id/image_show"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/selector_image_show"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <View style="@style/View_Line_Style" />
+    </LinearLayout>
 
     <com.ilife.iliferobot_cn.view.RegularButton
         android:id="@+id/bt_login"
-        style="@style/Button_Style"
-        android:layout_marginTop="@dimen/dp_40"
+        style="@style/Button_Style_quick_login"
+        android:layout_marginTop="@dimen/dp_78"
         android:text="@string/login_aty_login" />
 
     <com.ilife.iliferobot_cn.view.RegularTextView
         android:id="@+id/tv_forget"
-        android:layout_marginTop="@dimen/dp_10"
-        style="@style/Text_12sp_33"
+        style="@style/Text_16sp_595757"
         android:layout_gravity="center_horizontal"
-        android:text="@string/login_aty_fw"
-        android:padding="@dimen/dp_10" />
+        android:layout_marginTop="@dimen/dp_30"
+        android:padding="@dimen/dp_10"
+        android:text="@string/login_aty_fw" />
 </LinearLayout>

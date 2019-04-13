@@ -84,10 +84,14 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clock);
         initView();
         intData();
         getClockInfo();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_clock;
     }
 
     @Override
@@ -99,7 +103,7 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
 //        }
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         clockInfos = new ArrayList<>();
         dialog = DialogUtils.createLoadingDialog_(context);

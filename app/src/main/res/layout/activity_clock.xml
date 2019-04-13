@@ -3,27 +3,23 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout style="@style/Aty_top_rl_bg">
-
+    <RelativeLayout
+        style="@style/Aty_top_rl_bg">
         <ImageView
             android:id="@+id/image_back"
-            style="@style/Image_Back_Style" />
-
+            style="@style/Image_Back_Style"/>
         <com.ilife.iliferobot_cn.view.RegularTextView
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
-            android:text="@string/clock_aty_appoint" />
+            android:text="@string/clock_aty_appoint"/>
     </RelativeLayout>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

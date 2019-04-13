@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <RelativeLayout style="@style/Aty_top_rl_bg">
-
+    <RelativeLayout
+        style="@style/Aty_top_rl_bg">
         <ImageView
             android:id="@+id/image_back"
-            style="@style/Image_Back_Style" />
-
+            style="@style/Image_Back_Style"/>
         <com.ilife.iliferobot_cn.view.RegularTextView
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
-            android:text="@string/add_aty_wifi_setting" />
+            android:text="@string/add_aty_wifi_setting"/>
     </RelativeLayout>
 
-    <View style="@style/View_Line_Style" />
+    <View style="@style/View_Line_Style"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
-
         <ImageView
             android:id="@+id/image_wifi"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_16"
             android:background="@drawable/n_icon_wifi"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30" />
-
+            android:layout_marginStart="@dimen/dp_30"/>
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33"
+            style="@style/Text_16sp_33"
             android:id="@+id/tv_ssid"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/image_wifi"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <View style="@style/View_Line_Style" />
+    <View
+        style="@style/View_Line_Style"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
-
         <ImageView
             android:id="@+id/image_pass"
             android:layout_width="@dimen/dp_18"
@@ -51,7 +48,6 @@
             android:background="@drawable/n_icon_password"
             android:layout_marginStart="@dimen/dp_34"
             android:layout_centerVertical="true" />
-
         <com.ilife.iliferobot_cn.view.LightEditText
             style="@style/EditText_14sp_ac"
             android:id="@+id/et_pass"
@@ -59,8 +55,7 @@
             android:layout_marginStart="@dimen/dp_22"
             android:layout_toEndOf="@+id/image_pass"
             android:layout_toStartOf="@+id/image_show_pass"
-            android:layout_marginEnd="@dimen/dp_20" />
-
+            android:layout_marginEnd="@dimen/dp_20"/>
         <ImageView
             android:id="@+id/image_show_pass"
             android:layout_width="wrap_content"
@@ -68,16 +63,16 @@
             android:background="@drawable/selector_image_show"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_30" />
+            android:layout_marginEnd="@dimen/dp_30"/>
     </RelativeLayout>
 
-    <View style="@style/View_Line_Style" />
+    <View
+        style="@style/View_Line_Style"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <RelativeLayout
             android:id="@+id/rl_connect"
             android:layout_width="match_parent"
@@ -86,7 +81,6 @@
             android:layout_marginEnd="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_40"
             android:background="@drawable/n_all_bt_bg">
-
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/dp_27"
@@ -94,14 +88,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_19"
                 android:src="@drawable/n_icon_progress"
-                android:visibility="gone" />
-
+                android:visibility="gone"/>
             <com.ilife.iliferobot_cn.view.RegularTextView
                 style="@style/Text_14sp_ff"
                 android:id="@+id/tv_connect"
                 android:text="@string/add_aty_start_connect"
-                android:layout_centerInParent="true" />
-
+                android:layout_centerInParent="true"/>
             <ImageView
                 android:id="@+id/image_cancel"
                 android:layout_width="@dimen/dp_26"
@@ -110,15 +102,13 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/dp_19"
                 android:background="@drawable/n_btn_close"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/rl_tip1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20">
-
             <com.ilife.iliferobot_cn.view.LightTextView
                 style="@style/Text_12sp_ac"
                 android:layout_width="match_parent"
@@ -126,8 +116,7 @@
                 android:text="@string/wifi_guide_aty_tip_"
                 android:layout_marginStart="@dimen/dp_30"
                 android:layout_marginEnd="@dimen/dp_30"
-                android:gravity="center" />
-
+                android:gravity="center"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
@@ -135,16 +124,14 @@
                 android:layout_alignStart="@+id/tv_tip1"
                 android:layout_alignEnd="@+id/tv_tip1"
                 android:layout_below="@+id/tv_tip1"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </RelativeLayout>
-
         <LinearLayout
             android:id="@+id/ll_tip2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
-
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_tip2"
                 android:layout_width="match_parent"
@@ -156,8 +143,7 @@
                 android:textSize="@dimen/sp_12"
                 android:textColor="@color/color_ac"
                 android:includeFontPadding="false"
-                android:paddingBottom="@dimen/dp_2" />
-
+                android:paddingBottom="@dimen/dp_2"/>
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,21 +154,18 @@
                 android:textSize="@dimen/sp_12"
                 android:textColor="@color/color_ac"
                 android:includeFontPadding="false"
-                android:paddingBottom="@dimen/dp_2" />
+                android:paddingBottom="@dimen/dp_2"/>
         </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20">
-
             <com.ilife.iliferobot_cn.view.MediumTextView
                 style="@style/Text_12sp_f08300"
                 android:id="@+id/tv_ap"
                 android:paddingTop="@dimen/dp_10"
                 android:layout_centerHorizontal="true"
-                android:text="@string/add_aty_try_apLink" />
-
+                android:text="@string/add_aty_try_apLink"/>
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_1"

@@ -99,10 +99,14 @@ public class HistoryDetailActivity_x9 extends BaseActivity implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_detail);
         initView();
         getData();
 //        decodeData();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_history_detail;
     }
 
     private void drawHistoryMap() {
@@ -287,7 +291,7 @@ public class HistoryDetailActivity_x9 extends BaseActivity implements View.OnCli
         }
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         subdomain = SpUtils.getSpString(context, "subdomain");
         deviceId = SpUtils.getLong(context, "deviceId");

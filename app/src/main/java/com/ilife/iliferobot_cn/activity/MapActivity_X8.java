@@ -129,11 +129,15 @@ public class MapActivity_X8 extends BaseActivity implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_new);
         initView();
         initData();
         subscribeRealTimeMap();
         getRealTimeMap();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_map_new;
     }
 
     @Override
@@ -158,7 +162,7 @@ public class MapActivity_X8 extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void initView() {
+    public void initView() {
         context = this;
         errorPopup = new PopupWindow();
         anchorView = findViewById(R.id.rl_status);

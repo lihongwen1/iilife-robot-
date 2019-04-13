@@ -25,6 +25,7 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceBind;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
+import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -37,6 +38,9 @@ import com.ilife.iliferobot_cn.utils.WifiUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -45,7 +49,7 @@ import io.reactivex.functions.Consumer;
  * Created by chenjiaping on 2017/7/4.
  */
 //DONE
-public class AddActivity extends BaseActivity implements View.OnClickListener {
+public class AddActivity extends BaseActivity {
     final String TAG = AddActivity.class.getSimpleName();
     public static final String EXTAR_DEVID = "EXTAR_DEVID";
     final long DELAYMILLIS = 2 * 1000;
@@ -53,18 +57,31 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     final int STATUS_NORMAL = 0x02;
     final int TAG_BIND_FAIL = 0x03;
     Context context;
-    TextView tv_title;
+    @BindView(R.id.tv_ssid)
     TextView tv_ssid;
-    TextView tv_tip1, tv_tip2;
+    @BindView(R.id.tv_tip1)
+    TextView tv_tip1;
+    @BindView(R.id.tv_tip2)
+    TextView tv_tip2;
+    @BindView(R.id.tv_ap)
     TextView tv_ap;
+    @BindView(R.id.tv_connect)
     TextView tv_connect;
+    @BindView(R.id.et_pass)
     EditText et_pass;
+    @BindView(R.id.image_show_pass)
     ImageView image_show;
+    @BindView(R.id.image_cancel)
     ImageView image_cancel;
+    @BindView(R.id.imageView)
     ImageView imageView;
+    @BindView(R.id.image_back)
     ImageView image_back;
+    @BindView(R.id.rl_tip1)
     RelativeLayout rl_tip1;
+    @BindView(R.id.ll_tip2)
     LinearLayout ll_tip2;
+    @BindView(R.id.rl_connect)
     RelativeLayout rl_connect;
 
     int index;
@@ -78,10 +95,9 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     CountDownTimer timer;
     ACDeviceActivator activator;
 
-    Handler handler = new Handler() {
+    WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_BIND_FAIL:
                     if (!isTimeOut) {
@@ -97,39 +113,25 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
                     }
                     break;
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
-        initView();
         initData();
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_add;
+    }
+
+    @Override
+    public void initView() {
         context = this;
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_ssid = (TextView) findViewById(R.id.tv_ssid);
-        tv_tip1 = (TextView) findViewById(R.id.tv_tip1);
-        tv_tip2 = (TextView) findViewById(R.id.tv_tip2);
-        tv_ap = (TextView) findViewById(R.id.tv_ap);
-        tv_connect = (TextView) findViewById(R.id.tv_connect);
-        et_pass = (EditText) findViewById(R.id.et_pass);
         Utils.setTransformationMethod(et_pass, false);
-        rl_tip1 = (RelativeLayout) findViewById(R.id.rl_tip1);
-        ll_tip2 = (LinearLayout) findViewById(R.id.ll_tip2);
-        rl_connect = (RelativeLayout) findViewById(R.id.rl_connect);
-        imageView = (ImageView) findViewById(R.id.imageView);
-        image_show = (ImageView) findViewById(R.id.image_show_pass);
-        image_cancel = (ImageView) findViewById(R.id.image_cancel);
-        image_back = (ImageView) findViewById(R.id.image_back);
-        tv_ap.setOnClickListener(this);
-        image_show.setOnClickListener(this);
-        rl_connect.setOnClickListener(this);
-        image_cancel.setOnClickListener(this);
-        image_back.setOnClickListener(this);
     }
 
     private void initData() {
@@ -160,7 +162,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Override
+    @OnClick({R.id.tv_ap, R.id.image_show_pass, R.id.rl_connect, R.id.image_cancel, R.id.image_back})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_show_pass:
@@ -329,7 +331,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
                     if (permission.granted) {
                         // 用户已经同意该权限
                         String ssid = WifiUtils.getSsid(context);
-                        if (!TextUtils.isEmpty(ssid)) {
+                        if (ssid!=null&&!TextUtils.isEmpty(ssid)) {
                             tv_ssid.setText(ssid);
                         }
                         MyLog.e(TAG, "onWindowFocusChanged permission.granted ");
@@ -339,7 +341,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
                         MyLog.e(TAG, "onWindowFocusChanged permission 拒绝了");
                     }
                 }
-            });
+            }).dispose();
         }
     }
 

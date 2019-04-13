@@ -11,49 +11,53 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accloud.service.ACException;
-import com.ilife.iliferobot_cn.listener.ReNameListener;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BaseActivity;
+import com.ilife.iliferobot_cn.listener.ReNameListener;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.UserUtils;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by chengjiaping on 2018/9/3.
  */
 
-public class BindSucActivity extends BaseActivity implements View.OnClickListener {
+public class BindSucActivity extends BaseActivity {
     final String TAG = BindSucActivity.class.getSimpleName();
     long deviceId;
     String name;
     Context context;
     String subdomain;
+    @BindView(R.id.bt_done)
     Button bt_done;
+    @BindView(R.id.et_devName)
     EditText et_devName;
+    @BindView(R.id.tv_connected)
     TextView tv_connected;
+    @BindView(R.id.image_back)
     ImageView image_back;
     ReNameListener listener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind_suc);
-        initView();
         initData();
     }
 
-    private void initView() {
-        context = this;
-        bt_done = (Button) findViewById(R.id.bt_done);
-        et_devName = (EditText) findViewById(R.id.et_devName);
-        et_devName.requestFocus();
-        image_back = (ImageView) findViewById(R.id.image_back);
-        tv_connected = (TextView) findViewById(R.id.tv_connected);
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_bind_suc;
+    }
 
-        bt_done.setOnClickListener(this);
-        image_back.setOnClickListener(this);
+    @Override
+    public void initView() {
+        context = this;
+        et_devName.requestFocus();
     }
 
     public void initData() {
@@ -96,7 +100,7 @@ public class BindSucActivity extends BaseActivity implements View.OnClickListene
         };
     }
 
-    @Override
+    @OnClick({R.id.image_back, R.id.bt_done})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_back:

@@ -138,9 +138,13 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ap_third);
         initView();
         initData();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_ap_third;
     }
 
     @Override
@@ -183,7 +187,7 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void initView() {
+    public void initView() {
         isFirst = true;
         context = this;
         tv_set = (TextView) findViewById(R.id.tv_set);
