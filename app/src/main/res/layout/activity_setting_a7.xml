@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout style="@style/Aty_top_rl_bg">
+
+        <ImageView
+            android:id="@+id/image_back"
+            style="@style/Image_Back_Style" />
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/tv_title"
+            style="@style/Text_14sp_33"
+            android:layout_centerInParent="true"
+            android:text="@string/ap_aty_setting" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80">
+
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_width="@dimen/dp_77"
+            android:layout_height="@dimen/dp_77"
+            android:background="@drawable/n_x800_1"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.MediumTextView
+            style="@style/Text_14sp_33"
+            android:id="@+id/tv_name"
+            android:text="@string/bind_suc_sty_robot_name"
+            android:layout_toEndOf="@+id/image_product"
+            android:layout_marginStart="@dimen/dp_23"
+            android:layout_marginTop="@dimen/dp_23" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_12sp_33"
+            android:id="@+id/textView"
+            android:text="@string/setting_aty_type"
+            android:layout_alignStart="@+id/tv_name"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="@dimen/dp_9" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_12sp_f08300"
+            android:id="@+id/tv_type"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_toEndOf="@+id/textView" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/color_f6" />
+
+    <View style="@style/View_Line_Style" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/setting_aty_list_a7" />
+    </ScrollView>
+</LinearLayout>

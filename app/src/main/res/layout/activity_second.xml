@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ff">
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="245dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ilife_logo" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_14sp_33"
+        android:id="@+id/tv_slogan"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/image_logo"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/login_aty_slogan"
+        android:visibility="invisible" />
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        android:id="@+id/bt_login"
+        style="@style/Button_Style"
+        android:layout_below="@+id/tv_slogan"
+        android:layout_marginTop="@dimen/dp_144"
+        android:text="@string/login_aty_login" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        android:id="@+id/tv_register"
+        style="@style/Text_12sp_33"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/bt_login"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/login_aty_register"
+        android:padding="@dimen/dp_10" />
+</RelativeLayout>

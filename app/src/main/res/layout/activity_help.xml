@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootView">
+
+    <RelativeLayout style="@style/Aty_top_rl_bg">
+
+        <ImageView
+            android:id="@+id/image_back"
+            style="@style/Image_Back_Style" />
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            style="@style/Text_14sp_33"
+            android:text="@string/personal_aty_help"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <include layout="@layout/activity_personal_include" />
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/n_panel_funtion">
+
+    <ImageView
+        android:id="@+id/image_clock"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@drawable/image_clock_bg" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        android:id="@+id/tv_clock"
+        style="@style/Text_12sp_81"
+        android:textSize="@dimen/sp_10"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/map_aty_appoint"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@drawable/menu_text_color" />
+
+    <ImageView
+        android:id="@+id/image_along"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@drawable/image_along_bg" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Text_12sp_81"
+        android:textSize="@dimen/sp_10"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/map_aty_along"
+        android:layout_marginTop="@dimen/dp_4"
+        android:id="@+id/tv_along"
+        android:textColor="@drawable/menu_text_color" />
+
+    <ImageView
+        android:id="@+id/image_point"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/image_point_bg"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_15" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Text_12sp_81"
+        android:textSize="@dimen/sp_10"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/map_aty_point"
+        android:layout_marginTop="@dimen/dp_4"
+        android:id="@+id/tv_point"
+        android:textColor="@drawable/menu_text_color" />
+
+    <ImageView
+        android:id="@+id/image_recharge"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/image_recharge_bg"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_15" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Text_12sp_81"
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/tv_recharge"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/map_aty_recharge"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@drawable/menu_text_color" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15" />
+
+</LinearLayout>

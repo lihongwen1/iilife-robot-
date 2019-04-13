@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/color_f6">
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            style="@style/Text_12sp_33"
+            android:textColor="@color/color_33"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="@string/personal_aty_support" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Lan_Text_Style"
+        android:text="@string/help_aty_russian" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/image_tel1"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/n_icon_tel"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.ItcaTextView
+            style="@style/Text_12sp_33_"
+            android:id="@+id/tv_telNum1"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_toEndOf="@+id/image_tel1"
+            android:text="89299401228" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_10"
+            android:textColor="@color/color_33"
+            android:text="@string/help_aty_time1"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/tv_telNum1"
+            android:layout_marginStart="@dimen/dp_16" />
+    </RelativeLayout>
+
+    <View
+        style="@style/View_Line_Style"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/image_email1"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/n_icon_email"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.ItcaTextView
+            style="@style/Text_12sp_33"
+            android:id="@+id/image_emailAdd1"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_toEndOf="@+id/image_email1"
+            android:text="service_russia@iliferobot.com" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Lan_Text_Style"
+        android:text="@string/help_aty_spain" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/image_tel2"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/n_icon_tel"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.ItcaTextView
+            style="@style/Text_12sp_33_"
+            android:id="@+id/tv_telNum2"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_toEndOf="@+id/image_tel2"
+            android:text="0034-918-607768" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_10"
+            android:textColor="@color/color_33"
+            android:text="@string/help_aty_time2"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/tv_telNum2"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16" />
+    </RelativeLayout>
+
+    <View
+        style="@style/View_Line_Style"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/image_email2"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/n_icon_email"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.ItcaTextView
+            style="@style/Text_12sp_33"
+            android:id="@+id/image_emailAdd2"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_toEndOf="@+id/image_email2"
+            android:text="serviciotecnico.ilife@edawms.com" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Lan_Text_Style"
+        android:text="@string/help_aty_other" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/image_email"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/n_icon_email"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
+
+        <com.ilife.iliferobot_cn.view.ItcaTextView
+            style="@style/Text_12sp_33"
+            android:id="@+id/image_emailAdd"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_toEndOf="@+id/image_email"
+            android:text="support@iliferobot.com" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/color_f6">
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            style="@style/Text_12sp_33"
+            android:textColor="@color/color_33"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="@string/personal_aty_feedback" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.LightEditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:hint="@string/personal_input_email"
+        android:background="@drawable/feedback_et_bg"
+        android:textColorHint="@color/color_ac"
+        android:textSize="@dimen/sp_12"
+        android:paddingStart="@dimen/dp_18"
+        android:includeFontPadding="false" />
+
+    <RelativeLayout
+        android:id="@+id/rl_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <com.ilife.iliferobot_cn.view.LightEditText
+            android:id="@+id/et_type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginStart="@dimen/dp_30"
+            android:background="@drawable/feedback_et_bg"
+            android:layout_toStartOf="@+id/tv_select"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:hint="@string/personal_aty_chose_type"
+            android:textSize="@dimen/sp_12"
+            android:textColorHint="@color/color_ac"
+            android:paddingStart="@dimen/dp_18"
+            android:includeFontPadding="false"
+            android:focusable="false" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:id="@+id/tv_select"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:text="@string/personal_select"
+            android:textColor="@color/color_ff"
+            android:background="@drawable/personal_chose_bg"
+            android:gravity="center" />
+    </RelativeLayout>
+
+    <com.ilife.iliferobot_cn.view.LightEditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:paddingStart="@dimen/dp_18"
+        android:paddingTop="@dimen/dp_10"
+        android:background="@drawable/feedback_et_bg"
+        android:hint="@string/help_aty_content"
+        android:gravity="start"
+        android:textSize="@dimen/sp_12"
+        android:textColorHint="@color/color_ac"
+        android:includeFontPadding="false" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_10sp_ac"
+            android:id="@+id/tv_numbs"
+            android:layout_alignParentEnd="true"
+            android:text="@string/personal_aty_count"
+            android:layout_marginEnd="@dimen/dp_35" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:background="@drawable/feedback_et_bg">
+
+        <ImageView
+            android:id="@+id/image_add"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:background="@drawable/n_icon_addpictures"
+            android:layout_toEndOf="@+id/image_1"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/image_1"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:visibility="gone"
+            android:scaleType="fitXY" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_10sp_ac"
+            android:id="@+id/tv_notice"
+            android:layout_toEndOf="@+id/image_add"
+            android:layout_marginStart="@dimen/dp_13"
+            android:text="@string/help_aty_add_pic"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        style="@style/Button_Style"
+        android:id="@+id/bt_confirm"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/dialog_del_confirm"
+        android:layout_marginBottom="@dimen/dp_60" />
+
+    <View
+        android:id="@+id/view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+</LinearLayout>

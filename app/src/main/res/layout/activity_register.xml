@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_ff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_79">
+
+        <ImageView
+            android:id="@+id/image_back"
+            style="@style/Image_Back_Style" />
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            style="@style/Text_14sp_33"
+            android:layout_centerInParent="true"
+            android:text="@string/login_aty_register" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_43"
+        android:background="@drawable/ilife_logo" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        android:id="@+id/tv_agreement"
+        style="@style/Text_12sp_33"
+        android:layout_marginStart="@dimen/dp_43"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_marginEnd="@dimen/dp_43"
+        android:text="@string/register_aty_tip"
+        android:lineSpacingExtra="@dimen/dp_1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_77"
+        android:background="@drawable/n_rl_bg">
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:id="@+id/image_emailAdd"
+            style="@style/Text_14sp_33"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_22"
+            android:text="@string/login_aty_email" />
+
+        <com.ilife.iliferobot_cn.view.LightEditText
+            style="@style/EditText_14sp_ac"
+            android:id="@+id/et_email"
+            android:layout_toEndOf="@+id/image_emailAdd"
+            android:layout_toStartOf="@+id/image_show_pw"
+            android:layout_marginEnd="21dp"
+            android:layout_marginStart="10dp" />
+
+        <ImageView
+            android:id="@+id/image_show_pw"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/n_email_selected"
+            android:layout_marginEnd="@dimen/dp_21"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        android:id="@+id/bt_agree"
+        style="@style/Button_Style"
+        android:layout_marginTop="@dimen/dp_192"
+        android:text="@string/register_aty_agree" />
+</LinearLayout>

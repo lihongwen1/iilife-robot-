@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/color_f6">
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_14sp_33"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:text="@string/ap_aty_first_step" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Text_12sp_33"
+        android:id="@+id/ap_guide_aty_tip1"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/ap_guide_aty_tip1" />
+
+    <ImageView
+        android:id="@+id/image_step1"
+        android:layout_width="@dimen/dp_128"
+        android:layout_height="@dimen/dp_107"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_14" />
+
+    <View
+        style="@style/View_Line_Style"
+        android:layout_marginTop="@dimen/dp_14" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/color_f6">
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_14sp_33"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:text="@string/ap_aty_second_step" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Text_12sp_33"
+        android:id="@+id/text_tip2"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/ap_guide_aty_tip2" />
+
+    <ImageView
+        android:id="@+id/image_step2"
+        android:layout_width="@dimen/dp_128"
+        android:layout_height="@dimen/dp_107"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_gravity="center_horizontal" />
+
+    <View
+        style="@style/View_Line_Style"
+        android:layout_marginTop="@dimen/dp_16" />
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        style="@style/Button_Style"
+        android:id="@+id/bt_next"
+        android:layout_marginTop="@dimen/dp_24"
+        android:text="@string/guide_aty_next" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_12sp_ac"
+        android:layout_width="match_parent"
+        android:text="@string/ap_guide_aty_tip3"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_20" />
+</LinearLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="clean_mode">
+        <item>@string/map_aty_plan_mode</item>
+        <item>@string/map_aty_random</item>
+    </string-array>
+
+    <string-array name="device_name">
+        <item>@string/select_aty_x785</item>
+        <item>@string/select_aty_x787</item>
+        <item>@string/select_aty_x800</item>
+    </string-array>
+    <string-array name="array_week">
+        <item>@string/clock_aty_sun</item>
+        <item>@string/clock_aty_mon</item>
+        <item>@string/clock_aty_tues</item>
+        <item>@string/clock_aty_wed</item>
+        <item>@string/clock_aty_thur</item>
+        <item>@string/clock_aty_fri</item>
+        <item>@string/clock_aty_sat</item>
+    </string-array>
+</resources>

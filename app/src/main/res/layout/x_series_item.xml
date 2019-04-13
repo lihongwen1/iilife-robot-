@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/dp_153"
+    android:layout_height="@dimen/dp_196">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_147"
+        android:layout_height="@dimen/dp_190"
+        android:background="@color/color_f6">
+
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_width="@dimen/dp_99"
+            android:layout_height="@dimen/dp_109"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_12sp_f08300"
+            android:id="@+id/tv_product"
+            android:layout_below="@+id/image_product"
+            android:text="ILIFE X785"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_15" />
+    </RelativeLayout>
+</LinearLayout>

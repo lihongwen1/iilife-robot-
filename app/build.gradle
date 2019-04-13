@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+    defaultConfig {
+        applicationId "com.ilife.iliferobot_cn"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 29
+        versionName '2.3.7'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+//        ndk {
+//            // 设置支持的SO库架构
+//            abiFilters 'armeabi','x86' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+//        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        jcenter()
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    testImplementation 'junit:junit:4.12'
+    implementation project(':PushSDK')
+    implementation files('libs/android-async-http-1.4.9.jar')
+    implementation files('libs/happy-dns-0.2.7.jar')
+    implementation files('libs/httpclient-4.4.1.1.jar')
+    implementation files('libs/qiniu-android-sdk-7.0.9.jar')
+    implementation files('libs/volly-1.0.11.jar')
+    implementation 'com.wang.avi:library:1.0.0'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'androidx.percentlayout:percentlayout:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
+    implementation 'com.android.support:multidex:'
+    implementation 'com.airbnb.android:lottie:2.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation files('libs/ltlink2.jar')
+    implementation files('libs/easylink_ftc_out.jar')
+    implementation files('libs/gson-2.8.0.jar')
+    implementation files('libs/jackson-2.3.2.jar')
+    implementation files('libs/java_websocket.jar')
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.0'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+    implementation files('libs/ac-service-android-v1.6.3.jar')
+    implementation files('libs/hiflying-iots-android-smartlink-8.2.0.jar')
+    implementation 'commons-codec:commons-codec:20041127.091804'
+}

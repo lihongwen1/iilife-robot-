@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout style="@style/Aty_top_rl_bg">
+
+        <ImageView
+            android:id="@+id/image_back"
+            style="@style/Image_Back_Style" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            style="@style/Text_14sp_33"
+            android:layout_centerInParent="true"
+            android:text="@string/bind_fail_aty_timeout" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_14sp_33"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/color_33"
+        android:text="@string/bind_fail_aty_hint" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_12sp_33"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/bind_fail_aty_hint1" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_12sp_33"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/bind_fail_aty_hint2" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_12sp_33"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/bind_fail_aty_hint3" />
+
+    <com.ilife.iliferobot_cn.view.LightTextView
+        style="@style/Text_12sp_33"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/bind_fail_aty_hint4" />
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        android:id="@+id/bt_ap"
+        style="@style/Button_Style"
+        android:layout_marginTop="50dp"
+        android:text="@string/bind_fail_aty_ap" />
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        android:id="@+id/bt_try"
+        style="@style/Button_Style"
+        android:layout_marginTop="20dp"
+        android:text="@string/bind_fail_aty_try" />
+</LinearLayout>
