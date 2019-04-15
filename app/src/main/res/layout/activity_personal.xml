@@ -38,11 +38,10 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:background="@color/white"
                 android:id="@+id/rl_help"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-               >
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/image_help"
@@ -60,12 +59,15 @@
                 <ImageView style="@style/Image_Style_Forward" />
             </RelativeLayout>
 
+            <View style="@style/View_Line_Style"
+                android:layout_marginStart="@dimen/dp_70"
+                />
+
             <RelativeLayout
-                android:layout_marginTop="@dimen/dp_1"
-                android:background="@color/white"
                 android:id="@+id/rl_scan"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60">
+                android:layout_height="@dimen/dp_60"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/image_scan"
@@ -83,13 +85,15 @@
                 <ImageView style="@style/Image_Style_Forward" />
             </RelativeLayout>
 
+            <View style="@style/View_Line_Style"
+                android:layout_marginStart="@dimen/dp_70"
+                />
+
             <RelativeLayout
-                android:layout_marginTop="@dimen/dp_1"
-                android:background="@color/white"
                 android:id="@+id/rl_share"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-               >
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/image_share"
@@ -119,21 +123,23 @@
                     android:visibility="gone" />
             </RelativeLayout>
 
+            <View style="@style/View_Line_Style"
+                android:layout_marginStart="@dimen/dp_70"
+                />
+
             <LinearLayout
-                android:layout_marginTop="@dimen/dp_1"
-                android:background="@color/white"
                 android:id="@+id/ll_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="gone" />
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/dp_1"
-                android:background="@color/white"
                 android:id="@+id/rl_protocol"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60">
+                android:layout_height="@dimen/dp_60"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/image_protocol"
@@ -158,12 +164,15 @@
                     style="@style/Image_Style_Forward" />
             </RelativeLayout>
 
+            <View style="@style/View_Line_Style"
+                android:layout_marginStart="@dimen/dp_70"
+                />
+
             <RelativeLayout
-                android:layout_marginTop="@dimen/dp_1"
-                android:background="@color/white"
                 android:id="@+id/rl_logout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60">
+                android:layout_height="@dimen/dp_60"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/image_logout"

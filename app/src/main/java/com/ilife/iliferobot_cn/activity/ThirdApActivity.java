@@ -12,9 +12,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,14 +44,16 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.appcompat.app.AlertDialog;
+
 /**
  * Created by chengjiaping on 2018/9/1.
  */
 
 public class ThirdApActivity extends BaseActivity implements View.OnClickListener {
     final String TAG = ThirdApActivity.class.getSimpleName();
-    private final int DELAYMILLIS = 2 * 1000;
-    private final int TAG_START_BIND = 15 * 1000;
+    private final int DELAYMILLIS = 2*1000;
+    private final int TAG_START_BIND = 15*1000;
     private final int REQUEST_CODE_LOCATION = 0x11;
     final int STATUS_CONNECTING = 0x01;
     final int STATUS_NORMAL = 0x02;
@@ -68,8 +67,8 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     String ap_ssid;
     String subdomain;
     String physicalId;
-    boolean isTimeOut, isFirst;
-    boolean isCanceled, locationEnable;
+    boolean isTimeOut,isFirst;
+    boolean isCanceled,locationEnable;
     TextView tv_set;
     TextView tv_tip2;
     TextView tv_connect;
@@ -82,7 +81,7 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     RelativeLayout rl_connect;
     EditText et_ssid;
     AlertDialog alertDialog;
-    CountDownTimer timer = new CountDownTimer(80 * 1000, 1000) {
+    CountDownTimer timer = new CountDownTimer(80*1000,1000) {
         @Override
         public void onTick(long millisUntilFinished) {
 
@@ -95,30 +94,30 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         }
     };
 
-    Handler handler = new Handler() {
+    Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what) {
+            switch (msg.what){
                 case TAG_START_BIND:
-                    if (!isCanceled) {
+                    if (!isCanceled){
                         timer.start();
-                        if (WifiUtils.isWifiConnected(context)) {
+                        if (WifiUtils.isWifiConnected(context)){
                             bindDevice(physicalId);
                         } else {
-                            MyLog.e(TAG, " WifiUtils.connectToAp_");
-                            WifiUtils.connectToAp_(wifiManager, ssid, pass, getCipherType(ssid));
+                            MyLog.e(TAG," WifiUtils.connectToAp_");
+                            WifiUtils.connectToAp_(wifiManager,ssid,pass,getCipherType(ssid));
                             bindDevice(physicalId);
                         }
                     }
                     break;
                 case TAG_BIND_FAIL:
-                    if (!isTimeOut) {
+                    if (!isTimeOut){
                         bindDevice(physicalId);
                     } else {
                         setStatus(STATUS_NORMAL);
-                        if (!isCanceled) {
-                            ToastUtils.showToast(context, getString(R.string.personal_aty_bind_fail));
+                        if (!isCanceled){
+                            ToastUtils.showToast(context,getString(R.string.personal_aty_bind_fail));
                         }
                     }
                     break;
@@ -134,7 +133,6 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
         }
     };
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,8 +158,8 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            if (isFirst) {
+        if (hasFocus){
+            if (isFirst){
                 isFirst = false;
             } else {
                 String ssid = WifiUtils.getSsid(context);
@@ -171,21 +169,22 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initData() {
-        animation = AnimationUtils.loadAnimation(context, R.anim.anims);
+        animation = AnimationUtils.loadAnimation(context,R.anim.anims);
         animation.setInterpolator(new LinearInterpolator());
-        subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
+        subdomain = SpUtils.getSpString(context,SelectActivity_x.KEY_SUBDOMAIN);
         activator = AC.deviceActivator(Constants.DEVICE_TYPE_QCLTLINK);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         locationManager = (LocationManager) context.getApplicationContext().getSystemService(LOCATION_SERVICE);
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        if (bundle!=null){
             ssid = bundle.getString(FirstApActivity.EXTRA_SSID);
             pass = bundle.getString(FirstApActivity.EXTRA_PASS);
         }
-        if (!subdomain.equals(Constants.subdomain_x800)) {
+        if (!subdomain.equals(Constants.subdomain_x800)){
             tv_tip2.setText(getString(R.string.add_aty_tip22));
         }
     }
+
 
     public void initView() {
         isFirst = true;
@@ -209,7 +208,7 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.image_back:
                 stop();
                 unRegisterLocation();
@@ -226,15 +225,15 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.rl_connect:
                 ap_ssid = et_ssid.getText().toString();
-                if (TextUtils.isEmpty(ap_ssid) || !ap_ssid.startsWith("Robot")) {
-                    ToastUtils.showToast(context, getString(R.string.third_ap_aty_port_));
+                if (TextUtils.isEmpty(ap_ssid)||!ap_ssid.startsWith("Robot")){
+                    ToastUtils.showToast(context,getString(R.string.third_ap_aty_port_));
                 } else {
                     WifiInfo info = wifiManager.getConnectionInfo();
-                    if (info != null) {
+                    if (info!=null){
                         String bssid = info.getBSSID();
-                        MyLog.e(TAG, "bssid = " + bssid);
-                        if (!TextUtils.isEmpty(bssid)) {
-                            if (bssid.startsWith("02")) {
+                        MyLog.e(TAG,"bssid = "+bssid);
+                        if (!TextUtils.isEmpty(bssid)){
+                            if (bssid.startsWith("02")){
                                 showLocationDialog();
                             } else {
                                 connect(bssid);
@@ -246,8 +245,8 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    public void showLocationDialog() {
-        View v = LayoutInflater.from(context).inflate(R.layout.layout_open_location_dialog, null);
+    public void showLocationDialog(){
+        View v = LayoutInflater.from(context).inflate(R.layout.layout_open_location_dialog,null);
 
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,10 +264,10 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         });
         int width = (int) getResources().getDimension(R.dimen.dp_300);
         int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alertDialog = AlertDialogUtils.showDialog(context, v, width, height);
+        alertDialog = AlertDialogUtils.showDialog(context,v,width,height);
     }
 
-    public void stop() {
+    public void stop(){
         timer.cancel();
         isCanceled = true;
         isTimeOut = true;
@@ -335,8 +334,8 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
 //        }
 //    }
 
-    public void setStatus(int status) {
-        switch (status) {
+    public void setStatus(int status){
+        switch (status){
             case STATUS_CONNECTING:
                 imageView.setVisibility(View.VISIBLE);
                 imageView.startAnimation(animation);
@@ -363,28 +362,28 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         AC.deviceActivator(ACDeviceActivator.QCLTLINK).startApLink(ssid, passWord, (int) TimeUnit.SECONDS.toMillis(20), new PayloadCallback<Boolean>() {
             @Override
             public void success(Boolean aBoolean) {
-                MyLog.e(TAG, "setWifiToAP aBoolean = " + aBoolean);
+                MyLog.e(TAG,"setWifiToAP aBoolean = "+aBoolean);
             }
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "setWifiToAP e = " + e.toString());
+                MyLog.e(TAG,"setWifiToAP e = "+e.toString());
 //                setWifiToAP(activator_qc,ssid,passWord);
             }
         }, new PayloadCallback<ACDeviceBind>() {
             @Override
             public void success(ACDeviceBind acDeviceBind) {
-                MyLog.e(TAG, "success acDeviceBind = " + acDeviceBind.toString());
+                MyLog.e(TAG,"success acDeviceBind = "+acDeviceBind.toString());
             }
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "error e = " + e.toString());
+                MyLog.e(TAG,"error e = "+e.toString());
             }
         });
     }
 
-    public int getCipherType(String ssid) {
+    public int  getCipherType( String ssid) {
         int type = 0;
         List<ScanResult> list = wifiManager.getScanResults();
         for (ScanResult scResult : list) {
@@ -404,44 +403,43 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
         return type;
     }
 
-    public boolean isTheSameDevice(String ap_ssid, String physicalId) {
-        if (!TextUtils.isEmpty(ap_ssid) && !TextUtils.isEmpty(physicalId)) {
-            if (ap_ssid.length() > 4 && physicalId.length() > 4) {
+    public boolean isTheSameDevice(String ap_ssid,String physicalId){
+        if (!TextUtils.isEmpty(ap_ssid)&&!TextUtils.isEmpty(physicalId)){
+            if (ap_ssid.length()>4&&physicalId.length()>4){
                 String ap_ssid_ = UserUtils.exChange(ap_ssid);
                 String physicalId_ = UserUtils.exChange(physicalId);
-                if (ap_ssid_.substring(ap_ssid_.length() - 4)
-                        .equals(physicalId_.substring(physicalId_.length() - 4))) {
+                if (ap_ssid_.substring(ap_ssid_.length()-4)
+                        .equals(physicalId_.substring(physicalId_.length()-4))){
                     return true;
                 }
             }
         }
         return false;
     }
-
-    public void bindDevice(String physicalId) {
+    public void bindDevice(String physicalId){
         AC.bindMgr().bindDevice(subdomain, physicalId, "", new PayloadCallback<ACUserDevice>() {
             @Override
             public void success(ACUserDevice userDevice) {
-                MyLog.e(TAG, "bindDevice success " + userDevice.toString());
-                if (!isDestroyed()) {
+                MyLog.e(TAG,"bindDevice success "+userDevice.toString());
+                if (!isDestroyed()){
                     stop();
                     unRegisterLocation();
-                    Intent i = new Intent(context, BindSucActivity.class);
-                    i.putExtra(AddActivity.EXTAR_DEVID, userDevice.deviceId);
+                    Intent i = new Intent(context,BindSucActivity.class);
+                    i.putExtra(AddActivity.EXTAR_DEVID,userDevice.deviceId);
                     startActivity(i);
                 }
             }
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "bindDevice errorCode " + e.toString());
-                handler.sendEmptyMessageDelayed(TAG_BIND_FAIL, 500);
+                MyLog.e(TAG,"bindDevice errorCode "+e.toString());
+                handler.sendEmptyMessageDelayed(TAG_BIND_FAIL,500);
             }
         });
     }
 
-    public void stopAbleLink() {
-        if (activator != null && activator.isAbleLink()) {
+    public void stopAbleLink(){
+        if (activator!=null&&activator.isAbleLink()){
             activator.stopAbleLink();
         }
     }
@@ -476,50 +474,54 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_LOCATION) {
+        if (requestCode==REQUEST_CODE_LOCATION){
             locationEnable = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
-            if (locationEnable) {
+            if (locationEnable){
                 ap_ssid = et_ssid.getText().toString();
-                if (TextUtils.isEmpty(ap_ssid) || !ap_ssid.startsWith("Robot")) {
-                    ToastUtils.showToast(context, getString(R.string.third_ap_aty_port_));
+                if (TextUtils.isEmpty(ap_ssid)||!ap_ssid.startsWith("Robot")){
+                    ToastUtils.showToast(context,getString(R.string.third_ap_aty_port_));
                 } else {
                     WifiInfo info = wifiManager.getConnectionInfo();
-                    if (info != null) {
+                    if (info!=null){
                         String bssid = info.getBSSID();
-                        if (!TextUtils.isEmpty(bssid)) {
+                        if (!TextUtils.isEmpty(bssid)){
                             connect(bssid);
                         }
                     }
                 }
             } else {
-                ToastUtils.showToast(context, getString(R.string.third_ap_aty_location));
+                ToastUtils.showToast(context,getString(R.string.third_ap_aty_location));
             }
         }
     }
 
-    public void connect(String bssid) {
-        BigInteger id = new BigInteger(bssid.replace(":", ""), 16);
+    /**
+     * 根据热点服务获取mac地址（可转化为physicalId）
+     * @param bssid
+     */
+    public void connect(String bssid){
+        BigInteger id = new BigInteger(bssid.replace(":",""),16);
         long mac;
-        if (!bssid.startsWith("84")) {
+        if (!bssid.startsWith("84")){
             mac = id.longValue() - 1;
         } else {
             mac = id.longValue();
         }
         physicalId = Long.toHexString(mac);
-        MyLog.e(TAG, "physicalId = " + physicalId);
-        if (TextUtils.isEmpty(physicalId) || !isTheSameDevice(ap_ssid, physicalId)) {
-            ToastUtils.showToast(context, getString(R.string.third_ap_aty_port_));
+        MyLog.e(TAG,"physicalId = "+physicalId);
+        if (TextUtils.isEmpty(physicalId)||!isTheSameDevice(ap_ssid,physicalId)){
+            ToastUtils.showToast(context,getString(R.string.third_ap_aty_port_));
         } else {
             setStatus(STATUS_CONNECTING);
             isCanceled = false;
             isTimeOut = false;
-            setWifiToAP(null, ssid, pass);
-            handler.sendEmptyMessageDelayed(TAG_START_BIND, 15 * 1000);
+            setWifiToAP(null,ssid,pass);
+            handler.sendEmptyMessageDelayed(TAG_START_BIND,15*1000);
         }
     }
 
-    public void unRegisterLocation() {
+    public void unRegisterLocation(){
         getContentResolver().unregisterContentObserver(mGpsMonitor);
     }
 }

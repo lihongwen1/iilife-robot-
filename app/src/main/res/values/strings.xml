@@ -103,6 +103,7 @@
     <string name="main_aty_bind_fail">激活失败,请重新连接</string>
 
     <string name="bind_suc_aty_suc">绑定成功</string>
+    <string name="bind_suc_aty_done_900">ILIFE X900 已连接！</string>
     <string name="bind_suc_aty_done_800">ILIFE X800 已连接！</string>
     <string name="bind_suc_aty_done_785">ILIFE X785 已连接！</string>
     <string name="bind_suc_aty_done_787">ILIFE x787 已连接！</string>
@@ -349,4 +350,5 @@
     <string name="third_ap_aty_location">请开启位置服务</string>
     <string name="cannot_change_suction">在该模式下不能改变吸力</string>
     <string name="map_aty_temp_keypoint">临时重点</string>
+    <string name="robot_connected">连接成功</string>
 </resources>

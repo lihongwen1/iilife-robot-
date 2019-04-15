@@ -96,15 +96,19 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     }
 
     @Override
-    public void bindFail() {
+    public void bindFail(String message) {
         ToastUtils.showToast("绑定失败");
+        updateBindProgress(message, 0);
     }
 
     @Override
     public void updateBindProgress(String tip, int progress) {
+        if (tip == null) {
+            return;
+        }
         runOnUiThread(() -> {
             tv_bind_tip.setText(tip);
-            tv_bind_progress.setText(progress+"%");
+            tv_bind_progress.setText(progress + "%");
             pb_BindProgress.setProgress(progress);
         });
 

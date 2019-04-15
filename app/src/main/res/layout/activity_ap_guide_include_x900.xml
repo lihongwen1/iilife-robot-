@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_ap_step1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_48"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/text_tip1"
+            style="@style/Text_18sp_33"
+            android:layout_marginTop="@dimen/dp_48"
+            android:text="@string/ap_guide_aty_tip1_x900" />
+
+        <ImageView
+            android:id="@+id/image_step1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_281"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_79"
+            android:scaleType="centerInside"
+            android:contentDescription="@null"
+            android:src="@drawable/n_img_guide_power"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_ap_step2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_48"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/text_tip2"
+            style="@style/Text_18sp_33"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:text="@string/ap_guide_aty_tip2_x900" />
+
+        <ImageView
+            android:id="@+id/image_step2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_281"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_17"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            android:src="@drawable/n_img_connect_light" />
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:layout_width="176dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="@string/ap_guide_tip4"
+            android:textColor="#ff333333"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <RadioButton
+        android:id="@+id/rb_next_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/dp_205"
+        android:gravity="center"
+        android:text="@string/ap_guide_already_open_device"
+        android:textColor="@color/color_33"
+        android:textSize="@dimen/sp_16" />
+
+    <com.ilife.iliferobot_cn.view.RegularButton
+        android:id="@+id/bt_next"
+        style="@style/Button_Style_quick_login"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_136"
+        android:text="@string/guide_aty_next" />
+</FrameLayout>

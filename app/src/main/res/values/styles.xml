@@ -287,6 +287,13 @@
         <item name="android:paddingBottom">@dimen/dp_2</item>
     </style>
 
+    <style name="Text_14sp_33">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_33</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
     <style name="Text_10sp_ac">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

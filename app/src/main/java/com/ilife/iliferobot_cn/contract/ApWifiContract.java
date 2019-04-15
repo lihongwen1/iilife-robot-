@@ -23,7 +23,7 @@ public interface ApWifiContract {
          */
         String getPassWord();
         void bindSuccess(ACUserDevice acUserDevice);
-        void bindFail();
+        void bindFail(String message);
         void bindDevice();
         void updateBindProgress(String tip, int progress);
     }
@@ -32,10 +32,8 @@ public interface ApWifiContract {
         void connectToDevice();
         /**
          * connect to device AP
-         * @param apssid
-         * @param apPassWord
          */
-        Completable connectToAp(String apssid, String apPassWord);
+        Completable connectToAp(int type);
 
         /**
          * broadcast wifi info to device
@@ -44,6 +42,9 @@ public interface ApWifiContract {
          */
         Completable broadCastWifi(String ssid, String passWord);
 
+        void generatePhysicalId();
+
         Single<ACUserDevice> bindDevice();
+        Completable detectTargetWifi();
     }
 }

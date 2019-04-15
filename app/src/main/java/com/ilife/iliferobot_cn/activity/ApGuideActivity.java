@@ -2,11 +2,14 @@ package com.ilife.iliferobot_cn.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
+import com.ilife.iliferobot_cn.receiver.WifiScanReceiver;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 
@@ -61,6 +65,7 @@ public class ApGuideActivity extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerWifiScaner();
     }
 
     // TODO 根据机型选择不同的布局文件
@@ -136,5 +141,10 @@ public class ApGuideActivity extends BackBaseActivity {
                 }
                 break;
         }
+    }
+    private void registerWifiScaner(){
+        IntentFilter filter =new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        registerReceiver(new WifiScanReceiver(), filter);
+        Log.d("WifiScanReceiver","注册wifi扫描结果广播");
     }
 }

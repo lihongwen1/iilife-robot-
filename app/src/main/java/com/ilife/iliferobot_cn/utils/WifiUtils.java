@@ -32,7 +32,6 @@ public class WifiUtils {
      */
     public static String searchTargetWifi(String wifiTag, WifiManager wifiManager) {
         String targetSsid = "";
-        wifiManager.startScan();
         List<ScanResult> list = wifiManager.getScanResults();//get wifi list
         for (ScanResult scResult : list) {
             if (!TextUtils.isEmpty(scResult.SSID) && scResult.SSID.contains(wifiTag)) {
@@ -124,7 +123,6 @@ public class WifiUtils {
         config.allowedKeyManagement.clear();
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
-
         //指定对应的SSID
         config.SSID = "\"" + ssid + "\"";
 

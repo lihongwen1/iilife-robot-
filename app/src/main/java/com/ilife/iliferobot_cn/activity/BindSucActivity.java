@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.accloud.service.ACException;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.listener.ReNameListener;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
  * Created by chengjiaping on 2018/9/3.
  */
 
-public class BindSucActivity extends BaseActivity {
+public class BindSucActivity extends BackBaseActivity {
     final String TAG = BindSucActivity.class.getSimpleName();
     long deviceId;
     String name;
@@ -37,12 +38,9 @@ public class BindSucActivity extends BaseActivity {
     Button bt_done;
     @BindView(R.id.et_devName)
     EditText et_devName;
-    @BindView(R.id.tv_connected)
-    TextView tv_connected;
-    @BindView(R.id.image_back)
-    ImageView image_back;
-    ReNameListener listener;
-
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
+    private ReNameListener listener;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +55,7 @@ public class BindSucActivity extends BaseActivity {
     @Override
     public void initView() {
         context = this;
+        tv_title.setText(R.string.robot_connected);
         et_devName.requestFocus();
     }
 
@@ -69,13 +68,16 @@ public class BindSucActivity extends BaseActivity {
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
         if (subdomain.equals(Constants.subdomain_x785)) {
             devName = "X785";
-            tv_connected.setText(getString(R.string.bind_suc_aty_done_785));
+//            tv_connected.setText(getString(R.string.bind_suc_aty_done_785));
         } else if (subdomain.equals(Constants.subdomain_x787)) {
             devName = "X787";
-            tv_connected.setText(getString(R.string.bind_suc_aty_done_787));
+//            tv_connected.setText(getString(R.string.bind_suc_aty_done_787));
+        } else if (subdomain.equals(Constants.subdomain_x900)) {
+            devName = "X900";
+//            tv_connected.setText(getString(R.string.bind_suc_aty_done_787));
         } else {
             devName = getString(R.string.bind_suc_sty_robot_name);
-            tv_connected.setText(getString(R.string.bind_suc_aty_done_800));
+//            tv_connected.setText(getString(R.string.bind_suc_aty_done_800));
         }
         et_devName.setText(devName);
         et_devName.setSelection(devName.length());
@@ -115,10 +117,5 @@ public class BindSucActivity extends BaseActivity {
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
     }
 }
