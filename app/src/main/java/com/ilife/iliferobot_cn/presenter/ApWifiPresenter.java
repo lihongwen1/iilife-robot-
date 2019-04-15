@@ -106,7 +106,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             if (type == 1) {
                 connectSsid = mApSsid;
                 connectPwd = apPassWord;
-                mView.updateBindProgress("连接设备热点成功" + connectSsid, 30);
+                mView.updateBindProgress("连接设备热点成功" + connectSsid, 40);
             } else {
                 connectSsid = mView.getSsid();
                 connectPwd = mView.getPassWord();
