@@ -21,12 +21,13 @@ import com.ilife.iliferobot_cn.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapView extends View {
     private static String TAG = "MapView";
     private int width, height, centerX, centerY;
     private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
-    private Path roadPath, slamPath;
+    private Path roadPath, slamPath, obtaclePath;
     private float lastX, lastY;
     private float beforeDistance, afterDistance;
     public static final int MODE_NONE = 1;
@@ -74,6 +75,9 @@ public class MapView extends View {
         downPoint = new PointF(0, 0);
         roadPath = new Path();
         slamPath = new Path();
+        obtaclePath = new Path();
+
+
         slamPaint = new Paint();
         slamPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         slamPaint.setStyle(Paint.Style.STROKE);
@@ -100,7 +104,7 @@ public class MapView extends View {
         roadPaint.setStrokeJoin(Paint.Join.ROUND);
         roadPaint.setStrokeCap(Paint.Cap.ROUND);
         roadPaint.setColor(getResources().getColor(R.color.white));
-        roadPaint.setStrokeWidth(4f);
+        roadPaint.setStrokeWidth(2f);
 
         virtualPaint = new Paint();
         virtualPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -140,6 +144,7 @@ public class MapView extends View {
      * @param roadList
      */
     public void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
+        roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
 //        绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
@@ -178,17 +183,10 @@ public class MapView extends View {
      * @param obstacleList 障碍物点集合
      */
     public void drawObstacle(ArrayList<Integer> obstacleList) {
-        float[] obstacles = new float[obstacleList.size()];
-        for (int i = 0; i < obstacleList.size(); i++) {
-            if (i % 2 == 0) {
-                obstacles[i] = matrixCoordinateX(obstacleList.get(i));
-            } else {
-                obstacles[i] = matrixCoordinateY(obstacleList.get(i));
-            }
-
-        }
         slamPaint.setColor(colors[0]);
-        roadCanvas.drawPoints(obstacles, slamPaint);
+        slamCanvas.drawPath(obtaclePath, slamPaint);
+        slamPaint.setColor(colors[1]);
+        slamCanvas.drawPath(slamPath, slamPaint);
         invalidate();
     }
 
@@ -249,6 +247,7 @@ public class MapView extends View {
      *
      * @param canvas
      */
+    // TODO 手势缩放移动的时候延迟刷新实时地图数据/或者生成刷新队列
     @Override
     protected void onDraw(Canvas canvas) {
         matrix.reset();
@@ -258,8 +257,6 @@ public class MapView extends View {
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
         super.onDraw(canvas);
-        roadPath.reset();
-        slamPath.reset();
     }
 
     @Override
@@ -409,16 +406,23 @@ public class MapView extends View {
 
     private int x, y, length, totalCount;
 
-
     /**
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
+        slamPath.reset();
+        obtaclePath.reset();
         if (slamBytes != null && slamBytes.length > 0) {
             slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             slamCanvas.save();
             for (int i = 0; i < slamBytes.length; i += 3) {
+                Path path;
                 byte attr = slamBytes[i];
+                if (attr == 0x01) {
+                    path = obtaclePath;
+                } else {
+                    path = slamPath;
+                }
                 length = DataUtils.bytesToInt2(new byte[]{slamBytes[i + 1], slamBytes[i + 2]}, 0);
                 Log.d(TAG, "地图类型:" + attr + "---length" + length);
                 slamPaint.setColor(colors[attr - 1]);
@@ -430,11 +434,13 @@ public class MapView extends View {
                     }
                     if (attr != 0x03) {//0x03未探索区域 0x02已探索区域
                         Log.d(TAG, "slam x:---" + x + "y:---" + (1500 - y));
+//                        slamCanvas.drawPoint(matrixCoordinateX(x), matrixCoordinateY(1500 - y),slamPaint);
                         if (i != 0) {
                             int distance = (int) (matrixCoordinateY(1500 - y) - matrixCoordinateY(1500 - y - 1));
                             for (int k = 0; k < distance; k++) {
-                                slamCanvas.drawLine(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k, matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k, slamPaint);
-
+                                path.moveTo(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k);
+                                path.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k);
+//                                slamCanvas.drawLine(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k, matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k, slamPaint);
                             }
 
                         }
@@ -447,7 +453,8 @@ public class MapView extends View {
             totalCount = 0;
             y = 0;
         }
-
+        slamCanvas.drawPath(slamPath, slamPaint);
+//        invalidate();
     }
 
 
