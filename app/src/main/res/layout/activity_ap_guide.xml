@@ -5,5 +5,5 @@
     android:orientation="vertical">
     <include layout="@layout/template_top_title" />
 
-    <include layout="@layout/activity_ap_guide_include_x900" />
+    <include layout="@layout/activity_ap_guide_include" />
 </LinearLayout>

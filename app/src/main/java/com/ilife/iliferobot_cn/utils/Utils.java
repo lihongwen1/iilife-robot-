@@ -39,4 +39,20 @@ public class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
+
+    public static byte[] concat_(byte[] a, byte[] b, byte type) {
+        int offset = 0;
+        switch (type) {
+            case 1:
+                offset = 7;
+                break;
+            case 2:
+                offset = 2;
+                break;
+        }
+        byte[] c = new byte[a.length + b.length - offset];
+        System.arraycopy(a, 0, c, 0, a.length);
+        System.arraycopy(b, offset, c, a.length, b.length - offset);
+        return c;
+    }
 }

@@ -33,11 +33,6 @@ public class DialogUtils {
     }
 
     public static void hideDialog(AlertDialog dialog) {
-//        if (dialog!=null){
-//            if (dialog.isShowing()){
-//                dialog.dismiss();
-//            }
-//        }
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }

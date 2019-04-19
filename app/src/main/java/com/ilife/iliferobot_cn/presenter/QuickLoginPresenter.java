@@ -36,20 +36,19 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     @Override
     public void sendVerification() {
         //send code by cloud
-        verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter -> {
-            acAccountMgr.sendVerifyCode(mView.getPhone(), 1, new VoidCallback() {
-                @Override
-                public void success() {
-                    completableEmitter.onComplete();
-                }
+        verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter ->
+                acAccountMgr.sendVerifyCode(mView.getPhone(), 1, new VoidCallback() {
+            @Override
+            public void success() {
+                completableEmitter.onComplete();
+            }
 
-                @Override
-                public void error(ACException e) {
-                    completableEmitter.onError(e);
-                    //发送验证码失败
-                }
-            });
-        })).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+            @Override
+            public void error(ACException e) {
+                completableEmitter.onError(e);
+                //发送验证码失败
+            }
+        }))).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
             //发送验证码成功
         }, throwable -> {
             //发送验证码失败
@@ -107,6 +106,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
                     //注册
                     mView.goSetPassword();
                 } else {
+                    ToastUtils.showToast("验证码错误！");
                     //提示验证码错误
                 }
             }

@@ -2,13 +2,16 @@ package com.ilife.iliferobot_cn.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +19,7 @@ import android.view.View;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
+import com.ilife.iliferobot_cn.utils.BitmapUtils;
 import com.ilife.iliferobot_cn.utils.DataUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 
@@ -25,14 +29,16 @@ import java.util.List;
 
 public class MapView extends View {
     private static String TAG = "MapView";
-    private int width, height, centerX, centerY;
+    private int width, height;
     private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
-    private Path roadPath, slamPath, obtaclePath;
-    private float lastX, lastY;
+    private Path roadPath, existvirtualPath, slamPath, obstaclePath;
+    private float downX, downY;
     private float beforeDistance, afterDistance;
     public static final int MODE_NONE = 1;
     public static final int MODE_DRAG = 2;
     public static final int MODE_ZOOM = 3;
+    public static final int MODE_ADD_VIRTUAL = 4;
+    public static final int MODE_DELETE_VIRTUAL = 5;
     private int MODE;
     private int originalMode;
     private float scare = 1;
@@ -40,15 +46,18 @@ public class MapView extends View {
     private float baseScare = 1;//基准坐标缩放比例，以slam边缘占据view3/4，与view同坐标中心为标准
 
     private PointF sCenter, downPoint;
-    private Bitmap roadBitmap, slagBitmap;
-    private Canvas roadCanvas, slamCanvas;
+    private Bitmap roadBitmap, slagBitmap, virtualBitmap;
+    private Canvas roadCanvas, slamCanvas, virtualCanvas;
     private boolean isInitBuffer = false;
     private Matrix matrix;
     private float dragX, originalDragX, dragY, originalDragY;
     private final int DEFAULT_SIZE = 1500;
     private float deviationX, deviationY;
     private int[] colors;
-    private boolean isEditVirtualWall = false;
+    private ArrayList<int[]> virtualWallPointfs;//新增加的虚拟墙线点集合
+    private ArrayList<int[]> existWallPointgs;//已经存在的虚拟墙线点集合
+    private static final int MIN_WALL_LENGTH = 20;
+    private Bitmap deleteBitmap;//删除虚拟墙的bitmap
 
     public MapView(Context context) {
         super(context);
@@ -74,8 +83,10 @@ public class MapView extends View {
         sCenter = new PointF(0, 0);
         downPoint = new PointF(0, 0);
         roadPath = new Path();
+        existvirtualPath = new Path();
         slamPath = new Path();
-        obtaclePath = new Path();
+        obstaclePath = new Path();
+        deleteBitmap = BitmapUtils.decodeSampledBitmapFromResource(getResources(), R.drawable.n_icon_delete_virtual, 36, 36);
 
 
         slamPaint = new Paint();
@@ -87,7 +98,6 @@ public class MapView extends View {
         slamPaint.setColor(getResources().getColor(R.color.colorPrimary));
         slamPaint.setStrokeWidth(4f);
 
-        positionCirclePaint = new Paint();
         positionCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         positionCirclePaint.setStyle(Paint.Style.FILL);
         positionCirclePaint.setFilterBitmap(true);
@@ -97,7 +107,6 @@ public class MapView extends View {
         positionCirclePaint.setStrokeWidth(3f);
 
 
-        roadPaint = new Paint();
         roadPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         roadPaint.setStyle(Paint.Style.STROKE);
         roadPaint.setFilterBitmap(true);
@@ -106,23 +115,39 @@ public class MapView extends View {
         roadPaint.setColor(getResources().getColor(R.color.white));
         roadPaint.setStrokeWidth(2f);
 
-        virtualPaint = new Paint();
         virtualPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         virtualPaint.setStyle(Paint.Style.STROKE);
         virtualPaint.setFilterBitmap(true);
         virtualPaint.setStrokeJoin(Paint.Join.ROUND);
         virtualPaint.setStrokeCap(Paint.Cap.ROUND);
-        virtualPaint.setColor(getResources().getColor(R.color.color_ff2035));
-        virtualPaint.setStrokeWidth(3f);
+        virtualPaint.setColor(getResources().getColor(R.color.color_f08300));
+        virtualPaint.setStrokeWidth(5f);
+        /**
+         * 虚拟墙路径集合
+         */
+        existWallPointgs = new ArrayList<>();
+        virtualWallPointfs = new ArrayList<>();
     }
 
+    /**
+     * 设置地图模式
+     *
+     * @param MODE MODE_VIRTUAL 虚拟墙编辑模式
+     */
     public void setMODE(int MODE) {
         this.MODE = MODE;
         this.originalMode = MODE;
+        if (MODE == MODE_ADD_VIRTUAL) {
+            drawVirtualWall(existWallPointgs);
+        }
+        if (MODE == MODE_DELETE_VIRTUAL) {
+            drawVirtualWall(existWallPointgs);
+            //draw delete sign
+        }
     }
 
-    public void setEditVirtualWall(boolean isEditVirtualWall) {
-        this.isEditVirtualWall = isEditVirtualWall;
+    public boolean isInMode(int mode) {
+        return mode == MODE;
     }
 
     private void initBuffer() {
@@ -132,8 +157,10 @@ public class MapView extends View {
         isInitBuffer = true;
         roadBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         slagBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        virtualBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
+        virtualCanvas = new Canvas(virtualBitmap);
         updateSlam(644, 807, 736, 827, null);
     }
 
@@ -144,6 +171,7 @@ public class MapView extends View {
      * @param roadList
      */
     public void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
+        Log.d(TAG, "drawRoadMap-----");
         roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
@@ -179,17 +207,23 @@ public class MapView extends View {
 
     /**
      * 绘制障碍物点
-     *
-     * @param obstacleList 障碍物点集合
      */
-    public void drawObstacle(ArrayList<Integer> obstacleList) {
+    public void drawObstacle() {
         slamPaint.setColor(colors[0]);
-        slamCanvas.drawPath(obtaclePath, slamPaint);
+        slamCanvas.drawPath(obstaclePath, slamPaint);
         slamPaint.setColor(colors[1]);
         slamCanvas.drawPath(slamPath, slamPaint);
         invalidate();
     }
 
+    /**
+     * 清楚所有绘图痕迹
+     */
+    public void clean() {
+        slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        invalidate();
+    }
 
     /**
      * @param xMin
@@ -199,6 +233,7 @@ public class MapView extends View {
      * @param slamBytes
      */
     public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
+        Log.d(TAG, "updateSlam---");
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
         double result = width * 0.85f / xLength;
@@ -231,6 +266,11 @@ public class MapView extends View {
         return value;
     }
 
+    private float reMatrixCoordinateX(float originalCoordinate) {
+        float value = originalCoordinate / baseScare + deviationX;
+        return value;
+    }
+
     /**
      * s
      *
@@ -239,6 +279,11 @@ public class MapView extends View {
      */
     private float matrixCoordinateY(float originalCoordinate) {
         float value = (originalCoordinate - deviationY) * baseScare;
+        return value;
+    }
+
+    private float reMatrixCoordinateY(float originalCoordinate) {
+        float value = originalCoordinate / baseScare + deviationY;
         return value;
     }
 
@@ -256,6 +301,7 @@ public class MapView extends View {
         matrix.postScale(scare, scare, sCenter.x, sCenter.y);
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
+        canvas.drawBitmap(virtualBitmap, matrix, virtualPaint);
         super.onDraw(canvas);
     }
 
@@ -263,9 +309,7 @@ public class MapView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
-        centerX = (int) (width / 2f);
         height = h;
-        centerY = (int) (height / 2f);
         initBuffer();
 
     }
@@ -284,6 +328,9 @@ public class MapView extends View {
         return scare + (sCenter.y * (scare - 1) / scare) - dragY;
     }
 
+
+    // TODO 重绘事件不要太频繁，真正有需求的时候才能调用
+    // TODO 屏幕坐标转设备坐标
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int me = event.getAction() & MotionEvent.ACTION_MASK;
@@ -292,11 +339,17 @@ public class MapView extends View {
         Log.d("SelfPaint", "x--:" + x + "y---:" + y);
         switch (me) {
             case MotionEvent.ACTION_DOWN:
-                lastX = x;
-                lastY = y;
+                downX = x;
+                downY = y;
                 downPoint.set(event.getX(), event.getY());
-                roadPath.moveTo(x, y);
-                if (!isEditVirtualWall) {
+                if (MODE == MODE_ADD_VIRTUAL) {
+                    if (virtualWallPointfs.size() >= 10) {
+                        //TODO 提示虚拟墙数量超最大数
+                    } else {
+                    }
+                } else if (MODE == MODE_DELETE_VIRTUAL) {
+                    // TODO 删除虚拟墙
+                } else {
                     originalMode = MODE;
                     MODE = MODE_DRAG;
                 }
@@ -309,12 +362,17 @@ public class MapView extends View {
                 } else if (MODE == MODE_DRAG) {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
-                } else {
-                    roadPath.quadTo(lastX, lastY, (x + lastX) / 2f, (y + lastY) / 2f);
-                    lastX = x;
-                    lastY = y;
-                    roadBitmap.eraseColor(Color.TRANSPARENT);
-                    roadCanvas.drawPath(roadPath, virtualPaint);
+                } else if (MODE == MODE_ADD_VIRTUAL) {
+                    if (virtualWallPointfs.size() >= 10) {
+                        //TODO 提示虚拟墙数量超最大数
+                    } else {
+                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                        virtualCanvas.save();
+                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
+                        virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
+                    }
+                } else if (MODE == MODE_DELETE_VIRTUAL) {
+                    //判断点击区域是否是“减号区域”
                 }
                 invalidate();
                 break;
@@ -324,6 +382,23 @@ public class MapView extends View {
 //                    roadBitmap.eraseColor(Color.TRANSPARENT);
 //                    roadCanvas.drawPath(roadPath, slamPaint);
 //                    invalidate();
+                } else if (MODE == MODE_ADD_VIRTUAL) {
+                    if (virtualWallPointfs.size() >= 10) {
+                        // TODO 提示虚拟墙数量达到最大值
+                    } else {
+                        float distance = distance(downX, downY, x, y);
+                        if (distance < MIN_WALL_LENGTH) {
+                            // TODO 提示虚拟墙太短
+                        } else {
+                            existvirtualPath.moveTo(downX, downY);
+                            existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
+                            virtualWallPointfs.add(new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)});
+                            //不用画了，抬起点即为移动最后一点
+                        }
+
+                    }
+                } else if (MODE == MODE_DELETE_VIRTUAL) {
+                    //TODO delete  virtual wall
                 } else if (MODE == MODE_DRAG) {
                     originalDragX = dragX;
                     originalDragY = dragY;
@@ -355,6 +430,12 @@ public class MapView extends View {
                 scare = 0.6f;
             }
         }
+    }
+
+    private float distance(float x1, float y1, float x2, float y2) {
+        float x = x1 - x2;
+        float y = y1 - y2;
+        return (float) Math.sqrt(x * x + y * y);
     }
 
     /**
@@ -403,6 +484,60 @@ public class MapView extends View {
         return result;
     }
 
+    /**
+     * 获取新增的虚拟墙列表
+     *
+     * @return
+     */
+    public ArrayList<int[]> getVirtualWallPointfs() {
+        return virtualWallPointfs;
+    }
+
+    /**
+     * 获取已存在的虚拟墙列表
+     *
+     * @return
+     */
+    public ArrayList<int[]> getExistWallPointgs() {
+        return existWallPointgs;
+    }
+
+
+    /**
+     * 刷新虚拟墙，用于添加，删除
+     */
+    public void refreshVirtualWall() {
+        if (existWallPointgs != null) {
+            drawVirtualWall(existWallPointgs);
+        }
+    }
+
+    /**
+     * 绘制已经保存到设备的虚拟墙
+     */
+    public void drawVirtualWall(ArrayList<int[]> existPointList) {
+        virtualWallPointfs.clear();
+        this.existWallPointgs = existPointList;
+        existvirtualPath.reset();
+        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        virtualCanvas.save();
+        for (int[] line : existWallPointgs) {
+            existvirtualPath.moveTo(matrixCoordinateX(line[0]), matrixCoordinateY(line[1]));
+            existvirtualPath.lineTo(matrixCoordinateX(line[2]), matrixCoordinateY(line[3]));
+        }
+        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
+        for (int[] line : existWallPointgs) {
+            float x = matrixCoordinateX((line[0] + line[2]) / 2f);
+            float y = matrixCoordinateY((line[1] + line[3]) / 2f);
+            if (MODE == MODE_DELETE_VIRTUAL) {//删除虚拟墙模式，需要画出减号删除键
+                virtualCanvas.drawBitmap(deleteBitmap, x, y, virtualPaint);
+            }
+
+        }
+
+        invalidate();
+    }
+
 
     private int x, y, length, totalCount;
 
@@ -410,8 +545,9 @@ public class MapView extends View {
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
+        Log.d(TAG, "drawSlamMap-----");
         slamPath.reset();
-        obtaclePath.reset();
+        obstaclePath.reset();
         if (slamBytes != null && slamBytes.length > 0) {
             slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             slamCanvas.save();
@@ -419,7 +555,7 @@ public class MapView extends View {
                 Path path;
                 byte attr = slamBytes[i];
                 if (attr == 0x01) {
-                    path = obtaclePath;
+                    path = obstaclePath;
                 } else {
                     path = slamPath;
                 }
@@ -454,8 +590,5 @@ public class MapView extends View {
             y = 0;
         }
         slamCanvas.drawPath(slamPath, slamPaint);
-//        invalidate();
     }
-
-
 }

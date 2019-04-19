@@ -50,9 +50,9 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
         setContentView(initContentView());
         setHeight(initHeight());
         setWidth(initWidth());
-        setOutsideTouchable(true);
         setTouchable(true);
         setFocusable(true);
+        setOutsideTouchable(false);
         setBackgroundDrawable(new ColorDrawable());
     }
 

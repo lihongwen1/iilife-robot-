@@ -39,7 +39,6 @@ import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -201,7 +200,7 @@ public class AddActivity extends BaseActivity {
                 cancel();
                 break;
             case R.id.tv_ap:
-                Intent i = new Intent(context, ApGuideActivity.class);
+                Intent i = new Intent(context, ApGuideActivityX900.class);
                 startActivity(i);
                 break;
             case R.id.image_back:

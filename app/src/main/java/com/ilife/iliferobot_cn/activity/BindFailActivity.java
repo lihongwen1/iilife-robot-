@@ -33,7 +33,7 @@ public class BindFailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_ap:
-                Intent intent = new Intent(BindFailActivity.this, ApGuideActivity.class);
+                Intent intent = new Intent(BindFailActivity.this, ApGuideActivityX900.class);
                 startActivity(intent);
                 finish();
                 break;

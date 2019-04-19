@@ -60,7 +60,12 @@ public class SelectActivity_x extends BackBaseActivity {
         adapter.setOnItemClickListener(position -> {
             SpUtils.saveString(context, KEY_SUBDOMAIN, subdomains[position]);
             SpUtils.saveLong(context, KEEY_SUBDOMAIN_ID, subdomainIds[position]);
-            Intent i = new Intent(context, ApGuideActivity.class);
+            Intent i ;
+            if (subdomains[position] == Constants.subdomain_x900) {
+                 i = new Intent(context, ApGuideActivityX900.class);
+            } else {
+                 i = new Intent(context, ApGuideActivity.class);
+            }
 //          i.putExtra(EXTRA_SUBDOMAIN,subdomains[position]);
             startActivity(i);
         });

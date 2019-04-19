@@ -60,7 +60,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_253"
         android:orientation="vertical"

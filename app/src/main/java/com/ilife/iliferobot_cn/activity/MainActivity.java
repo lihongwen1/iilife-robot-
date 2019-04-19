@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.tv_notice)
     TextView tv_notice;
     ImageView addImage;
-    //    ImageView image_add;
+    //    ImageView tv_add_virtual;
     @BindView(R.id.image_personal)
     ImageView image_personal;
     @BindView(R.id.recyclerView)
@@ -145,7 +145,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         refreshLayout.setColorSchemeColors(getResources()
                 .getColor(android.R.color.holo_blue_bright));
         bt_add.setOnClickListener(this);
-//        image_add.setOnClickListener(this);
+//        tv_add_virtual.setOnClickListener(this);
         image_personal.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
 
@@ -294,7 +294,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 }
 
                 break;
-//            case R.id.image_add:
+//            case R.id.tv_add_virtual:
 //                i = new Intent(context,SelectActivity.class);
 //                startActivity(i);
 //                break;

@@ -316,6 +316,7 @@
     <string name="map_aty_pause">暂停</string>
     <string name="virtualwall_save">是否保存？</string>
     <string name="virtualwall_confirm_save">保存</string>
+    <string name="map_virtual_wall">虚拟墙</string>
     <string name="map_aty_set_wall">是否进入虚拟墙编辑模式？</string>
     <string name="map_aty_will_stop">会暂停当前清扫工作</string>
     <string name="map_aty_edit_mode">编辑模式</string>

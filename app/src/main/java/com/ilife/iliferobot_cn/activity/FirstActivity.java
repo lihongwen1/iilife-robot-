@@ -37,16 +37,13 @@ public class FirstActivity extends AppCompatActivity {
         }
     }
 
-    private WeakHandler handler = new WeakHandler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case GOTOMAIN:
-                    gotoMain();
-                    break;
-            }
-            return false;
+    private WeakHandler handler = new WeakHandler(msg -> {
+        switch (msg.what) {
+            case GOTOMAIN:
+                gotoMain();
+                break;
         }
+        return false;
     });
 
     @Override

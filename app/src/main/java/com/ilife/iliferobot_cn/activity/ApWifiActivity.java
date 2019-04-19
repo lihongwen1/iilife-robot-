@@ -107,6 +107,9 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
             return;
         }
         runOnUiThread(() -> {
+            if (tv_bind_tip==null){
+                return;
+            }
             tv_bind_tip.setText(tip);
             tv_bind_progress.setText(progress + "%");
             pb_BindProgress.setProgress(progress);

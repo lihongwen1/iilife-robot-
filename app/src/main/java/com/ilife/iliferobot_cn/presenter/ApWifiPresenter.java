@@ -28,13 +28,19 @@ import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.content.Context.WIFI_SERVICE;
 
+/**
+ *
+ */
 public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implements ApWifiContract.Presenter {
     private static final String TAG = ApWifiPresenter.class.getName();
     private ACDeviceActivator activator;
@@ -43,7 +49,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
-    private Disposable apWifiDisposable;
+    private Disposable apWifiDisposable,apProgressDsiposable;
 
     @Override
     public void attachView(ApWifiContract.View view) {
@@ -68,7 +74,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 times++;
             }
             MyLog.d(TAG, "扫描目标wifi结束" + mApSsid);
-            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
+//            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
             if (mApSsid == null || mApSsid.isEmpty()) {
                 e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
             } else {
@@ -79,6 +85,9 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
     @Override
     public void connectToDevice() {
+        apProgressDsiposable=Observable.intervalRange(1,16,1,1,TimeUnit.SECONDS).subscribe(aLong -> {
+              mView.updateBindProgress("",(int)(aLong*5));
+        });
         apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).
                 andThen(broadCastWifi(mView.getSsid(), mView.getPassWord())).
                 delay(18, TimeUnit.SECONDS)
@@ -106,11 +115,11 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             if (type == 1) {
                 connectSsid = mApSsid;
                 connectPwd = apPassWord;
-                mView.updateBindProgress("连接设备热点成功" + connectSsid, 40);
+//                mView.updateBindProgress("连接设备热点成功" + connectSsid, 40);
             } else {
                 connectSsid = mView.getSsid();
                 connectPwd = mView.getPassWord();
-                mView.updateBindProgress("连接设备热点成功" + connectSsid, 70);
+//                mView.updateBindProgress("连接设备热点成功" + connectSsid, 70);
             }
             MyLog.d(TAG, "设备开始连接wifi：" + connectSsid + "是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
             boolean isSuccess = WifiUtils.getSsid(MyApplication.getInstance()).equals(connectSsid);
@@ -174,7 +183,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             //AC.DEVICE_ACTIVATOR_DEFAULT_TIMEOUT：使用默认超时时间60s
             //第一个回调为配置SSID与Password成功与否的回调，建议传null；只用于调试阶段分析问题。
             //第二个回调为设备是否连云成功的回调。配置成功与否以第二个回调为主
-            mView.updateBindProgress("发送家庭WiFi", 50);
+//            mView.updateBindProgress("发送家庭WiFi", 50);
             generatePhysicalId();
             if (TextUtils.isEmpty(physicalId) || !isTheSameDevice(mApSsid, physicalId)) {
                 emitter.onError(new Exception(Utils.getString(R.string.third_ap_aty_port_)));
@@ -183,7 +192,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     @Override
                     public void success(Boolean aBoolean) {
                         //设备配置SSID与Password成功
-                        mView.updateBindProgress("设备配置SSID成功", 60);
+//                        mView.updateBindProgress("设备配置SSID成功", 60);
                         MyLog.d(TAG, "设备配置ssid成功！");
                     }
 
@@ -199,7 +208,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 //                    physicalId = deviceBind.getPhysicalDeviceId();
                         //设备已成功连接，通过ACDeviceBind获取到物理ID进行绑定设备操作
                         MyLog.d(TAG, "设备连云成功");
-                        mView.updateBindProgress("设备连云成功", 70);
+//                        mView.updateBindProgress("设备连云成功", 70);
 //                    emitter.onComplete();
                     }
 
@@ -248,6 +257,9 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     @Override
     public void detachView() {
         super.detachView();
+        if (apProgressDsiposable!=null&&apProgressDsiposable.isDisposed()){
+            apProgressDsiposable.dispose();
+        }
         if (apWifiDisposable != null && !apWifiDisposable.isDisposed()) {
             apWifiDisposable.dispose();
         }

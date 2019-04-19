@@ -55,7 +55,7 @@
     <color name="bg_color_f5f7fa">#f5f7fa</color>
     <color name="white">#ffffff</color>
     <color name="map_bg">#FF1BADE2</color>
-    <color name="obstacle_color">#FF76C5EE</color>
-   <color name="slam_color">#8fc31f</color>
+    <color name="obstacle_color">#FF76C9EE</color>
+   <color name="slam_color">#FF49B6E8</color>
     <!--  QRCode scanner color end  -->
 </resources>
