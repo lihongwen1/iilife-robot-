@@ -21,6 +21,7 @@ import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
 import com.ilife.iliferobot_cn.utils.BitmapUtils;
 import com.ilife.iliferobot_cn.utils.DataUtils;
+import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 
 import java.math.BigDecimal;
@@ -58,6 +59,8 @@ public class MapView extends View {
     private ArrayList<int[]> existWallPointgs;//已经存在的虚拟墙线点集合
     private static final int MIN_WALL_LENGTH = 20;
     private Bitmap deleteBitmap;//删除虚拟墙的bitmap
+    private List<RectF> deleteIcons;
+    private static final int deleteIconW = 36;
 
     public MapView(Context context) {
         super(context);
@@ -86,7 +89,7 @@ public class MapView extends View {
         existvirtualPath = new Path();
         slamPath = new Path();
         obstaclePath = new Path();
-        deleteBitmap = BitmapUtils.decodeSampledBitmapFromResource(getResources(), R.drawable.n_icon_delete_virtual, 36, 36);
+        deleteBitmap = BitmapUtils.decodeSampledBitmapFromResource(getResources(), R.drawable.n_icon_delete_virtual, deleteIconW, deleteIconW);
 
 
         slamPaint = new Paint();
@@ -127,6 +130,7 @@ public class MapView extends View {
          */
         existWallPointgs = new ArrayList<>();
         virtualWallPointfs = new ArrayList<>();
+        deleteIcons = new ArrayList<>();
     }
 
     /**
@@ -232,11 +236,12 @@ public class MapView extends View {
      * @param yMax
      * @param slamBytes
      */
+    // TODO 地图x方向居中
     public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
         Log.d(TAG, "updateSlam---");
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
-        double result = width * 0.85f / xLength;
+        double result = width * 0.70f / xLength;
         BigDecimal bigDecimal = new BigDecimal(result).setScale(1, BigDecimal.ROUND_HALF_UP);
         if (baseScare == 1) {
             baseScare = bigDecimal.floatValue();
@@ -399,6 +404,11 @@ public class MapView extends View {
                     }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //TODO delete  virtual wall
+                    for (RectF rf : deleteIcons) {
+                        if (rf.contains(x, y)) {
+                            ToastUtils.showToast("点击了删除按钮");
+                        }
+                    }
                 } else if (MODE == MODE_DRAG) {
                     originalDragX = dragX;
                     originalDragY = dragY;
@@ -526,15 +536,19 @@ public class MapView extends View {
             existvirtualPath.lineTo(matrixCoordinateX(line[2]), matrixCoordinateY(line[3]));
         }
         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
-        for (int[] line : existWallPointgs) {
-            float x = matrixCoordinateX((line[0] + line[2]) / 2f);
-            float y = matrixCoordinateY((line[1] + line[3]) / 2f);
-            if (MODE == MODE_DELETE_VIRTUAL) {//删除虚拟墙模式，需要画出减号删除键
-                virtualCanvas.drawBitmap(deleteBitmap, x, y, virtualPaint);
+        if (MODE == MODE_DELETE_VIRTUAL) {//删除虚拟墙模式，需要画出减号删除键
+            RectF rectF;
+            for (int[] line : existWallPointgs) {
+                float l = matrixCoordinateX((line[0] + line[2]) / 2f);
+                float t = matrixCoordinateY((line[1] + line[3]) / 2f);
+                float r =l+deleteBitmap.getWidth()*scare;
+                float b = t+deleteBitmap.getHeight()*scare;
+                virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
+                rectF = new RectF(l, t, r,b);
+                deleteIcons.add(rectF);
             }
 
         }
-
         invalidate();
     }
 
