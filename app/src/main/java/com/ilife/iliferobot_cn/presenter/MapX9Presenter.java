@@ -13,6 +13,7 @@ import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
+import com.accloud.utils.LogUtil;
 import com.google.gson.Gson;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.activity.MainActivity;
@@ -34,6 +35,7 @@ import com.ilife.iliferobot_cn.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,8 +54,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private int curStatus, errorCode, batteryNo, workTime, cleanArea;
     private Timer timer;
     private ArrayList<Integer> realTimePoints, historyRoadList;
-    private ArrayList<int[]> wallPointList = new ArrayList<>();
-    private ArrayList<int[]> existPointList = new ArrayList<>();
+    private List<int[]> wallPointList = new ArrayList<>();
+    private List<int[]> existPointList = new ArrayList<>();
     private ACDeviceMsg mAcDevMsg;
     boolean isWork, hasAppoint, isMaxMode, hasStart, hasStart_, voiceOpen, isX800;//hasSart标记point动画启动状态
     /**
@@ -226,7 +228,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void error(ACException e) {
-
+                LogUtil.d(TAG,e.getErrorCode()+e.toString());
             }
         });
     }
@@ -598,10 +600,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * @param list SEND_VIR添加虚拟墙时为新增虚拟墙集合，EXIT_VIR 时，为null
      * @param tag
      */
-    public void sendVirtualWallData(final ArrayList<int[]> list, final int tag) {
-        if (tag==SEND_VIR){
-            wallPointList.addAll(list);
-        }
+    public void sendVirtualWallData(final List<int[]> list, final int tag) {
+        wallPointList.clear();
+        wallPointList.addAll(list);
         new Thread(() -> {
             virtualContentBytes = new byte[82];
 //                if (sendLists != null && sendLists.size() > 0) {

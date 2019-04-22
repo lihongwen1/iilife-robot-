@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
+import com.ilife.iliferobot_cn.model.VirtualWallBean;
 import com.ilife.iliferobot_cn.utils.BitmapUtils;
 import com.ilife.iliferobot_cn.utils.DataUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
@@ -26,6 +27,7 @@ import com.ilife.iliferobot_cn.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MapView extends View {
@@ -55,11 +57,9 @@ public class MapView extends View {
     private final int DEFAULT_SIZE = 1500;
     private float deviationX, deviationY;
     private int[] colors;
-    private ArrayList<int[]> virtualWallPointfs;//新增加的虚拟墙线点集合
-    private ArrayList<int[]> existWallPointgs;//已经存在的虚拟墙线点集合
+    private List<VirtualWallBean> virtualWallBeans;
     private static final int MIN_WALL_LENGTH = 20;
     private Bitmap deleteBitmap;//删除虚拟墙的bitmap
-    private List<RectF> deleteIcons;
     private static final int deleteIconW = 36;
 
     public MapView(Context context) {
@@ -128,9 +128,7 @@ public class MapView extends View {
         /**
          * 虚拟墙路径集合
          */
-        existWallPointgs = new ArrayList<>();
-        virtualWallPointfs = new ArrayList<>();
-        deleteIcons = new ArrayList<>();
+        virtualWallBeans = new ArrayList<>();
     }
 
     /**
@@ -142,10 +140,10 @@ public class MapView extends View {
         this.MODE = MODE;
         this.originalMode = MODE;
         if (MODE == MODE_ADD_VIRTUAL) {
-            drawVirtualWall(existWallPointgs);
+            drawVirtualWall();
         }
         if (MODE == MODE_DELETE_VIRTUAL) {
-            drawVirtualWall(existWallPointgs);
+            drawVirtualWall();
             //draw delete sign
         }
     }
@@ -348,7 +346,7 @@ public class MapView extends View {
                 downY = y;
                 downPoint.set(event.getX(), event.getY());
                 if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallPointfs.size() >= 10) {
+                    if (virtualWallBeans.size() >= 10) {
                         //TODO 提示虚拟墙数量超最大数
                     } else {
                     }
@@ -364,11 +362,11 @@ public class MapView extends View {
                     if (event.getPointerCount() == 2) {
                         calculateScare(event);
                     }
-                } else if (MODE == MODE_DRAG) {
+                } else if (MODE == MODE_DRAG || MODE == MODE_DELETE_VIRTUAL) {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallPointfs.size() >= 10) {
+                    if (virtualWallBeans.size() >= 10) {
                         //TODO 提示虚拟墙数量超最大数
                     } else {
                         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -376,8 +374,6 @@ public class MapView extends View {
                         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
                         virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
                     }
-                } else if (MODE == MODE_DELETE_VIRTUAL) {
-                    //判断点击区域是否是“减号区域”
                 }
                 invalidate();
                 break;
@@ -388,7 +384,7 @@ public class MapView extends View {
 //                    roadCanvas.drawPath(roadPath, slamPaint);
 //                    invalidate();
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallPointfs.size() >= 10) {
+                    if (virtualWallBeans.size() >= 10) {
                         // TODO 提示虚拟墙数量达到最大值
                     } else {
                         float distance = distance(downX, downY, x, y);
@@ -397,16 +393,25 @@ public class MapView extends View {
                         } else {
                             existvirtualPath.moveTo(downX, downY);
                             existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
-                            virtualWallPointfs.add(new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)});
-                            //不用画了，抬起点即为移动最后一点
+                            VirtualWallBean virtualWallBean = new VirtualWallBean(2, new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)}
+                                    , virtualWallBeans.size() + 1);
+                            virtualWallBeans.add(virtualWallBean);
+                            drawVirtualWall();
                         }
-
                     }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //TODO delete  virtual wall
-                    for (RectF rf : deleteIcons) {
-                        if (rf.contains(x, y)) {
-                            ToastUtils.showToast("点击了删除按钮");
+                    for (VirtualWallBean vr : virtualWallBeans) {
+                        if (vr.getDeleteIcon().contains(x, y)) {
+                            ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
+                            if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
+                                virtualWallBeans.remove(vr);
+                            }
+                            if (vr.getState() == 1) {//服务器上的虚拟墙，可能操作会被取消掉，只需要改变状态
+                                vr.setState(3);
+                            }
+                            drawVirtualWall();
+                            break;
                         }
                     }
                 } else if (MODE == MODE_DRAG) {
@@ -495,57 +500,83 @@ public class MapView extends View {
     }
 
     /**
-     * 获取新增的虚拟墙列表
+     * 撤销所有虚拟墙操作，恢复到与服务器数据一致的状态
+     */
+    public void undoAllOperation() {
+        if (virtualWallBeans != null && virtualWallBeans.size() > 0) {
+            Iterator<VirtualWallBean> iterator = virtualWallBeans.iterator();
+            while (iterator.hasNext()) {
+                VirtualWallBean virtualWallBean = iterator.next();
+                if (virtualWallBean.getState() == 2) {
+                    iterator.remove();
+                } else if (virtualWallBean.getState() == 3) {//被置为待删除的服务器虚拟墙恢复状态
+                    virtualWallBean.setState(1);
+                }
+            }
+        }
+        drawVirtualWall();
+    }
+
+    /**
+     * 获取虚拟墙列表,包含新增，和删除
      *
      * @return
      */
-    public ArrayList<int[]> getVirtualWallPointfs() {
+    public List<int[]> getVirtualWallPointfs() {
+        List<int[]> virtualWallPointfs = new ArrayList<>();
+        for (VirtualWallBean vr : virtualWallBeans) {
+            if (vr.getState() != 3) {
+                virtualWallPointfs.add(vr.getPointfs());
+            }
+        }
         return virtualWallPointfs;
     }
 
+
     /**
-     * 获取已存在的虚拟墙列表
+     * 查询到服务其虚拟墙数据后调用绘制虚拟墙
      *
-     * @return
+     * @param existPointList 服务器虚拟墙数据集合
      */
-    public ArrayList<int[]> getExistWallPointgs() {
-        return existWallPointgs;
-    }
-
-
-    /**
-     * 刷新虚拟墙，用于添加，删除
-     */
-    public void refreshVirtualWall() {
-        if (existWallPointgs != null) {
-            drawVirtualWall(existWallPointgs);
+    public void drawVirtualWall(List<int[]> existPointList) {
+        VirtualWallBean bean;
+        virtualWallBeans.clear();
+        for (int i = 0; i < existPointList.size(); i++) {
+            bean = new VirtualWallBean(i + 1, existPointList.get(i), 1);
+            virtualWallBeans.add(bean);
         }
+        drawVirtualWall();
     }
 
     /**
-     * 绘制已经保存到设备的虚拟墙
+     * 绘制虚拟墙
      */
-    public void drawVirtualWall(ArrayList<int[]> existPointList) {
-        virtualWallPointfs.clear();
-        this.existWallPointgs = existPointList;
+    public void drawVirtualWall() {
+        if (virtualWallBeans == null || virtualWallBeans.size() == 0) {
+            return;
+        }
         existvirtualPath.reset();
         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         virtualCanvas.save();
-        for (int[] line : existWallPointgs) {
-            existvirtualPath.moveTo(matrixCoordinateX(line[0]), matrixCoordinateY(line[1]));
-            existvirtualPath.lineTo(matrixCoordinateX(line[2]), matrixCoordinateY(line[3]));
+        for (VirtualWallBean vir : virtualWallBeans) {
+            if (vir.getState() != 3) {
+                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(vir.getPointfs()[1]));
+                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(vir.getPointfs()[3]));
+            }
         }
         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
         if (MODE == MODE_DELETE_VIRTUAL) {//删除虚拟墙模式，需要画出减号删除键
             RectF rectF;
-            for (int[] line : existWallPointgs) {
-                float l = matrixCoordinateX((line[0] + line[2]) / 2f);
-                float t = matrixCoordinateY((line[1] + line[3]) / 2f);
-                float r =l+deleteBitmap.getWidth()*scare;
-                float b = t+deleteBitmap.getHeight()*scare;
-                virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
-                rectF = new RectF(l, t, r,b);
-                deleteIcons.add(rectF);
+            for (VirtualWallBean vir : virtualWallBeans) {
+                if (vir.getState() != 3) {
+                    float l = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
+                    float t = matrixCoordinateY((vir.getPointfs()[1] + vir.getPointfs()[3]) / 2f);
+                    float r = l + deleteBitmap.getWidth() * scare;
+                    float b = t + deleteBitmap.getHeight() * scare;
+                    virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
+                    rectF = new RectF(l, t, r, b);
+                    vir.setDeleteIcon(rectF);
+                }
             }
 
         }

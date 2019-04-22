@@ -4,6 +4,7 @@ import com.accloud.service.ACDeviceMsg;
 import com.ilife.iliferobot_cn.base.BaseView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MapX9Contract {
     interface Model {
@@ -11,6 +12,7 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
+
         void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
@@ -55,7 +57,7 @@ public interface MapX9Contract {
         void setVirtualWallStatus(boolean isEnable);
         void showErrorPopup(int errorCode);
         void sendHandler(int msgCode);
-        void drawVirtualWall(ArrayList<int []> existPointList);
+        void drawVirtualWall(List<int []> existPointList);
     }
 
     interface Presenter {
@@ -81,7 +83,7 @@ public interface MapX9Contract {
         void sendToDeviceWithOption(ACDeviceMsg msg);
         void sendToDeviceWithOption_start(ACDeviceMsg msg);
         void enterVirtualMode();
-        void sendVirtualWallData(final ArrayList<int[]> list, final int tag);
+        void sendVirtualWallData(final List<int[]> list, final int tag);
         void sendToDeviceWithOptionVirtualWall(ACDeviceMsg acDeviceMsg, String physicalDeviceId, final int tag);
         int getCurStatus();
         /**

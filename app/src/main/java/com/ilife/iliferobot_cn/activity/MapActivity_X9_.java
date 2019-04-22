@@ -39,6 +39,7 @@ import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.view.MapView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
 import androidx.appcompat.app.AlertDialog;
@@ -300,7 +301,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     }
 
     @Override
-    public void drawVirtualWall(ArrayList<int[]> existPointList) {
+    public void drawVirtualWall(List<int[]> existPointList) {
         mMapView.drawVirtualWall(existPointList);
     }
 
@@ -375,7 +376,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         alertDialog = AlertDialogUtils.showDialog(context, v, width, height);
         v.findViewById(R.id.tv_confirm).setOnClickListener(view -> {
             DialogUtils.hideDialog(alertDialog);
-            mPresenter.sendVirtualWallData(null, EXIT_VIR);
+            mMapView.undoAllOperation();
+            /**
+             * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
+             */
+//            mPresenter.sendVirtualWallData(null, EXIT_VIR);
         });
         v.findViewById(R.id.tv_cancel).setOnClickListener(view -> DialogUtils.hideDialog(alertDialog));
     }
