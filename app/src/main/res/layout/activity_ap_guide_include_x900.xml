@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,26 +16,20 @@
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/text_tip1"
             style="@style/Text_18sp_33"
-            android:layout_marginTop="@dimen/dp_48"
             android:text="@string/ap_guide_aty_tip1_x900" />
 
-        <ImageView
+        <com.ilife.iliferobot_cn.view.GifView
             android:id="@+id/image_step1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_281"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_79"
-            android:scaleType="centerInside"
-            android:contentDescription="@null"
-            android:src="@drawable/n_img_guide_power"
-            />
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_280"
+            app:gif="@drawable/gif_open_key"
+             />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_ap_step2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_48"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
@@ -47,15 +42,12 @@
             android:layout_marginEnd="@dimen/dp_30"
             android:text="@string/ap_guide_aty_tip2_x900" />
 
-        <ImageView
+        <com.ilife.iliferobot_cn.view.GifView
             android:id="@+id/image_step2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_281"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_17"
-            android:contentDescription="@null"
-            android:scaleType="center"
-            android:src="@drawable/n_img_connect_light" />
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_280"
+            app:gif="@drawable/gif_click_wifi"
+            />
 
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:layout_width="176dp"

@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.cloudservice.VoidCallback;
@@ -28,11 +27,12 @@ import com.accloud.service.ACDeviceDataMgr;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
+import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
-import com.ilife.iliferobot_cn.listener.ReNameListener;
 import com.ilife.iliferobot_cn.R;
-import com.ilife.iliferobot_cn.base.BaseActivity;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.entity.PropertyInfo;
+import com.ilife.iliferobot_cn.listener.ReNameListener;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
@@ -51,7 +51,7 @@ import java.util.List;
  * Created by chengjiaping on 2018/8/16.
  */
 
-public class SettingActivity extends BaseActivity implements View.OnClickListener {
+public class SettingActivity extends BackBaseActivity implements View.OnClickListener {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
     public static final String KEY_MODE = "KEY_MODE";
@@ -61,10 +61,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     Intent intent;
     long deviceId, userId, ownerId;
     String devName, subdomain, physicalId, name;
-    ImageView image_back, image_soft, image_standard, image_strong, image_max, image_voice,
+    ImageView image_soft, image_standard, image_strong, image_max, image_voice,
             image_plan, image_random, image_product;
     TextView tv_name, tv_type, tv_soft, tv_standard, tv_strong, tv_water, tv_plan,
-            tv_random, tv_mode;
+            tv_random, tv_mode, tv_top_title;
     LayoutInflater inflater;
     AlertDialog alterDialog;
     Dialog dialog;
@@ -77,10 +77,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     ImageView imageView;
     ReNameListener listener;
     ACDeviceDataMgr.PropertyReceiver propReceiver;
-    Handler handler = new Handler() {
+    WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_FIND_DONE:
                     rl_find.setClickable(true);
@@ -88,8 +87,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     imageView.clearAnimation();
                     break;
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,6 +163,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tv_random = (TextView) findViewById(R.id.tv_random);
         tv_mode = (TextView) findViewById(R.id.tv_mode);
         tv_plan = (TextView) findViewById(R.id.tv_plan);
+        tv_top_title = findViewById(R.id.tv_top_title);
+        tv_top_title.setText(R.string.ap_aty_setting);
         rl_plan = (RelativeLayout) findViewById(R.id.rl_plan);
         rl_random = (RelativeLayout) findViewById(R.id.rl_random);
         rl_voice = findViewById(R.id.rl_voice);
@@ -182,7 +184,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ll_water = (LinearLayout) findViewById(R.id.ll_water);
         image_plan = (ImageView) findViewById(R.id.image_plan);
         image_random = (ImageView) findViewById(R.id.image_random);
-        image_back = (ImageView) findViewById(R.id.image_back);
         image_soft = (ImageView) findViewById(R.id.image_soft);
         image_standard = (ImageView) findViewById(R.id.image_standard);
         image_strong = (ImageView) findViewById(R.id.image_strong);
@@ -202,7 +203,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         rl_facReset.setOnClickListener(this);
         rl_find.setOnClickListener(this);
         ll_water.setOnClickListener(this);
-        image_back.setOnClickListener(this);
         rl_suction.setOnClickListener(new MyListener());
         rl_soft.setOnClickListener(new MyListener());
         rl_standard.setOnClickListener(new MyListener());
@@ -236,6 +236,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else if (subdomain.equals(Constants.subdomain_a7)) {
             tv_type.setText(getString(R.string.setting_aty_type_x787));
             image_product.setImageResource(R.drawable.n_x787_1);
+        } else if (subdomain.equals(Constants.subdomain_x900)) {
+            tv_type.setText(getString(R.string.setting_aty_type_x900));
+            image_product.setImageResource(R.drawable.n_x900);
         } else {
             rl_mode.setVisibility(View.GONE);
             tv_type.setText(getString(R.string.setting_aty_type_x800));
@@ -249,7 +252,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSuccess() {
                 ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_suc));
-                SpUtils.saveString(context, "devName", name);
+                SpUtils.saveString(context,  MainActivity.KEY_DEVNAME, name);
                 tv_name.setText(name);
             }
 
@@ -328,9 +331,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     ll_water.setVisibility(View.GONE);
                 }
-                break;
-            case R.id.image_back:
-                finish();
                 break;
             case R.id.rl_clock:
                 intent = new Intent(context, ClockingActivity.class);
@@ -430,8 +430,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
         UserUtils.setInputFilter(et_name);
         name = tv_name.getText().toString();
-        et_name.setText(name);
-        et_name.setSelection(name.length());
+//        et_name.setText(name);
+//        et_name.setSelection(name.length());
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -449,10 +449,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (!name.equals(devName)) {
                     AlertDialogUtils.hidden(alterDialog);
                     DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                }else {
+                    ToastUtils.showToast(context, getString(R.string.setting_aty_tip_same));
                 }
             }
         });
-        int width = (int) getResources().getDimension(R.dimen.dp_300);
+        int width = (int) getResources().getDimension(R.dimen.dp_315);
         int height = (int) getResources().getDimension(R.dimen.dp_140);
         alterDialog = AlertDialogUtils.showDialog(context, v, width, height);
     }

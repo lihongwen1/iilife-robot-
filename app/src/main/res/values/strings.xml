@@ -146,7 +146,7 @@
     <string name="personal_aty_protocol">隐私政策与服务协议</string>
     <string name="personal_acy_exit">退出登录</string>
     <string name="personal_aty_cancel">取消</string>
-    <string name="dialog_del_confirm">确认</string>
+    <string name="dialog_del_confirm">确定</string>
     <string name="setting_aty_devName_null">请输入⽤户名</string>
     <string name="personal_aty_reset_suc">修改⽤户名成功</string>
     <string name="personal_aty_reset_fail">修改⽤户名失败</string>
@@ -257,6 +257,7 @@
     <string name="setting_aty_reset_hint">所有清扫数据会被清除</string>
     <string name="setting_aty_devName">机器人名称</string>
     <string name="setting_aty_hit">请为您的机器人设置昵称~</string>
+    <string name="setting_aty_tip_same">昵称与之前的昵称相同</string>
     <string name="setting_aty_only_admin">只有管理员才有操作权限</string>
 
     <string name="clock_aty_sun">星期日</string>
@@ -273,6 +274,7 @@
     <string name="history_adapter_hour_minute">HH:mm</string>
     <string name="history_adapter_record_detail">记录详情</string>
     <string name="history_aty_no_record">没有清扫记录，先开始清扫吧~</string>
+    <string name="history_aty_start_clean">开始清扫</string>
 
     <string name="consume_aty_tips">小贴士:长按重置耗材寿命</string>
     <string name="consume_aty_side_time">边刷寿命</string>
@@ -288,6 +290,7 @@
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">设备离线</string>
     <string name="setting_aty_type_x800">ILIFE X800</string>
+    <string name="setting_aty_type_x900">ILIFE X900</string>
     <string name="setting_aty_type_x787">ILIFE X787</string>
     <string name="setting_aty_type_x785">ILIFE X785</string>
     <string name="select_aty_x785">x785</string>
@@ -329,7 +332,7 @@
     <string name="map_aty_set_suc">虚拟墙设置成功！</string>
     <string name="map_aty_set_fail">虚拟墙设置失败！</string>
     <string name="map_aty_max_count">已经达到虚拟墙最大数量！！</string>
-    <string name="setting_aty_ota_update">固件升级</string>
+    <string name="setting_aty_ota_update">OTA升级</string>
     <string name="ota_aty_update_suc">升级成功！</string>
     <string name="ota_aty_updating">正在升级&#8230;</string>
     <string name="ota_aty_cur">当前版本:%1$s</string>
@@ -352,4 +355,7 @@
     <string name="cannot_change_suction">在该模式下不能改变吸力</string>
     <string name="map_aty_temp_keypoint">临时重点</string>
     <string name="robot_connected">连接成功</string>
+
+    <string name="back_to_recharge">返回充电座</string>
+    <string name="finish_the_cleaning">结束当前清扫</string>
 </resources>

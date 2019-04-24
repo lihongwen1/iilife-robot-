@@ -100,7 +100,6 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
         switch (v.getId()){
             case R.id.tv_gain:
                 mPresenter.sendVerificationCode();
-
                 break;
             case R.id.bt_confirm:
                  mPresenter.checkVerificationCode(isRegister);

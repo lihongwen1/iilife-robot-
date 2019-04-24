@@ -52,7 +52,7 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
         setWidth(initWidth());
         setTouchable(true);
         setFocusable(true);
-        setOutsideTouchable(false);
+        setOutsideTouchable(true);
         setBackgroundDrawable(new ColorDrawable());
     }
 
@@ -71,7 +71,7 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
         image_left = (ImageView) view.findViewById(R.id.image_left);
         image_right = (ImageView) view.findViewById(R.id.image_right);
         image_forward = (ImageView) view.findViewById(R.id.image_forward);
-        image_back = (ImageView) view.findViewById(R.id.image_back);
+        image_back = (ImageView) view.findViewById(R.id.image_control_back);
         setListener();
         return view;
     }

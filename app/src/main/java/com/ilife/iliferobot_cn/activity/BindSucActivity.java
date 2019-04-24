@@ -102,12 +102,9 @@ public class BindSucActivity extends BackBaseActivity {
         };
     }
 
-    @OnClick({R.id.image_back, R.id.bt_done})
+    @OnClick({R.id.bt_done})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
             case R.id.bt_done:
                 name = et_devName.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {

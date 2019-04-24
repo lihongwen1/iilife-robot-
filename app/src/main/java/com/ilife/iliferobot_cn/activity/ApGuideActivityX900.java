@@ -45,10 +45,6 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     TextView text_tip1;
     @BindView(R.id.text_tip2)
     TextView text_tip2;
-    @BindView(R.id.image_step1)
-    ImageView image_step1;
-    @BindView(R.id.image_step2)
-    ImageView image_step2;
     @BindView(R.id.rb_next_tip)
     RadioButton rb_next_tip;
     @BindView(R.id.ll_ap_step1)
@@ -65,7 +61,6 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerWifiScaner();
     }
 
     // TODO 根据机型选择不同的布局文件
@@ -96,8 +91,8 @@ public class ApGuideActivityX900 extends BackBaseActivity {
             iconId = R.drawable.n_icon_guide_wifi_x7;
             setStr(start, strId, iconId);
         }
-        image_step1.setImageResource(res_id_start);
-        image_step2.setImageResource(res_id_light);
+//        image_step1.setImageResource(res_id_start);
+//        image_step2.setImageResource(res_id_light);
         tv_title.setText(R.string.guide_ap_prepare);
         curStep = 1;
         bt_next.setSelected(false);
@@ -141,10 +136,5 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                 }
                 break;
         }
-    }
-    private void registerWifiScaner(){
-        IntentFilter filter =new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        registerReceiver(new WifiScanReceiver(), filter);
-        Log.d("WifiScanReceiver","注册wifi扫描结果广播");
     }
 }

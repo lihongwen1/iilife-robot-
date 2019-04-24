@@ -51,6 +51,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         }))).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
             //发送验证码成功
         }, throwable -> {
+            ToastUtils.showToast(throwable.getMessage());
             //发送验证码失败
         });
 
@@ -85,7 +86,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
                 if (!isExit) {
                     completableEmitter.onComplete();
                 } else {
-                    completableEmitter.onError(new Exception());
+                    completableEmitter.onError(new Exception("账号已经存在"));
                     //账号已经存在
                 }
             }

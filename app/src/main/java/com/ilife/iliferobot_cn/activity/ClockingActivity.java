@@ -22,8 +22,10 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
+import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.adapter.ClockAdapter;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.entity.NewClockInfo;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
@@ -37,12 +39,14 @@ import com.ilife.iliferobot_cn.utils.ToastUtils;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 
 /**
  * Created by chenjiaping on 2017/7/25.
  */
 
-public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLayout.OnRefreshListener{
     final String TAG = ClockingActivity.class.getSimpleName();
     final String UNDER_LINE = "_";
     final int TAG_REFRESH_OVER = 0x01;
@@ -50,7 +54,6 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
     Dialog dialog;
     TextView tv_confirm;
     TextView tv_cancel;
-    ImageView image_back;
     RecyclerView recyclerView;
     ClockAdapter adapter;
     AlertDialog alertDialog;
@@ -64,13 +67,14 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
     String[] weeks;
     byte[] bytes;
     String last, strTimeFormat;
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
 //    ContentResolver cv;
 
 
-    Handler handler = new Handler() {
+    WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_REFRESH_OVER:
                     if (refreshLayout != null && refreshLayout.isRefreshing()) {
@@ -78,8 +82,9 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
                     }
                     break;
             }
+            return false;
         }
-    };
+    }) ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +110,7 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
 
     public void initView() {
         context = this;
+        tv_title.setText(R.string.clock_aty_appoint);
         clockInfos = new ArrayList<>();
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
@@ -113,11 +119,9 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
         refreshLayout.setColorSchemeColors(getResources().
                 getColor(android.R.color.holo_blue_bright));
         refreshLayout.setOnRefreshListener(this);
-        image_back = (ImageView) findViewById(R.id.image_back);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
-        image_back.setOnClickListener(this);
         adapter.setListener(new ClockAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -167,10 +171,10 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
             View contentView = inflater.inflate(R.layout.layout_timepick_dialog, null);
             timePicker = (TimePicker) contentView.findViewById(R.id.timePicker);
 //            timePicker.setIs24HourView(true);
-            TimePickerUIUtil.set_timepicker_text_colour(timePicker, context);
+//            TimePickerUIUtil.set_timepicker_text_colour(timePicker, context);
             tv_confirm = (TextView) contentView.findViewById(R.id.tv_confirm);
             tv_cancel = (TextView) contentView.findViewById(R.id.tv_cancel);
-            int width = (int) getResources().getDimension(R.dimen.dp_300);
+            int width = (int) getResources().getDimension(R.dimen.dp_315);
             int height = (int) getResources().getDimension(R.dimen.dp_300);
             alertDialog = AlertDialogUtils.showDialog(context, contentView, width, height);
         } else {
@@ -188,7 +192,7 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
 //        } else {
 //            timePicker.setIs24HourView(false);
 //        }
-        if (DateFormat.is24HourFormat(context)) {
+        if (subdomain.equals(Constants.subdomain_x900)||DateFormat.is24HourFormat(context)) {
             timePicker.setIs24HourView(true);
         } else {
             timePicker.setIs24HourView(false);
@@ -202,14 +206,6 @@ public class ClockingActivity extends BaseActivity implements SwipeRefreshLayout
         getClockInfo();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
-        }
-    }
 
     class MyListener implements View.OnClickListener {
         int position;

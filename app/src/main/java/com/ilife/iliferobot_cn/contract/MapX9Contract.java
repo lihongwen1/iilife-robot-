@@ -12,7 +12,9 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
-
+        void distributeDirectOrder(int directId);
+        void showRemoteControl();
+        void onBottomCancelClick();
         void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
@@ -58,6 +60,8 @@ public interface MapX9Contract {
         void showErrorPopup(int errorCode);
         void sendHandler(int msgCode);
         void drawVirtualWall(List<int []> existPointList);
+        void updateAlong(boolean isAlong);
+        void updatePoint(boolean isPoint);
     }
 
     interface Presenter {

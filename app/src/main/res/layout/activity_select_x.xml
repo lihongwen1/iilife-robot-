@@ -9,7 +9,7 @@
     <TextView
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_30"
-        style="@style/Text_14sp_33_center"
+        style="@style/Text_16sp_33_center"
         android:text="@string/x_series_robot" />
 
     <androidx.recyclerview.widget.RecyclerView

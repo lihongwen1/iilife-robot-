@@ -70,7 +70,7 @@ public class FirstApActivity extends BackBaseActivity {
         tv_title.setText(R.string.ap_wifi_guide);
     }
 
-    @OnClick({R.id.image_back, R.id.image_show_pass, R.id.tv_set, R.id.bt_next})
+    @OnClick({R.id.image_show_pass, R.id.tv_set, R.id.bt_next})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.image_show_pass:

@@ -590,7 +590,9 @@ public class MapView extends View {
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
-        Log.d(TAG, "drawSlamMap-----");
+        if (slamBytes != null) {
+            Log.d(TAG, "drawSlamMap-----" + slamBytes.length);
+        }
         slamPath.reset();
         obstaclePath.reset();
         if (slamBytes != null && slamBytes.length > 0) {

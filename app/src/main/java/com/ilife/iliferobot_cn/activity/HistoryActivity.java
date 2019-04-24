@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.adapter.HistoryAdapter_New;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.entity.HistoryRecord;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
  * Created by chenjiaping on 2017/8/18.
  */
 
-public class HistoryActivity extends BaseActivity implements View.OnClickListener {
+public class HistoryActivity extends BackBaseActivity{
     final String TAG = HistoryActivity.class.getSimpleName();
     int index;
     long deviceId;
@@ -46,8 +48,7 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
     private HistoryRecord[] records;
     RecyclerView recyclerView;
     HistoryAdapter_New adapter;
-    ImageView image_back;
-    TextView tv_noRecord;
+    FrameLayout fl_noRecord;
     Dialog dialog;
 
     @Override
@@ -66,9 +67,7 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
     public void initView() {
         context = this;
         dialog = DialogUtils.createLoadingDialog(context);
-        image_back = (ImageView) findViewById(R.id.image_back);
-        image_back.setOnClickListener(this);
-        tv_noRecord = (TextView) findViewById(R.id.tv_noRecord);
+        fl_noRecord = (FrameLayout) findViewById(R.id.fl_noRecord);
         recordList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -90,14 +89,6 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
         serviceName = DeviceUtils.getServiceName(subdomain);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
-        }
-    }
 
     private void getHistoryRecord() {
         index++;
@@ -128,6 +119,7 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
                     recordList.add(record);
                     showList(recordList);
                 }
+                MyLog.e(TAG,"getHistoryRecord---success"+index);
                 if (index < 7) {
                     getHistoryRecord();
                 } else {
@@ -145,6 +137,7 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
                     }
                     showList(recordList);
                 }
+                MyLog.e(TAG,"getHistoryRecord---exception"+index);
             }
         });
 
@@ -154,11 +147,11 @@ public class HistoryActivity extends BaseActivity implements View.OnClickListene
         DialogUtils.closeDialog(dialog);
         if (recordList.size() == 0) {
             recyclerView.setVisibility(View.GONE);
-            tv_noRecord.setVisibility(View.VISIBLE);
+            fl_noRecord.setVisibility(View.VISIBLE);
         } else {
             if (recyclerView.getVisibility() == View.GONE) {
                 recyclerView.setVisibility(View.VISIBLE);
-                tv_noRecord.setVisibility(View.GONE);
+                fl_noRecord.setVisibility(View.GONE);
             }
             bubbleSort(recordList);
             adapter.notifyDataSetChanged();

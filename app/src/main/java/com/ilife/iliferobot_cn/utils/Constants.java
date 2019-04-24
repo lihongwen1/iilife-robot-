@@ -51,9 +51,9 @@ public class Constants {
     public static final String SERVICE_NAME_X785 = "ILife-X785-CN";
     //国内测试X800
     public static final String SERVICE_NAME_X800 = "ILife-X800-CN";
-    //国内测试900
-//    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
-    public static final String SERVICE_NAME_X900 = "ILife-X900-CN-Test";
+//    //国内测试900
+////    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
+//    public static final String SERVICE_NAME_X900 = "ILife-X900-CN-Test";
     //国内测试787
     public static final String SERVICE_NAME_X787 = "ILife-X787-CN";
 
@@ -68,8 +68,8 @@ public class Constants {
 //    public static final String SERVICE_NAME_X785 ="ILife-X785-CN";
 //    //国内生产x800
 //    public static final String SERVICE_NAME_X800 ="ILife-X800-CN";
-//    //国内生产x900
-//    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
+    //国内生产x900
+    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
 //    //国内生产787
 //    public static final String SERVICE_NAME_X787 = "ILife-X787-CN";
 

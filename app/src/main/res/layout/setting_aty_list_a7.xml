@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/clock_aty_appoint"/>
         <ImageView
             style="@style/Image_Style_Forward"/>
@@ -20,7 +20,7 @@
         android:layout_height="@dimen/dp_60"
         android:visibility="gone">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_clean_record"/>
         <ImageView
             style="@style/Image_Style_Forward"/>
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_consume_detail"/>
         <ImageView
             style="@style/Image_Style_Forward"/>
@@ -46,7 +46,7 @@
         android:background="@drawable/setting_aty_water_bg"
         android:visibility="gone">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:id="@+id/tv_control"
             android:text="@string/setting_aty_water_control"/>
         <com.ilife.iliferobot_cn.view.LightTextView
@@ -163,7 +163,7 @@
             android:layout_marginEnd="@dimen/dp_20"
             android:gravity="end"/>
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_clean_mode1"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
@@ -236,7 +236,7 @@
         android:layout_height="@dimen/dp_60"
         android:visibility="gone">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_voice_mode"/>
         <ImageView
             android:id="@+id/image_voice"
@@ -254,7 +254,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_max_suction"/>
         <ImageView
             android:id="@+id/image_max"
@@ -276,7 +276,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_find_robot"/>
         <ImageView
             android:id="@+id/imageView"
@@ -295,7 +295,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
         <com.ilife.iliferobot_cn.view.LightTextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_factory_reset"/>
         <ImageView
             style="@style/Image_Style_Forward"/>

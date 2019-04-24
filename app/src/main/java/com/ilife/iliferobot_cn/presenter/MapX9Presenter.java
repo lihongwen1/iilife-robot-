@@ -118,11 +118,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRealTime");
         req.put("device_id", deviceId);
-        String serviceName = "ILife-X900-CN-Test";
-        AC.sendToService("", serviceName, Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+        AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                Log.d(TAG,"getRealTimeMap----");
+                Log.d(TAG, "getRealTimeMap----");
                 String strMap = resp.getString("slam_map");
                 int xMax = resp.getInt("slam_x_max");
                 int xMin = resp.getInt("slam_x_min");
@@ -150,11 +149,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRoadData");
         req.put("device_id", deviceId);
-        String serviceNames = "ILife-X900-CN-Test";
-        AC.sendToService("", serviceNames, Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+        AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg acMsg) {
-                Log.d(TAG,"getHistoryRoad()-----------");
+                Log.d(TAG, "getHistoryRoad()-----------");
                 ArrayList<ACObject> objects = acMsg.get("data");
                 if (objects != null && objects.size() > 0) {
                     for (int i = 0; i < objects.size(); i++) {
@@ -228,7 +226,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void error(ACException e) {
-                LogUtil.d(TAG,e.getErrorCode()+e.toString());
+                LogUtil.d(TAG, e.getErrorCode() + e.toString());
             }
         });
     }
@@ -244,7 +242,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         AC.classDataMgr().registerDataReceiver(new ACClassDataMgr.ClassDataReceiver() {
                             @Override
                             public void onReceive(String s, int i, String s1) {
-                                Log.d(TAG,"subscribeRealTimeMap-------");
+                                Log.d(TAG, "subscribeRealTimeMap-------");
                                 synchronized (this) {
                                     Gson gson = new Gson();
                                     RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
@@ -430,6 +428,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.setMapViewVisible(true);
         } else if (curStatus == 0x05) { //重点
             mView.setPointViewVisible(true);
+            mView.updatePoint(true);
             if (!hasStart) {
                 mView.updateQuanAnimation(true);
                 hasStart = true;
@@ -439,6 +438,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.setTvUseStatus(TAG_CONTROL);
         } else if (curStatus == 0x04) {//沿墙模式
             mView.setAlongViewVisible(true);
+            mView.updateAlong(true);
             if (!hasStart_) {
                 mView.updateAlongAnimation(true);
                 hasStart_ = true;
@@ -550,9 +550,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void success(ACDeviceMsg deviceMsg) {
-                byte[] bytes = deviceMsg.getContent();
-                curStatus = bytes[0];
-                setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
+                if (deviceMsg.getCode() != MsgCodeUtils.Proceed) {
+                    byte[] bytes = deviceMsg.getContent();
+                    curStatus = bytes[0];
+                    setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
+                }
             }
         });
     }
@@ -596,7 +598,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
 
     /**
-     *
      * @param list SEND_VIR添加虚拟墙时为新增虚拟墙集合，EXIT_VIR 时，为null
      * @param tag
      */
@@ -695,7 +696,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void enterPointMode() {
         if (curStatus == 0x09 || curStatus == 0x0B) {
-            ToastUtils.showToast(MyApplication.getInstance(), Utils. getString(R.string.map_aty_charge));
+            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
         } else if (curStatus == 0x08 || curStatus == 0x04) {
             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
         } else {

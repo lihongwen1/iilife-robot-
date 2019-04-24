@@ -24,7 +24,7 @@ public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyView
         inflater = LayoutInflater.from(context);
         drawables = new int[]{R.drawable.n_x900, R.drawable.n_x800, R.drawable.n_x787, R.drawable.n_x785};
 //        drawables = new int[]{R.drawable.n_x787,R.drawable.n_x800};
-        names = new String[]{"ILIFE n_x900","ILIFE X800","ILIFE X787","ILIFE X785"};
+        names = new String[]{"ILIFE X900","ILIFE X800","ILIFE X787","ILIFE X785"};
 //        names = new String[]{"A7","A9s"};
     }
 

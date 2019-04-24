@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_79">
 
         <TextView
-            style="@style/Text_14sp_33_center"
+            style="@style/Text_16sp_33_center"
             android:id="@+id/tv_title"
             android:text="@string/third_aty_open_location"
             android:layout_centerInParent="true"

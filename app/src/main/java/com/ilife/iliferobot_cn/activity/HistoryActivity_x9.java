@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.adapter.HistoryAdapter_New_x9;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.entity.HistoryRecord_x9;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
  * Created by chenjiaping on 2017/8/18.
  */
 
-public class HistoryActivity_x9 extends BaseActivity implements View.OnClickListener {
+public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClickListener {
     final String TAG = HistoryActivity_x9.class.getSimpleName();
     int index;
     long deviceId;
@@ -46,8 +48,8 @@ public class HistoryActivity_x9 extends BaseActivity implements View.OnClickList
     private HistoryRecord_x9[] records;
     RecyclerView recyclerView;
     HistoryAdapter_New_x9 adapter;
-    ImageView image_back;
-    TextView tv_noRecord;
+    FrameLayout fl_noRecord;
+    TextView tv_title;
     Dialog dialog;
 
     @Override
@@ -66,9 +68,9 @@ public class HistoryActivity_x9 extends BaseActivity implements View.OnClickList
     public void initView() {
         context = this;
         dialog = DialogUtils.createLoadingDialog(context);
-        image_back = (ImageView) findViewById(R.id.image_back);
-        image_back.setOnClickListener(this);
-        tv_noRecord = (TextView) findViewById(R.id.tv_noRecord);
+        fl_noRecord = (FrameLayout) findViewById(R.id.fl_noRecord);
+        tv_title=findViewById(R.id.tv_top_title);
+        tv_title.setText(R.string.setting_aty_clean_record);
         recordList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -163,11 +165,11 @@ public class HistoryActivity_x9 extends BaseActivity implements View.OnClickList
         DialogUtils.closeDialog(dialog);
         if (recordList.size() == 0) {
             recyclerView.setVisibility(View.GONE);
-            tv_noRecord.setVisibility(View.VISIBLE);
+            fl_noRecord.setVisibility(View.VISIBLE);
         } else {
             if (recyclerView.getVisibility() == View.GONE) {
                 recyclerView.setVisibility(View.VISIBLE);
-                tv_noRecord.setVisibility(View.GONE);
+                fl_noRecord.setVisibility(View.GONE);
             }
             bubbleSort(recordList);
             adapter.notifyDataSetChanged();

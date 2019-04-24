@@ -69,7 +69,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
             ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
             return;
         }
-        if (UserUtils.isEmail(str_email)) {
+        if (UserUtils.isEmail(str_email) || UserUtils.isPhone(str_email)) {
             AC.accountMgr().checkExist(str_email, new PayloadCallback<Boolean>() {
                 @Override
                 public void success(Boolean isExist) {
@@ -107,11 +107,11 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void confirm(boolean isRegister) {
-        if (!UserUtils.checkPassword(mView.getPwd1())){
+        if (!UserUtils.checkPassword(mView.getPwd1())) {
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
             return;
         }
-        if (!mView.getPwd1().equals(mView.getPwd2())){
+        if (!mView.getPwd1().equals(mView.getPwd2())) {
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
             return;
         }
@@ -120,11 +120,11 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void checkVerificationCode(boolean isRegister) {
-        AC.accountMgr().checkVerifyCode(mView.getAccount(),mView.getVerificationCode(), new PayloadCallback<Boolean>() {
+        AC.accountMgr().checkVerifyCode(mView.getAccount(), mView.getVerificationCode(), new PayloadCallback<Boolean>() {
             @Override
             public void success(Boolean result) {
                 if (result) {
-                    if (isRegister){
+                    if (isRegister) {
                         register();
                     } else {
                         resetPassword();
@@ -133,6 +133,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                     ToastUtils.showToast(Utils.getString(R.string.register2_aty_code_wrong));
                 }
             }
+
             @Override
             public void error(ACException e) {
 
@@ -142,13 +143,14 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void register() {
-        AC.accountMgr().register(mView.getAccount(),"", mView.getPwd1(), "",mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
+        AC.accountMgr().register(mView.getAccount(), "", mView.getPwd1(), "", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo userInfo) {
                 ToastUtils.showToast(Utils.getString(R.string.register2_aty_register_suc));
                 String email = userInfo.getEmail();
-                SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL,email);
+                SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL, email);
             }
+
             @Override
             public void error(ACException e) {
                 ToastUtils.showErrorToast(e.getErrorCode());
@@ -158,12 +160,12 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void resetPassword() {
-        AC.accountMgr().resetPassword(mView.getAccount(),mView.getPwd1(),mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
+        AC.accountMgr().resetPassword(mView.getAccount(), mView.getPwd1(), mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo acUserInfo) {
                 ToastUtils.showToast(Utils.getString(R.string.register2_aty_reset_suc));
                 String email = acUserInfo.getEmail();
-                SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL,email);
+                SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL, email);
 
             }
 
@@ -172,5 +174,13 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 ToastUtils.showErrorToast(e.getErrorCode());
             }
         });
+    }
+
+    @Override
+    public void detachView() {
+        if (countDownDisposable != null && !countDownDisposable.isDisposed()) {
+            countDownDisposable.dispose();
+        }
+        super.detachView();
     }
 }

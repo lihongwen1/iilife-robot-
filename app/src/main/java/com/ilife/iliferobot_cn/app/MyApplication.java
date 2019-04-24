@@ -31,10 +31,10 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         //国内测试环境
-        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
+//        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
         closeAndroidPDialog();
         //国内生产
-//        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
+        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
         //欧洲生产
 //        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
 //        AC.setRegional(AC.REGIONAL_CENTRAL_EUROPE);

@@ -14,7 +14,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_23" />
         <TextView
-            style="@style/Text_14sp_ac"
+            style="@style/Text_16sp_ac"
             android:text="@string/setting_aty_reset_hint"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv_title"
