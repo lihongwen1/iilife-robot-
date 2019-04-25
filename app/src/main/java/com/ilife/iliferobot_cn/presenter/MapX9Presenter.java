@@ -101,10 +101,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     public void initTimer() {
+        getRealTimeMap();//need get real time map in the first time enter
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                LogUtil.d(TAG, "getRealTimeMap---" + curStatus);
                 if (curStatus == 0x06 || curStatus == 0x08 || curStatus == 0x07) {
                     getRealTimeMap();
                 }
@@ -130,7 +132,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (!TextUtils.isEmpty(strMap)) {
                     slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                     if (isOnCreate) {
-                        mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
+//                        mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
+                        mView.drawSlamMap(slamBytes);
                         mView.drawObstacle();
                         isOnCreate = false;
                     }
@@ -422,27 +425,29 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_VOICE_OPEN, voiceOpen);
         }
         mView.clearAll(curStatus);//清空所有布局，以便根据status更新显示布局
-        if (curStatus == 0x07) {//虚拟墙编辑模式
+        if (curStatus == 0x8) { //回充
+            mView.updateRecharge(true);
+        } else if (curStatus == 0x07) {//虚拟墙编辑模式
             isVirtualEdit = true;
             mView.showVirtualEdit();
             mView.setMapViewVisible(true);
         } else if (curStatus == 0x05) { //重点
-            mView.setPointViewVisible(true);
+//            mView.setPointViewVisible(true);
             mView.updatePoint(true);
-            if (!hasStart) {
-                mView.updateQuanAnimation(true);
-                hasStart = true;
-            }
+//            if (!hasStart) {
+//                mView.updateQuanAnimation(true);
+//                hasStart = true;
+//            }
             mView.setTvUseStatus(TAG_KEYPOINT);
         } else if (curStatus == 0x0A) { //遥控
             mView.setTvUseStatus(TAG_CONTROL);
         } else if (curStatus == 0x04) {//沿墙模式
-            mView.setAlongViewVisible(true);
+//            mView.setAlongViewVisible(true);
             mView.updateAlong(true);
-            if (!hasStart_) {
-                mView.updateAlongAnimation(true);
-                hasStart_ = true;
-            }
+//            if (!hasStart_) {
+//                mView.updateAlongAnimation(true);
+//                hasStart_ = true;
+//            }
             mView.setTvUseStatus(TAG_ALONG);
         } else if (canEdit(curStatus)) {
             mView.showBottomView();
@@ -562,7 +567,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void sendToDeviceWithOption_start(ACDeviceMsg msg) {
-        sendByte = mAcDevMsg.getContent()[0];
+        sendByte = msg.getContent()[0];
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {
@@ -682,7 +687,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void enterAlongMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
-        if (curStatus == 0x02 || curStatus == 0x04 || curStatus == 0x0A) {
+        if (curStatus == 0x02 || curStatus == 0x04 || curStatus == 0x0A||curStatus==0x0C) {
             byte b = (byte) (curStatus == 0x04 ? 0x02 : 0x04);
             mAcDevMsg.setContent(new byte[]{b});
             sendToDeviceWithOption(mAcDevMsg);
@@ -695,18 +700,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == 0x09 || curStatus == 0x0B) {
-            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
-        } else if (curStatus == 0x08 || curStatus == 0x04) {
-            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
-        } else {
-            mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
-            if (curStatus == 0x05) {
-                mAcDevMsg.setContent(new byte[]{0x02});
-            } else {
-                mAcDevMsg.setContent(new byte[]{0x05});
-            }
+        mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
+        if (curStatus == 0x02 || curStatus == 0x05 || curStatus == 0x0A||curStatus==0x0C) {
+            byte b = (byte) (curStatus == 0x05 ? 0x02 : 0x05);
+            mAcDevMsg.setContent(new byte[]{b});
             sendToDeviceWithOption(mAcDevMsg);
+        } else if (curStatus == 0x09 || curStatus == 0x0B) {
+            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
+        } else {
+            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
         }
     }
 
@@ -730,5 +732,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public int getCurStatus() {
         return curStatus;
+    }
+
+    @Override
+    public void detachView() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        super.detachView();
     }
 }

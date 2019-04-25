@@ -27,14 +27,23 @@ public class MyApplication extends MultiDexApplication {
     public Typeface tf_regular;
     public Typeface tf_medium;
     public Typeface tf_itca;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        //国内测试环境
-//        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
+        Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_PRODUCT;
+        switch (Constants.CUR_APP_ENVIRONMENT) {
+            case Constants.APP_ENVIRONMENT_TEST:
+                 //        国内测试环境
+                AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
+                break;
+            case Constants.APP_ENVIRONMENT_PRODUCT:
+               //国内生产
+                AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
+                break;
+
+        }
         closeAndroidPDialog();
-        //国内生产
-        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
         //欧洲生产
 //        AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
 //        AC.setRegional(AC.REGIONAL_CENTRAL_EUROPE);
@@ -65,9 +74,8 @@ public class MyApplication extends MultiDexApplication {
         tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
         tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
         tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
-        tf_itca = Typeface.createFromAsset(getAssets(),"fonts/ITCAvantGardeStd-Demi.ttf");
+        tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
     }
-
 
 
     @Override
@@ -87,7 +95,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
 
-    private void closeAndroidPDialog(){
+    private void closeAndroidPDialog() {
 //        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.P){
 //            return;
 //        }

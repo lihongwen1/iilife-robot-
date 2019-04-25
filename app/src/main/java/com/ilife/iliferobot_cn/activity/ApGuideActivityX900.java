@@ -137,4 +137,16 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void clickBackBtn() {
+        if (curStep == 2) {
+            curStep = 1;
+            ll_ap_step1.setVisibility(View.VISIBLE);
+            ll_ap_step2.setVisibility(View.GONE);
+            rb_next_tip.setText(R.string.ap_guide_already_open_device);
+        } else {
+            super.clickBackBtn();
+        }
+    }
 }

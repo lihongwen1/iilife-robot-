@@ -9,6 +9,10 @@ import com.accloud.cloudservice.ACDeviceActivator;
  */
 
 public class Constants {
+    public static int CUR_APP_ENVIRONMENT=1;//default test environment
+    public static final int APP_ENVIRONMENT_TEST=1;
+    public static final int APP_ENVIRONMENT_PRODUCT=2;
+
     //主域名
     public static final String MajorDomain = "china-ilife";
     //主域id
@@ -52,7 +56,7 @@ public class Constants {
     //国内测试X800
     public static final String SERVICE_NAME_X800 = "ILife-X800-CN";
 //    //国内测试900
-////    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
+//////    public static final String SERVICE_NAME_X900 ="ILife-X900-CN";
 //    public static final String SERVICE_NAME_X900 = "ILife-X900-CN-Test";
     //国内测试787
     public static final String SERVICE_NAME_X787 = "ILife-X787-CN";

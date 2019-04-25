@@ -62,6 +62,7 @@ public interface MapX9Contract {
         void drawVirtualWall(List<int []> existPointList);
         void updateAlong(boolean isAlong);
         void updatePoint(boolean isPoint);
+        void updateRecharge(boolean isRecharge);
     }
 
     interface Presenter {

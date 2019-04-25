@@ -194,6 +194,7 @@
     <string name="map_aty_gang">--</string>
     <string name="setting_aty_area">清扫面积</string>
     <string name="map_aty_time">清扫时间</string>
+    <string name="map_aty_remaining_charge">剩余电量</string>
     <string name="map_aty_exception">异常</string>
     <string name="map_aty_sleep">休眠</string>
     <string name="map_aty_standby_mode">待机</string>

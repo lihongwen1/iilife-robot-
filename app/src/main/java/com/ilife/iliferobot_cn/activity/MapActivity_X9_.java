@@ -22,6 +22,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.accloud.service.ACDeviceMsg;
 import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
@@ -44,18 +46,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
-import androidx.appcompat.app.AlertDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 import butterknife.OnTouch;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by chengjiaping on 2018/8/15.
@@ -78,7 +72,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     Gson gson;
     Context context;
     long deviceId;
-    byte sendByte;
     boolean hasAppoint, hasStart, hasStart_;
     String physicalId, subdomain, robotType;
     @BindView(R.id.rl_status)
@@ -104,7 +97,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     @BindView(R.id.tv_appointment_x9)
     TextView tv_appointment;
     @BindView(R.id.image_ele)
-    ImageView image_ele;
+    ImageView image_ele;//battery
     @BindView(R.id.tv_control_x9)
     TextView tv_control_x9;
     @BindView(R.id.tv_close_x9)
@@ -138,10 +131,12 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     FrameLayout fl_control_x9;
     @BindView(R.id.fl_virtual_wall)
     FrameLayout fl_virtual_wall;
+    @BindView(R.id.image_center)
+    ImageView image_center;
     ACDeviceMsg mAcDevMsg;
     PopupWindow errorPopup;
     ControlPopupWindow controlPopup;
-    AnimationDrawable animationDrawable;
+    AnimationDrawable electricityDrawable;
     ArrayList<Integer> pointList;
     ArrayList<String> pointStrList;
     AlertDialog alertDialog;
@@ -168,6 +163,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     private CancleDialogFragment dialogFragment;
     private Timer timer;
     private TimerTask timerTask;
+    private int curentBottom = 1;//1-virtual wall and so on 2-along appoint and so on
     WeakHandler handler = new WeakHandler(msg -> {
         switch (msg.what) {
             case SEND_VIRTUALDATA_SUCCESS:
@@ -244,8 +240,9 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
 
     public void initView() {
         errorPopup = new PopupWindow();
-        image_ele.setImageResource(R.drawable.map_aty_battery4);
-        animationDrawable = (AnimationDrawable) image_animation.getBackground();
+        image_ele.setImageResource(R.drawable.map_aty_battery4_ing);
+        electricityDrawable = (AnimationDrawable) image_animation.getBackground();
+
         image_setting.setVisibility(View.VISIBLE);
         tv_title.setText(getString(R.string.map_aty_title, robotType));
     }
@@ -280,6 +277,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
 
     @Override
     public void setAlongViewVisible(boolean isVisible) {
+
         layout_along.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -294,12 +292,13 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         } else {
             tv_start.setText(R.string.map_aty_start);
             tv_wall.setText(R.string.map_virtual_wall);
+            tv_start.setText(value);
             tv_control_x9.setVisibility(View.VISIBLE);
             tv_close_x9.setVisibility(View.GONE);
-            fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+            fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
         }
         tv_start.setSelected(isSelect);
-        tv_start.setText(value);
+        image_center.setSelected(isSelect);//remote control start button
     }
 
     @Override
@@ -516,10 +515,17 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
      */
     public void showBottomView() {
         showMap();
-        fl_bottom_x9.setVisibility(View.VISIBLE);
-        layout_remote_control.setVisibility(View.GONE);
-        fl_control_x9.setVisibility(View.GONE);
-        fl_virtual_wall.setVisibility(View.GONE);
+        if (curentBottom == 1) {
+            layout_remote_control.setVisibility(View.GONE);
+            fl_bottom_x9.setVisibility(View.VISIBLE);
+            fl_control_x9.setVisibility(View.GONE);
+            fl_virtual_wall.setVisibility(View.GONE);
+        } else if (curentBottom == 2) {
+            layout_remote_control.setVisibility(View.VISIBLE);
+            fl_bottom_x9.setVisibility(View.GONE);
+            fl_control_x9.setVisibility(View.VISIBLE);
+            fl_virtual_wall.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -552,6 +558,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
      */
     @Override
     public void setTvUseStatus(int tag) {
+        tv_use_control.setTextColor(getResources().getColor(R.color.white));
         switch (tag) {
             case TAG_NORMAL:
                 tv_use_control.setVisibility(View.GONE);
@@ -561,6 +568,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 tv_use_control.setText(getString(R.string.map_aty_use_control));
                 break;
             case TAG_RECHAGRGE:
+                tv_use_control.setTextColor(getResources().getColor(R.color.color_f08300));
                 tv_use_control.setVisibility(View.VISIBLE);
                 tv_use_control.setText(getString(R.string.map_aty_use_recharging, robotType));
                 break;
@@ -591,12 +599,24 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             image_edge.clearAnimation();
             hasStart_ = false;
         }
+        if (curStatus != 0x08 && electricityDrawable.isRunning()) {
+            electricityDrawable.stop();
+        }
         hideVirtualEdit();
+        layout_remote_control.setVisibility(View.GONE);
         layout_recharge.setVisibility(View.GONE);
         layout_key_point.setVisibility(View.GONE);
         layout_along.setVisibility(View.GONE);
         mMapView.setVisibility(View.INVISIBLE);
         tv_use_control.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void updateRecharge(boolean isRecharge) {
+        layout_recharge.setVisibility(View.VISIBLE);
+        electricityDrawable.start();
+        fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
+        setTvUseStatus(TAG_RECHAGRGE);
     }
 
     @Override
@@ -641,20 +661,20 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             case R.id.tv_finish_cleaning://发送待机模式
                 mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
                 mAcDevMsg.setContent(new byte[]{0x02});//待机模式
-                sendByte = mAcDevMsg.getContent()[0];
                 mPresenter.sendToDeviceWithOption_start(mAcDevMsg);
                 dialogFragment.dismiss();
                 break;
         }
     }
 
-    @OnClick({R.id.image_center,R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_appointment_x9, R.id.tv_along_x9,
+    @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_appointment_x9, R.id.tv_along_x9,
             R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_cancel_virtual_x9, R.id.tv_ensure_virtual_x9
             , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_close_x9
     })
     public void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.image_center:
+                image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
@@ -662,7 +682,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 } else {
                     mAcDevMsg.setContent(new byte[]{0x06});
                 }
-                sendByte = mAcDevMsg.getContent()[0];
                 mPresenter.sendToDeviceWithOption_start(mAcDevMsg);
                 break;
             case R.id.tv_close_x9:
@@ -676,9 +695,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 } else {
                     showRemoteControl();
                     showOperationView();
+                    curentBottom = 2;
                 }
                 break;
             case R.id.iv_control_close_x9:
+                curentBottom = 1;
                 showBottomView();
                 break;
             case R.id.image_top_menu:
@@ -751,12 +772,14 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     @Override
     public void updateAlong(boolean isAlong) {
         layout_remote_control.setVisibility(View.GONE);
+        setMapViewVisible(true);
         tv_along.setSelected(isAlong);
         tv_point.setSelected(false);
     }
 
     @Override
     public void updatePoint(boolean isPoint) {
+        setMapViewVisible(true);
         layout_remote_control.setVisibility(View.GONE);
         tv_point.setSelected(isPoint);
         tv_along.setSelected(false);

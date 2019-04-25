@@ -69,7 +69,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         context = this;
         dialog = DialogUtils.createLoadingDialog(context);
         fl_noRecord = (FrameLayout) findViewById(R.id.fl_noRecord);
-        tv_title=findViewById(R.id.tv_top_title);
+        tv_title = findViewById(R.id.tv_top_title);
         tv_title.setText(R.string.setting_aty_clean_record);
         recordList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -169,8 +169,8 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         } else {
             if (recyclerView.getVisibility() == View.GONE) {
                 recyclerView.setVisibility(View.VISIBLE);
-                fl_noRecord.setVisibility(View.GONE);
             }
+            fl_noRecord.setVisibility(View.GONE);
             bubbleSort(recordList);
             adapter.notifyDataSetChanged();
         }

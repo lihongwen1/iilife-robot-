@@ -67,8 +67,8 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
                     if (progressBar != null) {
                         tv_progress.setText(progress + "%");
                         progressBar.setProgress(progress);
-//                        progressBar.setProgressDrawable(getDrawable(R.animationDrawable.progressbar_horizontal_long));//5.0以上
-//                        progressBar.setProgressDrawable(ContextCompat.getDrawable(context,R.animationDrawable.progressbar_horizontal_long));//不用管版本
+//                        progressBar.setProgressDrawable(getDrawable(R.electricityDrawable.progressbar_horizontal_long));//5.0以上
+//                        progressBar.setProgressDrawable(ContextCompat.getDrawable(context,R.electricityDrawable.progressbar_horizontal_long));//不用管版本
                         current = progress;
                         if (current == 100) {
                             tv_curVersion.setText(getString(R.string.ota_aty_cur, tarVersion));
