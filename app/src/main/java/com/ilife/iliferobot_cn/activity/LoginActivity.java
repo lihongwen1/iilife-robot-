@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
@@ -100,7 +101,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
                     return;
                 }
                 if (!UserUtils.isEmail(str_account)&&!UserUtils.isPhone(str_account)){
-                    ToastUtils.showToast(context,getString(R.string.login_aty_wrong_email));
+                    ToastUtils.showToast(context,getString(R.string.login_account_error));
                     return;
                 }
                 login(str_account,str_pass);

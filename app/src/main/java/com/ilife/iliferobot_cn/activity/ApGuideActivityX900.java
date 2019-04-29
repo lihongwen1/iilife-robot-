@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
@@ -24,6 +25,7 @@ import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.receiver.WifiScanReceiver;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.SpUtils;
+import com.ilife.iliferobot_cn.view.ToggleRadioButton;
 
 import java.util.Locale;
 
@@ -46,7 +48,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     @BindView(R.id.text_tip2)
     TextView text_tip2;
     @BindView(R.id.rb_next_tip)
-    RadioButton rb_next_tip;
+    ToggleRadioButton rb_next_tip;
     @BindView(R.id.ll_ap_step1)
     LinearLayout ll_ap_step1;
     @BindView(R.id.ll_ap_step2)

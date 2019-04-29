@@ -9,6 +9,7 @@
     <string name="login_aty_input_email">请输入邮箱</string>
     <string name="login_aty_input_pw">请输入密码</string>
     <string name="login_aty_wrong_email">邮箱格式不正确</string>
+    <string name="login_account_error">账号错误</string>
     <string name="login_aty_account_no">该邮箱未注册</string>
     <string name="login_aty_pw_error">密码不正确</string>
     <string name="login_aty_timeout">连接超时</string>

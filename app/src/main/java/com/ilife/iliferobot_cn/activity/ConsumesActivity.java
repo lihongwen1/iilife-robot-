@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,9 +40,9 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     LayoutInflater inflater;
     ProgressBar pb_side, pb_roll, pb_filter;
     TextView tv_percent_side, tv_percent_roll, tv_percent_filter;
-    RelativeLayout rl_side;
-    RelativeLayout rl_roll;
-    RelativeLayout rl_filter;
+    LinearLayout rl_side;
+    LinearLayout rl_roll;
+    LinearLayout rl_filter;
     ACDeviceMsg acDeviceMsg;
     androidx.appcompat.app.AlertDialog alertDialog;
     ArrayList<Integer> ids;
@@ -68,9 +69,9 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         pb_roll = (ProgressBar) findViewById(R.id.pb_roll);
         pb_filter = (ProgressBar) findViewById(R.id.pb_filter);
 
-        rl_side = (RelativeLayout) findViewById(R.id.rl_side);
-        rl_roll = (RelativeLayout) findViewById(R.id.rl_roll);
-        rl_filter = (RelativeLayout) findViewById(R.id.rl_filter);
+        rl_side = (LinearLayout) findViewById(R.id.rl_side);
+        rl_roll = (LinearLayout) findViewById(R.id.rl_roll);
+        rl_filter = (LinearLayout) findViewById(R.id.rl_filter);
 
         tv_percent_side = (TextView) findViewById(R.id.tv_percent_side);
         tv_percent_roll = (TextView) findViewById(R.id.tv_percent_roll);

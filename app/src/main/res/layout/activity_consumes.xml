@@ -6,157 +6,162 @@
 
     <include layout="@layout/template_top_title" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="1dp"
         android:id="@+id/rl_side"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
         android:background="@drawable/rl_top_back"
-        android:clickable="true">
+        android:clickable="true"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30">
 
         <ImageView
             android:id="@+id/image_side"
-            android:layout_width="@dimen/dp_37"
-            android:layout_height="@dimen/dp_42"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_bianshua" />
-
-        <com.ilife.iliferobot_cn.view.LightTextView
-            android:id="@+id/tv_side"
-            style="@style/Text_16sp_33"
-            android:layout_marginStart="@dimen/dp_17"
-            android:layout_marginTop="@dimen/dp_26"
-            android:layout_toEndOf="@+id/image_side"
-            android:text="@string/consume_aty_side_time" />
-
-        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_side"
-            android:layout_toEndOf="@+id/image_side">
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/n_icon_bianshua" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_26"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_side"
+                style="@style/Text_14sp_33"
+                android:text="@string/consume_aty_side_time" />
 
             <ProgressBar
                 android:id="@+id/pb_side"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="190dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_below="@id/tv_side"
+                android:layout_alignStart="@id/tv_side"
+                android:layout_marginTop="@dimen/dp_6"
                 android:max="100"
                 android:progressDrawable="@drawable/progress_bg" />
-
-            <TextView
-                android:id="@+id/tv_percent_side"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/pb_side"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/pb_side" />
         </RelativeLayout>
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_percent_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_38"
+            />
+    </LinearLayout>
 
     <View style="@style/View_Line_Style" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_roll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
         android:background="@drawable/rl_top_back"
-        android:clickable="true">
+        android:clickable="true"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30">
 
         <ImageView
             android:id="@+id/image_roll"
-            android:layout_width="@dimen/dp_37"
-            android:layout_height="@dimen/dp_22"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_gunshua" />
-
-        <com.ilife.iliferobot_cn.view.LightTextView
-            android:id="@+id/tv_roll"
-            style="@style/Text_16sp_33"
-            android:layout_marginStart="@dimen/dp_17"
-            android:layout_marginTop="@dimen/dp_26"
-            android:layout_toEndOf="@+id/image_roll"
-            android:text="@string/consume_aty_roll_time" />
-
-        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_roll"
-            android:layout_toEndOf="@+id/image_roll">
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/n_icon_gunshua" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_26"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_roll"
+                style="@style/Text_14sp_33"
+                android:text="@string/consume_aty_roll_time" />
 
             <ProgressBar
                 android:id="@+id/pb_roll"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="190dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_below="@id/tv_roll"
+                android:layout_alignLeft="@id/tv_roll"
+                android:layout_marginTop="@dimen/dp_6"
                 android:max="100"
                 android:progressDrawable="@drawable/progress_bg" />
 
-            <TextView
-                android:id="@+id/tv_percent_roll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/pb_roll"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/pb_roll" />
+
         </RelativeLayout>
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_percent_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_38" />
+    </LinearLayout>
 
     <View style="@style/View_Line_Style" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_filter"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
         android:background="@drawable/rl_top_back"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30">
 
         <ImageView
             android:id="@+id/image_filter"
-            android:layout_width="@dimen/dp_37"
-            android:layout_height="@dimen/dp_26"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_lvwang" />
-
-        <com.ilife.iliferobot_cn.view.LightTextView
-            android:id="@+id/tv_filter"
-            style="@style/Text_16sp_33"
-            android:layout_marginStart="@dimen/dp_17"
-            android:layout_marginTop="@dimen/dp_26"
-            android:layout_toEndOf="@+id/image_filter"
-            android:text="@string/consume_aty_filter_time"
-            android:textSize="@dimen/sp_14" />
-
-        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_filter"
-            android:layout_toEndOf="@+id/image_filter">
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/n_icon_lvwang" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_26"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_filter"
+                style="@style/Text_14sp_33"
+                android:text="@string/consume_aty_filter_time"
+                android:textSize="@dimen/sp_14" />
 
             <ProgressBar
                 android:id="@+id/pb_filter"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="190dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_below="@id/tv_filter"
+                android:layout_alignLeft="@id/tv_filter"
+                android:layout_marginTop="@dimen/dp_6"
                 android:max="100"
                 android:progressDrawable="@drawable/progress_bg" />
-
-            <TextView
-                android:id="@+id/tv_percent_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/pb_filter"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/pb_filter" />
         </RelativeLayout>
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_percent_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_38" />
+    </LinearLayout>
 
 
     <View style="@style/View_Line_Style" />
