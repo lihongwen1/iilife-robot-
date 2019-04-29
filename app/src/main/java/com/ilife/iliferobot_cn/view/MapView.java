@@ -237,17 +237,19 @@ public class MapView extends View {
      */
     // TODO 地图x方向居中
     public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
-        Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax);
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
-        double resultX = width * 0.80f / xLength;
+        double resultX = width * 0.70f / xLength;
         double resultY = height * 0.70f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
-        if (baseScare == 1) {
-            baseScare = bigDecimal.floatValue();
+        baseScare = bigDecimal.floatValue();
+        if (baseScare>=5){
+            baseScare=5;
         }
-        deviationX = (xMin + xMax) / 2f - width / 2f / baseScare;
-        deviationY = 750 - height / 2f / baseScare;
+        Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
+        deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
+//        deviationY = (yMax + yMin) / 2f*baseScare - height / 2f;
+        deviationY = deviationX;
         Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
 
 
@@ -266,12 +268,12 @@ public class MapView extends View {
      * @return
      */
     private float matrixCoordinateX(float originalCoordinate) {
-        float value = (originalCoordinate - deviationX) * baseScare;
+        float value = originalCoordinate * baseScare - deviationX;
         return value;
     }
 
     private float reMatrixCoordinateX(float originalCoordinate) {
-        float value = originalCoordinate / baseScare + deviationX;
+        float value = (originalCoordinate + deviationX) / baseScare;
         return value;
     }
 
@@ -282,12 +284,12 @@ public class MapView extends View {
      * @return
      */
     private float matrixCoordinateY(float originalCoordinate) {
-        float value = (originalCoordinate - deviationY) * baseScare;
+        float value = originalCoordinate * baseScare - deviationY;
         return value;
     }
 
     private float reMatrixCoordinateY(float originalCoordinate) {
-        float value = originalCoordinate / baseScare + deviationY;
+        float value = (originalCoordinate + deviationY) / baseScare;
         return value;
     }
 
