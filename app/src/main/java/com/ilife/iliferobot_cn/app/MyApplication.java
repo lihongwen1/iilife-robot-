@@ -31,7 +31,7 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_PRODUCT;
+        Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_TEST;
         switch (Constants.CUR_APP_ENVIRONMENT) {
             case Constants.APP_ENVIRONMENT_TEST:
                  //        国内测试环境

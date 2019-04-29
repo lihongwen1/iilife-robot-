@@ -73,7 +73,9 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
 //        }
         else if (subdomain.equals(Constants.subdomain_a7)) {
             Glide.with(context).load(R.drawable.n_x787_1).into(holder.image_product);
-        } else {
+        }else if (subdomain.equals(Constants.subdomain_x900)){
+            Glide.with(context).load(R.drawable.n_x900).into(holder.image_product);
+        }else {
             Glide.with(context).load(R.drawable.n_x800_1).into(holder.image_product);
         }
         String devName = deviceList.get(position).getName();

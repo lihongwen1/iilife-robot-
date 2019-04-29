@@ -39,6 +39,7 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
 import com.bumptech.glide.Glide;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.BitmapUtils;
@@ -52,6 +53,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.io.File;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -60,7 +62,7 @@ import io.reactivex.functions.Consumer;
  * Created by chengjiaping on 2018/8/13.
  */
 
-public class HelpActivity extends BaseActivity implements View.OnClickListener {
+public class HelpActivity extends BackBaseActivity implements View.OnClickListener {
     final String TAG = HelpActivity.class.getSimpleName();
     final int CAPTURE = 0x01;
     final int ALBUM = 0x02;
@@ -71,7 +73,7 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     TextView tv_numbs, tv_selsct, tv_notice, tv_telNum1, tv_telNum2;
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
-    ImageView image_add, image_1, image_back;
+    ImageView image_add, image_1;
     Button bt_confirm;
     File captureFile, albumFile;
     PopupWindow typePop;
@@ -88,6 +90,8 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     int index;
     Uri takePicUri;
     Dialog dialog;
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +118,6 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         et_content = (EditText) findViewById(R.id.et_content);
         image_1 = (ImageView) findViewById(R.id.image_1);
         image_add = (ImageView) findViewById(R.id.image_add);
-        image_back = (ImageView) findViewById(R.id.image_back);
         tv_telNum1 = findViewById(R.id.tv_telNum1);
         tv_telNum2 = findViewById(R.id.tv_telNum2);
         tv_selsct = (TextView) findViewById(R.id.tv_select);
@@ -123,11 +126,10 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
         rl_type = (RelativeLayout) findViewById(R.id.rl_type);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         view = findViewById(R.id.view);
-
+        tv_title.setText(R.string.personal_aty_help);
         image_1.setOnClickListener(this);
         et_type.setOnClickListener(this);
         image_add.setOnClickListener(this);
-        image_back.setOnClickListener(this);
         tv_telNum1.setOnClickListener(new MyListener());
         tv_telNum2.setOnClickListener(new MyListener());
         tv_selsct.setOnClickListener(this);
@@ -192,9 +194,6 @@ public class HelpActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
             case R.id.tv_telNum1:
 //                Intent intent = new Intent(Intent.ACTION_DIAL);
                 new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Permission>() {

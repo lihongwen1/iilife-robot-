@@ -20,6 +20,7 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DialogUtils;
@@ -31,7 +32,9 @@ import com.ilife.iliferobot_cn.utils.ToastUtils;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class OtaUpdateActivity extends BaseActivity implements View.OnClickListener {
+import butterknife.BindView;
+
+public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickListener {
     private final String TAG = OtaUpdateActivity.class.getSimpleName();
     private static final int SET_PROGRESSBAR = 1;
     private RelativeLayout rl_progress;
@@ -53,9 +56,10 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
     int sendp = 0;
     private boolean isNeedUpdate = true;
     private boolean isSuccess;
-    private ImageView image_back;
-    private Dialog dialog;
 
+    private Dialog dialog;
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -78,7 +82,6 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
 //                            ToastUtils.showToast(context, getString(R.string.setting_aty_ota_upadta_success));
                             isSuccess = true;
                             isNeedUpdate = false;
-                            image_back.setClickable(true);
                             current = 0;
                             sendp = 0;
                             otatimer.cancel();
@@ -94,7 +97,6 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
         showLoadingDialog();
         initData();
         startTimer();
@@ -153,9 +155,10 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
         tv_curVersion.setText(getString(R.string.ota_aty_cur, ""));
         tv_tarVersion.setText(getString(R.string.ota_aty_tar, ""));
         btn_update = (Button) findViewById(R.id.btn_update);
-        image_back = (ImageView) findViewById(R.id.image_back);
+
         btn_update.setOnClickListener(this);
-        image_back.setOnClickListener(this);
+
+        tv_title.setText(R.string.setting_aty_ota_update);
     }
 
     private void initData() {
@@ -259,16 +262,6 @@ public class OtaUpdateActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.image_back:
-                if (isSuccess) {
-                    finish();
-                } else if (isNeedUpdate) {
-                    image_back.setClickable(false);
-                } else {
-                    image_back.setClickable(true);
-                    finish();
-                }
-                break;
             case R.id.btn_update:
                 otaUpdate();
                 break;

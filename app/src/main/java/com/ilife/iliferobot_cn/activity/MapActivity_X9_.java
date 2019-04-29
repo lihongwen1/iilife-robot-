@@ -28,6 +28,7 @@ import com.accloud.service.ACDeviceMsg;
 import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.app.MyApplication;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.contract.MapX9Contract;
 import com.ilife.iliferobot_cn.fragment.CancleDialogFragment;
@@ -40,6 +41,7 @@ import com.ilife.iliferobot_cn.utils.DialogUtils;
 import com.ilife.iliferobot_cn.utils.MsgCodeUtils;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
+import com.ilife.iliferobot_cn.utils.Utils;
 import com.ilife.iliferobot_cn.view.MapView;
 
 import java.util.ArrayList;
@@ -69,11 +71,8 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     final int TAG_ALONG = 0x05;
     static final int SEND_VIR = 1;//add virtual
     static final int EXIT_VIR = 2;// delete virtual
-    Gson gson;
     Context context;
-    long deviceId;
     boolean hasAppoint, hasStart, hasStart_;
-    String physicalId, subdomain, robotType;
     @BindView(R.id.rl_status)
     View anchorView;
     @BindView(R.id.relativeLayout)
@@ -137,8 +136,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     PopupWindow errorPopup;
     ControlPopupWindow controlPopup;
     AnimationDrawable electricityDrawable;
-    ArrayList<Integer> pointList;
-    ArrayList<String> pointStrList;
     AlertDialog alertDialog;
     boolean isAutoScale = true;
     int index, length;
@@ -159,11 +156,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     ImageView image_left;
     @BindView(R.id.image_right)
     ImageView image_right;
-    StringBuilder sb;
     private CancleDialogFragment dialogFragment;
     private Timer timer;
     private TimerTask timerTask;
     private int curentBottom = 1;//1-virtual wall and so on 2-along appoint and so on
+    private boolean isTimerTaskRun;//标记发送方向指令的timer是否在运行
     WeakHandler handler = new WeakHandler(msg -> {
         switch (msg.what) {
             case SEND_VIRTUALDATA_SUCCESS:
@@ -214,28 +211,15 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         mPresenter.getDevStatus();
         mPresenter.initPropReceiver();
         mPresenter.registerPropReceiver();
+        updateMaxButton(mPresenter.isMaxMode());
     }
 
     public void initData() {
-        sb = new StringBuilder();
         context = this;
-        gson = new Gson();
         mAcDevMsg = new ACDeviceMsg();
-        pointList = new ArrayList<>();
-        pointStrList = new ArrayList<>();
         animation = AnimationUtils.loadAnimation(context, R.anim.anims_ni);
         animation.setInterpolator(new LinearInterpolator());
         animation_alpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
-        deviceId = SpUtils.getLong(context, MainActivity.KEY_DEVICEID);
-        subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
-        physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
-        if (subdomain.equals(Constants.subdomain_x900)) {
-            robotType = "X900";
-        } else if (subdomain.equals(Constants.subdomain_x787)) {
-            robotType = "X787";
-        } else {
-            robotType = "X785";
-        }
     }
 
     public void initView() {
@@ -244,7 +228,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         electricityDrawable = (AnimationDrawable) image_animation.getBackground();
 
         image_setting.setVisibility(View.VISIBLE);
-        tv_title.setText(getString(R.string.map_aty_title, robotType));
+        tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
     }
 
     @Override
@@ -416,7 +400,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             /**
              * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
              */
-//            mPresenter.sendVirtualWallData(null, EXIT_VIR);
+            mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs(), EXIT_VIR);
         });
         v.findViewById(R.id.tv_cancel).setOnClickListener(view -> DialogUtils.hideDialog(alertDialog));
     }
@@ -528,27 +512,14 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         }
     }
 
-    /**
-     * 显示遥控popWindow
-     */
-    public void showControlPopup() {
-        if (controlPopup == null) {
-            controlPopup = new ControlPopupWindow(context, physicalId, subdomain);
-            controlPopup.setOnDismissListener(() -> setTvUseStatus(TAG_NORMAL));
-        }
-        if (!controlPopup.isShowing()) {
-            controlPopup.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-            setTvUseStatus(TAG_CONTROL);
-        }
-    }
 
     /**
-     * 显示遥控器控制UI，点击单次执行任务，长按美隔400ms执行一次任务
+     * 显示遥控器控制UI，点击单次执行任务，长按每隔400ms执行一次任务
      */
     @Override
     public void showRemoteControl() {
         layout_remote_control.setVisibility(View.VISIBLE);
-
+        image_max.setSelected(mPresenter.isMaxMode());
     }
 
     /**
@@ -570,11 +541,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             case TAG_RECHAGRGE:
                 tv_use_control.setTextColor(getResources().getColor(R.color.color_f08300));
                 tv_use_control.setVisibility(View.VISIBLE);
-                tv_use_control.setText(getString(R.string.map_aty_use_recharging, robotType));
+                tv_use_control.setText(getString(R.string.map_aty_use_recharging, mPresenter.getRobotType()));
                 break;
             case TAG_KEYPOINT:
                 tv_use_control.setVisibility(View.VISIBLE);
-                tv_use_control.setText(getString(R.string.map_aty_key_pointing, robotType));
+                tv_use_control.setText(getString(R.string.map_aty_key_pointing, mPresenter.getRobotType()));
                 break;
             case TAG_ALONG:
                 tv_use_control.setVisibility(View.VISIBLE);
@@ -719,8 +690,10 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 break;
             case R.id.tv_virtual_wall_x9://虚拟墙编辑模式
                 ToastUtils.showToast("虚拟墙");
-                if (mPresenter.canEdit(mPresenter.getCurStatus())) {
+                if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == 0x06) {
                     showSetWallDialog();
+                } else {
+                    ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
                 }
                 break;
             case R.id.tv_add_virtual_x9://增加虚拟墙模式
@@ -728,7 +701,10 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                     tv_add_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
                 } else {
-                    showAddWallDialog();
+//                    showAddWallDialog();
+                    tv_add_virtual.setSelected(true);
+                    tv_delete_virtual.setSelected(false);
+                    mMapView.setMODE(MapView.MODE_ADD_VIRTUAL);
                 }
                 break;
             case R.id.tv_delete_virtual_x9://删除虚拟墙模式
@@ -736,7 +712,10 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                     tv_delete_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
                 } else {
-                    showDeleteWallDialog();
+//                    showDeleteWallDialog();
+                    tv_delete_virtual.setSelected(true);
+                    tv_add_virtual.setSelected(false);
+                    mMapView.setMODE(MapView.MODE_DELETE_VIRTUAL);
                 }
                 break;
             case R.id.tv_ensure_virtual_x9://保存虚拟墙模式
@@ -761,11 +740,25 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 break;
             case MotionEvent.ACTION_UP: //手指抬起
                 updateDirectionUi(-1);
-                timerTask.cancel();
-                mAcDevMsg.setCode(MsgCodeUtils.Proceed);
-                mAcDevMsg.setContent(new byte[]{0x05});
-                mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                if (timerTask != null) {
+                    timerTask.cancel();
+                    isTimerTaskRun = false;
+                }
+                if (v.getId() == R.id.image_control_back) {//没有返回功能，做max吸力功能
+                    mPresenter.reverseMaxMode(mAcDevMsg);
+                } else {
+                    mAcDevMsg.setCode(MsgCodeUtils.Proceed);
+                    mAcDevMsg.setContent(new byte[]{0x05});
+                    mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                }
                 break;
+        }
+    }
+
+    @Override
+    public void updateMaxButton(boolean isMaXMode) {
+        if (layout_remote_control.getVisibility() == View.VISIBLE) {
+            image_max.setSelected(isMaXMode);
         }
     }
 
@@ -792,15 +785,21 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         image_left.setSelected(selectId == R.id.image_left);
     }
 
+    //TODO 不能连续发送方向指令
     @Override
     public void distributeDirectOrder(int directId) {
+        if (directId == R.id.image_control_back) {//max吸力功能不需要持续发送指令
+            return;
+        }
         if (timer == null) {
             timer = new Timer();
             timer.schedule(timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     Log.d(TAG, "send direction order");
-                    mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                    if (isTimerTaskRun) {
+                        mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                    }
                 }
             }, 0, 4000);
         }
@@ -809,9 +808,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             case R.id.image_forward:
                 mAcDevMsg.setContent(new byte[]{0x01});
                 break;
-            case R.id.image_control_back:
-                mAcDevMsg.setContent(new byte[]{0x02});
-                break;
             case R.id.image_left:
                 mAcDevMsg.setContent(new byte[]{0x03});
                 break;
@@ -819,7 +815,10 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 mAcDevMsg.setContent(new byte[]{0x04});
                 break;
         }
-        timerTask.run();
+        if (!isTimerTaskRun) {
+            timerTask.run();
+            isTimerTaskRun = true;
+        }
     }
 
     /**

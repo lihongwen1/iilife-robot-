@@ -63,9 +63,12 @@ public interface MapX9Contract {
         void updateAlong(boolean isAlong);
         void updatePoint(boolean isPoint);
         void updateRecharge(boolean isRecharge);
+        void updateMaxButton(boolean isMaXMode);
     }
 
     interface Presenter {
+
+        String getRobotType();
         void initTimer();
 
         void getRealTimeMap();
@@ -101,7 +104,8 @@ public interface MapX9Contract {
          */
         void enterPointMode();
         void enterRechargeMode();
-
+         boolean isMaxMode();
+         void reverseMaxMode(ACDeviceMsg msg);
     }
 
 }

@@ -68,6 +68,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
     public void initView() {
         context = this;
         dialog = DialogUtils.createLoadingDialog(context);
+        dialog.dismiss();
         fl_noRecord = (FrameLayout) findViewById(R.id.fl_noRecord);
         tv_title = findViewById(R.id.tv_top_title);
         tv_title.setText(R.string.setting_aty_clean_record);
@@ -158,11 +159,9 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
                 }
             }
         });
-
     }
 
     public void showList(ArrayList<HistoryRecord_x9> recordList) {
-        DialogUtils.closeDialog(dialog);
         if (recordList.size() == 0) {
             recyclerView.setVisibility(View.GONE);
             fl_noRecord.setVisibility(View.VISIBLE);

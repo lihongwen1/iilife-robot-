@@ -24,6 +24,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
     repositories {
         jcenter()
@@ -73,7 +77,7 @@ dependencies {
     implementation files('libs/java_websocket.jar')
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.0'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
     implementation files('libs/ac-service-android-v1.6.3.jar')
     implementation files('libs/hiflying-iots-android-smartlink-8.2.0.jar')

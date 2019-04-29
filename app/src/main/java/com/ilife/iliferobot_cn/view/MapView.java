@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.accloud.utils.LogUtil;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
 import com.ilife.iliferobot_cn.model.VirtualWallBean;
@@ -94,7 +95,7 @@ public class MapView extends View {
 
         slamPaint = new Paint();
         slamPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        slamPaint.setStyle(Paint.Style.STROKE);
+        slamPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         slamPaint.setFilterBitmap(true);
         slamPaint.setStrokeJoin(Paint.Join.ROUND);
         slamPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -157,13 +158,12 @@ public class MapView extends View {
             return;
         }
         isInitBuffer = true;
-        roadBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        slagBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        virtualBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        roadBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        slagBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        virtualBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         virtualCanvas = new Canvas(virtualBitmap);
-        updateSlam(644, 807, 736, 827, null);
     }
 
     /**
@@ -222,6 +222,7 @@ public class MapView extends View {
      * 清楚所有绘图痕迹
      */
     public void clean() {
+        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
@@ -236,18 +237,18 @@ public class MapView extends View {
      */
     // TODO 地图x方向居中
     public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
-        Log.d(TAG, "updateSlam---");
+        Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax);
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
-        double result = width * 0.70f / xLength;
-        BigDecimal bigDecimal = new BigDecimal(result).setScale(1, BigDecimal.ROUND_HALF_UP);
+        double resultX = width * 0.80f / xLength;
+        double resultY = height * 0.70f / yLength;
+        BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         if (baseScare == 1) {
             baseScare = bigDecimal.floatValue();
         }
-        float left = (width - xLength * baseScare) / 2;
-        float top = (height - yLength * baseScare) / 2;
-        deviationX = xMin - left / baseScare;
-        deviationY = yMin - top / baseScare;
+        deviationX = (xMin + xMax) / 2f - width / 2f / baseScare;
+        deviationY = 750 - height / 2f / baseScare;
+        Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
 
 
         sCenter.set(width / 2f, height / 2f);
@@ -288,6 +289,10 @@ public class MapView extends View {
     private float reMatrixCoordinateY(float originalCoordinate) {
         float value = originalCoordinate / baseScare + deviationY;
         return value;
+    }
+
+    public void setScare(int scare) {
+        this.scare = scare;
     }
 
     /**
@@ -334,6 +339,7 @@ public class MapView extends View {
 
     // TODO 重绘事件不要太频繁，真正有需求的时候才能调用
     // TODO 屏幕坐标转设备坐标
+    ////删除虚拟墙的时候支持拖动,添加虚拟墙的时候支持缩放，NONE时支持缩放和拖动
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int me = event.getAction() & MotionEvent.ACTION_MASK;
@@ -393,8 +399,8 @@ public class MapView extends View {
                         } else {
                             existvirtualPath.moveTo(downX, downY);
                             existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
-                            VirtualWallBean virtualWallBean = new VirtualWallBean(2, new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)}
-                                    , virtualWallBeans.size() + 1);
+                            VirtualWallBean virtualWallBean = new VirtualWallBean(virtualWallBeans.size() + 1, new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)}
+                                    , 2);
                             virtualWallBeans.add(virtualWallBean);
                             drawVirtualWall();
                         }
@@ -402,6 +408,9 @@ public class MapView extends View {
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //TODO delete  virtual wall
                     for (VirtualWallBean vr : virtualWallBeans) {
+                        if (vr.getDeleteIcon() == null) {
+                            continue;
+                        }
                         if (vr.getDeleteIcon().contains(x, y)) {
                             ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
                             if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
@@ -414,6 +423,9 @@ public class MapView extends View {
                             break;
                         }
                     }
+                    //删除虚拟墙的时候支持拖动
+                    originalDragX = dragX;
+                    originalDragY = dragY;
                 } else if (MODE == MODE_DRAG) {
                     originalDragX = dragX;
                     originalDragY = dragY;
@@ -539,11 +551,13 @@ public class MapView extends View {
      * @param existPointList 服务器虚拟墙数据集合
      */
     public void drawVirtualWall(List<int[]> existPointList) {
-        VirtualWallBean bean;
-        virtualWallBeans.clear();
-        for (int i = 0; i < existPointList.size(); i++) {
-            bean = new VirtualWallBean(i + 1, existPointList.get(i), 1);
-            virtualWallBeans.add(bean);
+        if (existPointList != null && existPointList.size() > 0) {
+            VirtualWallBean bean;
+            virtualWallBeans.clear();
+            for (int i = 0; i < existPointList.size(); i++) {
+                bean = new VirtualWallBean(i + 1, existPointList.get(i), 1);
+                virtualWallBeans.add(bean);
+            }
         }
         drawVirtualWall();
     }
@@ -552,7 +566,7 @@ public class MapView extends View {
      * 绘制虚拟墙
      */
     public void drawVirtualWall() {
-        if (virtualWallBeans == null || virtualWallBeans.size() == 0) {
+        if (virtualWallBeans == null) {
             return;
         }
         existvirtualPath.reset();
@@ -617,13 +631,14 @@ public class MapView extends View {
                     }
                     if (attr != 0x03) {//0x03未探索区域 0x02已探索区域
                         Log.d(TAG, "slam x:---" + x + "y:---" + (1500 - y));
-//                        slamCanvas.drawPoint(matrixCoordinateX(x), matrixCoordinateY(1500 - y),slamPaint);
                         if (i != 0) {
+//                            path.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y - 1));
+//                            path.addRect(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y - 1),
+//                                    matrixCoordinateX(x), matrixCoordinateY(1500 - y), Path.Direction.CCW);
                             int distance = (int) (matrixCoordinateY(1500 - y) - matrixCoordinateY(1500 - y - 1));
                             for (int k = 0; k < distance; k++) {
                                 path.moveTo(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k);
                                 path.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k);
-//                                slamCanvas.drawLine(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k, matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k, slamPaint);
                             }
 
                         }

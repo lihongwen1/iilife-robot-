@@ -16,7 +16,7 @@
             android:layout_height="@dimen/dp_80"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_40"
-            android:background="@drawable/n_x800_1" />
+            />
 
         <com.ilife.iliferobot_cn.view.MediumTextView
             android:id="@+id/tv_name"
@@ -43,7 +43,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <include layout="@layout/setting_aty_list" />
     </ScrollView>
 </LinearLayout>

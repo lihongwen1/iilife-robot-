@@ -49,7 +49,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private long deviceId;
     private String physicalId, subdomain, robotType;
     private Gson gson;
-    boolean isVirtualEdit, isDelete, isVirtualWall, isOnCreate, isAdd;
+    boolean isVirtualEdit, isDelete, isVirtualWall, isAdd;
     private byte[] slamBytes;
     private int curStatus, errorCode, batteryNo, workTime, cleanArea;
     private Timer timer;
@@ -100,6 +100,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
     }
 
+    @Override
+    public String getRobotType() {
+        return robotType;
+    }
+
     public void initTimer() {
         getRealTimeMap();//need get real time map in the first time enter
         timer = new Timer();
@@ -117,13 +122,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void getRealTimeMap() {
+        if (!isViewAttached()) {
+            return;
+        }
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRealTime");
         req.put("device_id", deviceId);
         AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                Log.d(TAG, "getRealTimeMap----");
+                Log.d(TAG, "getRealTimeMap----当前状态："+curStatus);
                 String strMap = resp.getString("slam_map");
                 int xMax = resp.getInt("slam_x_max");
                 int xMin = resp.getInt("slam_x_min");
@@ -131,11 +139,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 int yMin = resp.getInt("slam_y_min");
                 if (!TextUtils.isEmpty(strMap)) {
                     slamBytes = Base64.decode(strMap, Base64.DEFAULT);
-                    if (isOnCreate) {
-//                        mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
+                    if (isViewAttached()&&curStatus!=0x07) {//判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式下不更新地图
+                        mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
                         mView.drawSlamMap(slamBytes);
+                        mView.drawRoadMap(realTimePoints, historyRoadList);
                         mView.drawObstacle();
-                        isOnCreate = false;
+                        mView.drawVirtualWall(null);//只是刷新虚拟墙
                     }
                 }
             }
@@ -246,6 +255,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             @Override
                             public void onReceive(String s, int i, String s1) {
                                 Log.d(TAG, "subscribeRealTimeMap-------");
+                                if (!isViewAttached()){
+                                    return;
+                                }
                                 synchronized (this) {
                                     Gson gson = new Gson();
                                     RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
@@ -413,6 +425,20 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 });
     }
 
+    @Override
+    public boolean isMaxMode() {
+        isMaxMode = SpUtils.getBoolean(MyApplication.getInstance(), physicalId + KEY_IS_MAX);
+        return isMaxMode;
+    }
+
+    @Override
+    public void reverseMaxMode(ACDeviceMsg msg) {
+        msg.setCode(MsgCodeUtils.CleanForce);
+        byte max = (byte) (isMaxMode ? 0x00 : 0x01);
+        msg.setContent(new byte[]{max, (byte) mopForce});
+        sendToDeviceWithOption(msg);
+    }
+
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
         isWork = isWork(curStatus);
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));
@@ -555,6 +581,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void success(ACDeviceMsg deviceMsg) {
+                if (deviceMsg.getCode() == MsgCodeUtils.CleanForce) {//更新max MODE
+                    byte[] resp = deviceMsg.getContent();
+                    isMaxMode = resp[0] == 0x01;
+                    mView.updateMaxButton(isMaxMode);
+                    SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_IS_MAX, isMaxMode);
+                    return;
+                }
                 if (deviceMsg.getCode() != MsgCodeUtils.Proceed) {
                     byte[] bytes = deviceMsg.getContent();
                     curStatus = bytes[0];
@@ -593,7 +626,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterVirtualMode() {
-        if (curStatus == 0x06) {
+        if (curStatus == 0x06) {//规划模式下进入虚拟墙
             mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
             mAcDevMsg.setContent(new byte[]{0x07});
             sendByte = mAcDevMsg.getContent()[0];
@@ -687,7 +720,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void enterAlongMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
-        if (curStatus == 0x02 || curStatus == 0x04 || curStatus == 0x0A||curStatus==0x0C) {
+        if (curStatus == 0x02 || curStatus == 0x04 || curStatus == 0x0A || curStatus == 0x0C) {
             byte b = (byte) (curStatus == 0x04 ? 0x02 : 0x04);
             mAcDevMsg.setContent(new byte[]{b});
             sendToDeviceWithOption(mAcDevMsg);
@@ -701,7 +734,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void enterPointMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
-        if (curStatus == 0x02 || curStatus == 0x05 || curStatus == 0x0A||curStatus==0x0C) {
+        if (curStatus == 0x02 || curStatus == 0x05 || curStatus == 0x0A || curStatus == 0x0C) {
             byte b = (byte) (curStatus == 0x05 ? 0x02 : 0x05);
             mAcDevMsg.setContent(new byte[]{b});
             sendToDeviceWithOption(mAcDevMsg);

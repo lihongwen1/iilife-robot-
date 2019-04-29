@@ -66,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_marginBottom="@dimen/dp_205"
+        android:layout_marginBottom="@dimen/dp_176"
         android:gravity="center"
         android:text="@string/ap_guide_already_open_device"
         android:textColor="@color/color_33"
@@ -77,6 +77,6 @@
         style="@style/Button_Style_quick_login"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_136"
+        android:layout_marginBottom="@dimen/dp_106"
         android:text="@string/guide_aty_next" />
 </FrameLayout>

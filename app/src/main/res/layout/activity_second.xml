@@ -60,8 +60,8 @@
 
             <com.ilife.iliferobot_cn.view.RegularTextView
                 android:id="@+id/tv_send_code"
-                android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:text="@string/get_ver_code_tip"
                 android:textColor="@color/color_f08300"
@@ -80,19 +80,20 @@
         <com.ilife.iliferobot_cn.view.RegularButton
             android:id="@+id/bt_quick_login"
             style="@style/Button_Style_quick_login"
-            android:layout_marginTop="@dimen/dp_165"
+            android:layout_marginTop="@dimen/dp_141"
             android:clickable="false"
             android:text="@string/quick_login" />
+
+
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/tv_login"
+            style="@style/Text_16sp_33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="@string/have_account_and_login" />
     </LinearLayout>
 
-
-    <com.ilife.iliferobot_cn.view.RegularTextView
-        android:id="@+id/tv_login"
-        style="@style/Text_16sp_33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="@dimen/dp_84"
-        android:text="@string/have_account_and_login" />
 
 </merge>

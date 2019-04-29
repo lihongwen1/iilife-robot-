@@ -14,6 +14,7 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
@@ -23,16 +24,17 @@ import com.ilife.iliferobot_cn.utils.ToastUtils;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 /**
  * Created by chenjiaping on 2017/7/28.
  */
 
-public class ConsumesActivity extends BaseActivity implements View.OnLongClickListener, View.OnClickListener {
+public class ConsumesActivity extends BackBaseActivity implements View.OnLongClickListener{
     final String TAG = ConsumesActivity.class.getSimpleName();
     Context context;
     String physicalId;
     String subdomain;
-    ImageView image_back;
     TextView tv_title, tv_cancel, tv_confirm;
     LayoutInflater inflater;
     ProgressBar pb_side, pb_roll, pb_filter;
@@ -45,11 +47,12 @@ public class ConsumesActivity extends BaseActivity implements View.OnLongClickLi
     ArrayList<Integer> ids;
     byte[] bytes;
     int index;
+    @BindView(R.id.tv_top_title)
+    TextView tv_top_title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
         initData();
     }
 
@@ -61,7 +64,6 @@ public class ConsumesActivity extends BaseActivity implements View.OnLongClickLi
     public void initView() {
         context = this;
         inflater = LayoutInflater.from(context);
-        image_back = (ImageView) findViewById(R.id.image_back);
         pb_side = (ProgressBar) findViewById(R.id.pb_side);
         pb_roll = (ProgressBar) findViewById(R.id.pb_roll);
         pb_filter = (ProgressBar) findViewById(R.id.pb_filter);
@@ -73,8 +75,7 @@ public class ConsumesActivity extends BaseActivity implements View.OnLongClickLi
         tv_percent_side = (TextView) findViewById(R.id.tv_percent_side);
         tv_percent_roll = (TextView) findViewById(R.id.tv_percent_roll);
         tv_percent_filter = (TextView) findViewById(R.id.tv_percent_filter);
-
-        image_back.setOnClickListener(this);
+        tv_top_title.setText(R.string.setting_aty_consume_detail);
         rl_side.setOnLongClickListener(this);
         rl_roll.setOnLongClickListener(this);
         rl_filter.setOnLongClickListener(this);
@@ -183,14 +184,6 @@ public class ConsumesActivity extends BaseActivity implements View.OnLongClickLi
         return false;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
-        }
-    }
 
     class MyListener implements View.OnClickListener {
         int tag;

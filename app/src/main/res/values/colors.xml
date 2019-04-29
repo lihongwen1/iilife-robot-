@@ -55,6 +55,7 @@
     <color name="bt_bg_unpress_color1">#4df08300</color>
     <color name="bg_color_f5f7fa">#f5f7fa</color>
     <color name="white">#ffffff</color>
+    <color name="white_50">#32ffffff</color>
     <color name="map_bg">#FF1BADE2</color>
     <color name="obstacle_color">#FF76C9EE</color>
    <color name="slam_color">#FF49B6E8</color>

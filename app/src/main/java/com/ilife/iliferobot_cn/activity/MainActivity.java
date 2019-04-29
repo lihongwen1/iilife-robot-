@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.container)
     MyRelativeLayout container;
     @BindView(R.id.layout_no_device)
-    LinearLayout layout_no_device;
+    RelativeLayout layout_no_device;
     RelativeLayout.LayoutParams params;
     RelativeLayout.LayoutParams lp_center;
     RelativeLayout.LayoutParams lp_below;
@@ -248,7 +248,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         addImage.setImageResource(R.drawable.n_btn_add);
         addImage.setClickable(true);
 
-        int width_height = (int) getResources().getDimension(R.dimen.dp_40);
+        int width_height = (int) getResources().getDimension(R.dimen.dp_50);
         margin = (int) getResources().getDimension(R.dimen.dp_30);
 
         lp_below = new RelativeLayout.LayoutParams(width_height, width_height);

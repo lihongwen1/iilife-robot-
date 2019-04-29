@@ -145,8 +145,9 @@
                     android:id="@+id/image_protocol"
                     android:layout_width="@dimen/dp_18"
                     android:layout_height="@dimen/dp_22"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/dp_31"
+                    android:layout_marginBottom="21dp"
                     android:background="@drawable/n_icon_protocol" />
 
                 <com.ilife.iliferobot_cn.view.LightTextView

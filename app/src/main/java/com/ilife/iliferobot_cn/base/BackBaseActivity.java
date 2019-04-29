@@ -1,7 +1,10 @@
 package com.ilife.iliferobot_cn.base;
 
+import android.widget.ImageView;
+
 import com.ilife.iliferobot_cn.R;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**

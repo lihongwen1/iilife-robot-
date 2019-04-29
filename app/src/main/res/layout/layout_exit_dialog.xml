@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_80"
         android:orientation="vertical">
         <com.ilife.iliferobot_cn.view.RegularTextView
-            style="@style/Text_16sp_33"
+            style="@style/Text_16sp_f08300"
             android:layout_gravity="center_horizontal"
             android:text="@string/personal_acy_exit"
             android:layout_marginTop="@dimen/dp_23"/>

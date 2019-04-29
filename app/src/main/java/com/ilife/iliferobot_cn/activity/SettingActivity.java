@@ -46,6 +46,8 @@ import com.ilife.iliferobot_cn.utils.UserUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 
 /**
  * Created by chengjiaping on 2018/8/16.
@@ -65,6 +67,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
             image_plan, image_random, image_product;
     TextView tv_name, tv_type, tv_soft, tv_standard, tv_strong, tv_water, tv_plan,
             tv_random, tv_mode, tv_top_title;
+    @BindView(R.id.tv_ota_ver)
+    TextView tv_ota_ver;
     LayoutInflater inflater;
     AlertDialog alterDialog;
     Dialog dialog;
@@ -94,7 +98,6 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
         initData();
     }
 
@@ -207,6 +210,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         rl_soft.setOnClickListener(new MyListener());
         rl_standard.setOnClickListener(new MyListener());
         rl_strong.setOnClickListener(new MyListener());
+        tv_ota_ver.setText("当前版本：0.0.1.10");
     }
 
     public void initData() {

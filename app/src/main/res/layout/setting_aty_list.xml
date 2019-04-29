@@ -61,7 +61,7 @@
 
         <com.ilife.iliferobot_cn.view.LightTextView
             android:id="@+id/tv_water"
-            style="@style/Text_12sp_ac"
+            style="@style/Text_14sp_ac"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toStartOf="@+id/image_down_1"
@@ -81,25 +81,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/color_f6"
         android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_soft"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:background="@color/color_f6">
+            android:layout_height="@dimen/dp_60">
 
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_soft"
-                style="@style/Text_12sp_ac"
+                style="@style/Text_14sp_ac"
                 android:layout_marginStart="@dimen/dp_30"
                 android:text="@string/setting_aty_soft"
                 android:textColor="@drawable/tv_water_color" />
 
             <ImageView
                 android:id="@+id/image_soft"
-                android:layout_width="@dimen/dp_42"
-                android:layout_height="@dimen/dp_14"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_30"
@@ -116,24 +116,23 @@
         <RelativeLayout
             android:id="@+id/rl_standard"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:background="@color/color_f6">
+            android:layout_height="@dimen/dp_60">
 
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_standard"
-                style="@style/Text_12sp_ac"
+                style="@style/Text_14sp_ac"
                 android:layout_marginStart="@dimen/dp_30"
                 android:text="@string/setting_aty_standard"
                 android:textColor="@drawable/tv_water_color" />
 
             <ImageView
                 android:id="@+id/image_standard"
-                android:layout_width="@dimen/dp_42"
-                android:layout_height="@dimen/dp_14"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_30"
-                android:background="@drawable/image_standard_bg" />
+                android:background="@drawable/image_soft_bg" />
         </RelativeLayout>
 
         <View
@@ -146,24 +145,23 @@
         <RelativeLayout
             android:id="@+id/rl_strong"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:background="@color/color_f6">
+            android:layout_height="@dimen/dp_60">
 
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_strong"
-                style="@style/Text_12sp_ac"
+                style="@style/Text_14sp_ac"
                 android:layout_marginStart="@dimen/dp_30"
                 android:text="@string/setting_aty_strong"
                 android:textColor="@drawable/tv_water_color" />
 
             <ImageView
                 android:id="@+id/image_strong"
-                android:layout_width="@dimen/dp_42"
-                android:layout_height="@dimen/dp_14"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_30"
-                android:background="@drawable/image_strong_bg" />
+                android:background="@drawable/image_soft_bg" />
         </RelativeLayout>
 
         <View
@@ -183,7 +181,7 @@
 
         <com.ilife.iliferobot_cn.view.LightTextView
             android:id="@+id/tv_mode"
-            style="@style/Text_12sp_ac"
+            style="@style/Text_14sp_ac"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toStartOf="@+id/image_down_2"
@@ -209,29 +207,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/color_f6"
         android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_plan"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
-            android:background="@color/color_f6">
+           >
 
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_plan"
-                style="@style/Text_12sp_ac"
+                style="@style/Text_14sp_ac"
                 android:layout_marginStart="@dimen/dp_30"
                 android:text="@string/setting_aty_nav_clean"
                 android:textColor="@drawable/tv_water_color" />
 
             <ImageView
                 android:id="@+id/image_plan"
-                android:layout_width="@dimen/dp_17"
-                android:layout_height="@dimen/dp_17"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_30"
-                android:background="@drawable/n_btn_model_bg" />
+                android:background="@drawable/image_soft_bg" />
         </RelativeLayout>
 
         <View
@@ -245,23 +244,23 @@
             android:id="@+id/rl_random"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
-            android:background="@color/color_f6">
+           >
 
             <com.ilife.iliferobot_cn.view.LightTextView
                 android:id="@+id/tv_random"
-                style="@style/Text_12sp_ac"
+                style="@style/Text_14sp_ac"
                 android:layout_marginStart="@dimen/dp_30"
                 android:text="@string/setting_aty_random_clean"
                 android:textColor="@drawable/tv_water_color" />
 
             <ImageView
                 android:id="@+id/image_random"
-                android:layout_width="@dimen/dp_17"
-                android:layout_height="@dimen/dp_17"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_30"
-                android:background="@drawable/n_btn_model_bg" />
+                android:background="@drawable/image_soft_bg" />
         </RelativeLayout>
 
         <View
@@ -303,8 +302,8 @@
 
         <ImageView
             android:id="@+id/image_max"
-            android:layout_width="@dimen/dp_49"
-            android:layout_height="@dimen/dp_28"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_22"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_30"
@@ -355,7 +354,7 @@
             android:text="@string/setting_aty_ota_update" />
         <com.ilife.iliferobot_cn.view.LightTextView
             android:id="@+id/tv_ota_ver"
-            style="@style/Text_12sp_ac"
+            style="@style/Text_14sp_ac"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toStartOf="@+id/ota_right"
