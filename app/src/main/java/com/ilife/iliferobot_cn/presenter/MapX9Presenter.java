@@ -131,7 +131,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                Log.d(TAG, "getRealTimeMap----当前状态："+curStatus);
+                Log.d(TAG, "getRealTimeMap----当前状态：" + curStatus);
                 String strMap = resp.getString("slam_map");
                 int xMax = resp.getInt("slam_x_max");
                 int xMin = resp.getInt("slam_x_min");
@@ -139,7 +139,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 int yMin = resp.getInt("slam_y_min");
                 if (!TextUtils.isEmpty(strMap)) {
                     slamBytes = Base64.decode(strMap, Base64.DEFAULT);
-                    if (isViewAttached()&&curStatus!=0x07) {//判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式下不更新地图
+                    if (isViewAttached() && curStatus != 0x07) {//判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式下不更新地图
                         mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
                         mView.drawSlamMap(slamBytes);
                         mView.drawRoadMap(realTimePoints, historyRoadList);
@@ -211,6 +211,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             public void success(ACDeviceMsg acDeviceMsg) {
                 existPointList.clear();
                 byte[] resp = acDeviceMsg.getContent();
+                StringBuilder stringBuilder = new StringBuilder();
                 if (resp != null && resp.length > 0) {
                     byte count = resp[1];//虚拟墙总数
                     for (int i = 9; i < 8 * count + 2; i += 8) {
@@ -219,16 +220,19 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int startY = DataUtils.bytesToInt(new byte[]{resp[i - 5], resp[i - 4]}, 0);//4,5
                         int endX = DataUtils.bytesToInt(new byte[]{resp[i - 3], resp[i - 2]}, 0);//6,7
                         int endY = DataUtils.bytesToInt(new byte[]{resp[i - 1], resp[i]}, 0);//8,9
+                        Log.d("queryVirtualWall","original:"+startX+"---"+startY+"---"+endX+"----"+endY);
                         //显示坐标(加移量后)
-                        int sx = startX + 750;
-                        int sy = 1500 - (startY + 750);
+                        int sx = startX  + 750;
+                        int sy = startY+ 750;
                         int ex = endX + 750;
-                        int ey = 1500 - (endY + 750);
+                        int ey =endY + 750;
                         int[] dataPoint = {sx, sy, ex, ey};
                         existPointList.add(dataPoint);
                         //TODO saveQueryRect
 //                        saveQueryRect(dataPoint);
+                        Log.d("queryVirtualWall",sx+"---"+sy+"---"+ex+"----"+ey);
                     }
+
                     wallPointList.clear();
                     wallPointList.addAll(existPointList);
                     //TODO 绘制虚拟墙
@@ -255,7 +259,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             @Override
                             public void onReceive(String s, int i, String s1) {
                                 Log.d(TAG, "subscribeRealTimeMap-------");
-                                if (!isViewAttached()){
+                                if (!isViewAttached()) {
                                     return;
                                 }
                                 synchronized (this) {

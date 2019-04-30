@@ -243,8 +243,8 @@ public class MapView extends View {
         double resultY = height * 0.70f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = bigDecimal.floatValue();
-        if (baseScare>=5){
-            baseScare=5;
+        if (baseScare >= 5) {
+            baseScare = 5;
         }
         Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
@@ -576,8 +576,8 @@ public class MapView extends View {
         virtualCanvas.save();
         for (VirtualWallBean vir : virtualWallBeans) {
             if (vir.getState() != 3) {
-                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(vir.getPointfs()[1]));
-                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(vir.getPointfs()[3]));
+                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(1500 - vir.getPointfs()[1]));
+                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(1500 - vir.getPointfs()[3]));
             }
         }
         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
@@ -586,7 +586,7 @@ public class MapView extends View {
             for (VirtualWallBean vir : virtualWallBeans) {
                 if (vir.getState() != 3) {
                     float l = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
-                    float t = matrixCoordinateY((vir.getPointfs()[1] + vir.getPointfs()[3]) / 2f);
+                    float t = matrixCoordinateY((1500 - vir.getPointfs()[1] + 1500 - vir.getPointfs()[3]) / 2f);
                     float r = l + deleteBitmap.getWidth() * scare;
                     float b = t + deleteBitmap.getHeight() * scare;
                     virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
