@@ -56,7 +56,7 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
     private static final int CORNER_RECT_WIDTH = 8;  //扫描区边角的宽
     private static final int CORNER_RECT_HEIGHT = 40; //扫描区边角的高
     private static final int SCANNER_LINE_MOVE_DISTANCE = 5;  //扫描线移动距离
-    private static final int SCANNER_LINE_HEIGHT = 10;  //扫描线宽度
+    private static final int SCANNER_LINE_HEIGHT = 3;  //扫描线宽度
 
     private final Paint paint;
     private Bitmap resultBitmap;
@@ -110,7 +110,7 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
 //    labelTextSize = array.getFloat(R.styleable.ViewfinderView_label_text_size, 36f);
         labelTextColor = getResources().getColor(R.color.color_ff);
         labelText = getContext().getString(R.string.capture_aty_scan);
-        labelTextSize = getContext().getResources().getDimension(R.dimen.sp_12);
+        labelTextSize = getContext().getResources().getDimension(R.dimen.sp_14);
 
         // Initialize these once for performance rather than calling them every time in onDraw().
         paint = new Paint();
@@ -201,11 +201,11 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
 
     //绘制图片
     private void drawBitmap(Canvas canvas, Rect frame) {
-        int width = 48;
-        int height = 84;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ss);
+        int width = 144;
+        int height = 144;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), isOpen ? R.drawable.flash_light_press : R.drawable.flash_light_normal);
         int left = frame.centerX() - (width / 2);
-        int top = (int) (frame.bottom - getResources().getDimension(R.dimen.dp_10) - height);
+        int top = (int) (frame.bottom + getResources().getDimension(R.dimen.dp_60) + 20);
 //    canvas.drawBitmap(bitmap,offsetX,offsetY,paint);
 
         bitmapRect = new Rect(left, top, left + width, top + height);
@@ -261,13 +261,13 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
 
         ComposeShader composeShader = new ComposeShader(radialGradient, linearGradient, PorterDuff.Mode.ADD);
 
-        paint.setShader(radialGradient);
+//        paint.setShader(radialGradient);
         if (scannerStart <= scannerEnd) {
             //矩形
-//      canvas.drawRect(frame.left, scannerStart, frame.right, scannerStart + SCANNER_LINE_HEIGHT, paint);
+            canvas.drawRect(frame.left, scannerStart, frame.right, scannerStart + SCANNER_LINE_HEIGHT, paint);
             //椭圆
-            RectF rectF = new RectF(frame.left + 2 * SCANNER_LINE_HEIGHT, scannerStart, frame.right - 2 * SCANNER_LINE_HEIGHT, scannerStart + SCANNER_LINE_HEIGHT);
-            canvas.drawOval(rectF, paint);
+//            RectF rectF = new RectF(frame.left + 2 * SCANNER_LINE_HEIGHT, scannerStart, frame.right - 2 * SCANNER_LINE_HEIGHT, scannerStart + SCANNER_LINE_HEIGHT);
+//            canvas.drawOval(rectF, paint);
             scannerStart += SCANNER_LINE_MOVE_DISTANCE;
         } else {
             scannerStart = frame.top;
@@ -324,7 +324,7 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int downX = (int) event.getX();
             int downY = (int) event.getY();
-            if (bitmapRect != null && bitmapRect.contains(downX, downY)) {
+            if (bitmapRect != null && bitmapRect.contains(downX, downY)) {//点击到了flashlight
                 isOpen = !isOpen;
 //          if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
 //            MyLog.e(TAG,"1111111111111111111111");
@@ -336,6 +336,7 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
                 } else {
                     closeFlash();
                 }
+                invalidate();
             }
         }
         return false;

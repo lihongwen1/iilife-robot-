@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.RectF;
+import android.nfc.Tag;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -164,6 +165,7 @@ public class MapView extends View {
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         virtualCanvas = new Canvas(virtualBitmap);
+        updateSlam(644, 807, 736, 827);
     }
 
     /**
@@ -233,31 +235,24 @@ public class MapView extends View {
      * @param xMax
      * @param yMin
      * @param yMax
-     * @param slamBytes
      */
-    // TODO 地图x方向居中
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
+    // TODO make sure the map is in the center of the screen  and it will be drawn all details ,there is an error that the react coordinate is less than the value 'xmin'
+
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
         double resultX = width * 0.70f / xLength;
         double resultY = height * 0.70f / yLength;
-        BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
+        BigDecimal bigDecimal = new BigDecimal(Math.min(resultX,resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = bigDecimal.floatValue();
         if (baseScare >= 5) {
             baseScare = 5;
         }
         Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
-//        deviationY = (yMax + yMin) / 2f*baseScare - height / 2f;
-        deviationY = deviationX;
+        deviationY = (yMax + yMin) / 2f*baseScare - height / 2f;
         Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
-
-
         sCenter.set(width / 2f, height / 2f);
-        slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        slamCanvas.save();
-        drawSlamMap(slamBytes);
-        invalidate();
     }
 
 
@@ -576,8 +571,8 @@ public class MapView extends View {
         virtualCanvas.save();
         for (VirtualWallBean vir : virtualWallBeans) {
             if (vir.getState() != 3) {
-                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(1500 - vir.getPointfs()[1]));
-                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(1500 - vir.getPointfs()[3]));
+                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY( vir.getPointfs()[1]));
+                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY( vir.getPointfs()[3]));
             }
         }
         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
@@ -585,12 +580,29 @@ public class MapView extends View {
             RectF rectF;
             for (VirtualWallBean vir : virtualWallBeans) {
                 if (vir.getState() != 3) {
-                    float l = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
-                    float t = matrixCoordinateY((1500 - vir.getPointfs()[1] + 1500 - vir.getPointfs()[3]) / 2f);
+                    float cx = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
+                    float cy = matrixCoordinateY((vir.getPointfs()[1] + vir.getPointfs()[3]) / 2f);
+                    float k=(matrixCoordinateY( vir.getPointfs()[3])-matrixCoordinateY( vir.getPointfs()[1]))/(matrixCoordinateX(vir.getPointfs()[2])
+                            -matrixCoordinateX(vir.getPointfs()[0]));
+                    //
+                    Log.d(TAG,"tanx:"+k);
+                    float distance=60;//偏移坐标中心点的距离
+                    float translationY= (float) (distance*(Math.sqrt(1+k*k)/(1+k*k)));
+                    float translationX=Math.abs(k)*translationY;
+
+                    if (k>0){
+                        cx+=translationX;
+                        cy-=translationY;
+                    }else {
+                        cx-=translationX;
+                        cy-=translationY;
+                    }
+                    float l=cx-deleteBitmap.getWidth() * scare/2;
+                    float t=cy-deleteBitmap.getWidth() * scare/2;
                     float r = l + deleteBitmap.getWidth() * scare;
                     float b = t + deleteBitmap.getHeight() * scare;
-                    virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
                     rectF = new RectF(l, t, r, b);
+                    virtualCanvas.drawBitmap(deleteBitmap, l, t, virtualPaint);
                     vir.setDeleteIcon(rectF);
                 }
             }
@@ -655,4 +667,5 @@ public class MapView extends View {
         }
         slamCanvas.drawPath(slamPath, slamPaint);
     }
+
 }

@@ -1,5 +1,9 @@
 package com.ilife.iliferobot_cn.presenter;
 
+import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -117,7 +121,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         };
-        timer.schedule(task, 0, 3 * 1000);
+        timer.schedule(task, 0, 7 * 1000);
     }
 
     @Override
@@ -135,12 +139,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 String strMap = resp.getString("slam_map");
                 int xMax = resp.getInt("slam_x_max");
                 int xMin = resp.getInt("slam_x_min");
-                int yMax = resp.getInt("slam_y_max");
-                int yMin = resp.getInt("slam_y_min");
+                int yMin = 1500 - resp.getInt("slam_y_max");
+                int yMax = 1500 - resp.getInt("slam_y_min");
                 if (!TextUtils.isEmpty(strMap)) {
                     slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                     if (isViewAttached() && curStatus != 0x07) {//判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式下不更新地图
-                        mView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
+                        mView.updateSlam(xMin, xMax, yMin, yMax);
                         mView.drawSlamMap(slamBytes);
                         mView.drawRoadMap(realTimePoints, historyRoadList);
                         mView.drawObstacle();
@@ -220,17 +224,17 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int startY = DataUtils.bytesToInt(new byte[]{resp[i - 5], resp[i - 4]}, 0);//4,5
                         int endX = DataUtils.bytesToInt(new byte[]{resp[i - 3], resp[i - 2]}, 0);//6,7
                         int endY = DataUtils.bytesToInt(new byte[]{resp[i - 1], resp[i]}, 0);//8,9
-                        Log.d("queryVirtualWall","original:"+startX+"---"+startY+"---"+endX+"----"+endY);
+                        Log.d("queryVirtualWall", "original:" + startX + "---" + startY + "---" + endX + "----" + endY);
                         //显示坐标(加移量后)
-                        int sx = startX  + 750;
-                        int sy = startY+ 750;
+                        int sx = startX + 750;
+                        int sy = 1500 - (startY + 750);
                         int ex = endX + 750;
-                        int ey =endY + 750;
+                        int ey = 1500 - (endY + 750);
                         int[] dataPoint = {sx, sy, ex, ey};
                         existPointList.add(dataPoint);
                         //TODO saveQueryRect
 //                        saveQueryRect(dataPoint);
-                        Log.d("queryVirtualWall",sx+"---"+sy+"---"+ex+"----"+ey);
+                        Log.d("queryVirtualWall", sx + "---" + sy + "---" + ex + "----" + ey);
                     }
 
                     wallPointList.clear();
@@ -770,6 +774,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public int getCurStatus() {
         return curStatus;
     }
+
+
+
+
 
     @Override
     public void detachView() {

@@ -32,6 +32,7 @@ import com.ilife.iliferobot_cn.utils.DialogUtils;
 import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
+import com.ilife.iliferobot_cn.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,7 +249,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         addImage.setImageResource(R.drawable.n_btn_add);
         addImage.setClickable(true);
 
-        int width_height = (int) getResources().getDimension(R.dimen.dp_50);
+        int width_height = Utils.dip2px(this,60);
         margin = (int) getResources().getDimension(R.dimen.dp_30);
 
         lp_below = new RelativeLayout.LayoutParams(width_height, width_height);

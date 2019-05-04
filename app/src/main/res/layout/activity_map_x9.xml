@@ -207,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp_40"
-                android:drawableTop="@drawable/n_wall_enable"
+                android:drawableTop="@drawable/selector_virtual_wall"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_virtual_wall" />
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/dp_40"
-                android:drawableTop="@drawable/n_btn_control"
+                android:drawableTop="@drawable/selector_control"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_aty_remote" />
@@ -283,16 +283,16 @@
 
             <com.ilife.iliferobot_cn.view.RegularTextView
 
-                android:id="@+id/tv_appointment_x9"
+                android:id="@+id/tv_recharge_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/dp_60"
-                android:drawableTop="@drawable/image_clock_bg"
+                android:drawableTop="@drawable/operation_recharge"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
-                android:text="@string/map_aty_appoint" />
+                android:text="@string/map_aty_recharge" />
 
             <ImageView
                 android:id="@+id/iv_control_close_x9"

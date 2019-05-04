@@ -148,6 +148,7 @@
     <string name="personal_acy_exit">退出登录</string>
     <string name="personal_aty_cancel">取消</string>
     <string name="dialog_del_confirm">确定</string>
+    <string name="confirm">完成</string>
     <string name="setting_aty_devName_null">请输入⽤户名</string>
     <string name="personal_aty_reset_suc">修改⽤户名成功</string>
     <string name="personal_aty_reset_fail">修改⽤户名失败</string>
@@ -177,7 +178,8 @@
     <string name="help_aty_content">请描述遇到的问题和现象</string>
     <string name="personal_aty_count">可输入字数140/140</string>
     <string name="help_aty_text_count">可输入字数%1$s/140</string>
-    <string name="help_aty_add_pic">请添加图片文件(JPG/PNG/WBMP)</string>
+    <string name="help_aty_add_pic">请添加图片文件</string>
+    <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
     <string name="help_aty_photo">拍照</string>
     <string name="help_aty_album">相册</string>
     <string name="feedback_aty_type_null">请选择产品型号</string>
@@ -288,8 +290,11 @@
                                              \t\t\t\t\t\t\t\t\t个月可更换滚刷、3&#8211;5个月可更换高效滤网。
                                             </string>
     <string name="consume_aty_resetSide">是否重置边刷寿命？</string>
+    <string name="consume_aty_resetSide_over">重置后边刷会更新到最新状态</string>
     <string name="consume_aty_resetRoll">是否重置滚刷寿命？</string>
+    <string name="consume_aty_resetRoll_over">重置后滚刷会更新到最新状态</string>
     <string name="consume_aty_resetFilter">是否重置滤网寿命？</string>
+    <string name="consume_aty_resetFilter_over">重置后滤网会更新到最新状态</string>
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">设备离线</string>
     <string name="setting_aty_type_x800">ILIFE X800</string>
@@ -299,6 +304,7 @@
     <string name="select_aty_x785">x785</string>
     <string name="select_aty_x787">x787</string>
     <string name="select_aty_x800">x800</string>
+    <string name="select_aty_x900">x900</string>
     <string name="setting_aty_hit_">请设置用户名～</string>
     <string name="consume_aty_text_1">温馨提示:</string>
     <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
@@ -361,4 +367,12 @@
 
     <string name="back_to_recharge">返回充电座</string>
     <string name="finish_the_cleaning">结束当前清扫</string>
+    
+     <!--device stop work reason-->
+    <string name="stop_work_reason1">完成清扫</string>
+    <string name="stop_work_reason2">低电量回冲停止</string>
+    <string name="stop_work_reason3">遥控器暂停</string>
+    <string name="stop_work_reason4">按键暂停</string>
+    <string name="stop_work_reason5">App主动暂停</string>
+    <string name="stop_work_reason6">异常报警停止</string>
 </resources>

@@ -23,7 +23,7 @@ import butterknife.BindView;
  * Created by chenjiaping on 2017/8/18.
  */
 
-public class HistoryDetailActivity_x9 extends BackBaseActivity{
+public class HistoryDetailActivity_x9 extends BackBaseActivity {
     private final String TAG = HistoryDetailActivity_x9.class.getSimpleName();
     private byte[] slamBytes;
     private byte[] roadBytes;
@@ -43,6 +43,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity{
     TextView tv_clean_time;
     @BindView(R.id.tv_lean_area)
     TextView tv_lean_area;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,20 +95,20 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity{
     }
 
     private void drawHistoryRoad() {
-        mapView.drawRoadMap(historyPointsList,null);
+        mapView.drawRoadMap(historyPointsList, null);
     }
 
     private void drawSlamMap(byte[] slamBytes) {
-      mapView.drawSlamMap(slamBytes);
-      mapView.drawObstacle();
+        mapView.updateSlam(xMin,xMax,yMin,yMax);
+        mapView.drawSlamMap(slamBytes);
+        mapView.drawObstacle();
     }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         drawHistoryMap();
     }
-
-
 
 
     private void getData() {//取出传递过来的集合
@@ -117,13 +118,41 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity{
             mapList = record.getHistoryData();
             xMin = record.getSlam_xMin();
             xMax = record.getSlam_xMax();
-            yMin = record.getSlam_yMin();
-            yMax = record.getSlam_yMax();
+            yMax = 1500 - record.getSlam_yMin();
+            yMin = 1500 - record.getSlam_yMax();
             MyLog.e(TAG, "getDate===:" + xMin + "<--->" + xMax + "<--->" + yMin + "<--->" + yMax + "<--->");
-            tv_end_reason.setText(getResources().getString(R.string.setting_aty_end_reason,"清扫完成"));
+            tv_end_reason.setText(getResources().getString(R.string.setting_aty_end_reason, gerRealErrortTip(record.getStop_reason())));
             tv_clean_time.setText(record.getWork_time() / 60 + "min");
             tv_lean_area.setText(record.getClean_area() + "㎡");
         }
+    }
+
+    private String gerRealErrortTip(int number) {
+        String text = "";
+        switch (number) {
+            case 1:
+                text = getResources().getString(R.string.stop_work_reason1);
+                break;
+            case 2:
+                text = getResources().getString(R.string.stop_work_reason2);
+                break;
+            case 3:
+                text = getResources().getString(R.string.stop_work_reason3);
+                break;
+            case 4:
+                text = getResources().getString(R.string.stop_work_reason4);
+                break;
+            case 5:
+                text = getResources().getString(R.string.stop_work_reason5);
+                break;
+            case 6:
+                text = getResources().getString(R.string.stop_work_reason6);
+                break;
+            default:
+                text = getResources().getString(R.string.stop_work_reason1);
+                break;
+        }
+        return text;
     }
 
     public void initView() {

@@ -25,13 +25,14 @@ public class MyApplication extends MultiDexApplication {
     private static MyApplication instance;
     public Typeface tf_light;
     public Typeface tf_regular;
+    public Typeface tf_english_regular;
     public Typeface tf_medium;
     public Typeface tf_itca;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_TEST;
+        Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_PRODUCT;
         switch (Constants.CUR_APP_ENVIRONMENT) {
             case Constants.APP_ENVIRONMENT_TEST:
                  //        国内测试环境
@@ -75,6 +76,7 @@ public class MyApplication extends MultiDexApplication {
         tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
         tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
         tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
+        tf_english_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
     }
 
 

@@ -6,11 +6,13 @@
         android:layout_marginStart="@dimen/dp_14"
         android:contentDescription="@null"
         android:id="@+id/image_back"
-        style="@style/Image_Back_Style" />
-    <com.ilife.iliferobot_cn.view.RegularTextView
+        style="@style/Image_Back_Style"
+        />
+    <TextView
         android:layout_centerVertical="true"
         android:id="@+id/tv_top_title"
         style="@style/Text_16sp_33"
+        android:textStyle="bold"
         android:layout_centerInParent="true"
         android:text="@string/login_aty_login" />
     <ImageView

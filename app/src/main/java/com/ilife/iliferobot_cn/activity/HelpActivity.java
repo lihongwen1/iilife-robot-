@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,6 +48,7 @@ import com.ilife.iliferobot_cn.utils.DialogUtils;
 import com.ilife.iliferobot_cn.utils.KeyboardUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.UserUtils;
+import com.ilife.iliferobot_cn.utils.Utils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -70,7 +72,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     Context context;
     LayoutInflater inflater;
     ScrollView scrollView;
-    TextView tv_numbs, tv_selsct, tv_notice, tv_telNum1, tv_telNum2;
+    TextView tv_numbs, tv_telNum1;
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
     ImageView image_add, image_1;
@@ -119,9 +121,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         image_1 = (ImageView) findViewById(R.id.image_1);
         image_add = (ImageView) findViewById(R.id.image_add);
         tv_telNum1 = findViewById(R.id.tv_telNum1);
-        tv_telNum2 = findViewById(R.id.tv_telNum2);
-        tv_selsct = (TextView) findViewById(R.id.tv_select);
-        tv_notice = (TextView) findViewById(R.id.tv_notice);
         bt_confirm = (Button) findViewById(R.id.bt_confirm);
         rl_type = (RelativeLayout) findViewById(R.id.rl_type);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -131,8 +130,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         et_type.setOnClickListener(this);
         image_add.setOnClickListener(this);
         tv_telNum1.setOnClickListener(new MyListener());
-        tv_telNum2.setOnClickListener(new MyListener());
-        tv_selsct.setOnClickListener(this);
         bt_confirm.setOnClickListener(this);
         et_content.addTextChangedListener(new MyTextWatcher());
 
@@ -212,9 +209,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 });
                 break;
             case R.id.et_type:
-                showPopup();
-                break;
-            case R.id.tv_select:
                 showPopup();
                 break;
             case R.id.image_1:
@@ -320,15 +314,15 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             listView.setAdapter(new ArrayAdapter<>(this, R.layout.simple_list_item, R.id.simple_list_item_textView, types));
             typePop = new PopupWindow(this);
             typePop.setContentView(contentView);
-            typePop.setWidth(et_type.getWidth());
+            typePop.setWidth(et_type.getWidth()+4);
             typePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
             typePop.setBackgroundDrawable(new ColorDrawable());
             typePop.setOutsideTouchable(true);
             typePop.setFocusable(true);
         }
         if (!typePop.isShowing()) {
-            int xOff = (int) (rl_type.getLeft() + getResources().getDimension(R.dimen.dp_30));
-            typePop.showAsDropDown(rl_type, xOff, 0);
+            int xOff = (int) (rl_type.getLeft() + getResources().getDimension(R.dimen.dp_30)-2);
+            typePop.showAsDropDown(rl_type, xOff, Utils.dip2px(this,4));
         }
     }
 
@@ -445,7 +439,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                         ToastUtils.showToast(context, getString(R.string.access_photo));
                     }
                 }
-            });
+            }).dispose();
         }
     }
 }

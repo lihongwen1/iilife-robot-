@@ -7,9 +7,10 @@
 
     <RelativeLayout style="@style/Aty_top_rl_bg">
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <TextView
             android:id="@+id/tv_title"
             style="@style/Text_16sp_33"
+            android:textStyle="bold"
             android:layout_centerInParent="true"
             android:text="@string/main_aty_my_robot" />
 

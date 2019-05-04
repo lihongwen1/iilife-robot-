@@ -14,18 +14,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.MediaStore;
-
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -42,11 +40,14 @@ import com.google.zxing.decoding.RGBLuminanceSource;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.view.ViewfinderView;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import butterknife.BindView;
 
 
 /**
@@ -54,13 +55,12 @@ import java.util.Vector;
  *
  * @author Ryan.Tang
  */
-public class CaptureActivity extends BaseActivity implements Callback {
+public class CaptureActivity extends BackBaseActivity implements Callback {
 
     private static final int REQUEST_CODE_SCAN_GALLERY = 100;
 
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
-    private ImageView image_back;
     private boolean hasSurface;
     private Vector<BarcodeFormat> decodeFormats;
     private String characterSet;
@@ -75,7 +75,8 @@ public class CaptureActivity extends BaseActivity implements Callback {
     //	private Button cancelScanButton;
     public static final int RESULT_CODE_QR_SCAN = 0xA1;
     public static final String INTENT_EXTRA_KEY_QR_SCAN = "qr_scan_result";
-
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
     /**
      * Called when the activity is first created.
      */
@@ -83,18 +84,6 @@ public class CaptureActivity extends BaseActivity implements Callback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
-        CameraManager.init(getApplication());
-        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_content);
-        image_back = (ImageView) findViewById(R.id.image_back);
-        image_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-//		cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
-        hasSurface = false;
-        inactivityTimer = new InactivityTimer(this);
 
         //添加toolbar
 //        addToolbar();
@@ -273,6 +262,11 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
     @Override
     public void initView() {
+       tv_title.setText(R.string.personal_aty_scan);CameraManager.init(getApplication());
+        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_content);
+//		cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
+        hasSurface = false;
+        inactivityTimer = new InactivityTimer(this);
 
     }
 

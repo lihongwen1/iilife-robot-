@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/qr_code_bg">
-    <com.ilife.iliferobot_cn.view.RegularTextView
-        android:id="@+id/tv_title"
+    android:background="@drawable/qr_code_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        android:gravity="center"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/color_33"/>
+        android:layout_height="@dimen/dp_92"
+        android:orientation="vertical">
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/tv_title"
+            style="@style/Text_16sp_33"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/consume_aty_resetSide"
+            android:layout_marginTop="@dimen/dp_20"/>
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:id="@+id/tv_tips"
+            style="@style/Text_12sp_ac"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/consume_aty_resetSide_over"
+            android:layout_marginTop="@dimen/dp_10"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/color_e2"
         android:layout_marginStart="@dimen/dp_1"
-        android:layout_marginEnd="@dimen/dp_1"/>
+        android:layout_marginEnd="@dimen/dp_1"
+        android:background="@color/color_e2" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60">
+        android:layout_height="@dimen/dp_48">
+
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/personal_aty_cancel"
             android:gravity="center"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_33"/>
+            android:text="@string/personal_aty_cancel"
+            android:textColor="@color/color_f08300"
+            android:textSize="@dimen/sp_14" />
+
         <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:background="@color/color_e2"
-            android:layout_marginBottom="@dimen/dp_2"/>
+            android:layout_marginBottom="@dimen/dp_2"
+            android:background="@color/color_e2" />
+
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_confirm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/dialog_del_confirm"
             android:gravity="center"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_f08300"/>
+            android:text="@string/dialog_del_confirm"
+            android:textColor="@color/color_33"
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 </LinearLayout>

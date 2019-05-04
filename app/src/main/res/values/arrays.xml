@@ -6,9 +6,10 @@
     </string-array>
 
     <string-array name="device_name">
-        <item>@string/select_aty_x785</item>
-        <item>@string/select_aty_x787</item>
+        <item>@string/select_aty_x900</item>
         <item>@string/select_aty_x800</item>
+        <item>@string/select_aty_x787</item>
+        <item>@string/select_aty_x785</item>
     </string-array>
     <string-array name="array_week">
         <item>@string/clock_aty_sun</item>

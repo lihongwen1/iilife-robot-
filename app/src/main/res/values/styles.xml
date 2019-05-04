@@ -106,6 +106,7 @@
         <item name="android:background">@color/bg_color_f5f7fa</item>
     </style>
 
+
     <style name="Aty_top_rl_bg">
         <item name="android:background">@color/white</item>
         <item name="android:layout_width">match_parent</item>

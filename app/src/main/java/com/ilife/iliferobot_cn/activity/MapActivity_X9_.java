@@ -72,7 +72,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     static final int SEND_VIR = 1;//add virtual
     static final int EXIT_VIR = 2;// delete virtual
     Context context;
-    boolean hasAppoint, hasStart, hasStart_;
+    boolean hasStart, hasStart_;
     @BindView(R.id.rl_status)
     View anchorView;
     @BindView(R.id.relativeLayout)
@@ -93,8 +93,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     TextView tv_point;
     @BindView(R.id.tv_along_x9)
     TextView tv_along;
-    @BindView(R.id.tv_appointment_x9)
-    TextView tv_appointment;
     @BindView(R.id.image_ele)
     ImageView image_ele;//battery
     @BindView(R.id.tv_control_x9)
@@ -316,8 +314,8 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes) {
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, slamBytes);
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
+        mMapView.updateSlam(xMin, xMax, yMin, yMax);
     }
 
     @Override
@@ -638,7 +636,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         }
     }
 
-    @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_appointment_x9, R.id.tv_along_x9,
+    @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
             R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_cancel_virtual_x9, R.id.tv_ensure_virtual_x9
             , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_close_x9
     })
@@ -677,9 +675,9 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 Intent i = new Intent(context, SettingActivity.class);
                 startActivity(i);
                 break;
-            case R.id.tv_appointment_x9: // TODO 进入预约界面
-                Intent i_clock = new Intent(context, ClockingActivity.class);
-                startActivity(i_clock);
+            case R.id.tv_recharge_x9://回冲
+                mPresenter.enterRechargeMode();
+                curentBottom=2;
                 showBottomView();
                 break;
             case R.id.tv_along_x9:  //done
@@ -877,6 +875,5 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     public void updateOperationViewStatue(int surStatues) {
         tv_point.setSelected(surStatues == 0x05);
         tv_along.setSelected(surStatues == 0x04);
-        tv_appointment.setSelected(hasAppoint);
     }
 }

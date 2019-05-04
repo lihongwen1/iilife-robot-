@@ -36,7 +36,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     Context context;
     String physicalId;
     String subdomain;
-    TextView tv_title, tv_cancel, tv_confirm;
+    TextView tv_title, tv_tips,tv_cancel, tv_confirm;
     LayoutInflater inflater;
     ProgressBar pb_side, pb_roll, pb_filter;
     TextView tv_percent_side, tv_percent_roll, tv_percent_filter;
@@ -100,6 +100,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         if (alertDialog == null) {
             View contentView = inflater.inflate(R.layout.layout_reset_consume, null);
             tv_title = contentView.findViewById(R.id.tv_title);
+            tv_tips = contentView.findViewById(R.id.tv_tips);
             tv_cancel = contentView.findViewById(R.id.tv_cancel);
             tv_confirm = contentView.findViewById(R.id.tv_confirm);
             int width = (int) getResources().getDimension(R.dimen.dp_300);
@@ -115,12 +116,15 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         switch (tag) {
             case R.id.rl_side:
                 tv_title.setText(getString(R.string.consume_aty_resetSide));
+                tv_tips.setText(R.string.consume_aty_resetSide_over);
                 break;
             case R.id.rl_roll:
                 tv_title.setText(getString(R.string.consume_aty_resetRoll));
+                tv_tips.setText(R.string.consume_aty_resetRoll_over);
                 break;
             case R.id.rl_filter:
                 tv_title.setText(getString(R.string.consume_aty_resetFilter));
+                tv_tips.setText(R.string.consume_aty_resetFilter_over);
                 break;
         }
     }

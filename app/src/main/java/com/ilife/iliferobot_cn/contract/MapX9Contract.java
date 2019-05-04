@@ -15,7 +15,7 @@ public interface MapX9Contract {
         void distributeDirectOrder(int directId);
         void showRemoteControl();
         void onBottomCancelClick();
-        void updateSlam(int xMin, int xMax, int yMin, int yMax, byte[] slamBytes);
+        void updateSlam(int xMin, int xMax, int yMin, int yMax);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
 
