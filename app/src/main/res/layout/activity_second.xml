@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/image_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_265"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_127"
             android:background="@drawable/ilife_logo" />
@@ -80,7 +80,7 @@
         <com.ilife.iliferobot_cn.view.RegularButton
             android:id="@+id/bt_quick_login"
             style="@style/Button_Style_quick_login"
-            android:layout_marginTop="@dimen/dp_141"
+            android:layout_marginTop="@dimen/dp_100"
             android:clickable="false"
             android:text="@string/quick_login" />
 

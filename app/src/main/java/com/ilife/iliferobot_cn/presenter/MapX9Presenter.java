@@ -121,7 +121,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         };
-        timer.schedule(task, 0, 7 * 1000);
+        timer.schedule(task, 0, 3* 1000);
     }
 
     @Override

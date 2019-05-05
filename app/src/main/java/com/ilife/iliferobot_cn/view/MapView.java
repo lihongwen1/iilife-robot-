@@ -21,6 +21,7 @@ import android.view.View;
 import com.accloud.utils.LogUtil;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
+import com.ilife.iliferobot_cn.model.SlamLineBean;
 import com.ilife.iliferobot_cn.model.VirtualWallBean;
 import com.ilife.iliferobot_cn.utils.BitmapUtils;
 import com.ilife.iliferobot_cn.utils.DataUtils;
@@ -35,7 +36,7 @@ import java.util.List;
 public class MapView extends View {
     private static String TAG = "MapView";
     private int width, height;
-    private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
+    private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint, obstaclePaint;
     private Path roadPath, existvirtualPath, slamPath, obstaclePath;
     private float downX, downY;
     private float beforeDistance, afterDistance;
@@ -101,7 +102,16 @@ public class MapView extends View {
         slamPaint.setStrokeJoin(Paint.Join.ROUND);
         slamPaint.setStrokeCap(Paint.Cap.ROUND);
         slamPaint.setColor(getResources().getColor(R.color.colorPrimary));
-        slamPaint.setStrokeWidth(4f);
+        slamPaint.setStrokeWidth(1f);
+
+        obstaclePaint = new Paint();
+        obstaclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        obstaclePaint.setStyle(Paint.Style.STROKE);
+        obstaclePaint.setFilterBitmap(true);
+        obstaclePaint.setStrokeJoin(Paint.Join.ROUND);
+        obstaclePaint.setStrokeCap(Paint.Cap.ROUND);
+        obstaclePaint.setColor(getResources().getColor(R.color.clock_status_bar_color));
+        obstaclePaint.setStrokeWidth(2f);
 
         positionCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         positionCirclePaint.setStyle(Paint.Style.FILL);
@@ -213,10 +223,10 @@ public class MapView extends View {
      * 绘制障碍物点
      */
     public void drawObstacle() {
-        slamPaint.setColor(colors[0]);
-        slamCanvas.drawPath(obstaclePath, slamPaint);
         slamPaint.setColor(colors[1]);
         slamCanvas.drawPath(slamPath, slamPaint);
+        slamPaint.setColor(colors[0]);
+        slamCanvas.drawPath(obstaclePath, slamPaint);
         invalidate();
     }
 
@@ -236,21 +246,23 @@ public class MapView extends View {
      * @param yMin
      * @param yMax
      */
-    // TODO make sure the map is in the center of the screen  and it will be drawn all details ,there is an error that the react coordinate is less than the value 'xmin'
-
+    // TODO make sure the map is in the center of the screen  and it will be drawn all details ,there is an error that the genuine coordinate is less than the value 'xmin'
     public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
+        if (xLength <= 0 || yLength <= 0) {
+            return;
+        }
         double resultX = width * 0.70f / xLength;
         double resultY = height * 0.70f / yLength;
-        BigDecimal bigDecimal = new BigDecimal(Math.min(resultX,resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
-        baseScare = bigDecimal.floatValue();
+        BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
+        baseScare = Math.round(bigDecimal.floatValue());
         if (baseScare >= 5) {
             baseScare = 5;
         }
         Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
-        deviationY = (yMax + yMin) / 2f*baseScare - height / 2f;
+        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
         Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
         sCenter.set(width / 2f, height / 2f);
     }
@@ -571,8 +583,8 @@ public class MapView extends View {
         virtualCanvas.save();
         for (VirtualWallBean vir : virtualWallBeans) {
             if (vir.getState() != 3) {
-                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY( vir.getPointfs()[1]));
-                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY( vir.getPointfs()[3]));
+                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(vir.getPointfs()[1]));
+                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(vir.getPointfs()[3]));
             }
         }
         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
@@ -582,23 +594,23 @@ public class MapView extends View {
                 if (vir.getState() != 3) {
                     float cx = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
                     float cy = matrixCoordinateY((vir.getPointfs()[1] + vir.getPointfs()[3]) / 2f);
-                    float k=(matrixCoordinateY( vir.getPointfs()[3])-matrixCoordinateY( vir.getPointfs()[1]))/(matrixCoordinateX(vir.getPointfs()[2])
-                            -matrixCoordinateX(vir.getPointfs()[0]));
+                    float k = (matrixCoordinateY(vir.getPointfs()[3]) - matrixCoordinateY(vir.getPointfs()[1])) / (matrixCoordinateX(vir.getPointfs()[2])
+                            - matrixCoordinateX(vir.getPointfs()[0]));
                     //
-                    Log.d(TAG,"tanx:"+k);
-                    float distance=60;//偏移坐标中心点的距离
-                    float translationY= (float) (distance*(Math.sqrt(1+k*k)/(1+k*k)));
-                    float translationX=Math.abs(k)*translationY;
+                    Log.d(TAG, "tanx:" + k);
+                    float distance = 60;//偏移坐标中心点的距离
+                    float translationY = (float) (distance * (Math.sqrt(1 + k * k) / (1 + k * k)));
+                    float translationX = Math.abs(k) * translationY;
 
-                    if (k>0){
-                        cx+=translationX;
-                        cy-=translationY;
-                    }else {
-                        cx-=translationX;
-                        cy-=translationY;
+                    if (k > 0) {
+                        cx += translationX;
+                        cy -= translationY;
+                    } else {
+                        cx -= translationX;
+                        cy -= translationY;
                     }
-                    float l=cx-deleteBitmap.getWidth() * scare/2;
-                    float t=cy-deleteBitmap.getWidth() * scare/2;
+                    float l = cx - deleteBitmap.getWidth() * scare / 2;
+                    float t = cy - deleteBitmap.getWidth() * scare / 2;
                     float r = l + deleteBitmap.getWidth() * scare;
                     float b = t + deleteBitmap.getHeight() * scare;
                     rectF = new RectF(l, t, r, b);
@@ -611,13 +623,14 @@ public class MapView extends View {
         invalidate();
     }
 
-
-    private int x, y, length, totalCount;
+    List<SlamLineBean> lastLineBeans = new ArrayList<>();
 
     /**
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
+
+        int x = 0, y = 0, length, totalCount = 0;
         if (slamBytes != null) {
             Log.d(TAG, "drawSlamMap-----" + slamBytes.length);
         }
@@ -637,35 +650,90 @@ public class MapView extends View {
                 length = DataUtils.bytesToInt2(new byte[]{slamBytes[i + 1], slamBytes[i + 2]}, 0);
                 Log.d(TAG, "地图类型:" + attr + "---length" + length);
                 slamPaint.setColor(colors[attr - 1]);
-                for (int j = 0; j < length; j++) {
-                    if (totalCount >= 1500) {
-                        x = 0;
-                        totalCount = 0;
-                        y++;
-                    }
-                    if (attr != 0x03) {//0x03未探索区域 0x02已探索区域
-                        Log.d(TAG, "slam x:---" + x + "y:---" + (1500 - y));
-                        if (i != 0) {
-//                            path.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y - 1));
-//                            path.addRect(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y - 1),
-//                                    matrixCoordinateX(x), matrixCoordinateY(1500 - y), Path.Direction.CCW);
-                            int distance = (int) (matrixCoordinateY(1500 - y) - matrixCoordinateY(1500 - y - 1));
-                            for (int k = 0; k < distance; k++) {
-                                path.moveTo(matrixCoordinateX(x - 1), matrixCoordinateY(1500 - y) + k);
-                                path.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y) + k);
-                            }
-
+                int distanceTo1500 = 1500 - totalCount;
+                switch (attr) {
+                    case 0x03://未探索区域
+                        if (length > 1500) {
+                            y += length / 1500;
+                            length = length % 1500;
                         }
-                    }
-                    x++;
-                    totalCount++;
+                        if (length < distanceTo1500) {
+                            x += length;
+                            totalCount += length;
+                        } else {
+                            x = length - distanceTo1500;
+                            //切换到下一行绘制
+                            for (int j = 1; j < baseScare; j++) {
+                                for (SlamLineBean slb : lastLineBeans) {
+                                    Path realPath = slb.getType() == 0x01 ? obstaclePath : slamPath;
+                                    realPath.moveTo(matrixCoordinateX(slb.getStartX()), matrixCoordinateY(1500 - y) + j);
+                                    realPath.lineTo(matrixCoordinateX(slb.getEndX()), matrixCoordinateY(1500 - y) + j);
+                                }
+                            }
+                            lastLineBeans.clear();
+                            y++;
+                            totalCount = x;
+                        }
+                        break;
+                    case 0x01://障碍物
+                        if (length < distanceTo1500) {
+                            obstaclePath.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            x += length;
+                            totalCount += length;
+                            obstaclePath.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, x - length, x));
+                        } else {
+                            obstaclePath.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            obstaclePath.lineTo(matrixCoordinateX(1500), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, x, 1500));
+                            //切换到下一行绘制
+                            for (int j = 1; j < baseScare; j++) {
+                                for (SlamLineBean slb : lastLineBeans) {
+                                    Path realPath = slb.getType() == 0x01 ? obstaclePath : slamPath;
+                                    realPath.moveTo(matrixCoordinateX(slb.getStartX()), matrixCoordinateY(1500 - y) + j);
+                                    realPath.lineTo(matrixCoordinateX(slb.getEndX()), matrixCoordinateY(1500 - y) + j);
+                                }
+                            }
+                            lastLineBeans.clear();//清空所有线的数据
+                            y++;
+                            x = length - distanceTo1500;
+                            obstaclePath.moveTo(matrixCoordinateX(0), matrixCoordinateY(1500 - y));
+                            obstaclePath.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, 0, x));
+                            totalCount = x;
+                        }
+                        break;
+                    case 0x02://已探索区域
+                        if (length < distanceTo1500) {
+                            slamPath.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            x += length;
+                            totalCount += length;
+                            slamPath.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, x - length, x));
+                        } else {
+                            slamPath.moveTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            slamPath.lineTo(matrixCoordinateX(1500), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, x, 1500));
+                            //切换到下一行绘制
+                            for (int j = 1; j < baseScare; j++) {
+                                for (SlamLineBean slb : lastLineBeans) {
+                                    Path realPath = slb.getType() == 0x01 ? obstaclePath : slamPath;
+                                    realPath.moveTo(matrixCoordinateX(slb.getStartX()), matrixCoordinateY(1500 - y) + j);
+                                    realPath.lineTo(matrixCoordinateX(slb.getEndX()), matrixCoordinateY(1500 - y) + j);
+                                }
+                            }
+                            lastLineBeans.clear();//清空所有线的数据
+                            y++;
+                            x = length - distanceTo1500;
+                            slamPath.moveTo(matrixCoordinateX(0), matrixCoordinateY(1500 - y));
+                            slamPath.lineTo(matrixCoordinateX(x), matrixCoordinateY(1500 - y));
+                            lastLineBeans.add(new SlamLineBean(attr, 0, x));
+                            totalCount = x;
+                        }
+                        break;
                 }
             }
-            x = 0;
-            totalCount = 0;
-            y = 0;
         }
-        slamCanvas.drawPath(slamPath, slamPaint);
     }
 
 }

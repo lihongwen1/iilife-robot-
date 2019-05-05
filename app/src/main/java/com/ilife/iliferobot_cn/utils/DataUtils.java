@@ -20,6 +20,7 @@ public class DataUtils {
         return hexList;
     }
 
+
     //高位
     public static int bytesToInt2(byte[] src, int offset) {
         int value;
