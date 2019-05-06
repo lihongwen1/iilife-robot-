@@ -194,7 +194,7 @@
 
     <string name="map_aty_title">%1$s 智能扫地机器人</string>
     <string name="map_aty_status">当前状态</string>
-    <string name="map_aty_gang">--</string>
+    <string name="map_aty_gang">— —</string>
     <string name="setting_aty_area">清扫面积</string>
     <string name="setting_aty_end_reason">结束原因:%1$s</string>
     <string name="map_aty_time">清扫时间</string>
@@ -215,7 +215,9 @@
     <string name="map_aty_function">功能</string>
     <string name="map_aty_use_control">已启用遥控功能</string>
     <string name="map_aty_use_recharging">%1$s正在回充&#8230;</string>
+    <string name="map_aty_use_recharging_x9">扫地机器人正在回充</string>
     <string name="map_aty_key_pointing">%1$s已启用重点清扫</string>
+    <string name="map_aty_key_pointing_x9">已启用重点清扫</string>
     <string name="map_aty_use_along">已启用沿边清扫</string>
     <string name="map_aty_can_not_execute">不可操作</string>
     <string name="adapter_error_no_error">没有异常</string>
@@ -341,7 +343,7 @@
     <string name="map_aty_set_suc">虚拟墙设置成功！</string>
     <string name="map_aty_set_fail">虚拟墙设置失败！</string>
     <string name="map_aty_max_count">已经达到虚拟墙最大数量！！</string>
-    <string name="setting_aty_ota_update">OTA升级</string>
+    <string name="setting_aty_ota_update">固件升级</string>
     <string name="ota_aty_update_suc">升级成功！</string>
     <string name="ota_aty_updating">正在升级&#8230;</string>
     <string name="ota_aty_cur">当前版本:%1$s</string>

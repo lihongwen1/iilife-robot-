@@ -6,9 +6,9 @@
     <View
         android:id="@+id/view5"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="4dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_e2" />
+        android:background="@color/bg_color_f5f7fa" />
 
     <com.ilife.iliferobot_cn.ui.SlidingMenu
         android:id="@+id/slidingMenu"

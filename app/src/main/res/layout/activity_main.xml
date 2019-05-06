@@ -10,14 +10,14 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/Text_16sp_33"
-            android:textStyle="bold"
             android:layout_centerInParent="true"
-            android:text="@string/main_aty_my_robot" />
+            android:text="@string/main_aty_my_robot"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/image_personal"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_30"
@@ -28,35 +28,23 @@
     <View
         android:id="@+id/view"
         style="@style/View_Line_Style" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <com.ilife.iliferobot_cn.ui.MyRelativeLayout
-            android:id="@+id/container"
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
 
-            <ImageView
-                android:id="@+id/image_add"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
-                android:layout_below="@+id/recyclerView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_30"
-                android:background="@drawable/n_btn_add"
-                android:visibility="gone" />
-        </com.ilife.iliferobot_cn.ui.MyRelativeLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/layout_no_device"
@@ -64,28 +52,24 @@
         android:layout_height="match_parent"
         android:visibility="visible">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:id="@+id/tv_notice_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_notice"
+            android:layout_centerHorizontal="true"
+            android:text="@string/no_device_tip_hi"
+            android:textColor="#fff08300"
+            android:textSize="24sp" />
+
+        <com.ilife.iliferobot_cn.view.LightTextView
+            android:id="@+id/tv_notice"
+            style="@style/Text_16sp_33"
             android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/no_device_tip_cleaning" />
 
-            <com.ilife.iliferobot_cn.view.LightTextView
-                android:id="@+id/tv_notice_big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_device_tip_hi"
-                android:textColor="#fff08300"
-                android:textSize="24sp" />
-
-            <com.ilife.iliferobot_cn.view.LightTextView
-                android:id="@+id/tv_notice"
-                style="@style/Text_16sp_33"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="@string/no_device_tip_cleaning" />
-
-        </LinearLayout>
 
         <com.ilife.iliferobot_cn.view.RegularButton
             android:id="@+id/bt_add"

@@ -353,6 +353,7 @@
             style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_ota_update" />
         <com.ilife.iliferobot_cn.view.LightTextView
+            android:visibility="gone"
             android:id="@+id/tv_ota_ver"
             style="@style/Text_14sp_ac"
             android:layout_marginStart="@dimen/dp_20"

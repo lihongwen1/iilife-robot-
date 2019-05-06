@@ -33,10 +33,14 @@ import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +48,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 
-public class MainActivity extends BaseActivity<MainPresenter> implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, MainContract.View {
+public class MainActivity extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View {
     private final String TAG = MainActivity.class.getSimpleName();
     public static List<ACUserDevice> mAcUserDevices;
     public static final String KEY_PHYCIALID = "KEY_PHYCIALID";
@@ -61,38 +65,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     TextView tv_title;
     @BindView(R.id.tv_notice)
     TextView tv_notice;
-    ImageView addImage;
-    //    ImageView tv_add_virtual;
     @BindView(R.id.image_personal)
     ImageView image_personal;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout refreshLayout;
-
+    SmartRefreshLayout refreshLayout;
     DevListAdapter adapter;
     AlertDialog alertDialog;
     Dialog loadingDialog;
     LinearLayoutManager llm;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-    @BindView(R.id.container)
-    MyRelativeLayout container;
     @BindView(R.id.layout_no_device)
     RelativeLayout layout_no_device;
-    RelativeLayout.LayoutParams params;
-    RelativeLayout.LayoutParams lp_center;
-    RelativeLayout.LayoutParams lp_below;
-    RelativeLayout.LayoutParams lp_bottom;
-    int downX, downY, margin;
     Rect rect;
     private WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_REFRESH_OVER:
-                    if (refreshLayout != null && refreshLayout.isRefreshing()) {
-                        refreshLayout.setRefreshing(false);
+                    if (refreshLayout != null) {
+                       refreshLayout.finishRefresh();
                     }
                     break;
             }
@@ -102,7 +96,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
 
     @Override
     public void setRefreshOver() {
-        handler.sendEmptyMessageDelayed(TAG_REFRESH_OVER, 1000);
+        handler.sendEmptyMessage(TAG_REFRESH_OVER);
     }
 
 
@@ -121,14 +115,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void initView() {
         activity=this;
         context=this;
-        initAddImage();
         rect = new Rect();
         llm = new LinearLayoutManager(context);
-        params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        params.addRule(RelativeLayout.BELOW, R.id.recyclerView);
-        params.setMargins(0, (int) getResources().getDimension(R.dimen.dp_30), 0, 0);
         loadingDialog = DialogUtils.createLoadingDialog_(context);
 
         mAcUserDevices = new ArrayList<>();
@@ -143,13 +131,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             }
         });
 
-        refreshLayout.setColorSchemeColors(getResources()
-                .getColor(android.R.color.holo_blue_bright));
         bt_add.setOnClickListener(this);
-//        tv_add_virtual.setOnClickListener(this);
         image_personal.setOnClickListener(this);
-        refreshLayout.setOnRefreshListener(this);
-
+        refreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.getDeviceList());
         adapter.setOnClickListener(new DevListAdapter.OnClickListener() {
             @Override
             public void onMenuClick(final int position) {
@@ -196,23 +180,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 }
             }
         });
-
-        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            if (mAcUserDevices.size() >= 4) {
-                addImage.setLayoutParams(lp_bottom);
-            } else {
-                addImage.setLayoutParams(lp_below);
-            }
-            if (container.getChildCount() == 3) {
-                container.removeView(addImage);
-            }
-            container.addView(addImage);
-            rect.top = addImage.getTop();
-            rect.left = addImage.getLeft();
-            rect.right = addImage.getRight();
-            rect.bottom = addImage.getBottom();
-            container.setmRect(rect);
-        });
     }
 
     @Override
@@ -243,28 +210,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     }
 
 
-    public void initAddImage() {
-        addImage = new ImageView(context);
-        addImage.setId(R.id.addImage);
-        addImage.setImageResource(R.drawable.n_btn_add);
-        addImage.setClickable(true);
-
-        int width_height = Utils.dip2px(this,60);
-        margin = (int) getResources().getDimension(R.dimen.dp_30);
-
-        lp_below = new RelativeLayout.LayoutParams(width_height, width_height);
-        lp_below.addRule(RelativeLayout.BELOW, R.id.recyclerView);
-        lp_below.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        lp_below.topMargin = margin;
-
-        lp_bottom = new RelativeLayout.LayoutParams(width_height, width_height);
-        lp_bottom.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lp_bottom.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        lp_bottom.bottomMargin = margin;
-
-        lp_center = new RelativeLayout.LayoutParams(width_height, width_height);
-        lp_center.addRule(RelativeLayout.CENTER_IN_PARENT);
-    }
 
     @Override
     public void updateDeviceList(List<ACUserDevice> acUserDevices) {
@@ -295,10 +240,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 }
 
                 break;
-//            case R.id.tv_add_virtual:
-//                i = new Intent(context,SelectActivity.class);
-//                startActivity(i);
-//                break;
             case R.id.image_personal:
                 i = new Intent(context, PersonalActivity.class);
                 startActivity(i);
@@ -321,16 +262,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         adapter.notifyDataSetChanged();
         DialogUtils.closeDialog(loadingDialog);
     }
-
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {
-        mPresenter.getDeviceList();
-    }
-
-
 
     private void showOfflineDialog() {
         View view = LayoutInflater.from(context).inflate(R.layout.offline_dialog, null);

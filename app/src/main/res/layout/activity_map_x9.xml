@@ -117,7 +117,7 @@
 
                 <ImageView
                     android:id="@+id/image_ele"
-                    android:layout_width="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_30"
                     android:layout_below="@+id/tv_4"
                     android:layout_centerHorizontal="true"
@@ -243,7 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/dp_40"
-                android:drawableTop="@drawable/selector_operaation_close"
+                android:drawableTop="@drawable/selector_recharge"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:visibility="gone" />
@@ -289,7 +289,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/dp_60"
-                android:drawableTop="@drawable/operation_recharge"
+                android:drawableTop="@drawable/selector_recharge"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_aty_recharge" />

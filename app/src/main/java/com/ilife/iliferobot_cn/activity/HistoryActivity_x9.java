@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,7 @@ import com.ilife.iliferobot_cn.utils.DialogUtils;
 import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
+import com.ilife.iliferobot_cn.view.RecyclerViewDivider;
 
 import java.util.ArrayList;
 
@@ -77,18 +79,17 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new HistoryAdapter_New_x9(context, recordList);
         recyclerView.setAdapter(adapter);
-        adapter.setOnClickListener(new HistoryAdapter_New_x9.OnClickListener() {
-            @Override
-            public void onContentClick(int position) {
+        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.VERTICAL, 6,
+                ContextCompat.getColor(this, R.color.bg_color_f5f7fa)));
+        adapter.setOnClickListener(position -> {
 //                Intent intent = new Intent(HistoryActivity_x9.this,HistoryDetailActivity_x9.class);
 //                intent.putExtra("mapList",recordList.get(position).getHistoryData());
 //                startActivity(intent);
-                Intent intent = new Intent(HistoryActivity_x9.this, HistoryDetailActivity_x9.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Record", recordList.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(HistoryActivity_x9.this, HistoryDetailActivity_x9.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Record", recordList.get(position));
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
     }
 

@@ -269,8 +269,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
     public void setMode(int mode) {
         boolean isRandom = mode == 0x03;
-        tv_mode.setText(isRandom ? getString(R.string.map_aty_random)
-                : getString(R.string.map_aty_plan_mode));
+        tv_mode.setText(isRandom ? getString(R.string.setting_aty_random_clean)
+                : getString(R.string.setting_aty_nav_clean));
         image_plan.setSelected(!isRandom);
         image_random.setSelected(isRandom);
         tv_plan.setSelected(!isRandom);

@@ -6,6 +6,9 @@
 
     <include layout="@layout/template_top_title" />
 
+    <View
+      style="@style/View_Line_Style"
+        />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

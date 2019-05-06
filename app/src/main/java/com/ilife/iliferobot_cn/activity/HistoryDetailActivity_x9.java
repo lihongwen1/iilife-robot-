@@ -15,7 +15,9 @@ import com.ilife.iliferobot_cn.utils.DeviceUtils;
 import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.view.MapView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -121,12 +123,19 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             yMax = 1500 - record.getSlam_yMin();
             yMin = 1500 - record.getSlam_yMax();
             MyLog.e(TAG, "getDate===:" + xMin + "<--->" + xMax + "<--->" + yMin + "<--->" + yMax + "<--->");
+            long time_ = record.getStart_time();
+            String date = generateTime(time_, getString(R.string.history_adapter_month_day));
+            tv_title.setText(date);
             tv_end_reason.setText(getResources().getString(R.string.setting_aty_end_reason, gerRealErrortTip(record.getStop_reason())));
             tv_clean_time.setText(record.getWork_time() / 60 + "min");
             tv_lean_area.setText(record.getClean_area() + "㎡");
         }
     }
-
+    public String generateTime(long time, String strFormat) {
+        SimpleDateFormat format = new SimpleDateFormat(strFormat);
+        String str = format.format(new Date((time + 10) * 1000));
+        return str;
+    }
     private String gerRealErrortTip(int number) {
         String text = "";
         switch (number) {
@@ -157,7 +166,6 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
 
     public void initView() {
         historyPointsList = new ArrayList<>();
-        tv_title.setText(R.string.history_adapter_record_detail);
     }
 
 }

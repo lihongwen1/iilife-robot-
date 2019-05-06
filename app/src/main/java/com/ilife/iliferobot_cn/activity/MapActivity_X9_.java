@@ -118,6 +118,8 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     View layout_along;
     @BindView(R.id.layout_remote_control)
     View layout_remote_control;
+    @BindView(R.id.tv_recharge_x9)
+    TextView tv_recharge_x9;
     @BindView(R.id.v_map)
     MapView mMapView;
     @BindView(R.id.tv_virtual_wall_x9)
@@ -226,7 +228,12 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         electricityDrawable = (AnimationDrawable) image_animation.getBackground();
 
         image_setting.setVisibility(View.VISIBLE);
-        tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
+        String devName = SpUtils.getSpString(context, MainActivity.KEY_DEVNAME);
+        if (devName != null && !devName.isEmpty()) {
+            tv_title.setText(devName);
+        } else {
+            tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
+        }
     }
 
     @Override
@@ -496,13 +503,16 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
      * 显示开始等操作按钮
      */
     public void showBottomView() {
-        showMap();
         if (curentBottom == 1) {
             layout_remote_control.setVisibility(View.GONE);
+            if (mMapView.getVisibility() == View.INVISIBLE && mPresenter.getCurStatus() == 0x06) {
+                showMap();
+            }
             fl_bottom_x9.setVisibility(View.VISIBLE);
             fl_control_x9.setVisibility(View.GONE);
             fl_virtual_wall.setVisibility(View.GONE);
         } else if (curentBottom == 2) {
+            setMapViewVisible(false);
             layout_remote_control.setVisibility(View.VISIBLE);
             fl_bottom_x9.setVisibility(View.GONE);
             fl_control_x9.setVisibility(View.VISIBLE);
@@ -539,11 +549,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
             case TAG_RECHAGRGE:
                 tv_use_control.setTextColor(getResources().getColor(R.color.color_f08300));
                 tv_use_control.setVisibility(View.VISIBLE);
-                tv_use_control.setText(getString(R.string.map_aty_use_recharging, mPresenter.getRobotType()));
+                tv_use_control.setText(R.string.map_aty_use_recharging_x9);
                 break;
             case TAG_KEYPOINT:
                 tv_use_control.setVisibility(View.VISIBLE);
-                tv_use_control.setText(getString(R.string.map_aty_key_pointing, mPresenter.getRobotType()));
+                tv_use_control.setText(R.string.map_aty_key_pointing_x9);
                 break;
             case TAG_ALONG:
                 tv_use_control.setVisibility(View.VISIBLE);
@@ -571,6 +581,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         if (curStatus != 0x08 && electricityDrawable.isRunning()) {
             electricityDrawable.stop();
         }
+        tv_close_x9.setSelected(false);
         hideVirtualEdit();
         layout_remote_control.setVisibility(View.GONE);
         layout_recharge.setVisibility(View.GONE);
@@ -583,6 +594,11 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     @Override
     public void updateRecharge(boolean isRecharge) {
         layout_recharge.setVisibility(View.VISIBLE);
+        tv_recharge_x9.setSelected(isRecharge);
+        tv_close_x9.setSelected(isRecharge);
+        tv_point.setSelected(false);
+        tv_along.setSelected(false);
+        setMapViewVisible(false);
         electricityDrawable.start();
         fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
         setTvUseStatus(TAG_RECHAGRGE);
@@ -654,7 +670,8 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 mPresenter.sendToDeviceWithOption_start(mAcDevMsg);
                 break;
             case R.id.tv_close_x9:
-                onBottomCancelClick();
+                mPresenter.enterRechargeMode();
+//                onBottomCancelClick();
                 break;
             case R.id.tv_control_x9://显示沿边，遥控等操作UI
                 if (mPresenter.isWork(mPresenter.getCurStatus()) || mPresenter.getCurStatus() == 0x01) {
@@ -677,8 +694,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 break;
             case R.id.tv_recharge_x9://回冲
                 mPresenter.enterRechargeMode();
-                curentBottom=2;
-                showBottomView();
                 break;
             case R.id.tv_along_x9:  //done
                 mPresenter.enterAlongMode();
@@ -766,6 +781,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         setMapViewVisible(true);
         tv_along.setSelected(isAlong);
         tv_point.setSelected(false);
+        tv_recharge_x9.setSelected(false);
     }
 
     @Override
@@ -774,6 +790,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         layout_remote_control.setVisibility(View.GONE);
         tv_point.setSelected(isPoint);
         tv_along.setSelected(false);
+        tv_recharge_x9.setSelected(false);
     }
 
     private void updateDirectionUi(int selectId) {
@@ -875,5 +892,6 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     public void updateOperationViewStatue(int surStatues) {
         tv_point.setSelected(surStatues == 0x05);
         tv_along.setSelected(surStatues == 0x04);
+        tv_recharge_x9.setSelected(surStatues == 0x08);
     }
 }

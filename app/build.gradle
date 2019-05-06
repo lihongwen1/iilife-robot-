@@ -10,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 29
-        versionName '2.3.7'
+        versionName '2.3.8'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 //        ndk {
@@ -85,4 +85,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'com.badoo.mobile:android-weak-handler:1.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-7'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

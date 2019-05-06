@@ -206,7 +206,7 @@
 
                 <com.ilife.iliferobot_cn.view.LightTextView
                     android:id="@+id/tv_version"
-                    style="@style/Text_12sp_33"
+                    style="@style/Text_14sp_ac"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_9"
                     android:layout_toEndOf="@+id/image_version"

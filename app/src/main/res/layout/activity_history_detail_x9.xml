@@ -26,13 +26,15 @@
             android:orientation="horizontal">
 
             <com.ilife.iliferobot_cn.view.RegularTextView
+                android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/setting_aty_area"
                 android:textColor="@color/color_33"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_14" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot_cn.view.EnglishRegularTextView
+                android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp_4"
                 android:id="@+id/tv_lean_area"
                 android:layout_width="wrap_content"
@@ -41,15 +43,26 @@
                 android:textColor="@color/color_33"
                 android:textSize="@dimen/sp_20" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
-                android:text="@string/map_aty_time"
-                android:textColor="@color/color_33"
-                android:textSize="@dimen/sp_16" />
+            <View
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_14"
+                android:background="#FFE2E2E2"
+                />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
+                android:layout_gravity="bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/map_aty_time"
+                android:textColor="@color/color_33"
+                android:textSize="@dimen/sp_14" />
+
+            <com.ilife.iliferobot_cn.view.EnglishRegularTextView
+                android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp_4"
                 android:id="@+id/tv_clean_time"
                 android:layout_width="wrap_content"
@@ -68,7 +81,7 @@
             android:layout_marginBottom="@dimen/dp_50"
             android:text="@string/setting_aty_end_reason"
             android:textColor="@color/color_ac"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_12" />
 
     </FrameLayout>
 </LinearLayout>
