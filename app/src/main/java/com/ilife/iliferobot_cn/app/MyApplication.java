@@ -5,12 +5,14 @@ import android.graphics.Typeface;
 
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot_cn.utils.Constants;
+import com.ilife.iliferobot_cn.utils.toast.Toasty;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import androidx.multidex.MultiDexApplication;
+
 //import com.tencent.bugly.crashreport.CrashReport;
 //import com.tencent.bugly.crashreport.CrashReport;
 //import com.umeng.message.IUmengRegisterCallback;
@@ -77,8 +79,13 @@ public class MyApplication extends MultiDexApplication {
         tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
         tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
         tf_english_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        configToast();
     }
 
+    private void configToast(){
+        Toasty.Config.getInstance().tintIcon(true).
+                setTextSize(16).allowQueue(false).apply();
+    }
 
     @Override
     public void onTerminate() {

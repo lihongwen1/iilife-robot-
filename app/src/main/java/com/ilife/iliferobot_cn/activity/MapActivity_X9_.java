@@ -8,9 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,7 +24,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.accloud.service.ACDeviceMsg;
 import com.badoo.mobile.util.WeakHandler;
-import com.google.gson.Gson;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
@@ -35,7 +32,6 @@ import com.ilife.iliferobot_cn.fragment.CancleDialogFragment;
 import com.ilife.iliferobot_cn.presenter.MapX9Presenter;
 import com.ilife.iliferobot_cn.ui.ControlPopupWindow;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
-import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
 import com.ilife.iliferobot_cn.utils.DialogUtils;
 import com.ilife.iliferobot_cn.utils.MsgCodeUtils;
@@ -51,7 +47,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 
 /**
  * Created by chengjiaping on 2018/8/15.
@@ -97,8 +92,8 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     ImageView image_ele;//battery
     @BindView(R.id.tv_control_x9)
     TextView tv_control_x9;
-    @BindView(R.id.tv_close_x9)
-    TextView tv_close_x9;
+    @BindView(R.id.tv_bottom_recharge_x9)
+    TextView tv_bottom_recharge;
     @BindView(R.id.image_top_menu)
     ImageView image_setting;
     @BindView(R.id.image_animation)
@@ -186,9 +181,9 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     public void onCreate(Bundle savedInstanceState) {
         initData();
         super.onCreate(savedInstanceState);
+        mPresenter.queryVirtualWall();
         mPresenter.initTimer();
         mPresenter.getHistoryRoad();
-        mPresenter.queryVirtualWall();
         mPresenter.subscribeRealTimeMap();
     }
 
@@ -274,16 +269,20 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     public void updateStartStatue(boolean isSelect, String value) {
         if (isSelect) {
             tv_control_x9.setVisibility(View.GONE);
-            tv_wall.setText("");
-            tv_start.setText("");
-            tv_close_x9.setVisibility(View.VISIBLE);
+            tv_start.setText(R.string.map_aty_stop);
+            tv_start.setTextColor(getResources().getColor(R.color.white));
+            tv_wall.setTextColor(getResources().getColor(R.color.white));
+            tv_bottom_recharge.setTextColor(getResources().getColor(R.color.white));
+            tv_bottom_recharge.setVisibility(View.VISIBLE);
             fl_bottom_x9.setBackground(new ColorDrawable(Color.TRANSPARENT));
         } else {
             tv_start.setText(R.string.map_aty_start);
-            tv_wall.setText(R.string.map_virtual_wall);
             tv_start.setText(value);
+            tv_start.setTextColor(getResources().getColor(R.color.color_33));
+            tv_wall.setTextColor(getResources().getColor(R.color.color_33));
+            tv_bottom_recharge.setTextColor(getResources().getColor(R.color.color_33));
             tv_control_x9.setVisibility(View.VISIBLE);
-            tv_close_x9.setVisibility(View.GONE);
+            tv_bottom_recharge.setVisibility(View.GONE);
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
         }
         tv_start.setSelected(isSelect);
@@ -480,9 +479,10 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
     }
 
     /**
-     * 显示沿边重点等操作
+     * 显示沿边重点,遥控等操作
      */
     public void showOperationView() {
+        showRemoteControl();
         fl_bottom_x9.setVisibility(View.GONE);
         fl_control_x9.setVisibility(View.VISIBLE);
         updateOperationViewStatue(mPresenter.getCurStatus());
@@ -499,24 +499,24 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         dialogFragment.show(getSupportFragmentManager(), "cancel");
     }
 
+    @Override
+    public void setCurrenrtBottom(int bottom) {
+        this.curentBottom=bottom;
+    }
+
     /**
      * 显示开始等操作按钮
      */
     public void showBottomView() {
-        if (curentBottom == 1) {
+        if (curentBottom == 1) {//需判断如果是从回冲状态到暂停状态，不需要显示实时地图。也就是开始回冲后，直接清空地图，不再接收绘制地图的数据
             layout_remote_control.setVisibility(View.GONE);
-            if (mMapView.getVisibility() == View.INVISIBLE && mPresenter.getCurStatus() == 0x06) {
-                showMap();
-            }
+            showMap();
             fl_bottom_x9.setVisibility(View.VISIBLE);
             fl_control_x9.setVisibility(View.GONE);
             fl_virtual_wall.setVisibility(View.GONE);
         } else if (curentBottom == 2) {
             setMapViewVisible(false);
-            layout_remote_control.setVisibility(View.VISIBLE);
-            fl_bottom_x9.setVisibility(View.GONE);
-            fl_control_x9.setVisibility(View.VISIBLE);
-            fl_virtual_wall.setVisibility(View.GONE);
+            showOperationView();
         }
     }
 
@@ -581,7 +581,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
         if (curStatus != 0x08 && electricityDrawable.isRunning()) {
             electricityDrawable.stop();
         }
-        tv_close_x9.setSelected(false);
+        tv_bottom_recharge.setSelected(false);
         hideVirtualEdit();
         layout_remote_control.setVisibility(View.GONE);
         layout_recharge.setVisibility(View.GONE);
@@ -593,12 +593,16 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
 
     @Override
     public void updateRecharge(boolean isRecharge) {
+        if (layout_recharge.getVisibility()==View.VISIBLE&& isRecharge){//避免重复刷新UI导致异常
+            return;
+        }
+        cleanMapView();
+        showOperationView();
         layout_recharge.setVisibility(View.VISIBLE);
         tv_recharge_x9.setSelected(isRecharge);
-        tv_close_x9.setSelected(isRecharge);
+        tv_bottom_recharge.setSelected(isRecharge);
         tv_point.setSelected(false);
         tv_along.setSelected(false);
-        setMapViewVisible(false);
         electricityDrawable.start();
         fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
         setTvUseStatus(TAG_RECHAGRGE);
@@ -654,7 +658,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
 
     @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
             R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_cancel_virtual_x9, R.id.tv_ensure_virtual_x9
-            , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_close_x9
+            , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.image_right, R.id.image_left, R.id.image_control_back, R.id.image_forward
     })
     public void onViewClick(View v) {
         switch (v.getId()) {
@@ -669,9 +673,9 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 }
                 mPresenter.sendToDeviceWithOption_start(mAcDevMsg);
                 break;
-            case R.id.tv_close_x9:
+            case R.id.tv_bottom_recharge_x9:
+                curentBottom = 2;
                 mPresenter.enterRechargeMode();
-//                onBottomCancelClick();
                 break;
             case R.id.tv_control_x9://显示沿边，遥控等操作UI
                 if (mPresenter.isWork(mPresenter.getCurStatus()) || mPresenter.getCurStatus() == 0x01) {
@@ -679,7 +683,7 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 } else if (mPresenter.getCurStatus() == 0x0B || mPresenter.getCurStatus() == 0x09) {
                     ToastUtils.showToast(context, getString(R.string.map_aty_charge));
                 } else {
-                    showRemoteControl();
+
                     showOperationView();
                     curentBottom = 2;
                 }
@@ -739,34 +743,54 @@ public class MapActivity_X9_ extends BackBaseActivity<MapX9Presenter> implements
                 mMapView.setMODE(MapView.MODE_NONE);
                 showClearWallDialog();
                 break;
+            /* 遥控器方向键*/
+            case R.id.image_left:
+                mAcDevMsg.setCode(MsgCodeUtils.Proceed);
+                mAcDevMsg.setContent(new byte[]{0x03});
+                mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                break;
+            case R.id.image_right:
+                mAcDevMsg.setCode(MsgCodeUtils.Proceed);
+                mAcDevMsg.setContent(new byte[]{0x04});
+                mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                break;
+            case R.id.image_forward:
+                mAcDevMsg.setCode(MsgCodeUtils.Proceed);
+                mAcDevMsg.setContent(new byte[]{0x01});
+                mPresenter.sendToDeviceWithOption(mAcDevMsg);
+                break;
+            case R.id.image_control_back://max吸力
+                mPresenter.reverseMaxMode(mAcDevMsg);
+                break;
+
         }
     }
 
-    @OnTouch({R.id.image_right, R.id.image_left, R.id.image_control_back, R.id.image_forward})
-    public void onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: //手指按下
-                distributeDirectOrder(v.getId());
-                updateDirectionUi(v.getId());
-                break;
-            case MotionEvent.ACTION_MOVE: //手指移动（从手指按下到抬起 move多次执行）
-                break;
-            case MotionEvent.ACTION_UP: //手指抬起
-                updateDirectionUi(-1);
-                if (timerTask != null) {
-                    timerTask.cancel();
-                    isTimerTaskRun = false;
-                }
-                if (v.getId() == R.id.image_control_back) {//没有返回功能，做max吸力功能
-                    mPresenter.reverseMaxMode(mAcDevMsg);
-                } else {
-                    mAcDevMsg.setCode(MsgCodeUtils.Proceed);
-                    mAcDevMsg.setContent(new byte[]{0x05});
-                    mPresenter.sendToDeviceWithOption(mAcDevMsg);
-                }
-                break;
-        }
-    }
+//    @OnTouch({R.id.image_right, R.id.image_left, R.id.image_control_back, R.id.image_forward})
+//    public void onTouch(View v, MotionEvent event) {
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN: //手指按下
+//                distributeDirectOrder(v.getId());
+//                updateDirectionUi(v.getId());
+//                break;
+//            case MotionEvent.ACTION_MOVE: //手指移动（从手指按下到抬起 move多次执行）
+//                break;
+//            case MotionEvent.ACTION_UP: //手指抬起
+//                updateDirectionUi(-1);
+//                if (timerTask != null) {
+//                    timerTask.cancel();
+//                    isTimerTaskRun = false;
+//                }
+//                if (v.getId() == R.id.image_control_back) {//没有返回功能，做max吸力功能
+//                    mPresenter.reverseMaxMode(mAcDevMsg);
+//                } else {
+//                    mAcDevMsg.setCode(MsgCodeUtils.Proceed);
+//                    mAcDevMsg.setContent(new byte[]{0x05});
+//                    mPresenter.sendToDeviceWithOption(mAcDevMsg);
+//                }
+//                break;
+//        }
+//    }
 
     @Override
     public void updateMaxButton(boolean isMaXMode) {

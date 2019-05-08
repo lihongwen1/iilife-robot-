@@ -64,6 +64,7 @@ public interface MapX9Contract {
         void updatePoint(boolean isPoint);
         void updateRecharge(boolean isRecharge);
         void updateMaxButton(boolean isMaXMode);
+        void setCurrenrtBottom(int bottom);
     }
 
     interface Presenter {

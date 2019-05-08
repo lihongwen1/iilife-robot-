@@ -5,37 +5,29 @@ import android.widget.Toast;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.app.MyApplication;
+import com.ilife.iliferobot_cn.utils.toast.Toasty;
 
 /**
  * Created by chenjiaping on 2017/7/4.
  */
 
 public class ToastUtils {
-    private static Toast toast;
-    public static void showToast(Context context,String msg){
-        if (toast==null){
-            toast = Toast.makeText(context,msg,Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(msg);
-        }
-        toast.show();
-    }
-    public static void showToast(String msg){
-        Toast.makeText(MyApplication.getInstance(),msg,Toast.LENGTH_SHORT).show();
+    public static void showToast(Context context, String msg) {
+        Toasty.normal(context, msg).show();
     }
 
-    public static void hiddenToast(){
-        if (toast!=null){
-            toast.cancel();
-        }
+    public static void showToast(String msg) {
+        Toasty.normal(MyApplication.getInstance(), msg).show();
     }
-    public static void showErrorToast(int code){
-        showErrorToast(MyApplication.getInstance(),code);
+
+    public static void showErrorToast(int code) {
+        showErrorToast(MyApplication.getInstance(), code);
     }
-    public static void showErrorToast(Context context,int code){
+
+    public static void showErrorToast(Context context, int code) {
         //默认显示连接超时
         String msg = context.getString(R.string.login_aty_timeout);
-        switch (code){
+        switch (code) {
             case 1993:
                 msg = context.getString(R.string.login_aty_timeout);
                 break;
@@ -67,12 +59,6 @@ public class ToastUtils {
                 msg = context.getString(R.string.register2_aty_account_abnormal);
                 break;
         }
-
-        if (toast==null){
-            toast = Toast.makeText(context,msg,Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(msg);
-        }
-        toast.show();
+        showToast(msg);
     }
 }

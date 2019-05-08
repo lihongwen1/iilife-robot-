@@ -4,6 +4,7 @@ package com.ilife.iliferobot_cn.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
@@ -23,7 +24,6 @@ import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 import com.ilife.iliferobot_cn.view.SuperEditText;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

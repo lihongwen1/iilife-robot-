@@ -180,11 +180,15 @@ public class MapView extends View {
         roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
+        float startX=0,startY=0;//标记起点坐标
 //        绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
-                    roadPath.moveTo(matrixCoordinateX(roadList.get(0)), matrixCoordinateY(1500 - roadList.get(1)));//设置起点
+                    startX=matrixCoordinateX(roadList.get(0));
+                    startY = matrixCoordinateY(1500 - roadList.get(1));
+                    roadPath.moveTo(startX, startY);//设置起点
+
                 } else {
                     roadPath.lineTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
                 }
@@ -194,7 +198,9 @@ public class MapView extends View {
         if (historyRoadList != null && historyRoadList.size() > 0) {
             for (int k = 0; k < historyRoadList.size() - 1; k += 2) {
                 if (k == 0) {
-                    roadPath.moveTo(matrixCoordinateX(historyRoadList.get(0)), matrixCoordinateY(1500 - historyRoadList.get(1)));//设置起点
+                    startX=matrixCoordinateX(historyRoadList.get(0));
+                    startY = matrixCoordinateY(1500 - historyRoadList.get(1));
+                    roadPath.moveTo(startX, startY);//设置起点
                 } else {
                     roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
                 }
@@ -202,10 +208,15 @@ public class MapView extends View {
             }
         }
         roadCanvas.drawPath(roadPath, roadPaint);
+         if (startX!=0&&startY!=0){
+             positionCirclePaint.setColor(getResources().getColor(R.color.white));
+             roadCanvas.drawCircle(startX,startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
+         }
         if (roadList != null && roadList.size() > 2) {
             float endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             float endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
-            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 5), positionCirclePaint);
+            positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
         invalidate();
     }
@@ -222,7 +233,7 @@ public class MapView extends View {
     }
 
     /**
-     * 清楚所有绘图痕迹
+     * 清除所有绘图痕迹
      */
     public void clean() {
         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -354,6 +365,7 @@ public class MapView extends View {
                 if (MODE == MODE_ADD_VIRTUAL) {
                     if (virtualWallBeans.size() >= 10) {
                         //TODO 提示虚拟墙数量超最大数
+                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
                     } else {
                     }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {

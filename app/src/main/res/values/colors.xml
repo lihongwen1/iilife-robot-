@@ -60,4 +60,11 @@
     <color name="obstacle_color">#FF76C9EE</color>
    <color name="slam_color">#FF49B6E8</color>
     <!--  QRCode scanner color end  -->
+    <!--toast color-->
+    <color name="defaultTextColor">#FFFFFF</color>
+    <color name="errorColor">#D50000</color>
+    <color name="infoColor">#3F51B5</color>
+    <color name="successColor">#388E3C</color>
+    <color name="warningColor">#FFA900</color>
+    <color name="normalColor">#4c4c4c</color>
 </resources>

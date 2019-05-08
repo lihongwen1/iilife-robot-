@@ -206,9 +206,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_24"
                 android:drawableTop="@drawable/selector_virtual_wall"
-                android:drawablePadding="@dimen/dp_16"
+                android:drawablePadding="@dimen/dp_13"
                 android:gravity="center"
                 android:text="@string/map_virtual_wall" />
 
@@ -220,7 +220,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:drawableTop="@drawable/image_start_bg"
-                android:drawablePadding="@dimen/dp_10"
                 android:gravity="center"
                 android:text="@string/map_aty_start" />
 
@@ -230,21 +229,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:layout_marginEnd="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_24"
                 android:drawableTop="@drawable/selector_control"
-                android:drawablePadding="@dimen/dp_16"
+                android:drawablePadding="@dimen/dp_13"
                 android:gravity="center"
                 android:text="@string/map_aty_remote" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
-                android:id="@+id/tv_close_x9"
+                android:id="@+id/tv_bottom_recharge_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:layout_marginEnd="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_24"
                 android:drawableTop="@drawable/selector_recharge"
-                android:drawablePadding="@dimen/dp_16"
+                android:drawablePadding="@dimen/dp_12"
+                android:text="@string/map_aty_recharge"
                 android:gravity="center"
                 android:visibility="gone" />
         </FrameLayout>
@@ -255,7 +255,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_154"
             android:background="@color/bg_color_f5f7fa"
-            android:paddingBottom="@dimen/dp_36"
             android:visibility="gone">
 
             <com.ilife.iliferobot_cn.view.RegularTextView
@@ -263,8 +262,8 @@
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/dp_60"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_40"
                 android:drawableTop="@drawable/image_along_bg"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
@@ -275,7 +274,7 @@
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                android:layout_gravity="center"
                 android:drawableTop="@drawable/image_point_bg"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
@@ -287,8 +286,8 @@
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_marginEnd="@dimen/dp_60"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_40"
                 android:drawableTop="@drawable/selector_recharge"
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"

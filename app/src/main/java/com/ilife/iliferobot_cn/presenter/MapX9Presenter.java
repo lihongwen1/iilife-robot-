@@ -37,6 +37,7 @@ import com.ilife.iliferobot_cn.utils.TimeUtil;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private long deviceId;
     private String physicalId, subdomain, robotType;
     private Gson gson;
-    boolean isVirtualEdit, isDelete, isVirtualWall, isAdd;
+    boolean isVirtualEdit;
     private byte[] slamBytes;
     private int curStatus, errorCode, batteryNo, workTime, cleanArea;
     private Timer timer;
@@ -109,6 +110,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         return robotType;
     }
 
+    /**
+     * 包含3s查询实时地图和查询虚拟墙
+     */
     public void initTimer() {
         getRealTimeMap();//need get real time map in the first time enter
         timer = new Timer();
@@ -116,23 +120,27 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             @Override
             public void run() {
                 LogUtil.d(TAG, "getRealTimeMap---" + curStatus);
-                if (curStatus == 0x06 || curStatus == 0x08 || curStatus == 0x07) {
+                if (!isViewAttached()) {
+                    return;
+                }
+                if (curStatus == 0x06) {
                     getRealTimeMap();
+                    queryVirtualWall();
                 }
             }
         };
-        timer.schedule(task, 0, 3* 1000);
+        timer.schedule(task, 0, 3 * 1000);
     }
 
     @Override
     public void getRealTimeMap() {
-        if (!isViewAttached()) {
+        if (!isViewAttached()) {//page destroyed
             return;
         }
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRealTime");
         req.put("device_id", deviceId);
-        AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+        AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
                 Log.d(TAG, "getRealTimeMap----当前状态：" + curStatus);
@@ -165,7 +173,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRoadData");
         req.put("device_id", deviceId);
-        AC.sendToService("", DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+        AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg acMsg) {
                 Log.d(TAG, "getHistoryRoad()-----------");
@@ -205,6 +213,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     /**
+     * //TODO 虚拟墙实时更新
      * 查询虚拟墙
      */
     public void queryVirtualWall() {
@@ -213,6 +222,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, mAcDevMsg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void success(ACDeviceMsg acDeviceMsg) {
+                if (!isViewAttached()) {
+                    return;
+                }
                 existPointList.clear();
                 byte[] resp = acDeviceMsg.getContent();
                 StringBuilder stringBuilder = new StringBuilder();
@@ -259,10 +271,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 new VoidCallback() {
                     @Override
                     public void success() {
+                        if (curStatus == 0x08) {//back to recharge
+                            return;
+                        }
                         AC.classDataMgr().registerDataReceiver(new ACClassDataMgr.ClassDataReceiver() {
                             @Override
                             public void onReceive(String s, int i, String s1) {
-                                Log.d(TAG, "subscribeRealTimeMap-------");
                                 if (!isViewAttached()) {
                                     return;
                                 }
@@ -319,13 +333,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                         for (int j = 2; j <= bytes_subscribe.length - 4; j += 4) {
                                             int x = DataUtils.bytesToInt(new byte[]{bytes_subscribe[j], bytes_subscribe[j + 1]}, 0);
                                             int y = DataUtils.bytesToInt(new byte[]{bytes_subscribe[j + 2], bytes_subscribe[j + 3]}, 0);
-                                            if ((x == 0x7fff) & (y == 0x7fff)) {
-                                                mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
-                                                mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
+                                            if ((x == 0x7fff) & (y == 0x7fff)) {//出现错误的坐标信息，放弃所有数据
+//                                                mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
+//                                                mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
                                                 mView.cleanMapView();
                                                 realTimePoints.clear();
                                                 historyRoadList.clear();
                                                 wallPointList.clear();
+                                                return;
                                             } else {
                                                 realTimePoints.add(x * 224 / 100 + 750);
                                                 realTimePoints.add(y * 224 / 100 + 750);
@@ -345,14 +360,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                             mView.drawObstacle();
                                         }
                                     }
-                                    int workTime = mapInfo.getReal_clean_time();
-                                    int cleanArea = mapInfo.getReal_clean_area();
-                                    if (curStatus == 0x08) {
+                                    workTime = mapInfo.getReal_clean_time();
+                                    cleanArea = mapInfo.getReal_clean_area();
+                                    if (curStatus == 0x08) {//回冲模式
                                         mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
                                         mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
                                     } else {
-                                        mView.updateCleanTime(workTime / 60 + "min");
-                                        mView.updateCleanArea(cleanArea / 100.0 + "㎡");
+                                        mView.updateCleanTime(getTimeValue());
+                                        mView.updateCleanArea(getAreaValue());
                                     }
                                 }
                             }
@@ -411,13 +426,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mopForce = bytes[4];
                             isMaxMode = bytes[3] == 0x01;
                             voiceOpen = bytes[6] == 0x01;
+                            Log.d(TAG, "set statue,and statue code is 430:" + curStatus);
                             setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                             if (curStatus != 0x06) {//0x06规划模式
                                 mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
                                 mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
                             } else {
-                                mView.updateCleanArea(cleanArea / 100.0 + "㎡");
-                                mView.updateCleanTime(workTime / 60 + "min");
+                                mView.updateCleanArea(getAreaValue());
+                                mView.updateCleanTime(getTimeValue());
                             }
                             mView.showErrorPopup(errorCode);
                             if (errorCode != 0) {
@@ -448,7 +464,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
-        if (!isViewAttached()){
+
+        if (!isViewAttached()) {
             return;
         }
         isWork = isWork(curStatus);
@@ -462,6 +479,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_VOICE_OPEN, voiceOpen);
         }
         mView.clearAll(curStatus);//清空所有布局，以便根据status更新显示布局
+        Log.d(TAG, "set statue,and statue code is:" + curStatus);
         if (curStatus == 0x8) { //回充
             mView.updateRecharge(true);
         } else if (curStatus == 0x07) {//虚拟墙编辑模式
@@ -487,6 +505,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 //            }
             mView.setTvUseStatus(TAG_ALONG);
         } else if (canEdit(curStatus)) {
+            if (curStatus == 0x09 || curStatus == 0x00B) { //充电模式
+                mView.setCurrenrtBottom(1);
+            }
             mView.showBottomView();
         }
         mView.updateOperationViewStatue(curStatus);
@@ -549,13 +570,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 isMaxMode = info.getVacuum_cleaning() == 0x01;
                 mopForce = info.getCleaning_cleaning();
                 voiceOpen = info.getVoice_mode() == 0x01;
+                Log.d(TAG, "set statue,and statue code is 571:" + curStatus);
                 setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                 if (curStatus != 0x06) {//0x06规划模式
                     mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
                     mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
                 } else {
-                    mView.updateCleanArea(cleanArea / 100.0 + "㎡");
-                    mView.updateCleanTime(workTime / 60 + "min");
+                    mView.updateCleanArea(getAreaValue());
+                    mView.updateCleanTime(getTimeValue());
                 }
                 mView.showErrorPopup(errorCode);
                 if (errorCode != 0) {
@@ -563,6 +585,17 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         };
+    }
+
+    private String getAreaValue() {
+        BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
+        double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        String value = area + "㎡";
+        return value;
+    }
+
+    private String getTimeValue() {
+        return Math.round(workTime / 60f) + "min";
     }
 
     @Override
@@ -602,6 +635,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (deviceMsg.getCode() != MsgCodeUtils.Proceed) {
                     byte[] bytes = deviceMsg.getContent();
                     curStatus = bytes[0];
+                    Log.d(TAG, "set statue,and statue code is 636:" + curStatus);
                     setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                 }
             }
@@ -622,9 +656,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             @Override
             public void success(ACDeviceMsg deviceMsg) {
                 byte[] bytes = deviceMsg.getContent();
-                MyLog.e(TAG, "sendToDeviceWithOption_start  success " + bytes[0]);
                 curStatus = bytes[0];
                 if (curStatus == sendByte) {
+                    Log.d(TAG, "set statue,and statue code is 660:" + curStatus);
                     setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                 } else {
                     if (curStatus == 0x0B) {//寻找模式
@@ -777,9 +811,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public int getCurStatus() {
         return curStatus;
     }
-
-
-
 
 
     @Override

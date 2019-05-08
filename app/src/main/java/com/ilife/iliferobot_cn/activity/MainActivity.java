@@ -118,7 +118,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         rect = new Rect();
         llm = new LinearLayoutManager(context);
         loadingDialog = DialogUtils.createLoadingDialog_(context);
-
         mAcUserDevices = new ArrayList<>();
         recyclerView.setLayoutManager(llm);
         adapter = new DevListAdapter(context, mAcUserDevices);

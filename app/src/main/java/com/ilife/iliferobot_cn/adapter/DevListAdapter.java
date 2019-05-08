@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,12 @@ import android.widget.TextView;
 import com.accloud.cloudservice.AC;
 import com.accloud.service.ACUserDevice;
 import com.bumptech.glide.Glide;
+import com.google.android.material.shadow.ShadowDrawableWrapper;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.activity.LoginActivity;
 import com.ilife.iliferobot_cn.activity.SelectActivity_x;
 import com.ilife.iliferobot_cn.ui.SlidingMenu;
 import com.ilife.iliferobot_cn.utils.Constants;
-
 import java.util.List;
 
 /**
