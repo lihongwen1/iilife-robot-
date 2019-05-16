@@ -12,6 +12,7 @@ import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.contract.ApWifiContract;
 import com.ilife.iliferobot_cn.presenter.ApWifiPresenter;
+import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -24,8 +25,6 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     Context context;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
-    @BindView(R.id.tv_bind_tip)
-    TextView tv_bind_tip;
     @BindView(R.id.tv_bind_progress)
     TextView tv_bind_progress;
     @BindView(R.id.pb_bind_progress)
@@ -52,11 +51,8 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     public void initData() {
         context = this;
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            ssid = bundle.getString(FirstApActivity.EXTRA_SSID);
-            password = bundle.getString(FirstApActivity.EXTRA_PASS);
-        }
+        ssid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
+        password = (String) SpUtils.get(this, FirstApActivity.EXTRA_PASS, "unknown");
     }
 
     @Override
@@ -97,8 +93,9 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-        ToastUtils.showToast("绑定失败");
-        updateBindProgress(message, 0);
+//        ToastUtils.showToast("绑定失败");
+        startActivity(new Intent(this, ConnectDeviceApActivity.class));
+        finish();
     }
 
     @Override
@@ -107,10 +104,9 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
             return;
         }
         runOnUiThread(() -> {
-            if (tv_bind_tip==null){
+            if (tv_bind_progress == null) {
                 return;
             }
-            tv_bind_tip.setText(tip);
             tv_bind_progress.setText(progress + "%");
             pb_BindProgress.setProgress(progress);
         });

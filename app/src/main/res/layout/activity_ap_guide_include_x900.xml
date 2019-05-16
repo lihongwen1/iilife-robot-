@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F4F5FA"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F4F5FA"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_ap_step1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_24"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="visible">
@@ -17,22 +19,25 @@
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/text_tip1"
             style="@style/Text_18sp_33"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_30"
+
             android:text="@string/ap_guide_aty_tip1_x900" />
 
         <com.ilife.iliferobot_cn.view.GifView
-            android:layout_marginTop="@dimen/dp_70"
             android:id="@+id/image_step1"
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_280"
-            app:gif="@drawable/gif_open_key"
-             />
+            android:layout_marginTop="@dimen/dp_70"
+            app:gif="@drawable/gif_open_key" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_ap_step2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_24"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
@@ -49,8 +54,7 @@
             android:id="@+id/image_step2"
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_280"
-            app:gif="@drawable/gif_click_wifi"
-            />
+            app:gif="@drawable/gif_click_wifi" />
 
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:layout_width="176dp"
@@ -66,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_marginBottom="@dimen/dp_176"
+        android:layout_marginTop="@dimen/dp_20"
         android:gravity="center"
         android:text="@string/ap_guide_already_open_device"
         android:textColor="@color/color_33"
@@ -77,6 +81,5 @@
         style="@style/Button_Style_quick_login"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_106"
         android:text="@string/guide_aty_next" />
-</FrameLayout>
+</LinearLayout>

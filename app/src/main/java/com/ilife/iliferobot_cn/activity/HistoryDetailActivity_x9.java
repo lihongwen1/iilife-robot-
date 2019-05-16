@@ -10,14 +10,17 @@ import android.widget.TextView;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.entity.HistoryRecord_x9;
+import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DataUtils;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
 import com.ilife.iliferobot_cn.utils.MyLog;
+import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.view.MapView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -45,6 +48,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     TextView tv_clean_time;
     @BindView(R.id.tv_lean_area)
     TextView tv_lean_area;
+    private String subdomain;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +105,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     }
 
     private void drawSlamMap(byte[] slamBytes) {
-        mapView.updateSlam(xMin,xMax,yMin,yMax);
+        mapView.updateSlam(xMin, xMax, yMin, yMax, 6);
         mapView.drawSlamMap(slamBytes);
         mapView.drawObstacle();
     }
@@ -109,11 +113,55 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        drawHistoryMap();
+        if (subdomain.equals(Constants.subdomain_x900)) {
+            drawHistoryMap();
+        }else {
+            drawHistoryMapX8();
+        }
     }
 
+    private void drawHistoryMapX8() {
+        //decode data
+        int length = 0;
+        List<Byte> byteList = new ArrayList<>();
+        ArrayList<Integer> pointList = new ArrayList<>();
+        if (mapList != null) {
+            if (mapList.size() > 0) {
+                for (int i = 0; i < mapList.size(); i++) {
+                    String data = mapList.get(i);
+                    byte[] bytes = Base64.decode(data, Base64.DEFAULT);
+                    length = bytes[0];
+                    for (int j = 1; j < bytes.length; j++) {
+                        byteList.add(bytes[j]);
+                    }
+                }
+            }
+        }
+        byte tempdata = 0;
+        byte mapdata = 0;
+        //decode x, y
+        for (int i = 0; i < byteList.size() / length; i++) {
+            for (int j = 0; j < length; j++) {
+                mapdata = byteList.get(i * length + j);
+                for (int k = 0; k < 8; k++) {
+                    tempdata = (byte) (0x80 >> k);
+                    float x;
+
+                    x = (i - byteList.size() / length / 2);
+                    float y = (j * 8 + k - length * 4);
+                    if ((mapdata & tempdata) == tempdata) {
+                        pointList.add((int) x);
+                        pointList.add((int) y);
+                    }
+                }
+            }
+        }
+        mapView.drawBoxMapX8(pointList);
+
+    }
 
     private void getData() {//取出传递过来的集合
+        subdomain = SpUtils.getSpString(this, MainActivity.KEY_SUBDOMAIN);
         Intent intent = getIntent();
         if (intent != null) {
             HistoryRecord_x9 record = (HistoryRecord_x9) intent.getSerializableExtra("Record");
@@ -131,11 +179,13 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             tv_lean_area.setText(record.getClean_area() + "㎡");
         }
     }
+
     public String generateTime(long time, String strFormat) {
         SimpleDateFormat format = new SimpleDateFormat(strFormat);
         String str = format.format(new Date((time + 10) * 1000));
         return str;
     }
+
     private String gerRealErrortTip(int number) {
         String text = "";
         switch (number) {

@@ -224,6 +224,7 @@
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
     <style name="Text_18sp_f08300">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -241,6 +242,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:paddingBottom">2dp</item>
     </style>
+
     <style name="Text_14sp_ac">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -345,6 +347,7 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
     <style name="Text_18sp_ff">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -365,6 +368,25 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_60</item>
         <item name="android:background">@color/color_f6</item>
+    </style>
+
+    <style name="universal_dialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <!-- 窗口背景色 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否有覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--进出动画-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 
     <style name="AlertDialog_Style">
@@ -457,7 +479,7 @@
 
     <style name="dialogTheme" parent="Theme.AppCompat.Dialog">
         <!-- 边框 -->
-        <item name="android:windowFrame">@null</item >
+        <item name="android:windowFrame">@null</item>
         <!-- 测试了下也是内容背景色 会覆盖android:windowBackground-->
         <!--<item name="android:background">@android:color/holo_red_dark</item>-->
         <!--
@@ -478,5 +500,15 @@
         <!-- 灰色的百分比 0就是全透明了-->
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
-    <style name="Widget.GifView" parent="@android:style/Widget"/>
+
+    <style name="Widget.GifView" parent="@android:style/Widget" />
+
+    <style name="progress_horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_horizontal_yellow</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:minHeight">20dip</item>
+        <item name="android:maxHeight">20dip</item>
+        <item name="android:mirrorForRtl">true</item>
+    </style>
 </resources>

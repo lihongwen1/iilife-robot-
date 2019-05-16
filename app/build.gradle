@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.ilife.iliferobot_cn"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 29
         versionName '2.3.8'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -88,5 +88,4 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
 }

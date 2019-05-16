@@ -12,9 +12,6 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
-        void distributeDirectOrder(int directId);
-        void showRemoteControl();
-        void onBottomCancelClick();
         void updateSlam(int xMin, int xMax, int yMin, int yMax);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
@@ -27,8 +24,6 @@ public interface MapX9Contract {
 
         void updateStartStatue(boolean isSelect, String value);
 
-        void updateTvVirtualStatue(boolean isSelect);
-
         void cleanMapView();
 
         void drawSlamMap(byte[] slamBytes);
@@ -37,26 +32,13 @@ public interface MapX9Contract {
 
         void setBatteryImage(int curStatus, int batteryNo);
 
-        void updateQuanAnimation(boolean isStart);
-
-
-        void updateAlongAnimation(boolean isStary);
-
         void hideVirtualEdit();
         void clearAll(int curStatus);
         void showVirtualEdit();
         void setMapViewVisible(boolean isViesible);
         void setTvUseStatus(int tag);
-        void setAlongViewVisible(boolean isVisible);
-
-        /**
-         * 设置重点清扫布局的显示状态
-         */
-        void setPointViewVisible(boolean isVisible);
         void showBottomView();
-        void  showMap();
         void updateOperationViewStatue(int surStatu);
-        void setVirtualWallStatus(boolean isEnable);
         void showErrorPopup(int errorCode);
         void sendHandler(int msgCode);
         void drawVirtualWall(List<int []> existPointList);
@@ -64,7 +46,9 @@ public interface MapX9Contract {
         void updatePoint(boolean isPoint);
         void updateRecharge(boolean isRecharge);
         void updateMaxButton(boolean isMaXMode);
-        void setCurrenrtBottom(int bottom);
+        void setCurrentBottom(int bottom);
+        void setTvUseStatusVisible(boolean isVisible);
+        void drawBoxMapX8(ArrayList<Integer> pointList);
     }
 
     interface Presenter {
@@ -90,10 +74,9 @@ public interface MapX9Contract {
         void initPropReceiver();
         void registerPropReceiver();
         void sendToDeviceWithOption(ACDeviceMsg msg);
-        void sendToDeviceWithOption_start(ACDeviceMsg msg);
         void enterVirtualMode();
-        void sendVirtualWallData(final List<int[]> list, final int tag);
-        void sendToDeviceWithOptionVirtualWall(ACDeviceMsg acDeviceMsg, String physicalDeviceId, final int tag);
+        void sendVirtualWallData(final List<int[]> list);
+        void sendToDeviceWithOptionVirtualWall(ACDeviceMsg acDeviceMsg, String physicalDeviceId);
         int getCurStatus();
         /**
          * 进入沿边模式
@@ -106,7 +89,7 @@ public interface MapX9Contract {
         void enterPointMode();
         void enterRechargeMode();
          boolean isMaxMode();
-         void reverseMaxMode(ACDeviceMsg msg);
+         void reverseMaxMode();
     }
 
 }

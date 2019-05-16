@@ -23,6 +23,7 @@ import com.ilife.iliferobot_cn.adapter.HistoryAdapter_New;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.entity.HistoryRecord;
+import com.ilife.iliferobot_cn.entity.HistoryRecord_x9;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
 import com.ilife.iliferobot_cn.utils.DialogUtils;
@@ -43,9 +44,9 @@ public class HistoryActivity extends BackBaseActivity{
     Context context;
     String subdomain;
     String serviceName;
-    ArrayList<HistoryRecord> recordList;
+    ArrayList<HistoryRecord_x9> recordList;
     private Long[] startTimes;
-    private HistoryRecord[] records;
+    private HistoryRecord_x9[] records;
     RecyclerView recyclerView;
     HistoryAdapter_New adapter;
     FrameLayout fl_noRecord;
@@ -73,13 +74,10 @@ public class HistoryActivity extends BackBaseActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new HistoryAdapter_New(context, recordList);
         recyclerView.setAdapter(adapter);
-        adapter.setOnClickListener(new HistoryAdapter_New.OnClickListener() {
-            @Override
-            public void onContentClick(int position) {
-                Intent intent = new Intent(HistoryActivity.this, HistoryDetailActivity.class);
-                intent.putExtra("mapList", recordList.get(position).getHistoryData());
-                startActivity(intent);
-            }
+        adapter.setOnClickListener(position -> {
+            Intent intent = new Intent(HistoryActivity.this, HistoryDetailActivity.class);
+            intent.putExtra("mapList", recordList.get(position).getHistoryData());
+            startActivity(intent);
         });
     }
 
@@ -104,7 +102,7 @@ public class HistoryActivity extends BackBaseActivity{
                     ArrayList<ACObject> data = resp.get("data");
                     ACObject obj = data.get(0);
                     String clean_data0 = obj.getString("clean_data");
-                    HistoryRecord record = new HistoryRecord();
+                    HistoryRecord_x9 record = new HistoryRecord_x9();
                     record.setLineSpace(String.valueOf(clean_data0.charAt(0)));
                     record.setWork_time(obj.getInt("work_time"));
                     record.setStart_time(obj.getLong("start_time"));
@@ -143,7 +141,7 @@ public class HistoryActivity extends BackBaseActivity{
 
     }
 
-    public void showList(ArrayList<HistoryRecord> recordList) {
+    public void showList(ArrayList<HistoryRecord_x9> recordList) {
         DialogUtils.closeDialog(dialog);
         if (recordList.size() == 0) {
             recyclerView.setVisibility(View.GONE);
@@ -158,10 +156,10 @@ public class HistoryActivity extends BackBaseActivity{
         }
     }
 
-    public void bubbleSort(ArrayList<HistoryRecord> recordList) {
+    public void bubbleSort(ArrayList<HistoryRecord_x9> recordList) {
         int size = recordList.size();
         startTimes = new Long[size];
-        records = new HistoryRecord[size];
+        records = new HistoryRecord_x9[size];
         for (int i = 0; i < size; i++) {
             startTimes[i] = recordList.get(i).getStart_time();
             records[i] = recordList.get(i);
@@ -170,7 +168,7 @@ public class HistoryActivity extends BackBaseActivity{
             for (int j = 0; j < startTimes.length - i - 1; j++) {
                 if (startTimes[j] < startTimes[j + 1]) {
                     long temp = startTimes[j];
-                    HistoryRecord tempRecord = records[j];
+                    HistoryRecord_x9 tempRecord = records[j];
                     startTimes[j] = startTimes[j + 1];
                     records[j] = records[j + 1];
                     startTimes[j + 1] = temp;

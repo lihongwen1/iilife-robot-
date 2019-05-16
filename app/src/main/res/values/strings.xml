@@ -19,8 +19,8 @@
     <string name="register2_input_code">请输入邮箱验证码</string>
     <string name="register2_gain_code">获取验证码</string>
     <string name="register2_gain_code_second">获取验证码 %1$s</string>
-    <string name="register2_input_pass" >请输入新密码 （6个字符以上）</string>
-    <string name="register2_input_pass_again" >再次输入新密码</string>
+    <string name="register2_input_pass">请输入新密码 （6个字符以上）</string>
+    <string name="register2_input_pass_again">再次输入新密码</string>
     <string name="register2_reset_pass">忘记密码</string>
     <string name="register2_aty_obtain_suc">验证码已发送</string>
     <string name="register2_input_pw2">请再次输入密码</string>
@@ -214,6 +214,9 @@
     <string name="map_aty_recharge">回充</string>
     <string name="map_aty_function">功能</string>
     <string name="map_aty_use_control">已启用遥控功能</string>
+    <string name="map_aty_use_left">向左</string>
+    <string name="map_aty_use_right">向右</string>
+    <string name="map_aty_use_forward">向前</string>
     <string name="map_aty_use_recharging">%1$s正在回充&#8230;</string>
     <string name="map_aty_use_recharging_x9">扫地机器人正在回充</string>
     <string name="map_aty_key_pointing">%1$s已启用重点清扫</string>
@@ -330,19 +333,20 @@
     <string name="map_aty_pause">暂停</string>
     <string name="virtualwall_save">是否保存？</string>
     <string name="virtualwall_confirm_save">保存</string>
-    <string name="map_virtual_wall">虚拟墙</string>
-    <string name="map_aty_set_wall">是否进入虚拟墙编辑模式？</string>
+    <string name="map_virtual_wall">电子墙</string>
+    <string name="map_aty_set_wall">是否进入电子墙编辑模式？</string>
     <string name="map_aty_will_stop">会暂停当前清扫工作</string>
     <string name="map_aty_edit_mode">编辑模式</string>
-    <string name="map_aty_clear_wall">是否清除所有虚拟墙设置？</string>
-    <string name="map_aty_add_wall">进入增加虚拟墙模式！</string>
+    <string name="map_aty_clear_wall">是否清除所有电子墙设置？</string>
+    <string name="map_aty_add_wall">进入增加电子墙模式！</string>
     <string name="map_aty_hua_xian">用手指在地图相应的位置划线即可添加</string>
-    <string name="map_aty_delete_wall">进入删除虚拟墙模式！</string>
+    <string name="map_aty_delete_wall">进入删除电子墙模式！</string>
     <string name="map_aty_dian_ji">点击对应编号既可删除</string>
-    <string name="map_aty_apply_wall">是否应用所有虚拟墙？</string>
-    <string name="map_aty_set_suc">虚拟墙设置成功！</string>
-    <string name="map_aty_set_fail">虚拟墙设置失败！</string>
-    <string name="map_aty_max_count">已经达到虚拟墙最大数量！！</string>
+    <string name="map_aty_apply_wall">是否应用所有电子墙？</string>
+    <string name="map_aty_set_suc">电子墙设置成功！</string>
+    <string name="map_aty_set_fail">电子墙设置失败！</string>
+    <string name="map_aty_max_count">已经达到电子墙最大数量！！</string>
+    <string name="map_aty_too_short">电子墙太短！！</string>
     <string name="setting_aty_ota_update">固件升级</string>
     <string name="ota_aty_update_suc">升级成功！</string>
     <string name="ota_aty_updating">正在升级&#8230;</string>
@@ -369,12 +373,15 @@
 
     <string name="back_to_recharge">返回充电座</string>
     <string name="finish_the_cleaning">结束当前清扫</string>
-    
-     <!--device stop work reason-->
+
+    <!--device stop work reason-->
     <string name="stop_work_reason1">完成清扫</string>
     <string name="stop_work_reason2">低电量回冲停止</string>
     <string name="stop_work_reason3">遥控器暂停</string>
     <string name="stop_work_reason4">按键暂停</string>
     <string name="stop_work_reason5">App主动暂停</string>
     <string name="stop_work_reason6">异常报警停止</string>
+    <string name="open_gps_location">开启GPS位置信息</string>
+    <string name="open_gps_location_tip">打开后将为您自动获取家庭WIFI</string>
+    <string name="please_not_exit_app">请勿关闭软件</string>
 </resources>

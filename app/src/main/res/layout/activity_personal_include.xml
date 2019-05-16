@@ -26,7 +26,7 @@
             android:layout_marginStart="@dimen/dp_30"
             android:background="@drawable/n_icon_tel" />
 
-        <com.ilife.iliferobot_cn.view.ItcaTextView
+        <com.ilife.iliferobot_cn.view.AvantGardTextView
             android:id="@+id/tv_telNum1"
             style="@style/Text_14sp_33"
             android:layout_centerVertical="true"
@@ -57,7 +57,7 @@
             android:layout_marginStart="@dimen/dp_30"
             android:background="@drawable/n_icon_email" />
 
-        <com.ilife.iliferobot_cn.view.ItcaTextView
+        <com.ilife.iliferobot_cn.view.AvantGardTextView
             android:id="@+id/image_emailAdd1"
             style="@style/Text_14sp_33"
             android:layout_centerVertical="true"

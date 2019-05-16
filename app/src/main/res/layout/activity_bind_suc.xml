@@ -7,41 +7,53 @@
 
     <include layout="@layout/template_top_title" />
 
-
-    <com.ilife.iliferobot_cn.view.RegularTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/robot_connected"
-        android:layout_marginTop="@dimen/dp_52"
-        android:textColor="@color/color_f08300"
-        android:textSize="34sp"/>
-
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_266"
-        android:layout_marginTop="@dimen/dp_12"
-        android:background="@drawable/n_robot" />
+        android:layout_height="wrap_content">
 
-    <com.ilife.iliferobot_cn.view.LightTextView
-        style="@style/Text_12sp_ac"
-        android:layout_marginTop="@dimen/dp_18"
-        android:text="@string/bind_suc_aty_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.ilife.iliferobot_cn.view.RegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_52"
+                android:text="@string/robot_connected"
+                android:textColor="@color/color_f08300"
+                android:textSize="34sp" />
+
+            <ImageView
+                android:id="@+id/iv_bind_device"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_266"
+                android:layout_marginTop="@dimen/dp_12"
+                android:src="@drawable/rechage_device_x900" />
+
+            <com.ilife.iliferobot_cn.view.LightTextView
+                style="@style/Text_12sp_ac"
+                android:layout_marginTop="@dimen/dp_18"
+                android:text="@string/bind_suc_aty_name" />
 
 
-    <EditText
-        android:id="@+id/et_devName"
-        android:layout_width="@dimen/dp_315"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/name_bt_bg"
-        android:gravity="center"
-        android:text="@string/bind_suc_sty_robot_name"
-        android:textColor="@color/color_33"
-        android:textSize="@dimen/sp_12" />
+            <EditText
+                android:id="@+id/et_devName"
+                android:layout_width="@dimen/dp_315"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/name_bt_bg"
+                android:gravity="center"
+                android:text="@string/bind_suc_sty_robot_name"
+                android:textColor="@color/color_33"
+                android:textSize="@dimen/sp_12" />
 
-    <com.ilife.iliferobot_cn.view.RegularButton
-        android:id="@+id/bt_done"
-        style="@style/Button_Style"
-        android:layout_marginTop="@dimen/dp_40"
-        android:text="@string/bind_suc_sty_robot_done" />
+            <com.ilife.iliferobot_cn.view.RegularButton
+                android:id="@+id/bt_done"
+                style="@style/Button_Style"
+                android:layout_marginTop="@dimen/dp_40"
+                android:text="@string/bind_suc_sty_robot_done" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

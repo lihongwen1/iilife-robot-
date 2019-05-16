@@ -106,6 +106,7 @@ public class CanvasView extends View implements View.OnTouchListener {
         int vertz = 0;
         int vertz1 = 0;
 
+        //绘制网格背景
         paint.setColor(Color.parseColor("#eeeeef"));
         for (int i = 0; i < 100; i++) {
             if (i % 10 == 0) {
@@ -122,6 +123,7 @@ public class CanvasView extends View implements View.OnTouchListener {
             vertz1 += -space;
         }
 
+        //绘制清扫区域的黄方格
         paint.setColor(context.getResources().getColor(R.color.color_f08300));
         paint.setStrokeWidth((float) (space - 2));
 
@@ -131,6 +133,8 @@ public class CanvasView extends View implements View.OnTouchListener {
                 long y = -pointList.get(i);
                 canvas.drawPoint((float) (x * space), -(float) (y * space), paint);
             }
+
+            //绘制机器位置点
             int size = pointList.size();
             long finalX = -Long.valueOf(pointList.get(size - 2));
             long finalY = Long.valueOf(pointList.get(size - 1));
@@ -249,6 +253,10 @@ public class CanvasView extends View implements View.OnTouchListener {
 
     }
 
+    /**
+     *  下发上传请求实时信息指令
+     * @param b
+     */
     public void upLoadMsg(byte b) {
         ACDeviceMsg deviceMsg = new ACDeviceMsg(MsgCodeUtils.UPLOADMSG, new byte[]{b});
         sendToDeviceWithOption(deviceMsg, physicalDeviceId);

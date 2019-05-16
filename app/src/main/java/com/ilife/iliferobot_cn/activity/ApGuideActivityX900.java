@@ -2,35 +2,23 @@ package com.ilife.iliferobot_cn.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
-import com.ilife.iliferobot_cn.base.BaseActivity;
-import com.ilife.iliferobot_cn.receiver.WifiScanReceiver;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.view.ToggleRadioButton;
 
-import java.util.Locale;
-
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.OnClick;
 
 /**
@@ -59,6 +47,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     private int res_id_start, res_id_light;
     int start, strId, iconId;
     private int curStep;
+    private String ssid,pwd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,11 +119,13 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                     ll_ap_step1.setVisibility(View.GONE);
                     ll_ap_step2.setVisibility(View.VISIBLE);
                     rb_next_tip.setText(R.string.ap_guide_already_open_wifi);
+                    bt_next.setText(R.string.add_aty_start_connect);
                     rb_next_tip.setChecked(false);
                     curStep = 2;
                 } else {
-                    Intent i = new Intent(context, FirstApActivity.class);
+                    Intent i = new Intent(context, ApWifiActivity.class);
                     startActivity(i);
+                    finish();
                 }
                 break;
         }
@@ -147,6 +138,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
             ll_ap_step1.setVisibility(View.VISIBLE);
             ll_ap_step2.setVisibility(View.GONE);
             rb_next_tip.setText(R.string.ap_guide_already_open_device);
+            bt_next.setText(R.string.guide_aty_next);
         } else {
             super.clickBackBtn();
         }

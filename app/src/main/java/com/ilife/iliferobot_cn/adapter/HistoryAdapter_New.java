@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.entity.HistoryRecord;
+import com.ilife.iliferobot_cn.entity.HistoryRecord_x9;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ import java.util.Date;
 public class HistoryAdapter_New extends RecyclerView.Adapter<HistoryAdapter_New.MyViewHolder> {
     Context context;
     LayoutInflater inflater;
-    ArrayList<HistoryRecord> records;
+    ArrayList<HistoryRecord_x9> records;
 
-    public HistoryAdapter_New(Context context, ArrayList<HistoryRecord> records) {
+    public HistoryAdapter_New(Context context, ArrayList<HistoryRecord_x9> records) {
         this.context = context;
         this.records = records;
         inflater = LayoutInflater.from(context);
@@ -39,7 +40,7 @@ public class HistoryAdapter_New extends RecyclerView.Adapter<HistoryAdapter_New.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        HistoryRecord historyRecord = records.get(position);
+        HistoryRecord_x9 historyRecord = records.get(position);
         holder.tv_duration.setText(historyRecord.getWork_time() / 60 + "min");
         holder.tv_area.setText(historyRecord.getClean_area() + "㎡");
 

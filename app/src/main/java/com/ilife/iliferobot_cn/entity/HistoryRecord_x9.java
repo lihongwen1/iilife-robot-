@@ -15,6 +15,12 @@ public class HistoryRecord_x9 implements Serializable {
     private int slam_yMin;
     private int slam_yMax;
     private int start_reason;
+    private int stop_reason;
+    private long start_time;
+    private int clean_area;
+    private ArrayList<String> historyData;
+    private String lineSpace;
+
 
     public int getSlam_xMin() {
         return slam_xMin;
@@ -64,11 +70,7 @@ public class HistoryRecord_x9 implements Serializable {
         this.stop_reason = stop_reason;
     }
 
-    private int stop_reason;
-    private long start_time;
-    private int clean_area;
-    private ArrayList<String> historyData;
-    private String lineSpace;
+
 
     public int getWork_time() {
         return work_time;

@@ -79,7 +79,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new HistoryAdapter_New_x9(context, recordList);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.VERTICAL, 6,
+        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.VERTICAL, 4,
                 ContextCompat.getColor(this, R.color.bg_color_f5f7fa)));
         adapter.setOnClickListener(position -> {
 //                Intent intent = new Intent(HistoryActivity_x9.this,HistoryDetailActivity_x9.class);
@@ -118,29 +118,52 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         AC.sendToService("", serviceName, Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                if (resp.get("data") != null) {
-                    ArrayList<ACObject> data = resp.get("data");
-                    ACObject acObject = data.get(0);
-                    String slamData = acObject.getString("clean_slam");
-                    String roadData = acObject.getString("clean_road");
-                    ArrayList<String> maplists = new ArrayList<>();
-                    maplists.add(slamData);
-                    maplists.add(roadData);
-                    HistoryRecord_x9 record = new HistoryRecord_x9();
-                    record.setStart_time(acObject.getLong("start_time"));
-                    record.setClean_area(acObject.getInt("clean_area"));
-                    record.setWork_time(acObject.getInt("clean_time"));
-                    record.setSlam_xMin(acObject.getInt("slam_x_min"));
-                    record.setSlam_xMax(acObject.getInt("slam_x_max"));
-                    record.setSlam_yMin(acObject.getInt("slam_y_min"));
-                    record.setSlam_yMax(acObject.getInt("slam_y_max"));
-                    record.setStart_reason(acObject.getInt("start_reason"));
-                    record.setStop_reason(acObject.getInt("stop_reason"));
-                    record.setHistoryData(maplists);
-                    recordList.add(record);
-                    showList(recordList);
-                    MyLog.e(TAG, "getHistoryRecord success===:" + "<--->" + recordList.size());
+                if (subdomain.equals(Constants.subdomain_x900)) {
+                    if (resp.get("data") != null) {
+                        ArrayList<ACObject> data = resp.get("data");
+                        ACObject acObject = data.get(0);
+                        String slamData = acObject.getString("clean_slam");
+                        String roadData = acObject.getString("clean_road");
+                        ArrayList<String> maplists = new ArrayList<>();
+                        maplists.add(slamData);
+                        maplists.add(roadData);
+                        HistoryRecord_x9 record = new HistoryRecord_x9();
+                        record.setStart_time(acObject.getLong("start_time"));
+                        record.setClean_area(acObject.getInt("clean_area"));
+                        record.setWork_time(acObject.getInt("clean_time"));
+                        record.setSlam_xMin(acObject.getInt("slam_x_min"));
+                        record.setSlam_xMax(acObject.getInt("slam_x_max"));
+                        record.setSlam_yMin(acObject.getInt("slam_y_min"));
+                        record.setSlam_yMax(acObject.getInt("slam_y_max"));
+                        record.setStart_reason(acObject.getInt("start_reason"));
+                        record.setStop_reason(acObject.getInt("stop_reason"));
+                        record.setHistoryData(maplists);
+                        recordList.add(record);
+                        showList(recordList);
+                    }
+                } else {
+                    if (resp.get("data") != null) {
+                        ArrayList<ACObject> data = resp.get("data");
+                        ACObject obj = data.get(0);
+                        String clean_data0 = obj.getString("clean_data");
+                        HistoryRecord_x9 record = new HistoryRecord_x9();
+                        record.setLineSpace(String.valueOf(clean_data0.charAt(0)));
+                        record.setWork_time(obj.getInt("work_time"));
+                        record.setStart_time(obj.getLong("start_time"));
+                        record.setClean_area(obj.getInt("clean_area"));
+                        String clean_data;
+                        ArrayList<String> mapList = new ArrayList<>();
+                        for (int i = 0; i < data.size(); i++) {
+                            clean_data = data.get(i).getString("clean_data");
+                            mapList.add(clean_data);
+                        }
+                        record.setHistoryData(mapList);
+                        recordList.add(record);
+                        showList(recordList);
+                    }
                 }
+
+
                 if (index < 7) {
                     getHistoryRecord();
                 } else {

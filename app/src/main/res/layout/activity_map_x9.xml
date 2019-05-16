@@ -142,24 +142,10 @@
 
             <include
                 android:id="@+id/layout_remote_control"
-                layout="@layout/window_directioon_x9"
+                layout="@layout/window_direction_x9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="gone" />
-
-            <include
-                layout="@layout/layout_virtual_wall"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/layout_clean"
-                layout="@layout/layout_clean"
                 android:visibility="gone" />
 
             <include
@@ -167,16 +153,6 @@
                 layout="@layout/layout_recharge_x900"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/layout_key_point"
-                layout="@layout/layout_key_point"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/layout_along"
-                layout="@layout/layout_along"
                 android:visibility="gone" />
 
             <com.ilife.iliferobot_cn.view.LightTextView
@@ -199,7 +175,6 @@
             android:background="@color/bg_color_f5f7fa"
             android:paddingBottom="@dimen/dp_30"
             android:visibility="visible">
-
             <com.ilife.iliferobot_cn.view.RegularTextView
                 android:id="@+id/tv_virtual_wall_x9"
                 style="@style/Text_14sp_33"
@@ -211,6 +186,18 @@
                 android:drawablePadding="@dimen/dp_13"
                 android:gravity="center"
                 android:text="@string/map_virtual_wall" />
+            <com.ilife.iliferobot_cn.view.RegularTextView
+                android:id="@+id/tv_bottom_recharge_x8"
+                style="@style/Text_14sp_33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/dp_24"
+                android:drawableTop="@drawable/selector_recharge"
+                android:drawablePadding="@dimen/dp_13"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="@string/map_aty_recharge" />
 
 
             <com.ilife.iliferobot_cn.view.RegularTextView
@@ -244,8 +231,8 @@
                 android:layout_marginEnd="@dimen/dp_24"
                 android:drawableTop="@drawable/selector_recharge"
                 android:drawablePadding="@dimen/dp_12"
-                android:text="@string/map_aty_recharge"
                 android:gravity="center"
+                android:text="@string/map_aty_recharge"
                 android:visibility="gone" />
         </FrameLayout>
 
@@ -311,25 +298,25 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_ensure_virtual_x9"
+                android:id="@+id/tv_cancel_virtual_x9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
-                android:text="确认"
+                android:text="@string/personal_aty_cancel"
                 android:textColor="#ff8fc31f"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tv_cancel_virtual_x9"
+                android:id="@+id/tv_ensure_virtual_x9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="取消"
+                android:text="@string/dialog_del_confirm"
                 android:textColor="@color/color_f08300"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_add_virtual_x9"
@@ -342,7 +329,7 @@
                 android:gravity="center"
                 android:text="添加"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_delete_virtual_x9"
@@ -355,7 +342,7 @@
                 android:gravity="center"
                 android:text="删减"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

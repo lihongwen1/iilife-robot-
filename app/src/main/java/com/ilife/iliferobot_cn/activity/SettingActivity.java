@@ -341,11 +341,12 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.rl_record:
-                if (subdomain.equals(Constants.subdomain_x900)) {
-                    intent = new Intent(context, HistoryActivity_x9.class);
-                } else {
-                    intent = new Intent(context, HistoryActivity.class);
-                }
+                intent = new Intent(context, HistoryActivity_x9.class);
+//                if (subdomain.equals(Constants.subdomain_x900)) {
+//                    intent = new Intent(context, HistoryActivity_x9.class);
+//                } else {
+//                    intent = new Intent(context, HistoryActivity.class);
+//                }
                 startActivity(intent);
                 break;
             case R.id.rl_consume:

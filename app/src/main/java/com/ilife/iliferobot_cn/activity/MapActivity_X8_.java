@@ -93,9 +93,8 @@ public class MapActivity_X8_ extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initData();
-        initView();
+        super.onCreate(savedInstanceState);
         initReceiver();
     }
     @Override

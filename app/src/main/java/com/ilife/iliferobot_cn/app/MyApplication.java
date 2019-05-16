@@ -28,6 +28,7 @@ public class MyApplication extends MultiDexApplication {
     public Typeface tf_light;
     public Typeface tf_regular;
     public Typeface tf_english_regular;
+    public Typeface avantGard;
     public Typeface tf_medium;
     public Typeface tf_itca;
 
@@ -79,6 +80,7 @@ public class MyApplication extends MultiDexApplication {
         tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
         tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
         tf_english_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        avantGard = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
         configToast();
     }
 

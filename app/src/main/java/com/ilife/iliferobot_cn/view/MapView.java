@@ -65,6 +65,11 @@ public class MapView extends View {
     private Bitmap deleteBitmap;//删除虚拟墙的bitmap
     private static final int deleteIconW = 36;
 
+    private Canvas boxCanvas;
+    private Bitmap boxBitmap;
+    private Paint boxPaint;
+    private int space = 20, scrollingOffsetX = 0, scrollingOffsetY = 0;
+
     public MapView(Context context) {
         super(context);
         init();
@@ -128,6 +133,9 @@ public class MapView extends View {
         virtualPaint.setStrokeCap(Paint.Cap.ROUND);
         virtualPaint.setColor(getResources().getColor(R.color.color_f08300));
         virtualPaint.setStrokeWidth(3f);
+
+        boxPaint = new Paint();
+
         /**
          * 虚拟墙路径集合
          */
@@ -163,10 +171,12 @@ public class MapView extends View {
         roadBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         slagBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         virtualBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         virtualCanvas = new Canvas(virtualBitmap);
-        updateSlam(644, 807, 736, 827);
+        boxCanvas = new Canvas(boxBitmap);
+        sCenter.set(width / 2f, height / 2f);
     }
 
     /**
@@ -180,12 +190,12 @@ public class MapView extends View {
         roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
-        float startX=0,startY=0;//标记起点坐标
+        float startX = 0, startY = 0;//标记起点坐标
 //        绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
-                    startX=matrixCoordinateX(roadList.get(0));
+                    startX = matrixCoordinateX(roadList.get(0));
                     startY = matrixCoordinateY(1500 - roadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
 
@@ -198,7 +208,7 @@ public class MapView extends View {
         if (historyRoadList != null && historyRoadList.size() > 0) {
             for (int k = 0; k < historyRoadList.size() - 1; k += 2) {
                 if (k == 0) {
-                    startX=matrixCoordinateX(historyRoadList.get(0));
+                    startX = matrixCoordinateX(historyRoadList.get(0));
                     startY = matrixCoordinateY(1500 - historyRoadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
                 } else {
@@ -208,10 +218,10 @@ public class MapView extends View {
             }
         }
         roadCanvas.drawPath(roadPath, roadPaint);
-         if (startX!=0&&startY!=0){
-             positionCirclePaint.setColor(getResources().getColor(R.color.white));
-             roadCanvas.drawCircle(startX,startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
-         }
+        if (startX != 0 && startY != 0) {
+            positionCirclePaint.setColor(getResources().getColor(R.color.white));
+            roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
+        }
         if (roadList != null && roadList.size() > 2) {
             float endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             float endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
@@ -249,7 +259,7 @@ public class MapView extends View {
      * @param yMax
      */
     // TODO make sure the map is in the center of the screen  and it will be drawn all details ,there is an error that the genuine coordinate is less than the value 'xmin'
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScare) {
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
         if (xLength <= 0 || yLength <= 0) {
@@ -259,14 +269,13 @@ public class MapView extends View {
         double resultY = height * 0.80f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = Math.round(bigDecimal.floatValue());
-        if (baseScare >= 6) {
-            baseScare = 6;
+        if (baseScare >= maxScare) {
+            baseScare = maxScare;
         }
         Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
         deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
         Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
-        sCenter.set(width / 2f, height / 2f);
     }
 
 
@@ -321,6 +330,7 @@ public class MapView extends View {
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
         canvas.drawBitmap(virtualBitmap, matrix, virtualPaint);
+        canvas.drawBitmap(boxBitmap, matrix, boxPaint);
         super.onDraw(canvas);
     }
 
@@ -386,6 +396,7 @@ public class MapView extends View {
                 } else if (MODE == MODE_ADD_VIRTUAL) {
                     if (virtualWallBeans.size() >= 10) {
                         //TODO 提示虚拟墙数量超最大数
+                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
                     } else {
                         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                         virtualCanvas.save();
@@ -404,10 +415,11 @@ public class MapView extends View {
                 } else if (MODE == MODE_ADD_VIRTUAL) {
                     if (virtualWallBeans.size() >= 10) {
                         // TODO 提示虚拟墙数量达到最大值
+                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
                     } else {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
-                            // TODO 提示虚拟墙太短
+                            ToastUtils.showToast(Utils.getString(R.string.map_aty_too_short));
                         } else {
                             existvirtualPath.moveTo(downX, downY);
                             existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
@@ -419,10 +431,10 @@ public class MapView extends View {
                     }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //TODO delete  virtual wall
-                    for (VirtualWallBean vr : virtualWallBeans) {
-                        if (vr.getDeleteIcon() == null) {
-                            continue;
-                        }
+                    Iterator<VirtualWallBean> iterator=virtualWallBeans.iterator();
+                    VirtualWallBean vr;
+                    while (iterator.hasNext()){
+                       vr= iterator.next();
                         if (vr.getDeleteIcon().contains(x, y)) {
                             ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
                             if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
@@ -563,15 +575,20 @@ public class MapView extends View {
      * @param existPointList 服务器虚拟墙数据集合
      */
     public void drawVirtualWall(List<int[]> existPointList) {
-        if (existPointList != null && existPointList.size() > 0) {
-            VirtualWallBean bean;
+        if (existPointList == null) {
+            drawVirtualWall();//Represents when the map is updating
+        } else if (existPointList.size() == 0) {
             virtualWallBeans.clear();
+            drawVirtualWall();
+        } else {
+            virtualWallBeans.clear();
+            VirtualWallBean bean;
             for (int i = 0; i < existPointList.size(); i++) {
                 bean = new VirtualWallBean(i + 1, existPointList.get(i), 1);
                 virtualWallBeans.add(bean);
             }
+            drawVirtualWall();
         }
-        drawVirtualWall();
     }
 
     /**
@@ -709,7 +726,52 @@ public class MapView extends View {
         }
         lastLineBeans.clear();//清空所有线的数据
     }
-    public void clear(){
-        ;
+
+
+    /**
+     * 绘制x800的黄方格地图
+     *
+     * @param pointList
+     */
+    public void drawBoxMapX8(ArrayList<Integer> pointList) {
+        if (pointList == null) {
+            return;
+        }
+        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
+        int x, y;
+        for (int i = 1; i < pointList.size(); i += 2) {
+            x = -pointList.get(i - 1);
+            y = -pointList.get(i);
+            Log.d(TAG,"800--x:"+x+"---y:"+-y);
+            if (minX > x) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            if (minY > y) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        updateSlam(minX, maxX, minY, maxY, 20);
+        boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        //绘制清扫区域的黄方格
+        boxPaint.setColor(getResources().getColor(R.color.white));
+        boxPaint.setStrokeWidth((float) (baseScare - 2));
+        if (pointList.size() > 0) {
+            for (int i = 1; i < pointList.size(); i += 2) {
+                x = -pointList.get(i - 1);
+                y = -pointList.get(i);
+                boxCanvas.drawPoint(matrixCoordinateX(x), height-matrixCoordinateY(y), boxPaint);
+            }
+        }
+        float endY = height-matrixCoordinateY(-pointList.get(pointList.size() - 1));
+        float endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
+        positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+        boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+        invalidate();
     }
 }

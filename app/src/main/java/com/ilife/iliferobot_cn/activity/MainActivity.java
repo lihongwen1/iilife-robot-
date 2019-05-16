@@ -166,13 +166,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                     SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
                     SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
                     SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-                    if (subdomain.equals(Constants.subdomain_x800)) {
-                        i = new Intent(context, MapActivity_X8_.class);
-                    } else if (subdomain.equals(Constants.subdomain_x900)) {
+//                    if (subdomain.equals(Constants.subdomain_x800)) {
+//                        i = new Intent(context, MapActivity_X8_.class);
+//                    } else if (subdomain.equals(Constants.subdomain_x900)) {
                         i = new Intent(context, MapActivity_X9_.class);
-                    } else {
-                        i = new Intent(context, MapActivity_X7_.class);
-                    }
+//                    } else {
+//                        i = new Intent(context, MapActivity_X7_.class);
+//                    }
                     startActivity(i);
                 } else {
                     showOfflineDialog();

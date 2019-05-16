@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
+        android:id="@+id/iv_recharge_model"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/rechage_device_x900" />

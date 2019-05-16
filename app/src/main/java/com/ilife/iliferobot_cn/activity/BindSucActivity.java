@@ -40,7 +40,10 @@ public class BindSucActivity extends BackBaseActivity {
     EditText et_devName;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
+    @BindView(R.id.iv_bind_device)
+    ImageView iv_bind_device;
     private ReNameListener listener;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,23 +65,25 @@ public class BindSucActivity extends BackBaseActivity {
     public void initData() {
         Bundle bundle = getIntent().getExtras();
         String devName;
+        int image_device;
         if (bundle != null) {
             deviceId = bundle.getLong(AddActivity.EXTAR_DEVID);
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
         if (subdomain.equals(Constants.subdomain_x785)) {
             devName = "X785";
-//            tv_connected.setText(getString(R.string.bind_suc_aty_done_785));
+            image_device = R.drawable.rechage_device_x785;
         } else if (subdomain.equals(Constants.subdomain_x787)) {
             devName = "X787";
-//            tv_connected.setText(getString(R.string.bind_suc_aty_done_787));
+            image_device = R.drawable.rechage_device_x787;
         } else if (subdomain.equals(Constants.subdomain_x900)) {
             devName = "X900";
-//            tv_connected.setText(getString(R.string.bind_suc_aty_done_787));
+            image_device = R.drawable.rechage_device_x900;
         } else {
             devName = getString(R.string.bind_suc_sty_robot_name);
-//            tv_connected.setText(getString(R.string.bind_suc_aty_done_800));
+            image_device = R.drawable.rechage_device_x800;
         }
+        iv_bind_device.setImageResource(image_device);
         et_devName.setText(devName);
         et_devName.setSelection(devName.length());
         UserUtils.setInputFilter(et_devName);

@@ -188,6 +188,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             if (TextUtils.isEmpty(physicalId) || !isTheSameDevice(mApSsid, physicalId)) {
                 emitter.onError(new Exception(Utils.getString(R.string.third_ap_aty_port_)));
             } else {
+
                 activator.startApLink(ssid, passWord, (int) TimeUnit.SECONDS.toMillis(20), new PayloadCallback<Boolean>() {
                     @Override
                     public void success(Boolean aBoolean) {
@@ -219,7 +220,6 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                         //此处一般为1993的超时错误，建议处理逻辑为页面上提示配网失败，提示用户检查自己输入的WIFI信息是否正确等，回到上述第一步骤，重新开始所有配网步骤。
                     }
                 });
-                MyLog.d(TAG, "设备连云成功");
                 emitter.onComplete();
             }
         });

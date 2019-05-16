@@ -68,7 +68,7 @@
         style="@style/Button_Style"
         android:id="@+id/bt_next"
         android:layout_marginTop="@dimen/dp_40"
-        android:text="@string/add_aty_start_connect" />
+        android:text="@string/guide_aty_next" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
