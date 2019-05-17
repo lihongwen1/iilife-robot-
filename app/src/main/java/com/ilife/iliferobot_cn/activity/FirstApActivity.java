@@ -4,9 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -69,7 +72,8 @@ public class FirstApActivity extends BackBaseActivity {
     public void initData() {
         context = this;
     }
-    private void checkGps(){
+
+    private void checkGps() {
         // 用户已经同意该权限
         String ssid = WifiUtils.getSsid(context);
         if (!TextUtils.isEmpty(ssid) && !ssid.contains("unknown")) {
@@ -117,6 +121,7 @@ public class FirstApActivity extends BackBaseActivity {
                     }
                     return;
                 }
+
                 pass = et_pass.getText().toString().trim();
                 if (TextUtils.isEmpty(pass)) {
                     ToastUtils.showToast(context, getString(R.string.ap_aty_input_pass));
@@ -127,14 +132,25 @@ public class FirstApActivity extends BackBaseActivity {
                     ToastUtils.showToast(context, getString(R.string.add_aty_wrong_wifi_pass));
                     return;
                 }
-                SpUtils.put(this, EXTRA_SSID, ssid);
-                SpUtils.put(this, EXTRA_PASS, pass);
-                Intent i_ap = new Intent(context, ApGuideActivityX900.class);
-                startActivity(i_ap);
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                WifiInfo info = wifiManager.getConnectionInfo();
+                if (info != null) {
+                    String bssid = info.getBSSID();
+                    if (!TextUtils.isEmpty(bssid)) {
+                        if (bssid.startsWith("02")) {
+                            goSetGps();
+                        } else {
+                            SpUtils.put(this, EXTRA_SSID, ssid);
+                            SpUtils.put(this, EXTRA_PASS, pass);
+                            Intent i_ap = new Intent(context, ApGuideActivityX900.class);
+                            startActivity(i_ap);
+                        }
+                    }
+                }
+
                 break;
         }
     }
-
 
 
     private boolean checkGpsIsOpen() {
@@ -159,7 +175,7 @@ public class FirstApActivity extends BackBaseActivity {
         super.onResume();
         // 用户已经同意该权限
         String ssid = WifiUtils.getSsid(context);
-        if (!TextUtils.isEmpty(ssid)){
+        if (!TextUtils.isEmpty(ssid)) {
             tv_ssid.setText(ssid);
         }
     }

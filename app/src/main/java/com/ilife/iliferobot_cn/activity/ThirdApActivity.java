@@ -231,7 +231,6 @@ public class ThirdApActivity extends BaseActivity implements View.OnClickListene
                     WifiInfo info = wifiManager.getConnectionInfo();
                     if (info!=null){
                         String bssid = info.getBSSID();
-                        MyLog.e(TAG,"bssid = "+bssid);
                         if (!TextUtils.isEmpty(bssid)){
                             if (bssid.startsWith("02")){
                                 showLocationDialog();
