@@ -87,7 +87,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     File tempFile;
     String userName, content, email, type;
     TextView tv_userName, tv_del_cancel, tv_confirm, del_tv_title, tv_version, tv_content;
-    ImageView image_down, image_forward, image_avatar;
+    ImageView  image_forward, image_avatar;
     LayoutInflater inflater;
     RelativeLayout rl_help;
     RelativeLayout rl_scan;
@@ -127,7 +127,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         color_ac = getResources().getColor(R.color.color_ac);
         color_f6 = getResources().getColor(R.color.color_f6);
         inflater = LayoutInflater.from(context);
-        image_down = (ImageView) findViewById(R.id.image_down);
         tv_version = (TextView) findViewById(R.id.tv_version);
         tv_userName = (TextView) findViewById(R.id.tv_userName);
         image_forward = (ImageView) findViewById(R.id.image_forward);
@@ -243,8 +242,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                             showDeviceList();
                         }
                         ll_device.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-                        image_down.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-                        image_forward.setVisibility(!isShow ? View.GONE : View.VISIBLE);
+                        image_forward.setRotation(!isShow ?-90:0);
                         isShow = !isShow;
                     } else {
                         ToastUtils.showToast(context, getString(R.string.personal_aty_no_shareable));

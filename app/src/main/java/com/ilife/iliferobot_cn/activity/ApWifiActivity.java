@@ -3,6 +3,7 @@ package com.ilife.iliferobot_cn.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -93,7 +94,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-//        ToastUtils.showToast("绑定失败");
+        Log.d(TAG,"绑定失败：    "+message);
         startActivity(new Intent(this, ConnectDeviceApActivity.class));
         finish();
     }

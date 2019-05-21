@@ -48,4 +48,5 @@
             android:includeFontPadding="false"
             android:gravity="center" />
     </LinearLayout>
+
 </LinearLayout>

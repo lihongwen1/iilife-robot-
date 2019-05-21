@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="false"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
@@ -18,6 +19,7 @@
         />
 
     <TextView
+        android:text="hello world"
         android:id="@+id/toast_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

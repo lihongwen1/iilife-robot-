@@ -7,112 +7,128 @@
 
     <include layout="@layout/template_top_title" />
 
-
-    <com.ilife.iliferobot_cn.view.SuperEditText
-        android:id="@+id/et_email"
-        style="@style/super_edit_text_16sp"
-        android:layout_marginStart="@dimen/dp_30"
-        android:layout_marginEnd="@dimen/dp_30"
-        android:hint="@string/login_aty_email"
-        android:inputType="textEmailAddress"
-        app:ic_left_click="@drawable/n_icon_personal"
-        app:ic_left_unclick="@drawable/n_icon_personal"
-        app:left_height="72"
-        app:left_width="72" />
-
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_30"
-        android:layout_marginEnd="@dimen/dp_30">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <com.ilife.iliferobot_cn.view.SuperEditText
-            android:id="@+id/et_code"
-            style="@style/super_edit_text_16sp"
-            android:hint="@string/verification_code_tip"
-            android:inputType="number"
-            app:ic_delete="@null"
-            app:ic_left_click="@drawable/icon_verification_code"
-            app:ic_left_unclick="@drawable/icon_verification_code"
-            app:is_show_delete="false"
-            app:left_height="72"
-            app:left_width="72" />
-
-        <com.ilife.iliferobot_cn.view.RegularTextView
-            android:id="@+id/tv_gain"
-            android:layout_width="70dp"
-            android:layout_height="20dp"
-            android:layout_gravity="end|center_vertical"
-            android:text="@string/get_ver_code_tip"
-            android:textColor="@color/color_f08300"
-            android:textSize="@dimen/sp_14" />
-
-        <com.ilife.iliferobot_cn.view.RegularTextView
-            android:id="@+id/tv_count_down"
-            android:layout_width="24dp"
-            android:layout_height="20dp"
-            android:layout_gravity="end|center_vertical"
-            android:textColor="@color/color_ac"
-            android:textSize="14sp"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.ilife.iliferobot_cn.view.SuperEditText
-            android:id="@+id/et_pw1"
+            android:id="@+id/et_email"
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginEnd="@dimen/dp_30"
-            android:hint="@string/login_aty_pw"
-            android:inputType="phone"
-            app:ic_left_click="@drawable/n_icon_password"
-            app:ic_left_unclick="@drawable/n_icon_password"
-            app:is_show_delete="false"
+            android:hint="@string/login_aty_email"
+            android:inputType="textEmailAddress"
+            app:ic_left_click="@drawable/n_icon_personal"
+            app:ic_left_unclick="@drawable/n_icon_personal"
             app:left_height="72"
             app:left_width="72" />
 
-        <ImageView
-           android:id="@+id/image_show_1"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/selector_image_show"
-            android:contentDescription="@null" />
-    </FrameLayout>
+        <View
+            style="@style/View_Line_Style"
+            android:layout_marginStart="@dimen/dp_66" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.ilife.iliferobot_cn.view.SuperEditText
-            android:id="@+id/et_pw2"
-            style="@style/super_edit_text_16sp"
-            android:layout_width="341dp"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:hint="@string/login_aty_pw_ensure"
-            android:inputType="phone"
-            app:ic_left_click="@drawable/n_icon_confirm"
-            app:ic_left_unclick="@drawable/n_icon_confirm"
-            app:is_show_delete="false"
-            app:left_height="72"
-            app:left_width="72" />
+            android:layout_marginEnd="@dimen/dp_30">
 
-        <ImageView
-            android:id="@+id/image_show_2"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/selector_image_show"
-            android:contentDescription="@null" />
-    </FrameLayout>
+            <com.ilife.iliferobot_cn.view.SuperEditText
+                android:id="@+id/et_code"
+                style="@style/super_edit_text_16sp"
+                android:hint="@string/verification_code_tip"
+                android:inputType="number"
+                app:ic_delete="@null"
+                app:ic_left_click="@drawable/icon_verification_code"
+                app:ic_left_unclick="@drawable/icon_verification_code"
+                app:is_show_delete="false"
+                app:left_height="72"
+                app:left_width="72" />
 
+            <com.ilife.iliferobot_cn.view.RegularTextView
+                android:id="@+id/tv_gain"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/get_ver_code_tip"
+                android:textColor="@color/color_f08300"
+                android:textSize="@dimen/sp_14" />
+
+            <com.ilife.iliferobot_cn.view.RegularTextView
+                android:id="@+id/tv_count_down"
+                android:layout_width="24dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@color/color_ac"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <View
+            style="@style/View_Line_Style"
+            android:layout_marginStart="@dimen/dp_66" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ilife.iliferobot_cn.view.SuperEditText
+                android:id="@+id/et_pw1"
+                style="@style/super_edit_text_16sp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:hint="@string/login_aty_pw"
+                android:inputType="phone"
+                app:ic_left_click="@drawable/n_icon_password"
+                app:ic_left_unclick="@drawable/n_icon_password"
+                app:is_show_delete="false"
+                app:left_height="72"
+                app:left_width="72" />
+
+            <ImageView
+                android:id="@+id/image_show_1"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:background="@drawable/selector_image_show"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <View
+            style="@style/View_Line_Style"
+            android:layout_marginStart="@dimen/dp_66" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ilife.iliferobot_cn.view.SuperEditText
+                android:id="@+id/et_pw2"
+                style="@style/super_edit_text_16sp"
+                android:layout_width="341dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:hint="@string/login_aty_pw_ensure"
+                android:inputType="phone"
+                app:ic_left_click="@drawable/n_icon_confirm"
+                app:ic_left_unclick="@drawable/n_icon_confirm"
+                app:is_show_delete="false"
+                app:left_height="72"
+                app:left_width="72" />
+
+            <ImageView
+                android:id="@+id/image_show_2"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:background="@drawable/selector_image_show"
+                android:contentDescription="@null" />
+        </FrameLayout>
+    </LinearLayout>
 
     <com.ilife.iliferobot_cn.view.RegularButton
         android:id="@+id/bt_confirm"

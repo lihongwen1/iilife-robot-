@@ -22,7 +22,7 @@
 
         <com.ilife.iliferobot_cn.view.LightEditText
             android:id="@+id/et_ssid"
-            style="@style/EditText_12sp_ac"
+            style="@style/EditText_16sp_ac"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/tv_set"
             android:layout_toEndOf="@+id/tv_robot_wifi"

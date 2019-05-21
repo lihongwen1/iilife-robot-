@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/n_icon_portrait" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_userName"
             style="@style/Text_16sp_33"
             android:layout_below="@+id/image_avatar"
@@ -48,7 +48,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_help" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot_cn.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -74,7 +74,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_scan" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot_cn.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -100,7 +100,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_shared" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot_cn.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -111,16 +111,6 @@
                 <ImageView
                     android:id="@+id/image_forward"
                     style="@style/Image_Style_Forward" />
-
-                <ImageView
-                    android:id="@+id/image_down"
-                    android:layout_width="15dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dp_30"
-                    android:background="@drawable/fgm_per_up"
-                    android:visibility="gone" />
             </RelativeLayout>
 
             <View style="@style/View_Line_Style"
@@ -142,18 +132,14 @@
                 android:background="@color/white">
 
                 <ImageView
+                    style="@style/Image_Style_30"
                     android:id="@+id/image_protocol"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_22"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/dp_31"
-                    android:layout_marginBottom="21dp"
                     android:background="@drawable/n_icon_protocol" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot_cn.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp_21"
+                    android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_toStartOf="@+id/image_forward_policy"
                     android:layout_toEndOf="@+id/image_protocol"
@@ -180,7 +166,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_logout" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot_cn.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -192,26 +178,27 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_23"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:id="@+id/image_version"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_19"
-                    android:layout_marginStart="@dimen/dp_138"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
                     android:background="@drawable/n_icon_version" />
 
                 <com.ilife.iliferobot_cn.view.LightTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tv_version"
-                    style="@style/Text_14sp_ac"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_marginStart="@dimen/dp_5"
                     android:layout_toEndOf="@+id/image_version"
                     android:text="@string/personal_aty_version"
-                    android:textColor="@color/color_33" />
+                    android:textColor="@color/color_ac" />
             </RelativeLayout>
         </LinearLayout>
     </com.ilife.iliferobot_cn.ui.ReboundScrollView>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -327,7 +328,7 @@ public class Toasty {
         toastTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 
         currentToast.setView(toastLayout);
-
+        currentToast.setGravity(Gravity.CENTER,0,0);
         if (!allowQueue){
             if (lastToast != null)
                 lastToast.cancel();

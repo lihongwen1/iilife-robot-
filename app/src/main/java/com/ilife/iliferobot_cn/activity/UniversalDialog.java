@@ -15,15 +15,17 @@ import com.ilife.iliferobot_cn.R;
 
 
 public class UniversalDialog extends DialogFragment {
-    private TextView tv_left, tv_mid, tv_right, tv_dialog_title, tv_hint_tip;
+    private TextView tv_left, tv_mid, tv_right, tv_dialog_title, tv_hint_tip, tv_mid_title;
     private LinearLayout ll_normal;
     private OnLeftButtonClck onLeftButtonClck;
     private OnMidButtonClck onMidButtonClck;
     private OnRightButtonClck onRightButtonClck;
     public static final int TYPE_NORMAL = 1;
-    public static final int TYPE_ONLY_MID = 2;
-    private String title, hintTip,leftText,midText,rightText;
+    public static final int TYPE_NORMAL_MID_BUTTON = 2;
+    public static final int TYPE_NORMAL_MID_TITLE = 3;
+    private String title, hintTip,midTitle, leftText, midText, rightText;
     private int type;
+    private boolean exchangeColor;
 
 
     @Override
@@ -42,27 +44,41 @@ public class UniversalDialog extends DialogFragment {
 
     private void initView(View v) {
         ll_normal = v.findViewById(R.id.ll_normal);
+        tv_mid_title = v.findViewById(R.id.tv_mid_title);
         tv_dialog_title = v.findViewById(R.id.tv_dialog_title);
         tv_hint_tip = v.findViewById(R.id.tv_dialog_hint_tip);
         tv_left = v.findViewById(R.id.tv_dialog_left);
         tv_mid = v.findViewById(R.id.tv_dialog_mid);
         tv_right = v.findViewById(R.id.tv_dialog_right);
+        if (exchangeColor){
+            tv_left.setTextColor(getResources().getColor(R.color.color_595757));
+            tv_right.setTextColor(getResources().getColor(R.color.color_f08300));
+        }
         if (title != null && !title.isEmpty()) {
             tv_dialog_title.setText(title);
         }
         if (hintTip != null && !hintTip.isEmpty()) {
             tv_hint_tip.setText(hintTip);
-        } if (leftText != null && !leftText.isEmpty()) {
+        }
+        if (leftText != null && !leftText.isEmpty()) {
             tv_left.setText(leftText);
-        } if (midText != null && !midText.isEmpty()) {
+        }
+        if (midText != null && !midText.isEmpty()) {
             tv_mid.setText(midText);
-        } if (rightText != null && !rightText.isEmpty()) {
+        }
+        if (rightText != null && !rightText.isEmpty()) {
             tv_right.setText(rightText);
         }
-        if (type == TYPE_ONLY_MID) {
+        if (type == TYPE_NORMAL_MID_BUTTON) {
             ll_normal.setVisibility(View.GONE);
             tv_mid.setVisibility(View.VISIBLE);
         }
+        if (type == TYPE_NORMAL_MID_TITLE) {
+            tv_dialog_title.setVisibility(View.GONE);
+            tv_hint_tip.setVisibility(View.GONE);
+            tv_mid_title.setVisibility(View.VISIBLE);
+        }
+
         tv_left.setOnClickListener(v1 -> {
             dismiss();
             if (onLeftButtonClck != null) {
@@ -82,6 +98,7 @@ public class UniversalDialog extends DialogFragment {
             }
         });
     }
+
 
     public interface OnLeftButtonClck {
         void onClick();
@@ -120,21 +137,31 @@ public class UniversalDialog extends DialogFragment {
         return this;
     }
 
-    public UniversalDialog setMidText(String midText){
-        this.midText=midText;
+    public UniversalDialog setMidText(String midText) {
+        this.midText = midText;
         return this;
-    }public UniversalDialog setLeftText(String leftText){
-        this.leftText=midText;
+    }
+    public UniversalDialog setMidTitle(String midTitle) {
+        this.midTitle = midTitle;
+        return this;
+    }
+
+    public UniversalDialog setLeftText(String leftText) {
+        this.leftText = midText;
         return this;
     }
 
     public UniversalDialog setRightText(String rightText) {
-        this.rightText=rightText;
+        this.rightText = rightText;
         return this;
     }
 
     public UniversalDialog setDialogType(int type) {
         this.type = type;
+        return this;
+    }
+    public UniversalDialog exchangeButtonColor(){
+        exchangeColor=true;
         return this;
     }
 

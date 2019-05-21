@@ -44,8 +44,7 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
     private String physicalId;
     private String subdomain;
     private TextView tv_curVersion;
-    private TextView tv_tarVersion;
-    private Button btn_update;
+    private TextView tv_update_tip;
     private String curVersion;
     private String tarVersion;
     Timer otatimer;
@@ -76,9 +75,8 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
                         current = progress;
                         if (current == 100) {
                             tv_curVersion.setText(getString(R.string.ota_aty_cur, tarVersion));
-                            tv_tarVersion.setVisibility(View.GONE);
                             rl_progress.setVisibility(View.GONE);
-                            btn_update.setVisibility(View.GONE);
+                            tv_update_tip.setTextColor(getResources().getColor(R.color.color_ac));
 //                            ToastUtils.showToast(context, getString(R.string.setting_aty_ota_upadta_success));
                             isSuccess = true;
                             isNeedUpdate = false;
@@ -151,12 +149,10 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
         tv_progress = (TextView) findViewById(R.id.tv_progress);
         rl_progress = (RelativeLayout) findViewById(R.id.rl_progress);
         tv_curVersion = (TextView) findViewById(R.id.tv_cur_version);
-        tv_tarVersion = (TextView) findViewById(R.id.tv_tar_version);
         tv_curVersion.setText(getString(R.string.ota_aty_cur, ""));
-        tv_tarVersion.setText(getString(R.string.ota_aty_tar, ""));
-        btn_update = (Button) findViewById(R.id.btn_update);
+        tv_update_tip = (TextView) findViewById(R.id.tv_update_tip);
 
-        btn_update.setOnClickListener(this);
+        tv_update_tip.setOnClickListener(this);
 
         tv_title.setText(R.string.setting_aty_ota_update);
     }
@@ -186,19 +182,16 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
                             curVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
                             tv_curVersion.setVisibility(View.VISIBLE);
                             tv_curVersion.setText(getString(R.string.ota_aty_cur, curVersion));
-                            tv_tarVersion.setVisibility(View.GONE);
-                            btn_update.setVisibility(View.GONE);
+                            tv_update_tip.setTextColor(getResources().getColor(R.color.color_ac));
                             isNeedUpdate = false;
                             break;
 
                         case 0x01://有更新
                             DialogUtils.closeDialog(dialog);
-                            tv_tarVersion.setVisibility(View.VISIBLE);
-                            btn_update.setVisibility(View.VISIBLE);
+                            tv_update_tip.setTextColor(getResources().getColor(R.color.color_f08300));
                             curVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];//当前版本
                             tarVersion = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];//目标版本
                             tv_curVersion.setText(getString(R.string.ota_aty_cur, curVersion));
-                            tv_tarVersion.setText(getString(R.string.ota_aty_tar, tarVersion));
                             isNeedUpdate = false;
                             break;
 
@@ -206,7 +199,6 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
                             DialogUtils.closeDialog(dialog);
                             rl_progress.setVisibility(View.VISIBLE);//进入地图有更新时直接跳转至该界面
                             tv_curVersion.setVisibility(View.GONE);
-                            tv_tarVersion.setVisibility(View.GONE);
 //                            btn_update.setVisibility(View.GONE);
                             byte progress = resp[1];//更新进度
                             sendProgressTimer(progress);
@@ -262,7 +254,7 @@ public class OtaUpdateActivity extends BackBaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_update:
+            case R.id. tv_update_tip:
                 otaUpdate();
                 break;
         }

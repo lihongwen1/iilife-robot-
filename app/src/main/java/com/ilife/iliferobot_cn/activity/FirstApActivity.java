@@ -1,6 +1,5 @@
 package com.ilife.iliferobot_cn.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -9,34 +8,22 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
-import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
-import com.ilife.iliferobot_cn.utils.DialogUtils;
-import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.UserUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 import com.ilife.iliferobot_cn.utils.WifiUtils;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by c on 2017/7/15.
@@ -96,7 +83,7 @@ public class FirstApActivity extends BackBaseActivity {
         tv_title.setText(R.string.ap_wifi_guide);
     }
 
-    @OnClick({R.id.image_show_pass, R.id.tv_set, R.id.bt_next})
+    @OnClick({R.id.image_show_pass, R.id.iv_set, R.id.bt_next})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_show_pass:
@@ -106,7 +93,7 @@ public class FirstApActivity extends BackBaseActivity {
                 Utils.setTransformationMethod(et_pass, isSelected);
                 et_pass.setSelection(curIndex);
                 break;
-            case R.id.tv_set:
+            case R.id.iv_set:
                 Intent i = new Intent();
                 i.setAction("android.net.wifi.PICK_WIFI_NETWORK");
                 startActivity(i);
@@ -162,7 +149,7 @@ public class FirstApActivity extends BackBaseActivity {
 
     private void goSetGps() {
         UniversalDialog universalDialog = new UniversalDialog();
-        universalDialog.setDialogType(UniversalDialog.TYPE_ONLY_MID)
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON)
                 .setMidText(Utils.getString(R.string.ap_aty_setting)).setOnMidButtonClck(() -> {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(intent, 1);

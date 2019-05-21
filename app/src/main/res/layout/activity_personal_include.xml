@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -69,8 +70,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/color_f6">
+        android:layout_marginTop="@dimen/dp_10">
 
         <com.ilife.iliferobot_cn.view.RegularTextView
             style="@style/Text_16sp_33"
@@ -188,14 +188,21 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <com.ilife.iliferobot_cn.view.RegularButton
-        android:id="@+id/bt_confirm"
-        style="@style/Button_Style"
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_marginBottom="@dimen/dp_60"
-        android:text="@string/confirm" />
-
+       <com.ilife.iliferobot_cn.view.ShadowContainer
+           android:layout_marginTop="@dimen/dp_23"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:containerDeltaLength="@dimen/dp_8"
+           app:containerCornerRadius="@dimen/dp_25"
+           app:containerShadowRadius="@dimen/dp_6"
+           app:deltaY="@dimen/dp_2"
+           app:containerShadowColor="@color/color_f08300_66"
+           app:enable="true">
+        <com.ilife.iliferobot_cn.view.RegularTextView
+            android:id="@+id/bt_confirm"
+            style="@style/Button_Style"
+            android:text="@string/confirm" />
+       </com.ilife.iliferobot_cn.view.ShadowContainer>
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

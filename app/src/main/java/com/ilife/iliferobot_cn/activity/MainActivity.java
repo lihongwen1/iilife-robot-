@@ -45,6 +45,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import butterknife.BindView;
 
 
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             switch (msg.what) {
                 case TAG_REFRESH_OVER:
                     if (refreshLayout != null) {
-                       refreshLayout.finishRefresh();
+                        refreshLayout.finishRefresh();
                     }
                     break;
             }
@@ -113,8 +114,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
 
     @Override
     public void initView() {
-        activity=this;
-        context=this;
+        activity = this;
+        context = this;
         rect = new Rect();
         llm = new LinearLayoutManager(context);
         loadingDialog = DialogUtils.createLoadingDialog_(context);
@@ -159,21 +160,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             @Override
             public void onContentClick(int position) {
                 if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
-                    Intent i;
                     String subdomain = mAcUserDevices.get(position).getSubDomain();
                     SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
                     SpUtils.saveLong(context, KEY_DEVICEID, mAcUserDevices.get(position).getDeviceId());
                     SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
                     SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
                     SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-//                    if (subdomain.equals(Constants.subdomain_x800)) {
-//                        i = new Intent(context, MapActivity_X8_.class);
-//                    } else if (subdomain.equals(Constants.subdomain_x900)) {
-                        i = new Intent(context, MapActivity_X9_.class);
-//                    } else {
-//                        i = new Intent(context, MapActivity_X7_.class);
-//                    }
-                    startActivity(i);
+                   if (subdomain.equals(Constants.subdomain_x900)) {
+                        Intent i = new Intent(context, MapActivity_X9_.class);
+                        startActivity(i);
+                    }else{
+                       Intent i = new Intent(context, MapActivity_X8_.class);
+                       startActivity(i);
+                   }
                 } else {
                     showOfflineDialog();
                 }
@@ -209,7 +208,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     }
 
 
-
     @Override
     public void updateDeviceList(List<ACUserDevice> acUserDevices) {
         mAcUserDevices.clear();
@@ -221,7 +219,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             showList();
         }
     }
-
 
 
     @Override
@@ -248,6 +245,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 break;
         }
     }
+
     public void showButton() {
         refreshLayout.setVisibility(View.GONE);
         layout_no_device.setVisibility(View.VISIBLE);

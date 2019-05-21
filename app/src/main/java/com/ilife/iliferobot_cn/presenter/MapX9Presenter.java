@@ -223,6 +223,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg acMsg) {
+                if (!isViewAttached()) {
+                    return;
+                }
                 Log.d(TAG, "getHistoryRoad()-----------");
                 ArrayList<ACObject> objects = acMsg.get("data");
                 if (objects != null && objects.size() > 0) {
@@ -511,7 +514,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
                     @Override
                     public void success(ACDeviceMsg deviceMsg) {
-                        if (!isViewAttached()){
+                        if (!isViewAttached()) {
                             return;
                         }
                         byte[] bytes = deviceMsg.getContent();
@@ -574,7 +577,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
-        if (curStatus == MsgCodeUtils.STATUE_RECHARGE || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
+        if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
                 || curStatus == MsgCodeUtils.STATUE_ALONG) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_REMOTE_CONTROL);
         }
@@ -703,7 +706,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void sendToDeviceWithOption(ACDeviceMsg msg) {
-        curStatus = msg.getContent()[0];
+        sendByte = msg.getContent()[0];
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {

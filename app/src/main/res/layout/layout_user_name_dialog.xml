@@ -14,7 +14,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_23" />
         <EditText
-            style="@style/EditText_12sp_ac"
+            style="@style/EditText_16sp_ac"
             android:id="@+id/et_name"
             android:hint="@string/setting_aty_hit_"
             android:layout_centerHorizontal="true"

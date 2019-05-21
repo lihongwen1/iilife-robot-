@@ -756,11 +756,11 @@ public class MapView extends View {
                 maxY = y;
             }
         }
-        updateSlam(minX, maxX, minY, maxY, 20);
+        updateSlam(minX, maxX, minY, maxY, 15);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         //绘制清扫区域的黄方格
         boxPaint.setColor(getResources().getColor(R.color.white));
-        boxPaint.setStrokeWidth((float) (baseScare - 2));
+        boxPaint.setStrokeWidth((float) (baseScare - 1));
         if (pointList.size() > 0) {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);

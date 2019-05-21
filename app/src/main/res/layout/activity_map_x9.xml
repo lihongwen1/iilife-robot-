@@ -266,9 +266,19 @@
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_aty_point" />
-
             <com.ilife.iliferobot_cn.view.RegularTextView
-
+                android:visibility="gone"
+                android:id="@+id/tv_appointment_x9"
+                style="@style/Text_14sp_33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_40"
+                android:drawableTop="@drawable/selector_appointment"
+                android:drawablePadding="@dimen/dp_16"
+                android:gravity="center"
+                android:text="@string/map_aty_appoint" />
+            <com.ilife.iliferobot_cn.view.RegularTextView
                 android:id="@+id/tv_recharge_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"

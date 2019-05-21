@@ -14,8 +14,8 @@
         />
     <ImageView
         android:id="@+id/image_delete"
-        android:layout_width="@dimen/dp_26"
-        android:layout_height="@dimen/dp_26"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dp_30"
         android:background="@drawable/n_map_aty_delete"/>

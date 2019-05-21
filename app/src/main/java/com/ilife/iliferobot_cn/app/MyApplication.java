@@ -85,7 +85,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void configToast(){
-        Toasty.Config.getInstance().tintIcon(true).
+        Toasty.Config.getInstance().tintIcon(true).tintIcon(false).
                 setTextSize(16).allowQueue(false).apply();
     }
 

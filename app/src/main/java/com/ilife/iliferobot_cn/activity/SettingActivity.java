@@ -33,6 +33,7 @@ import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BackBaseActivity;
 import com.ilife.iliferobot_cn.entity.PropertyInfo;
 import com.ilife.iliferobot_cn.listener.ReNameListener;
+import com.ilife.iliferobot_cn.presenter.MapX9Presenter;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
@@ -73,6 +74,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     AlertDialog alterDialog;
     Dialog dialog;
     Animation animation;
+    private ImageView image_down_1,image_down_2;
     RelativeLayout rl_water, rl_clock, rl_record, rl_consume,
             rl_mode, rl_suction, rl_find, rl_soft, rl_standard, rl_strong,
             rl_plan, rl_random, rl_facReset, rl_voice, rl_update;
@@ -185,6 +187,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         rl_strong = (RelativeLayout) findViewById(R.id.rl_strong);
         ll_mode = (LinearLayout) findViewById(R.id.ll_mode);
         ll_water = (LinearLayout) findViewById(R.id.ll_water);
+        image_down_1=findViewById(R.id.image_down_1);
+        image_down_2=findViewById(R.id.image_down_2);
         image_plan = (ImageView) findViewById(R.id.image_plan);
         image_random = (ImageView) findViewById(R.id.image_random);
         image_soft = (ImageView) findViewById(R.id.image_soft);
@@ -224,9 +228,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         ownerId = SpUtils.getLong(context, MainActivity.KEY_OWNER);
         userId = AC.accountMgr().getUserId();
         mode = SpUtils.getInt(context, physicalId + KEY_MODE);
-        mopForce = SpUtils.getInt(context, physicalId + MapActivity_X8_.KEY_MOP_FORCE);
-        isMaxMode = SpUtils.getBoolean(context, physicalId + MapActivity_X8_.KEY_IS_MAX);
-        voiceOpen = SpUtils.getBoolean(context, physicalId + MapActivity_X8_.KEY_VOICE_OPEN);
+        mopForce = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE);
+        isMaxMode = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX);
+        voiceOpen = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
         setMode(mode);
         setStatus(1, mopForce, isMaxMode, voiceOpen);
         if (!TextUtils.isEmpty(devName)) {
@@ -236,17 +240,17 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         }
         if (subdomain.equals(Constants.subdomain_x785)) {
             tv_type.setText(getString(R.string.setting_aty_type_x785));
-            image_product.setImageResource(R.drawable.n_x785_1);
+            image_product.setImageResource(R.drawable.n_x785);
         } else if (subdomain.equals(Constants.subdomain_a7)) {
             tv_type.setText(getString(R.string.setting_aty_type_x787));
-            image_product.setImageResource(R.drawable.n_x787_1);
+            image_product.setImageResource(R.drawable.n_x787);
         } else if (subdomain.equals(Constants.subdomain_x900)) {
             tv_type.setText(getString(R.string.setting_aty_type_x900));
             image_product.setImageResource(R.drawable.n_x900);
         } else {
             rl_mode.setVisibility(View.GONE);
             tv_type.setText(getString(R.string.setting_aty_type_x800));
-            image_product.setImageResource(R.drawable.n_x800_1);
+            image_product.setImageResource(R.drawable.n_x800);
         }
         if (!subdomain.equals(Constants.subdomain_x900)) {
             rl_update.setVisibility(View.GONE);
@@ -331,8 +335,10 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_water:
                 if (ll_water.getVisibility() == View.GONE) {
+                    image_down_1.setRotation(-90);
                     ll_water.setVisibility(View.VISIBLE);
                 } else {
+                    image_down_1.setRotation(90);
                     ll_water.setVisibility(View.GONE);
                 }
                 break;
@@ -356,7 +362,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
             case R.id.rl_mode:
                 if (ll_mode.getVisibility() == View.GONE) {
                     ll_mode.setVisibility(View.VISIBLE);
+                    image_down_2.setRotation(-90);
                 } else {
+                    image_down_2.setRotation(90);
                     ll_mode.setVisibility(View.GONE);
                 }
                 break;

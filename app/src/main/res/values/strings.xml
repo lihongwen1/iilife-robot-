@@ -306,10 +306,10 @@
     <string name="setting_aty_type_x900">ILIFE X900</string>
     <string name="setting_aty_type_x787">ILIFE X787</string>
     <string name="setting_aty_type_x785">ILIFE X785</string>
-    <string name="select_aty_x785">x785</string>
-    <string name="select_aty_x787">x787</string>
-    <string name="select_aty_x800">x800</string>
-    <string name="select_aty_x900">x900</string>
+    <string name="select_aty_x785">X785</string>
+    <string name="select_aty_x787">X787</string>
+    <string name="select_aty_x800">X800</string>
+    <string name="select_aty_x900">X900</string>
     <string name="setting_aty_hit_">请设置用户名～</string>
     <string name="consume_aty_text_1">温馨提示:</string>
     <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
@@ -352,6 +352,7 @@
     <string name="ota_aty_updating">正在升级&#8230;</string>
     <string name="ota_aty_cur">当前版本:%1$s</string>
     <string name="ota_aty_tar">目标版本:%1$s</string>
+    <string name="ota_aty_latest_ver">已经是最新版本</string>
     <string name="ota_aty_update">立即更新</string>
     <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
     <string name="edit_phone_tip">+86手机号</string>

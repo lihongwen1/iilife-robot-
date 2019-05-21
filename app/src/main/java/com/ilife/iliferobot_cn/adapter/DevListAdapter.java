@@ -101,17 +101,18 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
         } else {
             String subdomain = deviceList.get(position).getSubDomain();
             if (subdomain.equals(Constants.subdomain_x785)) {
-                Glide.with(context).load(R.drawable.n_x785_1).into(holder.image_product);
+                Glide.with(context).load(R.drawable.n_x785).into(holder.image_product);
+            } else if (subdomain.equals(Constants.subdomain_x787)) {
+                Glide.with(context).load(R.drawable.n_x787).into(holder.image_product);
             }
-//        else if (subdomain.equals(Constants.subdomain_x787)){
-//            Glide.with(context).load(R.drawable.n_x787_1).into(holder.image_product);
-//        }
             else if (subdomain.equals(Constants.subdomain_a7)) {
-                Glide.with(context).load(R.drawable.n_x787_1).into(holder.image_product);
+                Glide.with(context).load(R.drawable.n_x787).into(holder.image_product);
             } else if (subdomain.equals(Constants.subdomain_x900)) {
                 Glide.with(context).load(R.drawable.n_x900).into(holder.image_product);
+            } else if (subdomain.equals(Constants.subdomain_x800)) {
+                Glide.with(context).load(R.drawable.n_x800).into(holder.image_product);
             } else {
-                Glide.with(context).load(R.drawable.n_x800_1).into(holder.image_product);
+                Glide.with(context).load(R.drawable.n_x800).into(holder.image_product);
             }
             String devName = deviceList.get(position).getName();
             if (TextUtils.isEmpty(devName)) {

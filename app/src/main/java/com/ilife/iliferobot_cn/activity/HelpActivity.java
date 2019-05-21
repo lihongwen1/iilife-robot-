@@ -76,7 +76,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
     ImageView image_add, image_1;
-    Button bt_confirm;
+    TextView bt_confirm;
     File captureFile, albumFile;
     PopupWindow typePop;
     AlertDialog alertDialog;
@@ -121,7 +121,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         image_1 = (ImageView) findViewById(R.id.image_1);
         image_add = (ImageView) findViewById(R.id.image_add);
         tv_telNum1 = findViewById(R.id.tv_telNum1);
-        bt_confirm = (Button) findViewById(R.id.bt_confirm);
+        bt_confirm = (TextView) findViewById(R.id.bt_confirm);
         rl_type = (RelativeLayout) findViewById(R.id.rl_type);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         view = findViewById(R.id.view);

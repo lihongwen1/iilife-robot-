@@ -33,6 +33,7 @@ import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.entity.PropertyInfo;
 import com.ilife.iliferobot_cn.listener.ReNameListener;
+import com.ilife.iliferobot_cn.presenter.MapX9Presenter;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DeviceUtils;
@@ -218,9 +219,9 @@ public class SettingActivity_a7 extends BaseActivity implements View.OnClickList
         ownerId = SpUtils.getLong(context, MainActivity.KEY_OWNER);
         userId = AC.accountMgr().getUserId();
         mode = SpUtils.getInt(context, physicalId + KEY_MODE);
-        mopForce = SpUtils.getInt(context, physicalId + MapActivity_X8_.KEY_MOP_FORCE);
-        isMaxMode = SpUtils.getBoolean(context, physicalId + MapActivity_X8_.KEY_IS_MAX);
-        voiceOpen = SpUtils.getBoolean(context, physicalId + MapActivity_X8_.KEY_VOICE_OPEN);
+        mopForce = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE);
+        isMaxMode = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX);
+        voiceOpen = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
         setMode(mode);
         setStatus(1, mopForce, isMaxMode, voiceOpen);
         if (!TextUtils.isEmpty(devName)) {

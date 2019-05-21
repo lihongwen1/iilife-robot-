@@ -7,10 +7,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_92">
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot_cn.view.MediumTextView
             style="@style/Text_16sp_33"
             android:id="@+id/tv_dialog_title"
             android:text="@string/open_gps_location"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20" />
         <com.ilife.iliferobot_cn.view.LightTextView
@@ -21,6 +22,13 @@
             android:gravity="center"
             android:layout_below="@+id/tv_dialog_title"
             android:layout_marginTop="@dimen/dp_10" />
+        <com.ilife.iliferobot_cn.view.MediumTextView
+            android:visibility="gone"
+            style="@style/Text_16sp_33"
+            android:id="@+id/tv_mid_title"
+            android:text="@string/map_aty_clear_wall"
+            android:layout_centerInParent="true"
+            />
     </RelativeLayout>
     <View
         style="@style/View_Line_Style"
@@ -42,10 +50,10 @@
             android:includeFontPadding="false"
             android:gravity="center"/>
         <View
-            android:alpha="50"
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:background="@color/color_e2"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:background="@color/bg_color_f5f7fa"
             />
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/tv_dialog_right"

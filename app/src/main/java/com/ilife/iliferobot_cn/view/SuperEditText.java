@@ -110,10 +110,10 @@ public class SuperEditText extends AppCompatEditText {
         ic_delete = getResources().getDrawable(ic_deleteResID);
         // 3. 设置图标大小
         // 起点(x，y)、宽= left_width、高 = left_height
-        delete_x = typedArray.getInteger(R.styleable.SuperEditText_delete_x, 0);
+        delete_x = typedArray.getInteger(R.styleable.SuperEditText_delete_x, 12);
         delete_y = typedArray.getInteger(R.styleable.SuperEditText_delete_y, 0);
-        delete_width = typedArray.getInteger(R.styleable.SuperEditText_delete_width, 60);
-        delete_height = typedArray.getInteger(R.styleable.SuperEditText_delete_height, 60);
+        delete_width = typedArray.getInteger(R.styleable.SuperEditText_delete_width, 72)+delete_x;
+        delete_height = typedArray.getInteger(R.styleable.SuperEditText_delete_height, 72);
         ic_delete.setBounds(delete_x, delete_y, delete_width, delete_height);
         isShowDelete = typedArray.getBoolean(R.styleable.SuperEditText_is_show_delete, true);
         isShowBottomLine = typedArray.getBoolean(R.styleable.SuperEditText_isBottomShowLine, false);

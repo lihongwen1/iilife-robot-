@@ -11,8 +11,8 @@
         android:layout_weight="1">
         <ImageView
             android:id="@+id/image_photo"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_18"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:background="@drawable/n_icon_photo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_22"/>
@@ -36,8 +36,8 @@
         android:layout_weight="1">
         <ImageView
             android:id="@+id/image_album"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_18"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:background="@drawable/n_icon_image"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_22"/>
