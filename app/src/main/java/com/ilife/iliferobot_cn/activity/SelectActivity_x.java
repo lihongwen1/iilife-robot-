@@ -56,7 +56,7 @@ public class SelectActivity_x extends BackBaseActivity {
 
         adapter = new X_seriesAdapter(context);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 11)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6)));
         adapter.setOnItemClickListener(position -> {
             SpUtils.saveString(context, KEY_SUBDOMAIN, subdomains[position]);
             SpUtils.saveLong(context, KEEY_SUBDOMAIN_ID, subdomainIds[position]);

@@ -57,6 +57,9 @@ public class UniversalDialog extends DialogFragment {
         if (title != null && !title.isEmpty()) {
             tv_dialog_title.setText(title);
         }
+        if (midTitle != null && !midTitle.isEmpty()) {
+            tv_mid_title.setText(midTitle);
+        }
         if (hintTip != null && !hintTip.isEmpty()) {
             tv_hint_tip.setText(hintTip);
         }

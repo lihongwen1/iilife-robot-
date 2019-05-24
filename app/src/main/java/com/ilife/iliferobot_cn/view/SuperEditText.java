@@ -161,7 +161,7 @@ public class SuperEditText extends AppCompatEditText {
         mPaint.setStrokeWidth(2.0f); // 分割线粗细
 
         // 2. 设置分割线颜色（使用十六进制代码，如#333、#8e8e8e）
-        int lineColorClick_default = context.getResources().getColor(R.color.lineColor_click); // 默认 = 蓝色#1296db
+        int lineColorClick_default = context.getResources().getColor(R.color.color_33); // 默认 = 蓝色#1296db
         int lineColorunClick_default = context.getResources().getColor(R.color.lineColor_unclick); // 默认 = 灰色#9b9b9b
         lineColor_click = typedArray.getColor(R.styleable.SuperEditText_lineColor_click, lineColorClick_default);
         lineColor_unclick = typedArray.getColor(R.styleable.SuperEditText_lineColor_unclick, lineColorunClick_default);

@@ -23,8 +23,8 @@
             android:layout_marginEnd="@dimen/dp_30"
             android:hint="@string/login_aty_email"
             android:inputType="textEmailAddress"
-            app:ic_left_click="@drawable/n_icon_email"
-            app:ic_left_unclick="@drawable/n_icon_email"
+            app:ic_left_click="@drawable/n_icon_personal"
+            app:ic_left_unclick="@drawable/n_icon_personal"
             app:left_height="72"
             app:left_width="72" />
 
@@ -60,12 +60,21 @@
         </FrameLayout>
 
     </LinearLayout>
-
+    <com.ilife.iliferobot_cn.view.ShadowContainer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:containerCornerRadius="@dimen/dp_25"
+        app:containerDeltaLength="@dimen/dp_8"
+        app:containerShadowColor="@color/color_f08300_66"
+        app:containerShadowRadius="@dimen/dp_6"
+        app:deltaY="@dimen/dp_2"
+        app:enable="true">
     <com.ilife.iliferobot_cn.view.RegularButton
         android:id="@+id/bt_login"
         style="@style/Button_Style_quick_login"
         android:layout_marginTop="@dimen/dp_78"
         android:text="@string/login_aty_login" />
+    </com.ilife.iliferobot_cn.view.ShadowContainer>
 
     <com.ilife.iliferobot_cn.view.RegularTextView
         android:id="@+id/tv_forget"

@@ -74,9 +74,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     final int REQUEST_SCAN = 0X01;
     final int TAKE_PIC = 0x02;
     final int LOCAL_PIC = 0x03;
-    final int TAG_SUC = 0x02;
-    final int TAG_FAIL = 0x03;
-    final int TAG_HIDE = 0x04;
     int color_e2;
     int color_ac;
     int color_f6;
@@ -101,13 +98,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     ArrayList<ACUserDevice> mDeviceList;
     ArrayList<String> formats;
 
-    WeakHandler handler = new WeakHandler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            AlertDialogUtils.hidden(alertDialog);
-            return false;
-        }
-    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -398,12 +388,12 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         AC.bindMgr().bindDeviceWithShareCode(shareCode, new PayloadCallback<ACUserDevice>() {
             @Override
             public void success(ACUserDevice userDevice) {
-                showBindDoneDialog(TAG_SUC);
+                ToastUtils.showToast(getString(R.string.personal_aty_bind_done));
             }
 
             @Override
             public void error(ACException e) {
-                showBindDoneDialog(TAG_FAIL);
+                ToastUtils.showToast(getString(R.string.personal_aty_bind_fail));
             }
         });
     }
@@ -578,22 +568,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         }
     }
 
-    public void showBindDoneDialog(int tag) {
-        View contentView = inflater.inflate(R.layout.layout_bind_done_dialog, null);
-        TextView textView = (TextView) contentView.findViewById(R.id.textView);
-        switch (tag) {
-            case TAG_SUC:
-                textView.setText(getString(R.string.personal_aty_bind_done));
-                break;
-            case TAG_FAIL:
-                textView.setText(getString(R.string.personal_aty_bind_fail));
-                break;
-        }
-        int width = (int) getResources().getDimension(R.dimen.dp_200);
-        int height = (int) getResources().getDimension(R.dimen.dp_72);
-        alertDialog = AlertDialogUtils.showDialog(context, contentView, width, height);
-        handler.sendEmptyMessageDelayed(TAG_HIDE, 2 * 1000);
-    }
 
     private void commit(String email, String contents) {
         ACFeedback feedback = new ACFeedback();

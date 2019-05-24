@@ -2,9 +2,13 @@ package com.ilife.iliferobot_cn.app;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.accloud.cloudservice.AC;
+import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.utils.Constants;
+import com.ilife.iliferobot_cn.utils.ScreenUtil;
 import com.ilife.iliferobot_cn.utils.toast.Toasty;
 
 import java.lang.reflect.Constructor;
@@ -35,14 +39,19 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        float screenWidth = dm.widthPixels / dm.xdpi;
+        float screenHeight = dm.heightPixels / dm.ydpi;
+        Log.d("MyApplication", "minW:" +screenWidth + "--minH:"
+                + screenHeight+"---"+getResources().getConfiguration().screenWidthDp+"----"+getResources().getConfiguration().screenHeightDp);
         Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_PRODUCT;
         switch (Constants.CUR_APP_ENVIRONMENT) {
             case Constants.APP_ENVIRONMENT_TEST:
-                 //        国内测试环境
+                //        国内测试环境
                 AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
                 break;
             case Constants.APP_ENVIRONMENT_PRODUCT:
-               //国内生产
+                //国内生产
                 AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
                 break;
 
@@ -84,7 +93,7 @@ public class MyApplication extends MultiDexApplication {
         configToast();
     }
 
-    private void configToast(){
+    private void configToast() {
         Toasty.Config.getInstance().tintIcon(true).tintIcon(false).
                 setTextSize(16).allowQueue(false).apply();
     }

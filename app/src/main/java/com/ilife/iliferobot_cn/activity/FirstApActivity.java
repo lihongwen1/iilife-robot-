@@ -7,9 +7,12 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,7 +46,8 @@ public class FirstApActivity extends BackBaseActivity {
     EditText et_pass;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
-
+    @BindView(R.id.bt_next)
+    Button bt_next;
 
     String ssid;
     String pass;
@@ -81,9 +85,34 @@ public class FirstApActivity extends BackBaseActivity {
     public void initView() {
         Utils.setTransformationMethod(et_pass, false);
         tv_title.setText(R.string.ap_wifi_guide);
+        bt_next.setSelected(false);
+        bt_next.setClickable(false);
+        et_pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    if (s.toString().trim().length()>0){
+                        bt_next.setSelected(true);
+                        bt_next.setClickable(true);
+                    }else{
+                        bt_next.setSelected(false);
+                        bt_next.setClickable(false);
+                    }
+
+            }
+        });
     }
 
-    @OnClick({R.id.image_show_pass, R.id.iv_set, R.id.bt_next})
+    @OnClick({R.id.image_show_pass, R.id.bt_next,R.id.rl_select_wifi})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_show_pass:
@@ -93,7 +122,7 @@ public class FirstApActivity extends BackBaseActivity {
                 Utils.setTransformationMethod(et_pass, isSelected);
                 et_pass.setSelection(curIndex);
                 break;
-            case R.id.iv_set:
+            case R.id.rl_select_wifi:
                 Intent i = new Intent();
                 i.setAction("android.net.wifi.PICK_WIFI_NETWORK");
                 startActivity(i);
@@ -162,7 +191,7 @@ public class FirstApActivity extends BackBaseActivity {
         super.onResume();
         // 用户已经同意该权限
         String ssid = WifiUtils.getSsid(context);
-        if (!TextUtils.isEmpty(ssid)) {
+        if (!TextUtils.isEmpty(ssid) && !ssid.contains("unknown")) {
             tv_ssid.setText(ssid);
         }
     }

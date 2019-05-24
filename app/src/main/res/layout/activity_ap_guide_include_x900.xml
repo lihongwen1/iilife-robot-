@@ -44,10 +44,10 @@
         <com.ilife.iliferobot_cn.view.RegularTextView
             android:id="@+id/text_tip2"
             style="@style/Text_18sp_33"
+            android:layout_height="@dimen/dp_90"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_30"
-            android:layout_height="@dimen/dp_90"
             android:text="@string/ap_guide_aty_tip2_x900" />
 
         <com.ilife.iliferobot_cn.view.GifView
@@ -66,12 +66,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginBottom="@dimen/dp_136"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_136"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <com.ilife.iliferobot_cn.view.ToggleRadioButton
             android:id="@+id/rb_next_tip"
             android:layout_width="wrap_content"
@@ -80,11 +81,23 @@
             android:text="@string/ap_guide_already_open_device"
             android:textColor="@color/color_33"
             android:textSize="@dimen/sp_16" />
-        <com.ilife.iliferobot_cn.view.RegularButton
+
+        <com.ilife.iliferobot_cn.view.ShadowContainer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
-            android:id="@+id/bt_next"
-            style="@style/Button_Style_quick_login"
-            android:text="@string/guide_aty_next" />
+            app:containerCornerRadius="@dimen/dp_25"
+            app:containerDeltaLength="@dimen/dp_8"
+            app:containerShadowColor="@color/color_f08300_66"
+            app:containerShadowRadius="@dimen/dp_6"
+            app:deltaY="@dimen/dp_2"
+            app:enable="true">
+
+            <com.ilife.iliferobot_cn.view.RegularButton
+                android:id="@+id/bt_next"
+                style="@style/Button_Style_quick_login"
+                android:text="@string/guide_aty_next" />
+        </com.ilife.iliferobot_cn.view.ShadowContainer>
     </LinearLayout>
 
 </FrameLayout>

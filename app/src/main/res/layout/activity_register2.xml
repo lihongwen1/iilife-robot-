@@ -33,8 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
-            android:layout_marginEnd="@dimen/dp_30">
-
+            >
             <com.ilife.iliferobot_cn.view.SuperEditText
                 android:id="@+id/et_code"
                 style="@style/super_edit_text_16sp"
@@ -49,19 +48,23 @@
 
             <com.ilife.iliferobot_cn.view.RegularTextView
                 android:id="@+id/tv_gain"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical"
                 android:text="@string/get_ver_code_tip"
-                android:textColor="@color/color_f08300"
+                android:gravity="center"
+                android:background="@color/color_f08300"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_14" />
 
             <com.ilife.iliferobot_cn.view.RegularTextView
                 android:id="@+id/tv_count_down"
-                android:layout_width="24dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical"
-                android:textColor="@color/color_ac"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@color/color_f08300_66"
                 android:textSize="14sp"
                 android:visibility="gone" />
         </FrameLayout>
@@ -130,9 +133,24 @@
         </FrameLayout>
     </LinearLayout>
 
-    <com.ilife.iliferobot_cn.view.RegularButton
-        android:id="@+id/bt_confirm"
-        style="@style/Button_Style_quick_login"
-        android:layout_marginTop="@dimen/dp_297"
-        android:text="@string/dialog_del_confirm" />
+    <View
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <com.ilife.iliferobot_cn.view.ShadowContainer
+        android:layout_marginBottom="@dimen/dp_136"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:containerCornerRadius="@dimen/dp_25"
+        app:containerDeltaLength="@dimen/dp_8"
+        app:containerShadowColor="@color/color_f08300_66"
+        app:containerShadowRadius="@dimen/dp_6"
+        app:deltaY="@dimen/dp_2"
+        app:enable="true">
+
+        <com.ilife.iliferobot_cn.view.RegularButton
+            android:id="@+id/bt_confirm"
+            style="@style/Button_Style_quick_login"
+            android:text="@string/dialog_del_confirm" />
+    </com.ilife.iliferobot_cn.view.ShadowContainer>
 </LinearLayout>

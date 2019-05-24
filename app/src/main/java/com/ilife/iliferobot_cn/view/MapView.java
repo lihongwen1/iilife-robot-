@@ -431,10 +431,10 @@ public class MapView extends View {
                     }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //TODO delete  virtual wall
-                    Iterator<VirtualWallBean> iterator=virtualWallBeans.iterator();
+                    Iterator<VirtualWallBean> iterator = virtualWallBeans.iterator();
                     VirtualWallBean vr;
-                    while (iterator.hasNext()){
-                       vr= iterator.next();
+                    while (iterator.hasNext()) {
+                        vr = iterator.next();
                         if (vr.getDeleteIcon().contains(x, y)) {
                             ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
                             if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
@@ -742,7 +742,7 @@ public class MapView extends View {
         for (int i = 1; i < pointList.size(); i += 2) {
             x = -pointList.get(i - 1);
             y = -pointList.get(i);
-            Log.d(TAG,"800--x:"+x+"---y:"+-y);
+            Log.d(TAG, "800--x:" + x + "---y:" + -y);
             if (minX > x) {
                 minX = x;
             }
@@ -765,10 +765,10 @@ public class MapView extends View {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);
                 y = -pointList.get(i);
-                boxCanvas.drawPoint(matrixCoordinateX(x), height-matrixCoordinateY(y), boxPaint);
+                boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
             }
         }
-        float endY = height-matrixCoordinateY(-pointList.get(pointList.size() - 1));
+        float endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
         float endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
         boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);

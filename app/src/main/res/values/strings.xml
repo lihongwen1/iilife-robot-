@@ -2,21 +2,21 @@
     <string name="app_name">智意机器人</string>
     <string name="login_aty_login">登录</string>
     <string name="login_aty_register">注册账户</string>
-    <string name="login_aty_email">邮箱/用户名</string>
+    <string name="login_aty_email">手机号/邮箱</string>
     <string name="login_aty_pw">请输入新密码(6个字符以上)</string>
-    <string name="login_aty_pw_ensure">确认新密码(6个字符以上)</string>
+    <string name="login_aty_pw_ensure">确认新密码</string>
     <string name="login_aty_fw">忘记密码？</string>
-    <string name="login_aty_input_email">请输入邮箱</string>
+    <string name="login_aty_input_email">请输入手机号/邮箱</string>
     <string name="login_aty_input_pw">请输入密码</string>
-    <string name="login_aty_wrong_email">邮箱格式不正确</string>
+    <string name="login_aty_wrong_email">手机号/邮箱格式不正确</string>
     <string name="login_account_error">账号错误</string>
-    <string name="login_aty_account_no">该邮箱未注册</string>
+    <string name="login_aty_account_no">该手机号/邮箱未注册</string>
     <string name="login_aty_pw_error">密码不正确</string>
     <string name="login_aty_timeout">连接超时</string>
     <string name="register_aty_tip">创建ILIFE智意账户的同时，我同意接受隐私政策与服务协议。我了解自己将收到有关我的ILIFE智意账户的电子邮件</string>
     <string name="register_aty_agree">我同意</string>
     <string name="register_aty_email_registered">该邮箱已被注册</string>
-    <string name="register2_input_code">请输入邮箱验证码</string>
+    <string name="register2_input_code">请输入验证码</string>
     <string name="register2_gain_code">获取验证码</string>
     <string name="register2_gain_code_second">获取验证码 %1$s</string>
     <string name="register2_input_pass">请输入新密码 （6个字符以上）</string>
@@ -35,7 +35,7 @@
     <string name="register2_aty_code_nouse">验证码已失效</string>
     <string name="register2_aty_illegal_email">邮箱不合法</string>
     <string name="register2_aty_account_abnormal">账号状态异常</string>
-    <string name="register2_aty_not_register">该邮箱未注册</string>
+    <string name="register2_aty_not_register">该手机号/邮箱未注册</string>
 
     <string name="main_aty_my_robot">我的机器人</string>
     <string name="main_aty_no_robot">您暂未拥有ILIFE智意机器人</string>
@@ -61,6 +61,7 @@
 
     <string name="add_aty_wifi_setting">Wi-Fi 设置</string>
     <string name="ap_aty_input_pass">请输入WiFi密码</string>
+    <string name="ap_aty_input_wifi_ssid">选择您的家庭WIFI</string>
     <string name="add_aty_start_connect">开始连接</string>
     <string name="add_aty_try_apLink">使用AP配网</string>
     <string name="wifi_guide_aty_tip_">请先打开机器的电源开关，然后点击开始连接</string>
@@ -85,7 +86,7 @@
     <string name="ap_aty_family_wifi">家庭Wi-Fi：</string>
     <string name="ap_aty_setting">设置</string>
     <string name="ap_aty_wifi_pass">Wi-Fi密码：</string>
-    <string name="wifi_guide_aty_tip2">机器人暂时无法使用5G信号的WiFi</string>
+    <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
 
     <string name="ap_aty_id_code">ID条码：</string>
@@ -355,11 +356,11 @@
     <string name="ota_aty_latest_ver">已经是最新版本</string>
     <string name="ota_aty_update">立即更新</string>
     <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
-    <string name="edit_phone_tip">+86手机号</string>
-    <string name="verification_code_tip">6位验证码</string>
+    <string name="edit_phone_tip">手机号</string>
+    <string name="verification_code_tip">请输入验证码</string>
     <string name="get_ver_code_tip">获取验证码</string>
-    <string name="have_account_and_login">已有账号？请登录</string>
-    <string name="quick_login">快捷注册</string>
+    <string name="have_account_and_login">已有账户？请登录</string>
+    <string name="quick_login">快速注册</string>
     <string name="set_password">设置密码</string>
     <string name="no_device_tip_hi">Hi，别来无恙</string>
     <string name="no_device_tip_cleaning">开始您的清洁之旅吧~</string>

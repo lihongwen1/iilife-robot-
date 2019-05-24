@@ -172,38 +172,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         return;
                     }
                     for (int i = 0; i < data.size(); i++) {
-                        byte[] bytes = Base64.decode(data.get(i).getString("clean_data"), Base64.DEFAULT);
-                        if (bytes == null || bytes.length < 4 || (bytes.length % 4) != 0) {
-                            return;
-                        }
-                        if (i == data.size() - 1) {
-                            byte[] byte_area = new byte[]{bytes[0], bytes[1]};
-                            byte[] byte_time = new byte[]{bytes[2], bytes[3]};
-                            workTime = DataUtils.bytesToInt2(byte_time, 0);
-                            cleanArea = DataUtils.bytesToInt2(byte_area, 0);
-                        }
-                        for (int j = 7; j < bytes.length; j += 4) {
-                            int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
-                            int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
-                            if ((x == 0x7fff) & (y == 0x7fff)) {
-                                MyLog.e(TAG, "getRealTimeMap (x==0x7fff)&(y==0x7fff) 地图被清掉了");
-                                pointList.clear();
-                                pointStrList.clear();
-                                workTime = 0;
-                                cleanArea = 0;
-                            } else {
-                                if (!pointStrList.contains(x + "_" + y)) {
-                                    pointList.add(x);
-                                    pointList.add(y);
-                                    pointStrList.add(x + "_" + y);
-                                }
-                            }
-                        }
-                    }
-                    mView.updateCleanTime(getTimeValue());
-                    mView.updateCleanArea(getAreaValue());
-                    if (pointList != null && pointList.size() > 0) {
-                        mView.drawBoxMapX8(pointList);
+                        parseRealTimeMapX8(data.get(i).getString("clean_data"));
                     }
                 }
             }
@@ -328,7 +297,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 if (subdomain.equals(Constants.subdomain_x900)) {
                                     parseRealTimeMapX9(s1);
                                 } else {
-                                    parseRealTimeMapX8(s1);
+                                    Gson gson = new Gson();
+                                    RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
+                                    String clean_data = mapInfo.getClean_data();
+                                    parseRealTimeMapX8(clean_data);
                                 }
                             }
                         });
@@ -344,12 +316,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     /**
      * x800绘制黄方格地图
      *
-     * @param mapSrc
+     * @param clean_data
      */
-    private void parseRealTimeMapX8(String mapSrc) {
-        Gson gson = new Gson();
-        RealTimeMapInfo mapInfo = gson.fromJson(mapSrc, RealTimeMapInfo.class);
-        String clean_data = mapInfo.getClean_data();
+    private void parseRealTimeMapX8(String clean_data) {
         if (!TextUtils.isEmpty(clean_data)) {
             byte[] bytes = Base64.decode(clean_data, Base64.DEFAULT);
             if ((bytes.length % 4) != 0) {
@@ -538,7 +507,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
                     @Override
                     public void error(ACException e) {
-
                     }
                 });
     }

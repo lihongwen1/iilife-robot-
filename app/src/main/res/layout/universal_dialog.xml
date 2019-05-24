@@ -26,7 +26,7 @@
             android:visibility="gone"
             style="@style/Text_16sp_33"
             android:id="@+id/tv_mid_title"
-            android:text="@string/map_aty_clear_wall"
+            android:text=""
             android:layout_centerInParent="true"
             />
     </RelativeLayout>

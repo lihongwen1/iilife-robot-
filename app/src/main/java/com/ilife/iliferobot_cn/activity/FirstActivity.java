@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.accloud.cloudservice.AC;
 import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -23,17 +24,13 @@ import io.reactivex.functions.Consumer;
  * Created by chenjiaping on 2017/7/20.
  */
 
-public class FirstActivity extends AppCompatActivity {
+public class FirstActivity extends BaseActivity {
     private final String TAG = FirstActivity.class.getSimpleName();
     private final int GOTOMAIN = 0x11;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int option = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(option);
-        setContentView(R.layout.avtivity_first);
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
@@ -41,6 +38,16 @@ public class FirstActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.avtivity_first;
+    }
+
+    @Override
+    public void initView() {
+
     }
 
     private WeakHandler handler = new WeakHandler(msg -> {

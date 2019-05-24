@@ -436,6 +436,7 @@ public class MapActivity_X7_ extends BaseActivity implements View.OnClickListene
                 Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
                     @Override
                     public void success(ACDeviceMsg deviceMsg) {
+                        ToastUtils.showToast("查询设备状态成功");
                         byte[] bytes = deviceMsg.getContent();
                         if (bytes != null) {
                             errorCode = bytes[8];
@@ -460,7 +461,7 @@ public class MapActivity_X7_ extends BaseActivity implements View.OnClickListene
 
                     @Override
                     public void error(ACException e) {
-
+                        ToastUtils.showToast("查询设备状态异常");
                     }
                 });
     }

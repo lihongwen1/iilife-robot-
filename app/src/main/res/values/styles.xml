@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/bg_color_f5f7fa</item>
         <item name="colorPrimary">@color/colorPrimary</item>
+        <!--状态栏颜色-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fitsSystemWindows">true</item>
@@ -142,6 +143,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@null</item>
+        <item name="android:textColorHint">@color/color_ac</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <!--<item name="android:paddingTop">@dimen/dp_2</item>-->
+        <item name="android:paddingBottom">@dimen/dp_2</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="EditText_16sp_33">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/color_33</item>
         <item name="android:textColorHint">@color/color_ac</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <!--<item name="android:paddingTop">@dimen/dp_2</item>-->

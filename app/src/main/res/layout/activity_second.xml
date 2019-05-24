@@ -77,22 +77,42 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-        <com.ilife.iliferobot_cn.view.RegularButton
-            android:id="@+id/bt_quick_login"
-            style="@style/Button_Style_quick_login"
-            android:layout_marginTop="@dimen/dp_100"
-            android:clickable="false"
-            android:text="@string/quick_login" />
-
-
-        <com.ilife.iliferobot_cn.view.RegularTextView
-            android:id="@+id/tv_login"
-            style="@style/Text_16sp_33"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"/>
+        <LinearLayout
+            android:layout_marginBottom="@dimen/dp_75"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginTop="@dimen/dp_30"
-            android:text="@string/have_account_and_login" />
+            android:orientation="vertical">
+
+            <com.ilife.iliferobot_cn.view.ShadowContainer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:containerCornerRadius="@dimen/dp_25"
+                app:containerDeltaLength="@dimen/dp_8"
+                app:containerShadowColor="@color/color_f08300_66"
+                app:containerShadowRadius="@dimen/dp_6"
+                app:deltaY="@dimen/dp_2"
+                app:enable="true">
+
+                <com.ilife.iliferobot_cn.view.RegularButton
+                    android:id="@+id/bt_quick_login"
+                    style="@style/Button_Style_quick_login"
+                    android:clickable="false"
+                    android:text="@string/quick_login" />
+            </com.ilife.iliferobot_cn.view.ShadowContainer>
+
+            <com.ilife.iliferobot_cn.view.RegularTextView
+                android:id="@+id/tv_login"
+                style="@style/Text_16sp_33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="@string/have_account_and_login" />
+        </LinearLayout>
     </LinearLayout>
 
 

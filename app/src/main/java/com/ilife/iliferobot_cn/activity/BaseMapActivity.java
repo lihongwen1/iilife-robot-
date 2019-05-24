@@ -154,10 +154,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public void onCreate(Bundle savedInstanceState) {
         initData();
         super.onCreate(savedInstanceState);
-        mPresenter.queryVirtualWall();
-        mPresenter.initTimer();
-        mPresenter.getHistoryRoad();
-        mPresenter.subscribeRealTimeMap();
     }
 
     @Override
@@ -171,6 +167,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public int getLayoutId() {
         return R.layout.activity_map_x9;
     }
+
 
     @Override
     protected void onResume() {
@@ -267,7 +264,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
      */
     @Override
     public void showErrorPopup(int errorCode) {
-
         boolean isShow = errorCode != 0;
         if (isShow) {
             if (errorPopup != null && !errorPopup.isShowing()) {
@@ -532,7 +528,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 startActivity(intent);
                 break;
             case R.id.tv_virtual_wall_x9://虚拟墙编辑模式
-                ToastUtils.showToast("虚拟墙");
                 if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
                     showSetWallDialog();
                 } else {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.github.zackratos.ultimatebar.UltimateBar;
+import com.github.zackratos.ultimatebar.UltimateBarUtils;
 import com.ilife.iliferobot_cn.R;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 
@@ -26,30 +28,29 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideBottomUIMenu();
+//        hideBottomUIMenu();
         setContentView(getLayoutId());
         mUnBinder = ButterKnife.bind(this);
         attachPresenter();
         initView();
-        setAndroidNativeLightStatusBar(this, true);
+        setAndroidNativeLightStatusBar();
     }
 
-    private static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
-        View decor = activity.getWindow().getDecorView();
-        if (dark) {
+    private void setAndroidNativeLightStatusBar() {
+        View decor = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
     }
 
+    protected void setNavigationBarColor(int colorId){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(colorId));
+        }
+    }
     @Override
     public void attachPresenter() {
 
-    }
-
-    protected void backImageClick() {
-        finish();
     }
 
     protected boolean isChildPage() {
