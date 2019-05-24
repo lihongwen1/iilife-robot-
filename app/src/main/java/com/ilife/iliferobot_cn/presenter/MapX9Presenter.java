@@ -639,19 +639,19 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || area == 0.0d) {
-            return Utils.getString(R.string.map_aty_gang);
-        } else {
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
             return area + "㎡";
+        } else {
+            return Utils.getString(R.string.map_aty_gang);
         }
     }
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || min == 0) {
-            return Utils.getString(R.string.map_aty_gang);
-        } else {
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
             return min + "min";
+        } else {
+            return Utils.getString(R.string.map_aty_gang);
         }
     }
 

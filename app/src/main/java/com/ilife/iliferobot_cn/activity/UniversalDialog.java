@@ -23,8 +23,9 @@ public class UniversalDialog extends DialogFragment {
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_NORMAL_MID_BUTTON = 2;
     public static final int TYPE_NORMAL_MID_TITLE = 3;
-    private String title, hintTip,midTitle, leftText, midText, rightText;
+    private String title, hintTip, midTitle, leftText, midText, rightText;
     private int type;
+    private int titleColor = -1;
     private boolean exchangeColor;
 
 
@@ -50,9 +51,12 @@ public class UniversalDialog extends DialogFragment {
         tv_left = v.findViewById(R.id.tv_dialog_left);
         tv_mid = v.findViewById(R.id.tv_dialog_mid);
         tv_right = v.findViewById(R.id.tv_dialog_right);
-        if (exchangeColor){
+        if (exchangeColor) {
             tv_left.setTextColor(getResources().getColor(R.color.color_595757));
             tv_right.setTextColor(getResources().getColor(R.color.color_f08300));
+        }
+        if (titleColor!=-1){
+            tv_dialog_title.setTextColor(titleColor);
         }
         if (title != null && !title.isEmpty()) {
             tv_dialog_title.setText(title);
@@ -144,6 +148,7 @@ public class UniversalDialog extends DialogFragment {
         this.midText = midText;
         return this;
     }
+
     public UniversalDialog setMidTitle(String midTitle) {
         this.midTitle = midTitle;
         return this;
@@ -163,9 +168,14 @@ public class UniversalDialog extends DialogFragment {
         this.type = type;
         return this;
     }
-    public UniversalDialog exchangeButtonColor(){
-        exchangeColor=true;
+
+    public UniversalDialog exchangeButtonColor() {
+        exchangeColor = true;
         return this;
     }
 
+    public UniversalDialog setTitleColor(int color) {
+        titleColor = color;
+        return this;
+    }
 }

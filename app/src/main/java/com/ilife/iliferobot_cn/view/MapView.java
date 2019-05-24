@@ -436,7 +436,7 @@ public class MapView extends View {
                     while (iterator.hasNext()) {
                         vr = iterator.next();
                         if (vr.getDeleteIcon().contains(x, y)) {
-                            ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
+//                            ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
                             if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
                                 virtualWallBeans.remove(vr);
                             }
@@ -649,6 +649,10 @@ public class MapView extends View {
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
+        if (slamCanvas==null){
+            isInitBuffer=false;
+            initBuffer();
+        }
         int x = 0, y = 0, length, totalCount = 0;
         if (slamBytes != null && slamBytes.length > 0) {
             slamPath.reset();

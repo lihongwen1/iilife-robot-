@@ -24,6 +24,12 @@ public class MapActivity_X9_ extends BaseMapActivity {
     }
 
     @Override
+    public void initView() {
+        super.initView();
+        iv_recharge_model.setImageResource(R.drawable.rechage_device_x900);
+    }
+
+    @Override
     public void showRemoteView() {
         if (mPresenter.isWork(mPresenter.getCurStatus()) || mPresenter.getCurStatus() == 0x01) {
             ToastUtils.showToast(context, getString(R.string.map_aty_can_not_execute));

@@ -278,7 +278,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 errorPopup.showAsDropDown(rl_top);
             }
         } else {
-            if (errorPopup != null && !errorPopup.isShowing()) {
+            if (errorPopup != null &&errorPopup.isShowing()) {
                 errorPopup.dismiss();
             }
         }

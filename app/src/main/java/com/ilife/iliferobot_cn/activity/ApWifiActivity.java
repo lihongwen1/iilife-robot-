@@ -32,7 +32,6 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     ProgressBar pb_BindProgress;
 
 
-    private ApWifiPresenter apWifiPresenter;
     private String ssid;
     private String password;
 
@@ -46,8 +45,8 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void attachPresenter() {
-        apWifiPresenter = new ApWifiPresenter();
-        apWifiPresenter.attachView(this);
+        mPresenter = new ApWifiPresenter();
+        mPresenter.attachView(this);
     }
 
     public void initData() {
@@ -72,7 +71,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
      */
     @Override
     public void bindDevice() {
-        apWifiPresenter.connectToDevice();
+        mPresenter.connectToDevice();
     }
 
     @Override

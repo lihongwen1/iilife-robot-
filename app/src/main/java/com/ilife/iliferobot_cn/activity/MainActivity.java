@@ -25,7 +25,6 @@ import com.ilife.iliferobot_cn.adapter.DevListAdapter;
 import com.ilife.iliferobot_cn.base.BaseActivity;
 import com.ilife.iliferobot_cn.contract.MainContract;
 import com.ilife.iliferobot_cn.presenter.MainPresenter;
-import com.ilife.iliferobot_cn.ui.MyRelativeLayout;
 import com.ilife.iliferobot_cn.utils.AlertDialogUtils;
 import com.ilife.iliferobot_cn.utils.Constants;
 import com.ilife.iliferobot_cn.utils.DialogUtils;
@@ -34,17 +33,13 @@ import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import butterknife.BindView;
 
@@ -81,6 +76,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.layout_no_device)
     RelativeLayout layout_no_device;
     Rect rect;
+    UniversalDialog unbindDialog;
     private WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -137,24 +133,31 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         adapter.setOnClickListener(new DevListAdapter.OnClickListener() {
             @Override
             public void onMenuClick(final int position) {
-                loadingDialog.show();
-                AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
-                    @Override
-                    public void success() {
-                        mAcUserDevices.remove(position);
-                        adapter.notifyDataSetChanged();
-                        if (mAcUserDevices.size() == 0) {
-                            showButton();
-                        }
-                        DialogUtils.closeDialog(loadingDialog);
-                    }
+                if (unbindDialog == null) {
+                    unbindDialog = new UniversalDialog();
+                    unbindDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.main_aty_unbind_device))
+                            .setHintTIp(Utils.getString(R.string.main_aty_unbind_device_tip)).setOnRightButtonClck(() -> {
+                        loadingDialog.show();
+                        AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
+                            @Override
+                            public void success() {
+                                mAcUserDevices.remove(position);
+                                adapter.notifyDataSetChanged();
+                                if (mAcUserDevices.size() == 0) {
+                                    showButton();
+                                }
+                                DialogUtils.closeDialog(loadingDialog);
+                            }
 
-                    @Override
-                    public void error(ACException e) {
-                        ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
-                        DialogUtils.closeDialog(loadingDialog);
-                    }
-                });
+                            @Override
+                            public void error(ACException e) {
+                                ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
+                                DialogUtils.closeDialog(loadingDialog);
+                            }
+                        });
+                    });
+                }
+                unbindDialog.show(getSupportFragmentManager(), "unbind");
             }
 
             @Override
@@ -166,13 +169,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                     SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
                     SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
                     SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-                   if (subdomain.equals(Constants.subdomain_x900)) {
+                    if (subdomain.equals(Constants.subdomain_x900)) {
                         Intent i = new Intent(context, MapActivity_X9_.class);
                         startActivity(i);
-                    }else{
-                       Intent i = new Intent(context, MapActivity_X8_.class);
-                       startActivity(i);
-                   }
+                    } else {
+                        Intent i = new Intent(context, MapActivity_X8_.class);
+                        startActivity(i);
+                    }
                 } else {
                     showOfflineDialog();
                 }

@@ -4,6 +4,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.ACDeviceActivator;
@@ -49,7 +50,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
-    private Disposable apWifiDisposable,apProgressDsiposable;
+    private Disposable apWifiDisposable, apProgressDsiposable;
 
     @Override
     public void attachView(ApWifiContract.View view) {
@@ -63,30 +64,38 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
         return Completable.create(e -> {
             mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
             int times = 0;
-            while (mApSsid == null || mApSsid.isEmpty()) {
-                if (times >= 6) {
-                    break;
+            try {
+                while (mApSsid == null || mApSsid.isEmpty()) {
+                    if (times >= 6) {
+                        break;
+                    }
+                    wifiManager.startScan();
+                    Thread.sleep(4000);
+                    MyLog.d(TAG, "扫描目标wifi~~~~");
+                    mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
+                    times++;
                 }
-                wifiManager.startScan();
-                Thread.sleep(4000);
-                MyLog.d(TAG, "扫描目标wifi~~~~");
-                mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
-                times++;
-            }
-            MyLog.d(TAG, "扫描目标wifi结束" + mApSsid);
+                MyLog.d(TAG, "扫描目标wifi结束" + mApSsid);
 //            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
-            if (mApSsid == null || mApSsid.isEmpty()) {
-                e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
-            } else {
-                e.onComplete();
+                if (mApSsid == null || mApSsid.isEmpty()) {
+                    e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
+                } else {
+                    e.onComplete();
+                }
+            } catch (Exception ex) {
+                MyLog.d(TAG, "扫描目标wifi异常");
             }
+
         });
     }
 
     @Override
     public void connectToDevice() {
-        apProgressDsiposable=Observable.intervalRange(1,16,1,1,TimeUnit.SECONDS).subscribe(aLong -> {
-              mView.updateBindProgress("",(int)(aLong*5));
+        apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+            if (isViewAttached()) {
+                Log.d(TAG, "update progress");
+                mView.updateBindProgress("", (int) (aLong * 5));
+            }
         });
         apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).
                 andThen(broadCastWifi(mView.getSsid(), mView.getPassWord())).
@@ -96,8 +105,18 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                         subscribeOn(Schedulers.io()).
                         observeOn(AndroidSchedulers.mainThread()).
                         subscribe(device ->
-                                mView.bindSuccess(device), throwable ->
-                                mView.bindFail(throwable.getMessage()));
+                        {
+                            Log.d(TAG, "bind success");
+                            if (isViewAttached()) {
+                                mView.bindSuccess(device);
+                            }
+                        }, throwable ->
+                        {
+                            Log.d(TAG, "bind fail");
+                            if (isViewAttached()) {
+                                mView.bindFail(throwable.getMessage());
+                            }
+                        });
     }
 
 
@@ -235,7 +254,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     public Single<ACUserDevice> bindDevice() {
         return Single.create(emitter -> {
             LogUtil.d(TAG, "physicalId--" + physicalId);
-            mView.updateBindProgress("开始绑定设备" , 90);
+            mView.updateBindProgress("开始绑定设备", 90);
             String bindPhysicalId = physicalId;
             AC.bindMgr().bindDevice(SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN), bindPhysicalId, "", new PayloadCallback<ACUserDevice>() {
                 @Override
@@ -257,7 +276,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     @Override
     public void detachView() {
         super.detachView();
-        if (apProgressDsiposable!=null&&apProgressDsiposable.isDisposed()){
+        if (apProgressDsiposable != null && apProgressDsiposable.isDisposed()) {
             apProgressDsiposable.dispose();
         }
         if (apWifiDisposable != null && !apWifiDisposable.isDisposed()) {

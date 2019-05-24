@@ -49,6 +49,7 @@ import com.ilife.iliferobot_cn.utils.MyLog;
 import com.ilife.iliferobot_cn.utils.SpUtils;
 import com.ilife.iliferobot_cn.utils.ToastUtils;
 import com.ilife.iliferobot_cn.utils.UserUtils;
+import com.ilife.iliferobot_cn.utils.Utils;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -84,7 +85,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     File tempFile;
     String userName, content, email, type;
     TextView tv_userName, tv_del_cancel, tv_confirm, del_tv_title, tv_version, tv_content;
-    ImageView  image_forward, image_avatar;
+    ImageView image_forward, image_avatar;
     LayoutInflater inflater;
     RelativeLayout rl_help;
     RelativeLayout rl_scan;
@@ -232,7 +233,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                             showDeviceList();
                         }
                         ll_device.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-                        image_forward.setRotation(!isShow ?-90:0);
+                        image_forward.setRotation(!isShow ? -90 : 0);
                         isShow = !isShow;
                     } else {
                         ToastUtils.showToast(context, getString(R.string.personal_aty_no_shareable));
@@ -269,12 +270,20 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     }
 
     private void showLogoutDialog() {
-        View content = inflater.inflate(R.layout.layout_exit_dialog, null);
-        TextView tv_cancel = (TextView) content.findViewById(R.id.tv_cancel);
-        TextView tv_exit = (TextView) content.findViewById(R.id.tv_exit);
-        tv_cancel.setOnClickListener(new MyListener());
-        tv_exit.setOnClickListener(new MyListener());
-        alertDialog = AlertDialogUtils.showDialog(context, content, dialog_width, dialog_height);
+        UniversalDialog logoutDialog = new UniversalDialog();
+        logoutDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitleColor(getResources().getColor(R.color.color_f08300)).
+                setTitle(Utils.getString(R.string.personal_acy_exit)).setHintTIp(Utils.getString(R.string.personal_aty_exit_content)).
+                setOnRightButtonClck(() -> {
+                    if (AC.accountMgr().isLogin()) {
+                        AC.accountMgr().logout();
+                        if (MainActivity.activity != null) {
+                            MainActivity.activity.finish();
+                        }
+                        Intent i = new Intent(context, QuickLoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }).show(getSupportFragmentManager(), "logout");
     }
 
     private void showRenameDialog() {

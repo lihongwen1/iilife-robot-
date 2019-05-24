@@ -41,6 +41,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+        setNavigationBarColor(R.color.white);
     }
 
     protected void setNavigationBarColor(int colorId){
