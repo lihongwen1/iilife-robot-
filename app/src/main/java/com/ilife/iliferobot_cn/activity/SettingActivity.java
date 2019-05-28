@@ -282,9 +282,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     }
 
     public void setStatus(int tag, int mopForce, boolean isMaxMode, boolean voiceOpen) {
-        SpUtils.saveBoolean(context, physicalId + MapActivity_X7_.KEY_IS_MAX, isMaxMode);
-        SpUtils.saveInt(context, physicalId + MapActivity_X7_.KEY_MOP_FORCE, mopForce);
-        SpUtils.saveBoolean(context, physicalId + MapActivity_X7_.KEY_VOICE_OPEN, voiceOpen);
+        SpUtils.saveBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX, isMaxMode);
+        SpUtils.saveInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE, mopForce);
+        SpUtils.saveBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN, voiceOpen);
         image_max.setSelected(isMaxMode);
         if (tag == 1) {
             image_voice.setSelected(voiceOpen);

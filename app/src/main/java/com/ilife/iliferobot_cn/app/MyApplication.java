@@ -42,8 +42,7 @@ public class MyApplication extends MultiDexApplication {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float screenWidth = dm.widthPixels / dm.xdpi;
         float screenHeight = dm.heightPixels / dm.ydpi;
-        Log.d("MyApplication", "minW:" +screenWidth + "--minH:"
-                + screenHeight+"---"+getResources().getConfiguration().screenWidthDp+"----"+getResources().getConfiguration().screenHeightDp);
+        Log.d("MyApplication", getResources().getConfiguration().screenWidthDp+"----"+getResources().getConfiguration().screenHeightDp+"-----"+getResources().getConfiguration().densityDpi);
         Constants.CUR_APP_ENVIRONMENT = Constants.APP_ENVIRONMENT_PRODUCT;
         switch (Constants.CUR_APP_ENVIRONMENT) {
             case Constants.APP_ENVIRONMENT_TEST:

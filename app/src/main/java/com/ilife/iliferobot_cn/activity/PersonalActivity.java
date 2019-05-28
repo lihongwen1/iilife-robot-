@@ -84,7 +84,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     boolean isShow;
     File tempFile;
     String userName, content, email, type;
-    TextView tv_userName, tv_del_cancel, tv_confirm, del_tv_title, tv_version, tv_content;
+    TextView tv_userName, del_tv_title, tv_version, tv_content;
     ImageView image_forward, image_avatar;
     LayoutInflater inflater;
     RelativeLayout rl_help;
@@ -260,12 +260,8 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
 
     private void showDeleteDialog() {
         View contentView = inflater.inflate(R.layout.layout_del_dialog, null);
-        tv_del_cancel = (TextView) contentView.findViewById(R.id.tv_del_cancel);
-        tv_confirm = (TextView) contentView.findViewById(R.id.tv_confirm);
         tv_content = contentView.findViewById(R.id.tv_content);
         del_tv_title = (TextView) contentView.findViewById(R.id.del_tv_title);
-        tv_del_cancel.setOnClickListener(new MyListener());
-        tv_confirm.setOnClickListener(new MyListener());
         alertDialog = AlertDialogUtils.showDialog(context, contentView, dialog_width, dialog_height_);
     }
 
@@ -407,50 +403,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         });
     }
 
-    class MyListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.tv_cancel:
-                    AlertDialogUtils.hidden(alertDialog);
-                    break;
-                case R.id.tv_exit:
-                    AlertDialogUtils.hidden(alertDialog);
-                    if (AC.accountMgr().isLogin()) {
-                        AC.accountMgr().logout();
-                        if (MainActivity.activity != null) {
-                            MainActivity.activity.finish();
-                        }
-                        Intent i = new Intent(context, QuickLoginActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                    break;
-                case R.id.tv_del_cancel:
-                    if (tv_confirm.getText().equals(getString(R.string.dialog_del_confirm))) {
-                        AlertDialogUtils.hidden(alertDialog);
-                    } else {
-                        if (TextUtils.isEmpty(content)) {
-                            content = "欧洲生产：" + getString(R.string.per_aty_please_del);
-                        }
-                        commit(email, content);
-                        AlertDialogUtils.hidden(alertDialog);
-                    }
-                    break;
-                case R.id.tv_confirm:
-                    if (tv_confirm.getText().equals(getString(R.string.dialog_del_confirm))) {
-                        tv_content.setText(getString(R.string.per_sty_del15));
-                        tv_confirm.setText(getString(R.string.personal_aty_cancel));
-                        tv_del_cancel.setText(getString(R.string.dialog_del_confirm));
-                        del_tv_title.setText(getString(R.string.personal_aty_title));
-                        del_tv_title.setTextColor(getResources().getColor(R.color.color_f02035));
-                    } else {
-                        AlertDialogUtils.hidden(alertDialog);
-                    }
-                    break;
-            }
-        }
-    }
 
     public void getOwnerList() {
         mDeviceList.clear();

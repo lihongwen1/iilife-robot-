@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="clean_mode">
-        <item>@string/map_aty_plan_mode</item>
-        <item>@string/map_aty_random</item>
-    </string-array>
 
     <string-array name="device_name">
         <item>@string/select_aty_x900</item>

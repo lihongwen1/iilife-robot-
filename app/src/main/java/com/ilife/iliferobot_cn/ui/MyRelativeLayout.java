@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
-import com.ilife.iliferobot_cn.activity.SelectActivity;
 import com.ilife.iliferobot_cn.activity.SelectActivity_x;
 import com.ilife.iliferobot_cn.utils.MyLog;
 

@@ -1,134 +1,70 @@
 <resources>
     <string name="app_name">智意机器人</string>
     <string name="login_aty_login">登录</string>
-    <string name="login_aty_register">注册账户</string>
     <string name="login_aty_email">手机号/邮箱</string>
     <string name="login_aty_pw">请输入新密码(6个字符以上)</string>
-    <string name="login_aty_pw_ensure">确认新密码</string>
-    <string name="login_aty_fw">忘记密码？</string>
     <string name="login_aty_input_email">请输入手机号/邮箱</string>
     <string name="login_aty_input_pw">请输入密码</string>
-    <string name="login_aty_wrong_email">手机号/邮箱格式不正确</string>
+    <string name="login_aty_pw_ensure">确认新密码</string>
+    <string name="login_aty_fw">忘记密码？</string>
+    <string name="login_aty_wrong_email">账号格式不正确</string>
     <string name="login_account_error">账号错误</string>
-    <string name="login_aty_account_no">该手机号/邮箱未注册</string>
+    <string name="login_aty_account_no">该账号未注册</string>
     <string name="login_aty_pw_error">密码不正确</string>
     <string name="login_aty_timeout">连接超时</string>
-    <string name="register_aty_tip">创建ILIFE智意账户的同时，我同意接受隐私政策与服务协议。我了解自己将收到有关我的ILIFE智意账户的电子邮件</string>
-    <string name="register_aty_agree">我同意</string>
-    <string name="register_aty_email_registered">该邮箱已被注册</string>
-    <string name="register2_input_code">请输入验证码</string>
-    <string name="register2_gain_code">获取验证码</string>
-    <string name="register2_gain_code_second">获取验证码 %1$s</string>
-    <string name="register2_input_pass">请输入新密码 （6个字符以上）</string>
-    <string name="register2_input_pass_again">再次输入新密码</string>
+    <string name="register_aty_email_registered">该账号已被注册</string>
     <string name="register2_reset_pass">忘记密码</string>
     <string name="register2_aty_obtain_suc">验证码已发送</string>
-    <string name="register2_input_pw2">请再次输入密码</string>
     <string name="register2_aty_code_wrong">验证码不正确</string>
     <!--<string name="register2_aty_error_char">密码含有非法字符</string>-->
     <string name="register2_aty_short_char">请输入6&#8211;18位字符的密码</string>
     <string name="register2_aty_no_same">密码不⼀致</string>
-    <string name="register2_aty_register_fail">注册失败</string>
-    <string name="register2_aty_reset_fail">重置密码失败</string>
     <string name="register2_aty_reset_suc">重置密码成功</string>
-    <string name="register2_aty_register_suc">注册成功</string>
     <string name="register2_aty_code_nouse">验证码已失效</string>
-    <string name="register2_aty_illegal_email">邮箱不合法</string>
+    <string name="register2_aty_illegal_email">账号不合法</string>
     <string name="register2_aty_account_abnormal">账号状态异常</string>
-    <string name="register2_aty_not_register">该手机号/邮箱未注册</string>
 
     <string name="main_aty_my_robot">我的机器人</string>
-    <string name="main_aty_no_robot">您暂未拥有ILIFE智意机器人</string>
     <string name="main_aty_add_robot">添加机器人</string>
     <string name="main_aty_press_exit">再按一次退出</string>
 
-    <string name="select_aty_x">X系列</string>
-    <string name="select_aty_w">W系列</string>
-    <string name="select_aty_sd">智能扫地机器人</string>
-    <string name="select_aty_xd">智能洗地机器人</string>
     <string name="select_x_aty_add">添加机器人</string>
-    <string name="select_aty_w_updating">产品正在更新中&#8230;</string>
-    <string name="select_aty_w_title">添加智能洗地机器人</string>
 
     <string name="guide_ap_prepare">配网准备</string>
-    <string name="guide_aty_guide">连接向导</string>
-    <string name="ap_aty_first_step">第一步</string>
-    <string name="guide_aty_tip1">打开机器电源，设备进入待机模式</string>
-    <string name="ap_aty_second_step">第二步</string>
-    <string name="guide_aty_tip2">将遥控器对准机器，长按配网键\"\"\"至机器播报\"WiFi连接中\"后松开。机器进入配网模式，网络指示灯闪烁。</string>
-    <string name="guide_aty_tip2_x7">在待机模式下，长按配网键\"\"\"至机器人提示一声\"滴\"提示音后松开，机器人进入配网模式，WiFi图标闪烁</string>
     <string name="guide_aty_next">下一步</string>
 
-    <string name="add_aty_wifi_setting">Wi-Fi 设置</string>
     <string name="ap_aty_input_pass">请输入WiFi密码</string>
     <string name="ap_aty_input_wifi_ssid">选择您的家庭WiFi</string>
     <string name="add_aty_start_connect">开始连接</string>
-    <string name="add_aty_try_apLink">使用AP配网</string>
-    <string name="wifi_guide_aty_tip_">请先打开机器的电源开关，然后点击开始连接</string>
-    <string name="wifi_guide_aty_tip2_">激活中，机器连接上WiFi后指示灯变常绿，并播报语音\"WiFi已连接\"；此时，只需要等待APP和机器绑定。</string>
-    <string name="add_aty_tip22">激活中，机器连接上WiFi后指示灯变常绿；此时，只需要等待APP和机器绑定。</string>
-    <string name="add_aty_tip2">注：如页面长时间不跳转或者绑定失败，请重复之前的操作。</string>
     <string name="add_aty_wrong_wifi_pass">密码含有非法字符</string>
-    <string name="add_aty_connecting">正在配对机器人，请稍候&#8230;</string>
 
-    <string name="ap_guide_aty_ap">AP配网模式</string>
-    <string name="ap_guide_aty_tip1">待机状态下，长按机器的配网键(即机器上面的唯一按键\"开始暂停键\")</string>
     <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关</string>
 
     <string name="ap_guide_aty_tip1_x7">待机状态下，长按机器的配网键(即机器上的\"\"\"键)</string>
-    <string name="ap_guide_aty_tip2">3秒钟后\"滴\"一声不松开，继续长按，听到语音\"WiFi连接中\"后松开，机器进入AP配网模式，WiFi指示灯开始闪烁</string>
     <string name="ap_guide_aty_tip2_x900">长按机器的启动键，3秒后听到\"滴\"的一声，继续长按听到“WiFi连接中”后松开。</string>
     <string name="ap_guide_aty_tip2_x7">3秒后\"滴\"一声不松开，继续长按，提示两声\"滴滴\"提示音后松开，机器进入AP配网模式，WiFi图标闪烁</string>
-    <string name="ap_guide_aty_tip3">温馨提示：第一次使用AP配网，请按照说明书指南操作</string>
     <string name="ap_guide_tip4">未听到，请重复上述操作</string>
     <string name="ap_guide_already_open_device">已打开</string>
     <string name="ap_guide_already_open_wifi">已听到“WiFi连接中”</string>
-    <string name="ap_aty_family_wifi">家庭Wi-Fi：</string>
     <string name="ap_aty_setting">设置</string>
-    <string name="ap_aty_wifi_pass">Wi-Fi密码：</string>
     <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
 
-    <string name="ap_aty_id_code">ID条码：</string>
-    <string name="ap_aty_tip3">*小贴士：将机器尘盒取出，ID条码位于面盖底部，请扫描或手动输入以MAC开头的ID条码</string>
-    <string name="ap_aty_input">ID条码不能为空</string>
-    <string name="ap_aty_physical_false">ID条码格式不正确</string>
-
-    <string name="ap_aty_third_step">第三步</string>
-    <string name="ap_aty_robot_wifi">机器人Wi-Fi：</string>
-    <string name="third_ap_aty_tip1">*小贴士:请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接.</string>
+    <string name="ap_aty_robot_wifi">机器Wi-Fi：</string>
+    <string name="third_ap_aty_tip1">*小贴士：机器连接上家庭WiFi后自生成\"Robot-XXXX\"的机器WiFi，默认密码:123456789 </string>
 
     <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
-    <string name="third_ap_aty_port">请选择机器热点</string>
     <string name="third_ap_aty_port_">请选择Robot-XXXX开头的热点</string>
-    <string name="ap_aty_start_connect">开始连接</string>
-    <string name="main_aty_bind_fail">激活失败,请重新连接</string>
 
-    <string name="bind_suc_aty_suc">绑定成功</string>
-    <string name="bind_suc_aty_done_900">ILIFE X900 已连接！</string>
-    <string name="bind_suc_aty_done_800">ILIFE X800 已连接！</string>
-    <string name="bind_suc_aty_done_785">ILIFE X785 已连接！</string>
-    <string name="bind_suc_aty_done_787">ILIFE x787 已连接！</string>
     <string name="bind_suc_aty_name">请为您的机器人命名</string>
     <string name="bind_suc_sty_robot_done">完成</string>
-    <string name="bind_suc_sty_robot_name">天耀X800</string>
-    <string name="bind_aty_reName_suc">修改机器⼈昵称成功</string>
-    <string name="bind_aty_reName_fail">修改机器⼈昵称失败</string>
-
-    <string name="wifi_guide_aty_guide">Wi-Fi连接向导</string>
+    <string name="bind_suc_sty_robot_name">ILIFE扫地机</string>
+    <string name="bind_aty_reName_suc">修改成功</string>
+    <string name="bind_aty_reName_fail">修改失败</string>
+    <string name="open_gps_location">开启GPS位置信息</string>
+    <string name="open_gps_location_tip">打开后将为您自动获取家庭WiFi</string>
+    <string name="please_not_exit_app">请勿将APP切换到后台</string>
     <string name="ap_wifi_guide">连接家庭WiFi</string>
-    <string name="wifi_guide_aty_tip">请确认手机是否连接家庭Wi-Fi网络</string>
-    <string name="wifi_guide_aty_go">去连接</string>
-    <string name="wifi_guide_aty_done">我已连接</string>
-
-    <string name="bind_fail_aty_timeout">配网超时</string>
-    <string name="bind_fail_aty_hint">请按以下步骤排查可能存在的问题</string>
-    <string name="bind_fail_aty_hint1">1.确保您的设备已经进入到配网模式;</string>
-    <string name="bind_fail_aty_hint2">2.确保输入的WiFi密码正确无误;</string>
-    <string name="bind_fail_aty_hint3">3.确保无线路由器的2.4GHz网络与5Hz网络的接入名称不同，并且手机连接到无线路由器2.4GHz网络；</string>
-    <string name="bind_fail_aty_hint4">4.确保无线路由器已关闭黑白名单(mac地址过滤)功能;</string>
-    <string name="bind_fail_aty_ap">进入AP配网</string>
-    <string name="bind_fail_aty_try">重试</string>
 
     <string name="device_adapter_device_status">状态：</string>
     <string name="device_adapter_device_online">在线</string>
@@ -142,7 +78,7 @@
     <string name="dev_frag_ok">好的</string>
 
     <string name="personal_aty_personal_center">个人中心</string>
-    <string name="personal_aty_set_name">设置用户名</string>
+    <string name="personal_aty_set_name">用户名</string>
     <string name="personal_aty_help">帮助</string>
     <string name="personal_aty_scan">扫一扫</string>
     <string name="personal_aty_share">机器共享</string>
@@ -156,10 +92,8 @@
     <string name="personal_aty_reset_suc">修改⽤户名成功</string>
     <string name="personal_aty_reset_fail">修改⽤户名失败</string>
     <string name="personal_aty_exit_content">退出后不会删除任何历史记录</string>
-    <string name="personal_aty_exit">退出</string>
     <string name="personal_acy_del">删除账号</string>
     <string name="personal_aty_del_content">删除后系统会清空您的个人数据</string>
-    <string name="personal_aty_title">您确定要删除账户吗？</string>
     <string name="personal_aty_no_shareable">您没有可以分享的机器</string>
     <string name="personal_aty_login_first">请先登录</string>
     <string name="personal_aty_avatar_suc">修改头像成功</string>
@@ -170,14 +104,10 @@
     <string name="help_aty_commit_suc">提交成功</string>
     <string name="help_aty_commit">提交失败,请重试</string>
     <string name="personal_aty_scan_code">请扫描二维码绑定机器人</string>
-    <string name="per_aty_please_del">请求删除账号</string>
-
-
     <string name="personal_aty_support">技术支持</string>
     <string name="personal_aty_feedback">问题反馈</string>
     <string name="personal_input_email">请输入您的邮箱</string>
     <string name="personal_aty_chose_type">请选择您的产品型号</string>
-    <string name="personal_select">选择</string>
     <string name="help_aty_content">请描述遇到的问题和现象</string>
     <string name="personal_aty_count">可输入字数140/140</string>
     <string name="help_aty_text_count">可输入字数%1$s/140</string>
@@ -188,13 +118,7 @@
     <string name="feedback_aty_type_null">请选择产品型号</string>
     <string name="help_aty_content_isnull">请输入反馈内容</string>
     <string name="feedback_aty_count_limit">您输入的字数已经超过了限制</string>
-
     <string name="capture_aty_scan">将二维码/条码放入框内，即可自动扫描</string>
-    <!--<string name="encode_qrcode">生成二维码</string>-->
-    <!--<string name="dencode_qrcode">扫描二维码</string>-->
-    <!--<string name="code_text">请输入生成二维码的文本信息</string>-->
-    <!--<string name="qrcodetext">这里显示扫描结果</string>-->
-
     <string name="map_aty_title">%1$s 智能扫地机器人</string>
     <string name="map_aty_status">当前状态</string>
     <string name="map_aty_gang">— —</string>
@@ -215,14 +139,11 @@
     <string name="map_aty_start">开始</string>
     <string name="map_aty_appoint">预约</string>
     <string name="map_aty_recharge">回充</string>
-    <string name="map_aty_function">功能</string>
     <string name="map_aty_use_control">已启用遥控功能</string>
     <string name="map_aty_use_left">向左</string>
     <string name="map_aty_use_right">向右</string>
     <string name="map_aty_use_forward">向前</string>
-    <string name="map_aty_use_recharging">%1$s正在回充&#8230;</string>
     <string name="map_aty_use_recharging_x9">扫地机器人正在回充</string>
-    <string name="map_aty_key_pointing">%1$s已启用重点清扫</string>
     <string name="map_aty_key_pointing_x9">已启用重点清扫</string>
     <string name="map_aty_use_along">已启用沿边清扫</string>
     <string name="map_aty_can_not_execute">不可操作</string>
@@ -250,8 +171,6 @@
     <string name="adapter_error_sxt">摄像头组件异常</string>
     <string name="adapter_error_xj">行进异常</string>
     <string name="adapter_error_qt">其他异常</string>
-
-
     <string name="setting_aty_type">型号：</string>
     <string name="clock_aty_appoint">定时预约</string>
     <string name="setting_aty_clean_record">清扫记录</string>
@@ -272,7 +191,6 @@
     <string name="setting_aty_hit">请为您的机器人设置昵称~</string>
     <string name="setting_aty_tip_same">昵称与之前的昵称相同</string>
     <string name="setting_aty_only_admin">只有管理员才有操作权限</string>
-
     <string name="clock_aty_sun">星期日</string>
     <string name="clock_aty_mon">星期一</string>
     <string name="clock_aty_tues">星期二</string>
@@ -281,22 +199,14 @@
     <string name="clock_aty_fri">星期五</string>
     <string name="clock_aty_sat">星期六</string>
     <string name="clock_aty_set_time">设置时间</string>
-
     <string name="setting_aty_duration">清扫时长</string>
     <string name="history_adapter_month_day">MM月dd日</string>
     <string name="history_adapter_hour_minute">HH:mm</string>
-    <string name="history_adapter_record_detail">记录详情</string>
     <string name="history_aty_no_record">没有清扫记录，先开始清扫吧~</string>
-    <string name="history_aty_start_clean">开始清扫</string>
-
     <string name="consume_aty_tips">小贴士:长按重置耗材寿命</string>
     <string name="consume_aty_side_time">边刷寿命</string>
     <string name="consume_aty_roll_time">滚刷寿命</string>
     <string name="consume_aty_filter_time">滤网寿命</string>
-    <string name="consume_aty_hint">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤\n
-                                             \t\t\t\t\t\t\t\t\t网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12\n
-                                             \t\t\t\t\t\t\t\t\t个月可更换滚刷、3&#8211;5个月可更换高效滤网。
-                                            </string>
     <string name="consume_aty_resetSide">是否重置边刷寿命？</string>
     <string name="consume_aty_resetSide_over">重置后边刷会更新到最新状态</string>
     <string name="consume_aty_resetRoll">是否重置滚刷寿命？</string>
@@ -313,8 +223,7 @@
     <string name="select_aty_x787">X787</string>
     <string name="select_aty_x800">X800</string>
     <string name="select_aty_x900">X900</string>
-    <string name="setting_aty_hit_">请设置用户名～</string>
-    <string name="consume_aty_text_1">温馨提示:</string>
+    <string name="setting_aty_hit_">用户名</string>
     <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
     <string name="access_camera">请授予访问摄像头的权限</string>
     <string name="access_location">请授予访问位置的权限</string>
@@ -322,45 +231,27 @@
     <string name="access_camera_storage">请授予访问摄像头和内部存储的权限</string>
     <string name="access_photo">请授予打电话的权限</string>
     <string name="setting_aty_voice_mode">提示音开关</string>
-    <string name="help_aty_russian">俄罗斯</string>
-    <string name="help_aty_spain">西班牙</string>
-    <string name="help_aty_other">其他地区</string>
-    <string name="help_aty_time1">(周一到周五：09:00&#8211;18:00)</string>
-    <string name="help_aty_time2">(周一到周五：09:00&#8211;18:00 周六：10:00&#8211;14:00)</string>
-    <string name="map_aty_clean">A7正在清扫</string>
-    <string name="per_sty_del15">系统将在十五日内删除您的帐户</string>
-    <string name="map_aty_please_select">请选择您的操作</string>
-    <string name="map_aty_select_task">请为您的机器人设置当前任务~</string>
-    <string name="map_aty_pause_task">暂停当前任务</string>
-    <string name="map_aty_stop_task">结束当前任务</string>
+    <string name="help_aty_time1">(周一到周六：09:00&#8211;18:00)</string>
     <string name="map_aty_pause">暂停</string>
-    <string name="virtualwall_save">是否保存？</string>
-    <string name="virtualwall_confirm_save">保存</string>
     <string name="map_virtual_wall">电子墙</string>
     <string name="ensure">确认</string>
     <string name="map_aty_set_wall">是否进入电子墙编辑模式？</string>
     <string name="map_aty_will_stop">会暂停当前清扫工作</string>
     <string name="map_aty_edit_mode">编辑模式</string>
     <string name="map_aty_clear_wall">是否清除所有电子墙设置？</string>
-    <string name="map_aty_add_wall">进入增加电子墙模式！</string>
-    <string name="map_aty_hua_xian">用手指在地图相应的位置划线即可添加</string>
-    <string name="map_aty_delete_wall">进入删除电子墙模式！</string>
-    <string name="map_aty_dian_ji">点击对应编号既可删除</string>
     <string name="map_aty_apply_wall">是否应用所有电子墙？</string>
     <string name="map_aty_set_suc">电子墙设置成功！</string>
     <string name="map_aty_set_fail">电子墙设置失败！</string>
-    <string name="map_aty_max_count">最多可设置10条电子墙</string>
+    <string name="map_aty_max_count">最多可设置10条电子墙!</string>
     <string name="map_aty_too_short">电子墙太短！！</string>
     <string name="setting_aty_ota_update">固件升级</string>
     <string name="ota_aty_update_suc">升级成功！</string>
     <string name="ota_aty_updating">正在升级&#8230;</string>
     <string name="ota_aty_cur">当前版本:%1$s</string>
-    <string name="ota_aty_tar">目标版本:%1$s</string>
     <string name="ota_aty_latest_ver">当前已是最新版本</string>
-    <string name="ota_aty_update">立即更新</string>
     <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
     <string name="edit_phone_tip">手机号</string>
-    <string name="verification_code_tip">请输入验证码</string>
+    <string name="verification_code_tip">6位验证码</string>
     <string name="get_ver_code_tip">获取验证码</string>
     <string name="have_account_and_login">已有账户？请登录</string>
     <string name="quick_login">快速注册</string>
@@ -368,17 +259,10 @@
     <string name="no_device_tip_hi">Hi，别来无恙</string>
     <string name="no_device_tip_cleaning">开始您的清洁之旅吧~</string>
     <string name="x_series_robot">X系列-智能扫地机器人</string>
-    <string name="login_aty_slogan">让保洁更简单  让生活更美好</string>
-    <string name="register_aty_confirm">确认密码</string>
-    <string name="third_aty_open_location">开启位置服务？</string>
-    <string name="third_ap_aty_location">请开启位置服务</string>
-    <string name="cannot_change_suction">在该模式下不能改变吸力</string>
     <string name="map_aty_temp_keypoint">临时重点</string>
     <string name="robot_connected">连接成功</string>
-
     <string name="back_to_recharge">返回充电座</string>
     <string name="finish_the_cleaning">结束当前清扫</string>
-
     <!--device stop work reason-->
     <string name="stop_work_reason1">完成清扫</string>
     <string name="stop_work_reason2">低电量回冲停止</string>
@@ -386,7 +270,5 @@
     <string name="stop_work_reason4">按键暂停</string>
     <string name="stop_work_reason5">App主动暂停</string>
     <string name="stop_work_reason6">异常报警停止</string>
-    <string name="open_gps_location">开启GPS位置信息</string>
-    <string name="open_gps_location_tip">打开后将为您自动获取家庭WiFi</string>
-    <string name="please_not_exit_app">请勿将APP切换到后台</string>
+
 </resources>

@@ -23,8 +23,8 @@ import butterknife.OnClick;
  * Created by chengjiaping on 2018/8/6.
  */
 //DONE
-public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View,View.OnClickListener{
-    private final String TAG = RegisterActivity2.class.getSimpleName();
+public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View,View.OnClickListener{
+    private final String TAG = ForgetPwdActivity.class.getSimpleName();
     final int STATUS_GAIN_CODE = 0X01;
     final int STATUS_GAIN_DONE = 0X02;
     Context context;
@@ -49,7 +49,6 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
     @BindView(R.id.image_show_2)
     ImageView image_show2;
     String str_email;
-    boolean isRegister;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +58,11 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
     public void initData(){
         Bundle bundle = getIntent().getExtras();
         if (bundle!=null){
-            str_email = bundle.getString(RegisterActivity.STR_EMAIL);
+            str_email = bundle.getString(LoginActivity.STR_EMAIL);
             if (!TextUtils.isEmpty(str_email)){
                 et_email.setText(str_email);
                 et_email.setEnabled(false);
             }
-            isRegister = bundle.getBoolean(RegisterActivity.IS_REGISTER);
         }
     }
 
@@ -79,13 +77,13 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_register2;
+        return R.layout.activity_forget_pwd;
     }
 
     @Override
     public void initView() {
         context = this;
-        tv_title.setText(isRegister?getString(R.string.login_aty_register):getString(R.string.register2_reset_pass));
+        tv_title.setText(getString(R.string.register2_reset_pass));
         Utils.setTransformationMethod(et_pw1,false);
         Utils.setTransformationMethod(et_pw2,false);
         et_code.addOnInputEndListener(s -> mPresenter.checkVerificationCode(s));
@@ -102,7 +100,7 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
                 mPresenter.sendVerificationCode();
                 break;
             case R.id.bt_confirm:
-                 mPresenter.checkVerificationCode(isRegister);
+                 mPresenter.checkVerificationCode();
                 break;
             case R.id.image_show_1:
                 boolean isSelected = !image_show1.isSelected();
@@ -123,14 +121,14 @@ public class RegisterActivity2 extends BackBaseActivity<ForgetPasswordPresenter>
 
     @Override
     public void registerSuccess() {
-        Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
+        Intent intent = new Intent(ForgetPwdActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     @Override
     public void resetPwdSuccess() {
-        Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
+        Intent intent = new Intent(ForgetPwdActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

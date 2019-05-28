@@ -17,7 +17,6 @@
         android:paddingEnd="@dimen/dp_30">
 
         <ImageView
-            android:id="@+id/image_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -69,7 +68,6 @@
         android:paddingEnd="@dimen/dp_30">
 
         <ImageView
-            android:id="@+id/image_roll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -123,7 +121,6 @@
         android:paddingEnd="@dimen/dp_30">
 
         <ImageView
-            android:id="@+id/image_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

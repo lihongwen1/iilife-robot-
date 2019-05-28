@@ -83,24 +83,9 @@ public class CaptureActivity extends BackBaseActivity implements Callback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
 
-        //添加toolbar
-//        addToolbar();
     }
 
-    private void addToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        ImageView more = (ImageView) findViewById(R.id.scanner_toolbar_more);
-//        assert more != null;
-//        more.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-        setSupportActionBar(toolbar);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,19 +93,7 @@ public class CaptureActivity extends BackBaseActivity implements Callback {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.scan_local:
-//                //打开手机中的相册
-//                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); //"android.intent.action.GET_CONTENT"
-//                innerIntent.setType("image/*");
-//                Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
-//                this.startActivityForResult(wrapperIntent, REQUEST_CODE_SCAN_GALLERY);
-//                return true;
-//        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {

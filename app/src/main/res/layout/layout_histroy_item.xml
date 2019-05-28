@@ -47,7 +47,6 @@
                 android:text="68㎡" />
 
             <com.ilife.iliferobot_cn.view.LightTextView
-                android:id="@+id/tv_area_"
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_area"
                 android:layout_centerHorizontal="true"
@@ -73,7 +72,6 @@
                 android:text="60min" />
 
             <com.ilife.iliferobot_cn.view.LightTextView
-                android:id="@+id/tv_duration_"
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_duration"
                 android:layout_centerHorizontal="true"

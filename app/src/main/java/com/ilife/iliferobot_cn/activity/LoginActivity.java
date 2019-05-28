@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
@@ -44,6 +43,8 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
     SuperEditText et_pass;
     @BindView(R.id.bt_login)
     Button bt_login;
+    public static final String IS_REGISTER = "IS_REGISTER";
+    public static final String STR_EMAIL = "STR_EMAIL";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
               mPresenter.checkMobile(s);
         });
         et_pass.addOnInputEndListener(s -> mPresenter.chePassword(s));
+        bt_login.setClickable(false);
     }
 
 
@@ -85,23 +87,15 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
                 et_pass.setSelection(curIndex);
                 break;
             case R.id.tv_forget:
-                Intent i = new Intent(LoginActivity.this, RegisterActivity2.class);
-                i.putExtra(RegisterActivity.IS_REGISTER,false);
+                Intent i = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+                i.putExtra(IS_REGISTER,false);
                 startActivity(i);
                 break;
             case R.id.bt_login:
                 String str_account = et_email.getText().toString().trim();
                 String str_pass = et_pass.getText().toString().trim();
-                if (TextUtils.isEmpty(str_account)){
-                    ToastUtils.showToast(context,getString(R.string.login_aty_input_email));
-                    return;
-                }
-                if (TextUtils.isEmpty(str_pass)){
-                    ToastUtils.showToast(context,getString(R.string.login_aty_input_pw));
-                    return;
-                }
                 if (!UserUtils.isEmail(str_account)&&!UserUtils.isPhone(str_account)){
-                    ToastUtils.showToast(context,getString(R.string.login_account_error));
+                    ToastUtils.showToast(context,getString(R.string.login_aty_wrong_email));
                     return;
                 }
                 login(str_account,str_pass);

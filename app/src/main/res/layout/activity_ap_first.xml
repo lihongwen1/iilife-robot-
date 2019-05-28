@@ -32,7 +32,6 @@
             android:hint="@string/ap_aty_input_wifi_ssid" />
 
         <ImageView
-            android:id="@+id/iv_set"
             style="@style/Image_Style_Forward"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
@@ -53,8 +52,7 @@
             android:layout_height="@dimen/dp_24"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_30"
-            android:src="@drawable/n_icon_password"
-            android:text="@string/ap_aty_wifi_pass" />
+            android:src="@drawable/n_icon_password" />
 
         <com.ilife.iliferobot_cn.view.LightEditText
             android:id="@+id/et_pass"
@@ -77,7 +75,6 @@
     </RelativeLayout>
 
     <com.ilife.iliferobot_cn.view.LightTextView
-        android:id="@+id/tv_tip1"
         style="@style/Text_14sp_ac"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_17"

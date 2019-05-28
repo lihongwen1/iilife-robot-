@@ -23,6 +23,7 @@ import butterknife.BindView;
  */
 public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements ApWifiContract.View {
     private final String TAG = ApWifiActivity.class.getSimpleName();
+    public static final String EXTAR_DEVID = "EXTAR_DEVID";
     Context context;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
@@ -87,7 +88,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     @Override
     public void bindSuccess(ACUserDevice userDevice) {
         Intent i = new Intent(context, BindSucActivity.class);
-        i.putExtra(AddActivity.EXTAR_DEVID, userDevice.deviceId);
+        i.putExtra(EXTAR_DEVID, userDevice.deviceId);
         startActivity(i);
     }
 

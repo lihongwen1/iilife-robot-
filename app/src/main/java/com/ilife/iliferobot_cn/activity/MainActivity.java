@@ -192,9 +192,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         if (LoginActivity.activity != null) {
             LoginActivity.activity.finish();
         }
-        if (RegisterActivity.activity != null) {
-            RegisterActivity.activity.finish();
-        }
         if (AC.accountMgr().isLogin()) {
             loadingDialog.show();
             mPresenter.getDeviceList();

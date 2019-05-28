@@ -30,7 +30,6 @@
                 android:text="@string/ap_guide_aty_tip1_x900" />
 
             <com.ilife.iliferobot_cn.view.GifView
-                android:id="@+id/image_step1"
                 android:layout_width="@dimen/dp_280"
                 android:layout_height="@dimen/dp_280"
                 app:gif="@drawable/gif_open_key" />
@@ -60,7 +59,6 @@
                 android:text="@string/ap_guide_aty_tip2_x900" />
 
             <com.ilife.iliferobot_cn.view.GifView
-                android:id="@+id/image_step2"
                 android:layout_width="@dimen/dp_280"
                 android:layout_height="@dimen/dp_280"
                 app:gif="@drawable/gif_click_wifi" />

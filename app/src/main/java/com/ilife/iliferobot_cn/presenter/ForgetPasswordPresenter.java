@@ -65,10 +65,6 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
     @Override
     public void sendVerificationCode() {
         String str_email = mView.getAccount();
-        if (TextUtils.isEmpty(str_email)) {
-            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
-            return;
-        }
         if (UserUtils.isEmail(str_email) || UserUtils.isPhone(str_email)) {
             AC.accountMgr().checkExist(str_email, new PayloadCallback<Boolean>() {
                 @Override
@@ -91,7 +87,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                         });
 
                     } else {
-                        ToastUtils.showToast(Utils.getString(R.string.register2_aty_not_register));
+                        ToastUtils.showToast(Utils.getString(R.string.login_aty_account_no));
                     }
                 }
 
@@ -115,20 +111,16 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
             return;
         }
-        checkVerificationCode(isRegister);
+        checkVerificationCode();
     }
 
     @Override
-    public void checkVerificationCode(boolean isRegister) {
+    public void checkVerificationCode() {
         AC.accountMgr().checkVerifyCode(mView.getAccount(), mView.getVerificationCode(), new PayloadCallback<Boolean>() {
             @Override
             public void success(Boolean result) {
                 if (result) {
-                    if (isRegister) {
-                        register();
-                    } else {
                         resetPassword();
-                    }
                 } else {
                     ToastUtils.showToast(Utils.getString(R.string.register2_aty_code_wrong));
                 }
@@ -137,23 +129,6 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
             @Override
             public void error(ACException e) {
 
-            }
-        });
-    }
-
-    @Override
-    public void register() {
-        AC.accountMgr().register(mView.getAccount(), "", mView.getPwd1(), "", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
-            @Override
-            public void success(ACUserInfo userInfo) {
-                ToastUtils.showToast(Utils.getString(R.string.register2_aty_register_suc));
-                String email = userInfo.getEmail();
-                SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL, email);
-            }
-
-            @Override
-            public void error(ACException e) {
-                ToastUtils.showErrorToast(e.getErrorCode());
             }
         });
     }

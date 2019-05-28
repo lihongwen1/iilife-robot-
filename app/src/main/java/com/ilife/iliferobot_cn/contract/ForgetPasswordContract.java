@@ -28,8 +28,7 @@ public interface ForgetPasswordContract {
         void checkPwd2(String s);
         void updateBtnConfirm();
         void sendVerificationCode();
-        void checkVerificationCode(boolean isRegist);
-        void register();
+        void checkVerificationCode();
         void resetPassword();
         void confirm(boolean isRegister);
     }

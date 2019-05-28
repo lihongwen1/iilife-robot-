@@ -5,19 +5,9 @@
     <color name="colorAccent">#f08300</color>
     <color name="colorTopPressed">#F1F1F1</color>
     <color name="colorTopNormal">#FFFFFF</color>
-    <color name="text_pressed">#8a8a8a</color>
-    <color name="text_normal">#0083DC</color>
     <color name="tv_normal">#00bdb5</color>
-    <color name="tv_pressed">#dcdddd</color>
-    <color name="tv_color_normal">#a1a1a1</color>
-    <color name="tv_color_pressed">#00bdb5</color>
-    <color name="all_line">#eeeeef</color>
-    <color name="all_bt_color">#ffffff</color>
-    <color name="all_title_color">#ffffff</color>
     <color name="clock_aty_tv_pressed">#cbcbcb</color>
     <color name="clock_aty_tv_unpressed">#00bdb5</color>
-    <color name="clock_status_bar_color">#00bdb5</color>
-    <color name="capture_aty_text_color">#FFC125</color>
 
     <!--<color name="status_bar_color">#ffffff</color>-->
     <color name="color_f08300">#f08300</color>
@@ -28,27 +18,17 @@
     <color name="color_e2">#e2e2e2</color>
     <color name="color_f6">#f6f6f6</color>
     <color name="color_ac">#acacac</color>
-    <color name="color_ee">#eeeeee</color>
     <color name="color_81">#818181</color>
     <color name="color_ef8200">#ef8200</color>
     <color name="color_595757">#ff595757</color>
-    <color name="color_bf000000">#bf000000</color>
     <color name="color_00">#000000</color>
-    <color name="color_ff2035">#ff2035</color>
-    <color name="color_8fc31f">#8fc31f</color>
-    <color name="color_f39800">#f39800</color>
 
     <!--  QRCode scanner color begin  -->
     <color name="viewfinder_mask">#B3000000</color>
     <color name="result_view">#B0000000</color>
     <color name="viewfinder_frame">#90FFFFFF</color>
     <color name="result_point_color">#C0FFFF00</color>
-    <color name="laser_color">#0F0</color>
-    <color name="corner_color">#00FF00</color>
-    <color name="color_f02035">#f02035</color>
     <color name="color_c2">#c2c2c2</color>
-    <color name="color_9f5948">#9f5948</color>
-    <color name="color_EBEBEB">#EBEBEB</color>
     <color name="color_00ffffff">#00ffffff</color>
     <color name="lineColor_click">#1296db</color>
     <color name="lineColor_unclick">#9b9b9b</color>
@@ -57,7 +37,6 @@
     <color name="bg_color_f5f7fa">#f5f7fa</color>
     <color name="white">#ffffff</color>
     <color name="white_50">#32ffffff</color>
-    <color name="map_bg">#FF1BADE2</color>
     <color name="obstacle_color">#FF76C9EE</color>
    <color name="slam_color">#FF49B6E8</color>
     <!--  QRCode scanner color end  -->
@@ -68,5 +47,4 @@
     <color name="successColor">#388E3C</color>
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#4c4c4c</color>
-    <color name="transparent_">#00000000</color>
 </resources>

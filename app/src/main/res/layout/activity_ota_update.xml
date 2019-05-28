@@ -13,7 +13,6 @@
         android:layout_height="match_parent">
         <com.ilife.iliferobot_cn.view.LightTextView
             style="@style/Text_12sp_33"
-            android:id="@+id/tv_suc"
             android:text="@string/ota_aty_update_suc"
             android:layout_centerInParent="true"
             android:visibility="gone" />

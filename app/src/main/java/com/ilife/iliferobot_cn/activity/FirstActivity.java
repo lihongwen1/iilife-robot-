@@ -17,6 +17,9 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import io.reactivex.functions.Consumer;
 
 
@@ -88,4 +91,5 @@ public class FirstActivity extends BaseActivity {
         startActivity(i);
         finish();
     }
+
 }

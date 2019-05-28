@@ -64,14 +64,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.RegisterActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.AddActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.ilife.iliferobot_cn.activity.FirstApActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -79,10 +71,6 @@
         <activity
             android:name="com.ilife.iliferobot_cn.activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.MainActivity_test"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.ilife.iliferobot_cn.activity.ClockingActivity"
@@ -101,24 +89,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SelectActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.ilife.iliferobot_cn.activity.ProtocolActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SelectActivity_w"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.ilife.iliferobot_cn.activity.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.RegisterActivity2"
+            android:name="com.ilife.iliferobot_cn.activity.ForgetPwdActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -135,19 +110,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_X7"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_X8"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.ilife.iliferobot_cn.activity.SettingActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.SettingActivity_x7"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -155,27 +118,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.GuideActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.WifiGuideActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.ApGuideActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.ilife.iliferobot_cn.activity.ApGuideActivityX900"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.SecondApActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.ThirdApActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -183,14 +126,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.BindFailActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_X7_"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.ilife.iliferobot_cn.activity.MapActivity_X8_"
             android:launchMode="singleTop"
@@ -200,23 +135,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_A7_"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ilife.iliferobot_cn.activity.SettingActivity_a7"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.ilife.iliferobot_cn.activity.OtaUpdateActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.HistoryDetailActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.HistoryActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
