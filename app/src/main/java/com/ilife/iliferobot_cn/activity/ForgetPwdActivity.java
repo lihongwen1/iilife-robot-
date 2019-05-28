@@ -159,6 +159,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     public void onCountDownFinish() {
         tv_count_down.setVisibility(View.GONE);
         tv_gain.setVisibility(View.VISIBLE);
+        tv_gain.setText(R.string.resend);
     }
 
     @Override

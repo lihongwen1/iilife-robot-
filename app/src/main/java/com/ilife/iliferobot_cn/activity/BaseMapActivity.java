@@ -278,7 +278,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 errorPopup.showAsDropDown(rl_top);
             }
         } else {
-            if (errorPopup != null &&errorPopup.isShowing()) {
+            if (errorPopup != null && errorPopup.isShowing()) {
                 errorPopup.dismiss();
             }
         }
@@ -302,7 +302,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
      */
     private void showClearWallDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
-        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_TITLE).setMidTitle(Utils.getString(R.string.map_aty_clear_wall)).setOnRightButtonClck(() ->
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.map_aty_clear_wall)).
+                setHintTIp(Utils.getString(R.string.map_aty_clear_undo)).
+                setOnRightButtonClck(() ->
         {
             mMapView.undoAllOperation();
             /**
@@ -504,7 +506,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 mPresenter.enterRechargeMode();
                 break;
             case R.id.tv_control_x9://显示沿边，遥控等操作UI
-                showRemoteView();
+                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {
+                    ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
+                } else {
+                    showRemoteView();
+                }
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
@@ -531,7 +537,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
                     showSetWallDialog();
                 } else {
-                    ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
+                    if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {
+                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
+                    } else {
+                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
+                    }
                 }
                 break;
             case R.id.tv_add_virtual_x9://增加虚拟墙模式

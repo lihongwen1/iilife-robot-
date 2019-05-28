@@ -4,7 +4,6 @@ package com.ilife.iliferobot_cn.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
@@ -60,7 +59,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_second;
+        return R.layout.activity_quick_login;
     }
 
     @Override
@@ -179,6 +178,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         Log.d("QuickLogin", "是否是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
         tv_count_down.setVisibility(View.GONE);
         tv_send_code.setVisibility(View.VISIBLE);
+        tv_send_code.setText(R.string.resend);
     }
 
     @Override

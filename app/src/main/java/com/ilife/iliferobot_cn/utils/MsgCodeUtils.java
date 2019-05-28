@@ -32,6 +32,7 @@ public class MsgCodeUtils {
     //模式
     public static final int STATUE_POINT=0X05;
     public static final int STATUE_ALONG=0X04;
+    public static final int STATUE_SLEEPING=0X01;
     public static final int STATUE_WAIT=0X02;
     public static final int STATUE_PLANNING=0X06;
     public static final int STATUE_VIRTUAL_EDIT=0X07;

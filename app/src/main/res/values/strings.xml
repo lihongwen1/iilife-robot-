@@ -188,7 +188,7 @@
     <string name="setting_aty_confirm_reset">确认恢复出厂设置？</string>
     <string name="setting_aty_reset_hint">所有清扫数据会被清除</string>
     <string name="setting_aty_devName">机器人名称</string>
-    <string name="setting_aty_hit">请为您的机器人设置昵称~</string>
+    <string name="setting_aty_hit">请为您的机器人设置昵称</string>
     <string name="setting_aty_tip_same">昵称与之前的昵称相同</string>
     <string name="setting_aty_only_admin">只有管理员才有操作权限</string>
     <string name="clock_aty_sun">星期日</string>
@@ -236,9 +236,10 @@
     <string name="map_virtual_wall">电子墙</string>
     <string name="ensure">确认</string>
     <string name="map_aty_set_wall">是否进入电子墙编辑模式？</string>
-    <string name="map_aty_will_stop">会暂停当前清扫工作</string>
+    <string name="map_aty_will_stop">此操作会暂停当前清扫工作</string>
     <string name="map_aty_edit_mode">编辑模式</string>
-    <string name="map_aty_clear_wall">是否清除所有电子墙设置？</string>
+    <string name="map_aty_clear_wall">是否要退出电子墙设置？</string>
+    <string name="map_aty_clear_undo">此操作会撤销当前所有更改</string>
     <string name="map_aty_apply_wall">是否应用所有电子墙？</string>
     <string name="map_aty_set_suc">电子墙设置成功！</string>
     <string name="map_aty_set_fail">电子墙设置失败！</string>
@@ -251,7 +252,7 @@
     <string name="ota_aty_latest_ver">当前已是最新版本</string>
     <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
     <string name="edit_phone_tip">手机号</string>
-    <string name="verification_code_tip">6位验证码</string>
+    <string name="verification_code_tip">请输入验证码</string>
     <string name="get_ver_code_tip">获取验证码</string>
     <string name="have_account_and_login">已有账户？请登录</string>
     <string name="quick_login">快速注册</string>
@@ -270,5 +271,6 @@
     <string name="stop_work_reason4">按键暂停</string>
     <string name="stop_work_reason5">App主动暂停</string>
     <string name="stop_work_reason6">异常报警停止</string>
+    <string name="resend">重新发送</string>
 
 </resources>

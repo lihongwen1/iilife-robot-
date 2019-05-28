@@ -77,7 +77,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                         AC.accountMgr().sendVerifyCode(str_email, Constants.EMAIL_MODE_Europe, new VoidCallback() {
                             @Override
                             public void success() {
-                                ToastUtils.showToast(Utils.getString(R.string.register2_aty_obtain_suc));
+//                                ToastUtils.showToast(Utils.getString(R.string.register2_aty_obtain_suc));
                             }
 
                             @Override
