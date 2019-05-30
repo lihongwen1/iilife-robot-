@@ -16,7 +16,7 @@
 
         <View style="@style/View_Line_Style" />
 
-        <com.ilife.iliferobot_cn.view.SuperEditText
+        <com.ilife.iliferobot.view.SuperEditText
             android:id="@+id/et_email"
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.ilife.iliferobot_cn.view.SuperEditText
+            <com.ilife.iliferobot.view.SuperEditText
                 android:id="@+id/et_pass"
                 style="@style/super_edit_text_16sp"
                 android:layout_marginStart="@dimen/dp_30"
@@ -60,7 +60,7 @@
         </FrameLayout>
 
     </LinearLayout>
-    <com.ilife.iliferobot_cn.view.ShadowContainer
+    <com.ilife.iliferobot.view.ShadowContainer
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:containerCornerRadius="@dimen/dp_25"
@@ -69,14 +69,14 @@
         app:containerShadowRadius="@dimen/dp_6"
         app:deltaY="@dimen/dp_2"
         app:enable="true">
-    <com.ilife.iliferobot_cn.view.RegularButton
+    <com.ilife.iliferobot.view.RegularButton
         android:id="@+id/bt_login"
         style="@style/Button_Style_quick_login"
         android:layout_marginTop="@dimen/dp_78"
         android:text="@string/login_aty_login" />
-    </com.ilife.iliferobot_cn.view.ShadowContainer>
+    </com.ilife.iliferobot.view.ShadowContainer>
 
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         android:id="@+id/tv_forget"
         style="@style/Text_16sp_595757"
         android:layout_gravity="center_horizontal"

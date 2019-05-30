@@ -6,7 +6,7 @@
 
     <include layout="@layout/template_top_title" />
 
-    <com.ilife.iliferobot_cn.view.MapView
+    <com.ilife.iliferobot.view.MapView
         android:id="@+id/mv_history_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +25,7 @@
             android:layout_marginTop="@dimen/dp_45"
             android:orientation="horizontal">
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:textColor="@color/color_33"
                 android:textSize="@dimen/sp_14" />
 
-            <com.ilife.iliferobot_cn.view.EnglishRegularTextView
+            <com.ilife.iliferobot.view.EnglishRegularTextView
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp_4"
                 android:id="@+id/tv_lean_area"
@@ -52,7 +52,7 @@
                 android:background="#FFE2E2E2"
                 />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:textColor="@color/color_33"
                 android:textSize="@dimen/sp_14" />
 
-            <com.ilife.iliferobot_cn.view.EnglishRegularTextView
+            <com.ilife.iliferobot.view.EnglishRegularTextView
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp_4"
                 android:id="@+id/tv_clean_time"
@@ -73,7 +73,7 @@
         </LinearLayout>
 
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_end_reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

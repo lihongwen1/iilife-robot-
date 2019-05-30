@@ -16,14 +16,11 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -39,9 +36,8 @@ import com.google.zxing.decoding.InactivityTimer;
 import com.google.zxing.decoding.RGBLuminanceSource;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.view.ViewfinderView;
-import com.ilife.iliferobot_cn.R;
-import com.ilife.iliferobot_cn.base.BackBaseActivity;
-import com.ilife.iliferobot_cn.base.BaseActivity;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.base.BackBaseActivity;
 
 import java.io.IOException;
 import java.util.Hashtable;

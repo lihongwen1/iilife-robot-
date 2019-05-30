@@ -7,7 +7,7 @@
 
     <include layout="@layout/template_top_title" />
 
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_52"

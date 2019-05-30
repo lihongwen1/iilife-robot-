@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_12sp_33"
             android:text="@string/ota_aty_update_suc"
             android:layout_centerInParent="true"
@@ -57,14 +57,14 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_cur_version"
                 android:textColor="@color/color_00"
                 android:textSize="@dimen/sp_18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ota_aty_cur" />
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 android:layout_marginTop="@dimen/dp_30"
                 android:id="@+id/tv_update_tip"
                 style="@style/Text_14sp_ac"

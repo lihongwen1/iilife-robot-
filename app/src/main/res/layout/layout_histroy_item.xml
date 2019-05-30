@@ -13,13 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_date"
             style="@style/Text_18sp_f08300"
 
             android:text="06月11日" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/tv_time"
             style="@style/Text_14sp_33"
             android:layout_below="@+id/tv_date"
@@ -40,13 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.ilife.iliferobot_cn.view.MediumTextView
+            <com.ilife.iliferobot.view.MediumTextView
                 android:id="@+id/tv_area"
                 style="@style/Text_14sp_33"
                 android:layout_centerHorizontal="true"
                 android:text="68㎡" />
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_area"
                 android:layout_centerHorizontal="true"
@@ -65,13 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10">
 
-            <com.ilife.iliferobot_cn.view.MediumTextView
+            <com.ilife.iliferobot.view.MediumTextView
                 android:id="@+id/tv_duration"
                 style="@style/Text_14sp_33"
                 android:layout_centerHorizontal="true"
                 android:text="60min" />
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_duration"
                 android:layout_centerHorizontal="true"

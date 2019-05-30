@@ -27,7 +27,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.hardware.Camera;
@@ -37,7 +36,7 @@ import android.view.View;
 
 import com.google.zxing.ResultPoint;
 import com.google.zxing.camera.CameraManager;
-import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot.R;
 
 import java.util.Collection;
 import java.util.HashSet;

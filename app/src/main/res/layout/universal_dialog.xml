@@ -7,14 +7,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_92">
-        <com.ilife.iliferobot_cn.view.MediumTextView
+        <com.ilife.iliferobot.view.MediumTextView
             style="@style/Text_16sp_33"
             android:id="@+id/tv_dialog_title"
             android:text="@string/open_gps_location"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20" />
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_14sp_ac"
             android:id="@+id/tv_dialog_hint_tip"
             android:hint="@string/open_gps_location_tip"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:layout_below="@+id/tv_dialog_title"
             android:layout_marginTop="@dimen/dp_10" />
-        <com.ilife.iliferobot_cn.view.MediumTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:visibility="gone"
             style="@style/Text_16sp_33"
             android:id="@+id/tv_mid_title"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:orientation="horizontal">
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_dialog_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -55,7 +55,7 @@
             android:layout_marginBottom="@dimen/dp_2"
             android:background="@color/bg_color_f5f7fa"
             />
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_dialog_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -66,7 +66,7 @@
             android:includeFontPadding="false"
             android:gravity="center" />
     </LinearLayout>
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         android:visibility="gone"
         android:id="@+id/tv_dialog_mid"
         android:layout_gravity="center_horizontal"

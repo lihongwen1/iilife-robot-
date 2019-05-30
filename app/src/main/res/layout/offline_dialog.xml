@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33"
             android:text="@string/dev_frag_offline"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_23"/>
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_12sp_ac"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_54"
         android:id="@+id/rl_ok">
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33"
             android:text="@string/dev_frag_ok"
             android:layout_centerInParent="true" />

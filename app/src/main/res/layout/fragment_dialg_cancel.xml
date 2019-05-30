@@ -16,7 +16,7 @@
         android:background="@drawable/shape_rect_white"
         android:orientation="vertical">
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_back_recharge"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
@@ -27,7 +27,7 @@
 
         <View style="@style/View_Line_Style" />
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_finish_cleaning"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
@@ -37,7 +37,7 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         android:id="@+id/tv_cancel_dialog"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"

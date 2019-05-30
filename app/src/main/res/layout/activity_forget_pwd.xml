@@ -13,7 +13,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.ilife.iliferobot_cn.view.SuperEditText
+        <com.ilife.iliferobot.view.SuperEditText
             android:id="@+id/et_email"
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
             >
-            <com.ilife.iliferobot_cn.view.SuperEditText
+            <com.ilife.iliferobot.view.SuperEditText
                 android:id="@+id/et_code"
                 style="@style/super_edit_text_16sp"
                 android:hint="@string/verification_code_tip"
@@ -46,7 +46,7 @@
                 app:left_height="72"
                 app:left_width="72" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_gain"
                 android:layout_width="@dimen/dp_120"
                 android:layout_height="match_parent"
@@ -57,7 +57,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_count_down"
                 android:layout_width="@dimen/dp_120"
                 android:layout_height="match_parent"
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.ilife.iliferobot_cn.view.SuperEditText
+            <com.ilife.iliferobot.view.SuperEditText
                 android:id="@+id/et_pw1"
                 style="@style/super_edit_text_16sp"
                 android:layout_marginStart="@dimen/dp_30"
@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.ilife.iliferobot_cn.view.SuperEditText
+            <com.ilife.iliferobot.view.SuperEditText
                 android:id="@+id/et_pw2"
                 style="@style/super_edit_text_16sp"
                 android:layout_width="341dp"
@@ -137,7 +137,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
-    <com.ilife.iliferobot_cn.view.ShadowContainer
+    <com.ilife.iliferobot.view.ShadowContainer
         android:layout_marginBottom="@dimen/dp_136"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,9 +148,9 @@
         app:deltaY="@dimen/dp_2"
         app:enable="true">
 
-        <com.ilife.iliferobot_cn.view.RegularButton
+        <com.ilife.iliferobot.view.RegularButton
             android:id="@+id/bt_confirm"
             style="@style/Button_Style_quick_login"
             android:text="@string/dialog_del_confirm" />
-    </com.ilife.iliferobot_cn.view.ShadowContainer>
+    </com.ilife.iliferobot.view.ShadowContainer>
 </LinearLayout>

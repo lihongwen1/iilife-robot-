@@ -25,7 +25,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 
-import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot.R;
 
 import java.io.IOException;
 

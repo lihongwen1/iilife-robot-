@@ -18,12 +18,12 @@
             android:layout_marginTop="@dimen/dp_127"
             android:background="@drawable/ilife_logo" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_16sp_33"
             android:layout_marginTop="@dimen/dp_20"
             android:text="@string/ilife_slogan" />
 
-        <com.ilife.iliferobot_cn.view.SuperEditText
+        <com.ilife.iliferobot.view.SuperEditText
             android:id="@+id/et_phone_number"
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
@@ -43,7 +43,7 @@
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginEnd="@dimen/dp_30">
 
-            <com.ilife.iliferobot_cn.view.SuperEditText
+            <com.ilife.iliferobot.view.SuperEditText
                 android:id="@+id/et_verification_code"
                 style="@style/super_edit_text_16sp"
                 android:hint="@string/verification_code_tip"
@@ -56,7 +56,7 @@
                 app:left_height="72"
                 app:left_width="72" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_send_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:textColor="@color/color_f08300"
                 android:textSize="@dimen/sp_14" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_count_down"
                 android:layout_width="24dp"
                 android:layout_height="20dp"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.ilife.iliferobot_cn.view.ShadowContainer
+            <com.ilife.iliferobot.view.ShadowContainer
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:containerCornerRadius="@dimen/dp_25"
@@ -95,14 +95,14 @@
                 app:deltaY="@dimen/dp_2"
                 app:enable="true">
 
-                <com.ilife.iliferobot_cn.view.RegularButton
+                <com.ilife.iliferobot.view.RegularButton
                     android:id="@+id/bt_quick_login"
                     style="@style/Button_Style_quick_login"
                     android:clickable="false"
                     android:text="@string/quick_login" />
-            </com.ilife.iliferobot_cn.view.ShadowContainer>
+            </com.ilife.iliferobot.view.ShadowContainer>
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_login"
                 style="@style/Text_16sp_33"
                 android:layout_width="wrap_content"

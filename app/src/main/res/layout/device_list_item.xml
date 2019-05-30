@@ -10,7 +10,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/bg_color_f5f7fa" />
 
-    <com.ilife.iliferobot_cn.ui.SlidingMenu
+    <com.ilife.iliferobot.ui.SlidingMenu
         android:id="@+id/slidingMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,18 +42,18 @@
                     android:layout_marginStart="@dimen/dp_30"
                     android:layout_toEndOf="@+id/image_product">
 
-                    <com.ilife.iliferobot_cn.view.MediumTextView
+                    <com.ilife.iliferobot.view.MediumTextView
                         android:id="@+id/tv_name"
                         style="@style/Text_16sp_33" />
 
-                    <com.ilife.iliferobot_cn.view.LightTextView
+                    <com.ilife.iliferobot.view.LightTextView
                         android:id="@+id/tv_status1"
                         style="@style/Text_12sp_33"
                         android:layout_below="@+id/tv_name"
                         android:layout_marginTop="@dimen/dp_1"
                         android:text="@string/device_adapter_device_status" />
 
-                    <com.ilife.iliferobot_cn.view.LightTextView
+                    <com.ilife.iliferobot.view.LightTextView
                         android:id="@+id/tv_status2"
                         style="@style/Text_12sp_33"
                         android:layout_alignBottom="@+id/tv_status1"
@@ -71,7 +71,7 @@
                     android:background="@drawable/n_btn_forward" />
             </RelativeLayout>
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/item_delete"
                 android:layout_width="@dimen/dp_84"
                 android:layout_height="match_parent"
@@ -81,5 +81,5 @@
                 android:textColor="@color/color_ff"
                 android:textSize="@dimen/sp_12" />
         </LinearLayout>
-    </com.ilife.iliferobot_cn.ui.SlidingMenu>
+    </com.ilife.iliferobot.ui.SlidingMenu>
 </RelativeLayout>

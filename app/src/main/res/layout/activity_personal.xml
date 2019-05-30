@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/n_icon_portrait" />
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_userName"
             style="@style/Text_16sp_33"
             android:layout_below="@+id/image_avatar"
@@ -28,7 +28,7 @@
             android:text="@string/personal_aty_set_name" />
     </RelativeLayout>
 
-    <com.ilife.iliferobot_cn.ui.ReboundScrollView
+    <com.ilife.iliferobot.ui.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -48,7 +48,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_help" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -74,7 +74,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_scan" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -100,7 +100,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_shared" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -136,7 +136,7 @@
                     android:id="@+id/image_protocol"
                     android:background="@drawable/n_icon_protocol" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -166,7 +166,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_logout" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
@@ -190,7 +190,7 @@
                     android:layout_height="@dimen/dp_24"
                     android:background="@drawable/n_icon_version" />
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot.view.LightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_version"
@@ -201,6 +201,6 @@
                     android:textColor="@color/color_ac" />
             </RelativeLayout>
         </LinearLayout>
-    </com.ilife.iliferobot_cn.ui.ReboundScrollView>
+    </com.ilife.iliferobot.ui.ReboundScrollView>
 
 </LinearLayout>

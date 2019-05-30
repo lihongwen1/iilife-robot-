@@ -5,7 +5,7 @@
     android:background="@drawable/qr_code_bg"
     android:orientation="vertical">
 
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:gravity="center"
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48">
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -50,7 +50,7 @@
             android:layout_marginBottom="@dimen/dp_2"
             android:background="@color/color_e2" />
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_confirm"
             android:layout_width="0dp"
             android:layout_height="match_parent"

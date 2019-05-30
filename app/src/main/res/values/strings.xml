@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">智意机器人</string>
     <string name="login_aty_login">登录</string>
     <string name="login_aty_email">手机号/邮箱</string>
     <string name="login_aty_pw">请输入新密码(6个字符以上)</string>

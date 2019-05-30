@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ilife.iliferobot_cn">
+    package="com.ilife.iliferobot">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -17,8 +17,6 @@
     <!--AbleCloud需要的权限-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!--自动连接到wifi需要的权限-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -29,88 +27,88 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-permission android:name="android.permission.READ_LOGS" /><!-- 获取日志-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
-        android:name="com.ilife.iliferobot_cn.app.MyApplication"
+        android:name="com.ilife.iliferobot.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.FirstActivity"
+            android:name="com.ilife.iliferobot.activity.FirstActivity"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MyCaptureActivity"
+            android:name="com.ilife.iliferobot.activity.MyCaptureActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.QuickLoginActivity"
+            android:name="com.ilife.iliferobot.activity.QuickLoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SetPasswordActivity"
+            android:name="com.ilife.iliferobot.activity.SetPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.LoginActivity"
+            android:name="com.ilife.iliferobot.activity.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.FirstApActivity"
+            android:name="com.ilife.iliferobot.activity.FirstApActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MainActivity"
+            android:name="com.ilife.iliferobot.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.ClockingActivity"
+            android:name="com.ilife.iliferobot.activity.ClockingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.ConsumesActivity"
+            android:name="com.ilife.iliferobot.activity.ConsumesActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.HistoryActivity_x9"
+            android:name="com.ilife.iliferobot.activity.HistoryActivity_x9"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.HistoryDetailActivity_x9"
+            android:name="com.ilife.iliferobot.activity.HistoryDetailActivity_x9"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.ProtocolActivity"
+            android:name="com.ilife.iliferobot.activity.ProtocolActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.ForgetPwdActivity"
+            android:name="com.ilife.iliferobot.activity.ForgetPwdActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SelectActivity_x"
+            android:name="com.ilife.iliferobot.activity.SelectActivity_x"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.PersonalActivity"
+            android:name="com.ilife.iliferobot.activity.PersonalActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.HelpActivity"
+            android:name="com.ilife.iliferobot.activity.HelpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.SettingActivity"
+            android:name="com.ilife.iliferobot.activity.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -118,38 +116,38 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.ApGuideActivityX900"
+            android:name="com.ilife.iliferobot.activity.ApGuideActivityX900"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.BindSucActivity"
+            android:name="com.ilife.iliferobot.activity.BindSucActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_X8_"
+            android:name="com.ilife.iliferobot.activity.MapActivity_X8_"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.MapActivity_X9_"
+            android:name="com.ilife.iliferobot.activity.MapActivity_X9_"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot_cn.activity.OtaUpdateActivity"
+            android:name="com.ilife.iliferobot.activity.OtaUpdateActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ApWifiActivity"
+            android:name="com.ilife.iliferobot.activity.ApWifiActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ConnectDeviceApActivity"
+            android:name="com.ilife.iliferobot.activity.ConnectDeviceApActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.ilife.iliferobot_cn.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -169,15 +167,14 @@
         <!--生产环境-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59a3bdba07fe65300000089a"></meta-data>
+            android:value="59a3bdba07fe65300000089a"/>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="3be416dbde2c9ddbf8c7563dfbe1c473"></meta-data>
+            android:value="3be416dbde2c9ddbf8c7563dfbe1c473"/>
 
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="wskgyvtdj201314"></meta-data>
-
+            android:value="wskgyvtdj201314"/>
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />

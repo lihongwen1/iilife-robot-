@@ -18,7 +18,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_52"
@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/dp_12"
                 android:src="@drawable/rechage_device_x900" />
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_ac"
                 android:layout_marginTop="@dimen/dp_18"
                 android:text="@string/bind_suc_aty_name" />
@@ -50,7 +50,7 @@
                 android:textColor="@color/color_33"
                 android:textSize="@dimen/sp_12" />
 
-            <com.ilife.iliferobot_cn.view.ShadowContainer
+            <com.ilife.iliferobot.view.ShadowContainer
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_40"
@@ -61,11 +61,11 @@
                 app:deltaY="@dimen/dp_2"
                 app:enable="true">
 
-                <com.ilife.iliferobot_cn.view.RegularButton
+                <com.ilife.iliferobot.view.RegularButton
                     android:id="@+id/bt_done"
                     style="@style/Button_Style"
                     android:text="@string/bind_suc_sty_robot_done" />
-            </com.ilife.iliferobot_cn.view.ShadowContainer>
+            </com.ilife.iliferobot.view.ShadowContainer>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

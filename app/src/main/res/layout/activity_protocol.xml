@@ -14,7 +14,7 @@
         android:layout_marginRight="15dp"
         android:visibility="gone">
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_16sp_33"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

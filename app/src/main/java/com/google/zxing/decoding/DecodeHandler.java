@@ -31,7 +31,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.camera.CameraManager;
 import com.google.zxing.camera.PlanarYUVLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import com.ilife.iliferobot_cn.R;
+import com.ilife.iliferobot.R;
 
 import java.util.Hashtable;
 

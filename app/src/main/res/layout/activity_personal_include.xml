@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.ilife.iliferobot_cn.view.RegularTextView
+    <com.ilife.iliferobot.view.RegularTextView
         style="@style/Text_16sp_33"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_42"
@@ -27,7 +27,7 @@
             android:layout_marginStart="@dimen/dp_30"
             android:background="@drawable/n_icon_tel" />
 
-        <com.ilife.iliferobot_cn.view.AvantGardTextView
+        <com.ilife.iliferobot.view.AvantGardTextView
             android:id="@+id/tv_telNum1"
             style="@style/Text_14sp_33"
             android:layout_centerVertical="true"
@@ -35,7 +35,7 @@
             android:layout_toEndOf="@+id/image_tel1"
             android:text="400-936-8886" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_12sp_33"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_16"
@@ -58,7 +58,7 @@
             android:layout_marginStart="@dimen/dp_30"
             android:background="@drawable/n_icon_email" />
 
-        <com.ilife.iliferobot_cn.view.AvantGardTextView
+        <com.ilife.iliferobot.view.AvantGardTextView
             style="@style/Text_14sp_33"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_18"
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10">
 
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_30"
@@ -79,7 +79,7 @@
             android:textColor="@color/color_33" />
     </RelativeLayout>
 
-    <com.ilife.iliferobot_cn.view.LightEditText
+    <com.ilife.iliferobot.view.LightEditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -99,7 +99,7 @@
         android:layout_height="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_10">
 
-        <com.ilife.iliferobot_cn.view.LightEditText
+        <com.ilife.iliferobot.view.LightEditText
             android:id="@+id/et_type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
@@ -114,7 +114,7 @@
             android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
-    <com.ilife.iliferobot_cn.view.LightEditText
+    <com.ilife.iliferobot.view.LightEditText
         android:id="@+id/et_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_160"
@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10">
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/tv_numbs"
             style="@style/Text_12sp_ac"
             android:layout_alignParentEnd="true"
@@ -177,17 +177,17 @@
             android:layout_marginStart="@dimen/dp_19"
             android:layout_toEndOf="@+id/image_add">
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_ac"
                 android:text="@string/help_aty_add_pic" />
 
-            <com.ilife.iliferobot_cn.view.EnglishRegularTextView
+            <com.ilife.iliferobot.view.EnglishRegularTextView
                 style="@style/Text_12sp_ac"
                 android:text="@string/help_aty_add_pic1" />
         </LinearLayout>
 
     </RelativeLayout>
-       <com.ilife.iliferobot_cn.view.ShadowContainer
+       <com.ilife.iliferobot.view.ShadowContainer
            android:layout_marginTop="@dimen/dp_23"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -197,11 +197,11 @@
            app:deltaY="@dimen/dp_2"
            app:containerShadowColor="@color/color_f08300_66"
            app:enable="true">
-        <com.ilife.iliferobot_cn.view.RegularTextView
+        <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/bt_confirm"
             style="@style/Button_Style"
             android:text="@string/confirm" />
-       </com.ilife.iliferobot_cn.view.ShadowContainer>
+       </com.ilife.iliferobot.view.ShadowContainer>
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

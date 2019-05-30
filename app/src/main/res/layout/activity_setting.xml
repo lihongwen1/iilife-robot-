@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/dp_40"
             />
 
-        <com.ilife.iliferobot_cn.view.MediumTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/tv_name"
             style="@style/Text_18sp_f08300"
             android:layout_marginStart="@dimen/dp_40"
@@ -27,14 +27,14 @@
             android:layout_toEndOf="@+id/image_product"
             android:text="@string/bind_suc_sty_robot_name" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/textView"
             style="@style/Text_14sp_33"
             android:layout_below="@+id/tv_name"
             android:layout_alignStart="@+id/tv_name"
             android:text="@string/setting_aty_type" />
 
-        <com.ilife.iliferobot_cn.view.LightTextView
+        <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/tv_type"
             style="@style/Text_14sp_33"
             android:layout_below="@+id/tv_name"

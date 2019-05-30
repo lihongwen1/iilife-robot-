@@ -27,13 +27,13 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot.view.LightTextView
                     android:id="@+id/tv_1"
                     style="@style/Text_14sp_ff"
                     android:layout_centerHorizontal="true"
                     android:text="@string/map_aty_status" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     android:id="@+id/tv_status"
                     style="@style/Text_20sp_ff"
                     android:layout_below="@+id/tv_1"
@@ -55,13 +55,13 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot.view.LightTextView
                     android:id="@+id/tv_2"
                     style="@style/Text_14sp_ff"
                     android:layout_centerHorizontal="true"
                     android:text="@string/setting_aty_area" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     android:id="@+id/tv_area"
                     style="@style/Text_20sp_ff"
                     android:layout_below="@+id/tv_2"
@@ -82,13 +82,13 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot.view.LightTextView
                     android:id="@+id/tv_3"
                     style="@style/Text_14sp_ff"
                     android:layout_centerHorizontal="true"
                     android:text="@string/map_aty_time" />
 
-                <com.ilife.iliferobot_cn.view.RegularTextView
+                <com.ilife.iliferobot.view.RegularTextView
                     android:id="@+id/tv_time"
                     style="@style/Text_20sp_ff"
                     android:layout_below="@+id/tv_3"
@@ -109,7 +109,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
-                <com.ilife.iliferobot_cn.view.LightTextView
+                <com.ilife.iliferobot.view.LightTextView
                     android:id="@+id/tv_4"
                     style="@style/Text_14sp_ff"
                     android:layout_centerHorizontal="true"
@@ -134,7 +134,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <com.ilife.iliferobot_cn.view.MapView
+            <com.ilife.iliferobot.view.MapView
                 android:id="@+id/v_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -155,7 +155,7 @@
                 android:layout_height="match_parent"
                 android:visibility="gone" />
 
-            <com.ilife.iliferobot_cn.view.LightTextView
+            <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_use_control"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
             android:layout_height="@dimen/dp_154"
             android:background="@color/bg_color_f5f7fa"
             android:visibility="visible">
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_virtual_wall_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -185,7 +185,7 @@
                 android:drawablePadding="@dimen/dp_13"
                 android:gravity="center"
                 android:text="@string/map_virtual_wall" />
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_bottom_recharge_x8"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -199,7 +199,7 @@
                 android:text="@string/map_aty_recharge" />
 
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_start_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -209,7 +209,7 @@
                 android:gravity="center"
                 android:text="@string/map_aty_start" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_control_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -221,7 +221,7 @@
                 android:gravity="center"
                 android:text="@string/map_aty_remote" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_bottom_recharge_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -243,7 +243,7 @@
             android:background="@color/bg_color_f5f7fa"
             android:visibility="gone">
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_along_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -255,7 +255,7 @@
                 android:gravity="center"
                 android:text="@string/map_aty_along" />
 
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_point_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
@@ -265,7 +265,7 @@
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_aty_point" />
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:visibility="gone"
                 android:id="@+id/tv_appointment_x9"
                 style="@style/Text_14sp_33"
@@ -277,7 +277,7 @@
                 android:drawablePadding="@dimen/dp_16"
                 android:gravity="center"
                 android:text="@string/map_aty_appoint" />
-            <com.ilife.iliferobot_cn.view.RegularTextView
+            <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_recharge_x9"
                 style="@style/Text_14sp_33"
                 android:layout_width="wrap_content"
