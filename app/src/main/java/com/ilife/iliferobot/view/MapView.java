@@ -64,8 +64,7 @@ public class MapView extends View {
     private Canvas boxCanvas;
     private Bitmap boxBitmap;
     private Paint boxPaint;
-    private int space = 20, scrollingOffsetX = 0, scrollingOffsetY = 0;
-
+    private float endX, endY;
     public MapView(Context context) {
         super(context);
         init();
@@ -219,8 +218,8 @@ public class MapView extends View {
             roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
         }
         if (roadList != null && roadList.size() > 2) {
-            float endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
-            float endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
+             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
+             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
@@ -362,20 +361,15 @@ public class MapView extends View {
         int me = event.getAction() & MotionEvent.ACTION_MASK;
         float x = event.getX() / scare + getOffsetX();
         float y = event.getY() / scare + getOffsetY();
-        Log.d("SelfPaint", "x--:" + x + "y---:" + y);
         switch (me) {
             case MotionEvent.ACTION_DOWN:
                 downX = x;
                 downY = y;
                 downPoint.set(event.getX(), event.getY());
                 if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallBeans.size() >= 10) {
-                        //TODO 提示虚拟墙数量超最大数
-                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
-                    } else {
-                    }
+                  // 添加虚拟墙
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
-                    // TODO 删除虚拟墙
+                 //  删除虚拟墙
                 } else {
                     originalMode = MODE;
                     MODE = MODE_DRAG;
@@ -390,15 +384,15 @@ public class MapView extends View {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallBeans.size() >= 10) {
-                        //TODO 提示虚拟墙数量超最大数
-                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
-                    } else {
+//                    if (getUsefulWallNum() >= 10) {
+//                        //TODO 提示虚拟墙数量超最大数
+////                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
+//                    } else {
                         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                         virtualCanvas.save();
                         virtualCanvas.drawPath(existvirtualPath, virtualPaint);
                         virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
-                    }
+//                    }
                 }
                 invalidate();
                 break;
@@ -409,9 +403,12 @@ public class MapView extends View {
 //                    roadCanvas.drawPath(roadPath, slamPaint);
 //                    invalidate();
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    if (virtualWallBeans.size() >= 10) {
+                    if (getUsefulWallNum() >= 10) {
                         // TODO 提示虚拟墙数量达到最大值
                         ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
+                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                        virtualCanvas.save();
+                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
                     } else {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
@@ -476,6 +473,10 @@ public class MapView extends View {
             if (scare < 0.6f) {
                 scare = 0.6f;
             }
+            if(scare>4.5f){
+                scare=4.5f;
+            }
+
         }
     }
 
@@ -529,6 +530,17 @@ public class MapView extends View {
             result = DEFAULT_SIZE;
         }
         return result;
+    }
+
+    private int getUsefulWallNum(){
+        int num=0;
+        for (VirtualWallBean vb:virtualWallBeans) {
+            if (vb.getState()==1||vb.getState()==2){
+                num++;
+            }
+        }
+        Log.d(TAG,"useful wall number:"+num);
+        return num;
     }
 
     /**
@@ -758,7 +770,7 @@ public class MapView extends View {
         }
         updateSlam(minX, maxX, minY, maxY, 15);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        //绘制清扫区域的黄方格
+        //绘制清扫区域的白方格
         boxPaint.setColor(getResources().getColor(R.color.white));
         boxPaint.setStrokeWidth((float) (baseScare - 1));
         if (pointList.size() > 0) {
@@ -768,8 +780,8 @@ public class MapView extends View {
                 boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
             }
         }
-        float endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
-        float endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
+         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
+         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
         boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         invalidate();
