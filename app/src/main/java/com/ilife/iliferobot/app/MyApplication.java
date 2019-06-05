@@ -36,10 +36,10 @@ public class MyApplication extends MultiDexApplication {
         Log.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
         Log.d("MyApplication",BuildConfig.Area+"---");
         instance = (MyApplication) getApplicationContext();
-        if (BuildConfig.isDebug) {//测试环境
-            AC.init(this, Constants.MajorDomain, Constants.MajorDomainId, AC.TEST_MODE);
-        } else { //生产环境
+        if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
             AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
+        } else { //测试环境
+            AC.init(this, Constants.MajorDomain, Constants.MajorDomainId,AC.TEST_MODE);
         }
         switch (BuildConfig.Area) {
             case 0:

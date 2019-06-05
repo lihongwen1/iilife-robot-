@@ -119,6 +119,8 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
         }
     }
 
+
+
     @Override
     public void registerSuccess() {
         Intent intent = new Intent(ForgetPwdActivity.this, MainActivity.class);

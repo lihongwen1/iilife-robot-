@@ -18,7 +18,16 @@ import com.ilife.iliferobot.R;
 public class AlertDialogUtils {
     static final String TAG = AlertDialogUtils.class.getSimpleName();
 
-    public static AlertDialog showDialog(Context context, View contentView, int width, int height) {
+    public static AlertDialog showDialogNoCancel(Context context, View contentView, int width, int height) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialog_Style);
+        builder.setView(contentView);
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+        dialog.getWindow().setLayout(width, height);
+        return dialog;
+    }
+ public static AlertDialog showDialog(Context context, View contentView, int width, int height) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialog_Style);
         builder.setView(contentView);
         AlertDialog dialog = builder.create();

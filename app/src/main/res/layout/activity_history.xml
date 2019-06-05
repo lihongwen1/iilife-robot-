@@ -25,7 +25,10 @@
             android:layout_height="match_parent">
 
             <com.ilife.iliferobot.view.RegularTextView
-                style="@style/Text_16sp_33"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color_ac"
+                android:textSize="@dimen/sp_24"
                 android:layout_gravity="center"
                 android:text="@string/history_aty_no_record"
                 android:visibility="visible" />

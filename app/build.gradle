@@ -21,7 +21,6 @@ android {
         versionName '3.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        buildConfigField("boolean", "isDebug", "false")
         flavorDimensions  "default"
         signingConfig signingConfigs.debug
     }
@@ -30,10 +29,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String","environment","\"product\"")
+
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String","environment","\"product\"")
         }
     }
     repositories {
@@ -44,6 +46,21 @@ android {
         abortOnError false
     }
     productFlavors {
+        /* 中国*/
+        _China_Test {
+            dimension "default"
+            applicationId "com.ilife.iliferobot_test"
+            signingConfig signingConfigs.ilife
+            buildConfigField("int", "Area", "0")
+            resValue "string", "app_name", "ILIFE-ROBOT"
+            buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
+        }
         /* 中国*/
         _China {
             dimension "default"
@@ -62,6 +79,9 @@ android {
         /*东南亚*/
         _SouthEast_Asia {
             dimension  "default"
+            applicationId "com.ilife.iliferobot_as"
+            signingConfig signingConfigs.ilife
+            buildConfigField("int", "Area", "1")
             resValue "string", "app_name", "ILIFE Robot Asia"
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-AS\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-AS\"")
@@ -70,9 +90,6 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-AS\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-AS\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-AS\"")
-            buildConfigField("int", "Area", "1")
-            applicationId "com.ilife.iliferobot_as"
-            signingConfig signingConfigs.ilife
         }
         /*美国*/
         _America {

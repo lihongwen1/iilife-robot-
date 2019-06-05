@@ -16,6 +16,7 @@ import com.ilife.iliferobot.utils.Utils;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 /**
@@ -65,6 +66,7 @@ public class SelectActivity_x extends BackBaseActivity {
             startActivity(i);
         });
         tvTitle.setText(R.string.select_x_aty_add);
+        Constants.IS_FIRST_AP = true;
     }
 
     class SpaceItemDecoration extends RecyclerView.ItemDecoration {

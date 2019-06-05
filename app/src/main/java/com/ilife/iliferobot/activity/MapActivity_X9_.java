@@ -54,7 +54,6 @@ public class MapActivity_X9_ extends BaseMapActivity {
             tv_control_x9.setVisibility(View.VISIBLE);
             tv_bottom_recharge.setVisibility(View.GONE);
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
-            setNavigationBarColor(R.color.white);
         }else if (isSelect) {
             tv_control_x9.setVisibility(View.GONE);
             tv_bottom_recharge.setTextColor(getResources().getColor(R.color.white));
@@ -65,7 +64,6 @@ public class MapActivity_X9_ extends BaseMapActivity {
             tv_control_x9.setTextColor(getResources().getColor(R.color.white));
             tv_wall.setTextColor(getResources().getColor(R.color.white));
             fl_bottom_x9.setBackground(new ColorDrawable(Color.TRANSPARENT));
-            setNavigationBarColor(R.color.color_ff1b92e2);
         } else {
             tv_start.setText(R.string.map_aty_start);
             tv_start.setText(value);
@@ -77,6 +75,10 @@ public class MapActivity_X9_ extends BaseMapActivity {
             tv_control_x9.setVisibility(View.VISIBLE);
             tv_bottom_recharge.setVisibility(View.GONE);
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
+        }
+        if (mPresenter.getCurStatus()==MsgCodeUtils.STATUE_PLANNING){
+            setNavigationBarColor(R.color.color_ff1b92e2);
+        }else {
             setNavigationBarColor(R.color.white);
         }
         tv_start.setSelected(isSelect);

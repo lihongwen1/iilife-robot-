@@ -94,7 +94,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     @Override
     public void bindFail(String message) {
         Log.d(TAG,"绑定失败：    "+message);
-        startActivity(new Intent(this, ConnectDeviceApActivity.class));
+        startActivity(new Intent(this, BindFailActivity.class));
         finish();
     }
 

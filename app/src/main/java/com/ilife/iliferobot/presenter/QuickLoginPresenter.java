@@ -5,11 +5,13 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACAccountMgr;
 import com.accloud.service.ACException;
+import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
 import com.ilife.iliferobot.contract.QuickLoginContract;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -86,7 +88,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
                 if (!isExit) {
                     completableEmitter.onComplete();
                 } else {
-                    completableEmitter.onError(new Exception("账号已经存在"));
+                    completableEmitter.onError(new Exception(Utils.getString(R.string.register_aty_email_registered)));
                     //账号已经存在
                 }
             }
@@ -107,7 +109,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
                     //注册
                     mView.goSetPassword();
                 } else {
-                    ToastUtils.showToast("验证码错误！");
+                    ToastUtils.showToast(Utils.getString(R.string.register2_aty_code_wrong));
                     //提示验证码错误
                 }
             }

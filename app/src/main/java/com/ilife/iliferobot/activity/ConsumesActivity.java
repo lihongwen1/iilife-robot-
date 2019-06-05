@@ -19,6 +19,7 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -28,12 +29,11 @@ import butterknife.BindView;
  * Created by chenjiaping on 2017/7/28.
  */
 
-public class ConsumesActivity extends BackBaseActivity implements View.OnLongClickListener{
+public class ConsumesActivity extends BackBaseActivity implements View.OnLongClickListener {
     final String TAG = ConsumesActivity.class.getSimpleName();
     Context context;
     String physicalId;
     String subdomain;
-    TextView tv_title, tv_tips,tv_cancel, tv_confirm;
     LayoutInflater inflater;
     ProgressBar pb_side, pb_roll, pb_filter;
     TextView tv_percent_side, tv_percent_roll, tv_percent_filter;
@@ -41,7 +41,6 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     LinearLayout rl_roll;
     LinearLayout rl_filter;
     ACDeviceMsg acDeviceMsg;
-    androidx.appcompat.app.AlertDialog alertDialog;
     ArrayList<Integer> ids;
     byte[] bytes;
     int index;
@@ -84,7 +83,6 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         ids.add(R.id.rl_side);
         ids.add(R.id.rl_roll);
         ids.add(R.id.rl_filter);
-//        bytes = new byte[]{0x00,0x00,0x00,0x00,0x00};
         physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
         acDeviceMsg = new ACDeviceMsg();
@@ -94,36 +92,32 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     }
 
     public void showResetDialog(int tag) {
-        if (alertDialog == null) {
-            View contentView = inflater.inflate(R.layout.layout_reset_consume, null);
-            tv_title = contentView.findViewById(R.id.tv_title);
-            tv_tips = contentView.findViewById(R.id.tv_tips);
-            tv_cancel = contentView.findViewById(R.id.tv_cancel);
-            tv_confirm = contentView.findViewById(R.id.tv_confirm);
-            int width = (int) getResources().getDimension(R.dimen.dp_300);
-            int height = (int) getResources().getDimension(R.dimen.dp_140);
-            alertDialog = AlertDialogUtils.showDialog(context, contentView, width, height);
-        } else {
-            if (!alertDialog.isShowing()) {
-                alertDialog.show();
-            }
-        }
-        tv_cancel.setOnClickListener(new MyListener(tag));
-        tv_confirm.setOnClickListener(new MyListener(tag));
+        String title = "";
+        String hint = "";
         switch (tag) {
             case R.id.rl_side:
-                tv_title.setText(getString(R.string.consume_aty_resetSide));
-                tv_tips.setText(R.string.consume_aty_resetSide_over);
+                title = Utils.getString(R.string.consume_aty_resetSide);
+                hint = Utils.getString(R.string.consume_aty_resetSide_over);
                 break;
             case R.id.rl_roll:
-                tv_title.setText(getString(R.string.consume_aty_resetRoll));
-                tv_tips.setText(R.string.consume_aty_resetRoll_over);
+                title = Utils.getString(R.string.consume_aty_resetRoll);
+                hint = Utils.getString(R.string.consume_aty_resetRoll_over);
                 break;
             case R.id.rl_filter:
-                tv_title.setText(getString(R.string.consume_aty_resetFilter));
-                tv_tips.setText(R.string.consume_aty_resetFilter_over);
+                title = Utils.getString(R.string.consume_aty_resetFilter);
+                hint = Utils.getString(R.string.consume_aty_resetFilter_over);
                 break;
         }
+        UniversalDialog universalDialog = new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(title).setHintTIp(hint).
+                setOnRightButtonClck(() -> {
+                    bytes = new byte[]{0x00, 0x00, 0x00, 0x00, 0x00};
+                    index = ids.indexOf(tag);
+                    bytes[index] = 0x01;
+                    acDeviceMsg.setContent(bytes);
+                    acDeviceMsg.setCode(MsgCodeUtils.RestLifeTime);
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
+                }).show(getSupportFragmentManager(), "" + tag);
     }
 
     public void sendToDeviceWithOption(ACDeviceMsg deviceMsg, String physicalDeviceId) {
@@ -149,16 +143,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                                 tv_percent_filter.setText(100 + "%");
                                 break;
                         }
-//                        if (resp[0]!=0){
-//                            pb_side.setProgress(100);
-//                            tv_percent_side.setText(100+"%");
-//                        } else if (resp[1]!=0){
-//                            pb_roll.setProgress(100);
-//                            tv_percent_roll.setText(100+"%");
-//                        } else if (resp[2]!=0){
-//                            pb_filter.setProgress(100);
-//                            tv_percent_filter.setText(100+"%");
-//                        }
+//
                         break;
                     //查询耗材情况
                     case MsgCodeUtils.MatConditions:
@@ -187,29 +172,4 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     }
 
 
-    class MyListener implements View.OnClickListener {
-        int tag;
-
-        public MyListener(int tag) {
-            this.tag = tag;
-        }
-
-        @Override
-        public void onClick(View v) {
-            acDeviceMsg.setCode(MsgCodeUtils.RestLifeTime);
-            switch (v.getId()) {
-                case R.id.tv_cancel:
-                    alertDialog.dismiss();
-                    break;
-                case R.id.tv_confirm:
-                    bytes = new byte[]{0x00, 0x00, 0x00, 0x00, 0x00};
-                    alertDialog.dismiss();
-                    index = ids.indexOf(tag);
-                    bytes[index] = 0x01;
-                    acDeviceMsg.setContent(bytes);
-                    sendToDeviceWithOption(acDeviceMsg, physicalId);
-                    break;
-            }
-        }
-    }
 }

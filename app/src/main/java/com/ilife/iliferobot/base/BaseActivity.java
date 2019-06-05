@@ -1,11 +1,13 @@
 package com.ilife.iliferobot.base;
 
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +23,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected T mPresenter;
     protected long exitTime;
     private Unbinder mUnBinder;
-
+    private Dialog loadingDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +102,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
-
+    protected void showLoadingDialog(){
+        if (loadingDialog==null){
+            loadingDialog= DialogUtils.createLoadingDialog_(this);
+        }
+        loadingDialog.show();
+    }
+    protected void hideLoadingDialog(){
+        if (loadingDialog!=null&&loadingDialog.isShowing()){
+           DialogUtils.closeDialog(loadingDialog);
+        }
+    }
     /**
      * 设置布局
      *

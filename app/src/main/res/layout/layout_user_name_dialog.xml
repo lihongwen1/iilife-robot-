@@ -16,7 +16,7 @@
         <EditText
             style="@style/EditText_16sp_ac"
             android:id="@+id/et_name"
-            android:hint="@string/setting_aty_hit_"
+            android:hint="@string/user_nickname"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:layout_below="@+id/tv_title"

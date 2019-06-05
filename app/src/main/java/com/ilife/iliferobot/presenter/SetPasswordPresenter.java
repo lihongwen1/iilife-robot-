@@ -6,6 +6,7 @@ import com.accloud.service.ACAccountMgr;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.base.BasePresenter;
+import com.ilife.iliferobot.utils.DeviceUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.SetPasswrodContract;
@@ -44,19 +45,19 @@ public class SetPasswordPresenter extends BasePresenter<SetPasswrodContract.View
         if (mView.getPw().equals(mView.getPwAgain())) {
             //TODO login business logic
             if (accountMgr == null) {
-                accountMgr= AC.accountMgr();
+                accountMgr = AC.accountMgr();
             }
             //emai和phone可以任选其一;nickName为可选项，没有时传空字符串
-            accountMgr.register("", mView.getPhone(), mView.getPw(), "flylin", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
+            accountMgr.register("", mView.getPhone(), mView.getPw(), "", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
                 @Override
                 public void success(ACUserInfo userInfo) {
                     //获得用户userId和nickName，由此进入主页或设备管理
-                    ToastUtils.showToast(userInfo.getName()+userInfo.getPhone());
                     mView.goMainActivity();
                 }
 
                 @Override
                 public void error(ACException e) {
+                    ToastUtils.showErrorToast(e.getErrorCode());
                     //网络错误或其他，根据e.getErrorCode()做不同的提示或处理
                 }
             });

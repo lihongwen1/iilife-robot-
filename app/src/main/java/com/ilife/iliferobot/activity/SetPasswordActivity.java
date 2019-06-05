@@ -114,5 +114,6 @@ public class SetPasswordActivity extends BackBaseActivity<SetPasswordPresenter> 
     public void goMainActivity() {
         Intent intent=new Intent(SetPasswordActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }

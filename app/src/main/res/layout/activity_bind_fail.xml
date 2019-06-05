@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <include layout="@layout/template_top_title" />
+
+    <com.ilife.iliferobot.view.MediumTextView
+        style="@style/Text_16sp_f08300"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_66"
+        android:text="@string/tip_troubleshoot" />
+
+    <com.ilife.iliferobot.view.RegularTextView
+        style="@style/Text_14sp_33"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:lineSpacingExtra="@dimen/dp_24"
+        android:text="@string/tip_troubles"
+        android:textColor="#ff333333"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/bt_retry"
+        style="@style/Button_Style"
+        android:layout_marginBottom="@dimen/dp_136"
+        android:text="@string/retry" />
+</LinearLayout>

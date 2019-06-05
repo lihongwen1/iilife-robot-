@@ -266,7 +266,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         rl_ok.setOnClickListener(this);
         int width = (int) getResources().getDimension(R.dimen.dp_280);
         int height = (int) getResources().getDimension(R.dimen.dp_150);
-        alertDialog = AlertDialogUtils.showDialog(context, view, width, height);
+        alertDialog = AlertDialogUtils.showDialogNoCancel(context, view, width, height);
     }
 
 

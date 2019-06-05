@@ -148,6 +148,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
+                if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
+                    return;
+                }
                 if (subdomain.equals(Constants.subdomain_x900)) {
                     String strMap = resp.getString("slam_map");
                     int xMax = resp.getInt("slam_x_max");
@@ -639,7 +642,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
+        if (curStatus == MsgCodeUtils.STATUE_POINT||curStatus == MsgCodeUtils.STATUE_ALONG ||curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
@@ -649,7 +652,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
+        if (curStatus == MsgCodeUtils.STATUE_POINT||curStatus == MsgCodeUtils.STATUE_ALONG ||curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
             return Utils.getString(R.string.map_aty_gang);
         } else {

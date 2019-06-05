@@ -74,7 +74,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     AlertDialog alterDialog;
     Dialog dialog;
     Animation animation;
-    private ImageView image_down_1,image_down_2;
+    private ImageView image_down_1, image_down_2;
     RelativeLayout rl_water, rl_clock, rl_record, rl_consume,
             rl_mode, rl_suction, rl_find, rl_soft, rl_standard, rl_strong,
             rl_plan, rl_random, rl_facReset, rl_voice, rl_update;
@@ -187,8 +187,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         rl_strong = (RelativeLayout) findViewById(R.id.rl_strong);
         ll_mode = (LinearLayout) findViewById(R.id.ll_mode);
         ll_water = (LinearLayout) findViewById(R.id.ll_water);
-        image_down_1=findViewById(R.id.image_down_1);
-        image_down_2=findViewById(R.id.image_down_2);
+        image_down_1 = findViewById(R.id.image_down_1);
+        image_down_2 = findViewById(R.id.image_down_2);
         image_plan = (ImageView) findViewById(R.id.image_plan);
         image_random = (ImageView) findViewById(R.id.image_random);
         image_soft = (ImageView) findViewById(R.id.image_soft);
@@ -252,15 +252,22 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
             tv_type.setText(getString(R.string.setting_aty_type_x800));
             image_product.setImageResource(R.drawable.n_x800);
         }
-        if (!subdomain.equals(Constants.subdomain_x900)) {
-            rl_update.setVisibility(View.GONE);
+        if (subdomain.equals(Constants.subdomain_x900)) {
+            rl_update.setVisibility(View.VISIBLE);
         }
+        if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
+            rl_mode.setVisibility(View.VISIBLE);
+        }
+        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
+            rl_voice.setVisibility(View.VISIBLE);
+        }
+
 
         listener = new ReNameListener() {
             @Override
             public void onSuccess() {
                 ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_suc));
-                SpUtils.saveString(context,  MainActivity.KEY_DEVNAME, name);
+                SpUtils.saveString(context, MainActivity.KEY_DEVNAME, name);
                 tv_name.setText(name);
             }
 
@@ -443,7 +450,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
         UserUtils.setInputFilter(et_name);
         name = tv_name.getText().toString();
-        TextView title=v.findViewById(R.id.tv_title);
+        TextView title = v.findViewById(R.id.tv_title);
         title.setText(name);
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,14 +469,14 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 if (!name.equals(devName)) {
                     AlertDialogUtils.hidden(alterDialog);
                     DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
-                }else {
+                } else {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_tip_same));
                 }
             }
         });
         int width = (int) getResources().getDimension(R.dimen.dp_315);
         int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialog(context, v, width, height);
+        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
     }
 
 
@@ -493,7 +500,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         });
         int width = (int) getResources().getDimension(R.dimen.dp_300);
         int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialog(context, v, width, height);
+        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
     }
 
     public void sendToDeviceWithOption(ACDeviceMsg deviceMsg, final String physicalDeviceId) {

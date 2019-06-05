@@ -259,7 +259,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         View contentView = inflater.inflate(R.layout.layout_del_dialog, null);
         tv_content = contentView.findViewById(R.id.tv_content);
         del_tv_title = (TextView) contentView.findViewById(R.id.del_tv_title);
-        alertDialog = AlertDialogUtils.showDialog(context, contentView, dialog_width, dialog_height_);
+        alertDialog = AlertDialogUtils.showDialogNoCancel(context, contentView, dialog_width, dialog_height_);
     }
 
     private void showLogoutDialog() {
@@ -283,10 +283,10 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         View v = inflater.inflate(R.layout.layout_user_name_dialog, null);
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
         UserUtils.setInputFilter(et_name);
-        if (!TextUtils.isEmpty(userName)) {
-            et_name.setText(userName);
-            et_name.setSelection(userName.length());
-        }
+//        if (!TextUtils.isEmpty(userName)) {
+//            et_name.setText(userName);
+//            et_name.setSelection(userName.length());
+//        }
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -296,7 +296,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialogUtils.hidden(alertDialog);
                 String name = et_name.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
@@ -305,11 +304,12 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 if (!name.equals(userName)) {
                     changeNickName(name);
                 }
+                AlertDialogUtils.hidden(alertDialog);
             }
         });
         int width = (int) getResources().getDimension(R.dimen.dp_300);
         int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alertDialog = AlertDialogUtils.showDialog(context, v, width, height);
+        alertDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
     }
 
     public void showPhotoDialog() {

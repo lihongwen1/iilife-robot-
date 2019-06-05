@@ -11,7 +11,7 @@
     <string name="login_aty_account_no">该账号未注册</string>
     <string name="login_aty_pw_error">密码不正确</string>
     <string name="login_aty_timeout">连接超时</string>
-    <string name="register_aty_email_registered">该账号已被注册</string>
+    <string name="register_aty_email_registered">该账号已经存在</string>
     <string name="register2_reset_pass">忘记密码</string>
     <string name="register2_aty_obtain_suc">验证码已发送</string>
     <string name="register2_aty_code_wrong">验证码不正确</string>
@@ -37,11 +37,10 @@
     <string name="add_aty_start_connect">开始连接</string>
     <string name="add_aty_wrong_wifi_pass">密码含有非法字符</string>
 
-    <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关</string>
+    <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关。(注：不要将机器放在充电座上)</string>
 
-    <string name="ap_guide_aty_tip1_x7">待机状态下，长按机器的配网键(即机器上的\"\"\"键)</string>
-    <string name="ap_guide_aty_tip2_x900">长按机器的启动键，3秒后听到\"滴\"的一声，继续长按听到“WiFi连接中”后松开。</string>
-    <string name="ap_guide_aty_tip2_x7">3秒后\"滴\"一声不松开，继续长按，提示两声\"滴滴\"提示音后松开，机器进入AP配网模式，WiFi图标闪烁</string>
+    <string name="ap_guide_aty_tip2_x900">长按机器的启动键，3秒后听到\"嘀\"的一声，继续长按听到\"WiFi连接中\"后松开，WiFi指示灯闪烁。</string>
+    <string name="ap_guide_aty_tip2_x7">长按机器的配网键，3秒后听到\"嘀\"的一声，继续长按听到两声\"嘀嘀\"后松开，WiFi图标闪烁。</string>
     <string name="ap_guide_tip4">未听到，请重复上述操作</string>
     <string name="ap_guide_already_open_device">已打开</string>
     <string name="ap_guide_already_open_wifi">已听到“WiFi连接中”</string>
@@ -201,14 +200,14 @@
     <string name="setting_aty_duration">清扫时长</string>
     <string name="history_adapter_month_day">MM月dd日</string>
     <string name="history_adapter_hour_minute">HH:mm</string>
-    <string name="history_aty_no_record">没有清扫记录，先开始清扫吧~</string>
+    <string name="history_aty_no_record">没有清扫记录</string>
     <string name="consume_aty_tips">小贴士:长按重置耗材寿命</string>
     <string name="consume_aty_side_time">边刷寿命</string>
     <string name="consume_aty_roll_time">滚刷寿命</string>
     <string name="consume_aty_filter_time">滤网寿命</string>
-    <string name="consume_aty_resetSide">是否重置边刷寿命？</string>
+    <string name="consume_aty_resetSide">是否重置边刷寿命</string>
     <string name="consume_aty_resetSide_over">重置后边刷会更新到最新状态</string>
-    <string name="consume_aty_resetRoll">是否重置滚刷寿命？</string>
+    <string name="consume_aty_resetRoll">是否重置滚刷寿命</string>
     <string name="consume_aty_resetRoll_over">重置后滚刷会更新到最新状态</string>
     <string name="consume_aty_resetFilter">是否重置滤网寿命？</string>
     <string name="consume_aty_resetFilter_over">重置后滤网会更新到最新状态</string>
@@ -271,5 +270,25 @@
     <string name="stop_work_reason5">App主动暂停</string>
     <string name="stop_work_reason6">异常报警停止</string>
     <string name="resend">重新发送</string>
+    <string name="user_nickname">请为您设置一个昵称</string>
 
+    <!--OTA-->
+    <string name="ota_aty_2_note1">安装更新中...</string>
+    <string name="oat_aty_2_note2">安装过程需要重启设备，可能耗时较长，请耐心等待</string>
+    <string name="ota_updating_tip">升级中，请勿断电，等待升级完成后再使用</string>
+    <string name="setting_aty_ota_upadta_success">升级成功！</string>
+    <string name="ota_aty_back">返回</string>
+    <string name="ota_aty_confirm">确认</string>
+    <string name="ota_aty_update_fail">更新失败！</string>
+    <string name="update_button">立即升级</string>
+    <string name="checkupdate_timeout">连接超时，请退出重试！</string>
+    <string name="ota_updating">正在升级&#8230;</string>
+    <string name="setting_ota_current_version">当前版本：%1$s</string>
+    <string name="setting_ota_targat_version">最新版本：%1$s</string>
+    <string name="tip_troubleshoot">请按以下步骤排查可能存在的问题</string>
+    <string name="tip_troubles">1.确保输入的WiFi密码正确无误； \n2.确保您的设备已经进入到配网模式；\n3.确保手机不是连接5G信号的 WiFi；\n4.确保无线路由器已关闭黑白名单（mac地址过 滤功能）</string>
+    <string name="retry">重试</string>
+    <string name="ap_wifi_timeout">配网超时</string>
+    <string name="ota_preupdate_tip">升级前请确保:\n1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于待机模式</string>
+    <string name="updating">升级中，请勿操作扫地机</string>
 </resources>

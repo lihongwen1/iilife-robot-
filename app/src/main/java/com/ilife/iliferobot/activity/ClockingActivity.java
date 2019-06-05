@@ -173,7 +173,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
             tv_cancel = (TextView) contentView.findViewById(R.id.tv_cancel);
             int width = (int) getResources().getDimension(R.dimen.dp_315);
             int height = (int) getResources().getDimension(R.dimen.dp_300);
-            alertDialog = AlertDialogUtils.showDialog(context, contentView, width, height);
+            alertDialog = AlertDialogUtils.showDialogNoCancel(context, contentView, width, height);
         } else {
             if (!alertDialog.isShowing()) {
                 alertDialog.show();

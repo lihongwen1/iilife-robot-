@@ -58,30 +58,27 @@ public class BindSucActivity extends BackBaseActivity {
     public void initView() {
         context = this;
         tv_title.setText(R.string.robot_connected);
+        findViewById(R.id.image_back).setVisibility(View.GONE);
         et_devName.requestFocus();
     }
 
     public void initData() {
         Bundle bundle = getIntent().getExtras();
-        String devName;
         int image_device;
         if (bundle != null) {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
         if (subdomain.equals(Constants.subdomain_x785)) {
-            devName = "X785";
             image_device = R.drawable.rechage_device_x785;
         } else if (subdomain.equals(Constants.subdomain_x787)) {
-            devName = "X787";
             image_device = R.drawable.rechage_device_x787;
         } else if (subdomain.equals(Constants.subdomain_x900)) {
-            devName = "X900";
             image_device = R.drawable.rechage_device_x900;
         } else {
-            devName = getString(R.string.bind_suc_sty_robot_name);
             image_device = R.drawable.rechage_device_x800;
         }
+        String devName = getString(R.string.bind_suc_sty_robot_name);
         iv_bind_device.setImageResource(image_device);
         et_devName.setText(devName);
         et_devName.setSelection(devName.length());
@@ -102,6 +99,7 @@ public class BindSucActivity extends BackBaseActivity {
                 ToastUtils.showToast(context, getString(R.string.bind_aty_reName_fail));
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
+                finish();
             }
         };
     }

@@ -139,6 +139,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 ToastUtils.showToast(Utils.getString(R.string.register2_aty_reset_suc));
                 String email = acUserInfo.getEmail();
                 SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL, email);
+                mView.resetPwdSuccess();
 
             }
 

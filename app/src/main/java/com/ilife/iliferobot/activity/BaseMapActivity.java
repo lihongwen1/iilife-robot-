@@ -274,7 +274,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 errorPopup.setOutsideTouchable(false);
                 errorPopup.setFocusable(false);
                 errorPopup.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                errorPopup.setHeight((int) getResources().getDimension(R.dimen.dp_80));
+                errorPopup.setHeight((int) getResources().getDimension(R.dimen.dp_60));
                 errorPopup.showAsDropDown(rl_top);
             }
         } else {
@@ -305,13 +305,13 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.map_aty_clear_wall)).
                 setHintTIp(Utils.getString(R.string.map_aty_clear_undo)).
                 setOnRightButtonClck(() ->
-        {
-            mMapView.undoAllOperation();
-            /**
-             * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
-             */
-            mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
-        }).show(getSupportFragmentManager(), "undo_wall");
+                {
+                    mMapView.undoAllOperation();
+                    /**
+                     * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
+                     */
+                    mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
+                }).show(getSupportFragmentManager(), "undo_wall");
     }
 
 
@@ -431,6 +431,10 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void clearAll(int curStatus) {
         if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT) {
+            mMapView.setMODE(MapView.MODE_NONE);
+            mMapView.undoAllOperation();
+        }
+        if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT) {
             hideVirtualEdit();
         }
         if (curStatus != MsgCodeUtils.STATUE_RECHARGE) {
@@ -467,9 +471,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             } else if (batteryNo < 35) {
                 image_ele.setImageResource(R.drawable.map_aty_battery2_ing);   //一格
             } else if (batteryNo < 75) {
-                image_ele.setImageResource(R.drawable.map_aty_battery4_ing);   //两格
+                image_ele.setImageResource(R.drawable.map_aty_battery3_ing);   //两格
             } else {
-                image_ele.setImageResource(R.drawable.map_aty_battery3_ing);   //满格
+                image_ele.setImageResource(R.drawable.map_aty_battery4_ing);   //满格
             }
         } else {
             if (batteryNo <= 6) {

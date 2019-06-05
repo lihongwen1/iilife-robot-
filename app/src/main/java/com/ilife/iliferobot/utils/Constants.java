@@ -55,4 +55,5 @@ public class Constants {
     public static final int CLOUD_ONLY = AC.ONLY_CLOUD;
 
     public static final int OTATYPE = 1;
+    public static boolean IS_FIRST_AP=true;//标记首次配网，可自动连接wifi，重试需要手动连接robot wifi
 }

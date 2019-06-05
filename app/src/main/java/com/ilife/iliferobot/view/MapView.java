@@ -110,7 +110,7 @@ public class MapView extends View {
         positionCirclePaint.setStrokeJoin(Paint.Join.ROUND);
         positionCirclePaint.setStrokeCap(Paint.Cap.ROUND);
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
-        positionCirclePaint.setStrokeWidth(3f);
+        positionCirclePaint.setStrokeWidth(1f);
 
 
         roadPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);

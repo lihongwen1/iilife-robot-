@@ -82,4 +82,5 @@
 	<dimen name="sp_18">17.2800sp</dimen>
 	<dimen name="sp_20">19.2000sp</dimen>
 	<dimen name="sp_22">21.1200sp</dimen>
+	<dimen name="sp_24">23.0400sp</dimen>
 </resources>
