@@ -65,6 +65,7 @@ public class MapView extends View {
     private Bitmap boxBitmap;
     private Paint boxPaint;
     private float endX, endY;
+
     public MapView(Context context) {
         super(context);
         init();
@@ -218,8 +219,8 @@ public class MapView extends View {
             roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
         }
         if (roadList != null && roadList.size() > 2) {
-             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
-             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
+            endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
+            endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
@@ -367,9 +368,9 @@ public class MapView extends View {
                 downY = y;
                 downPoint.set(event.getX(), event.getY());
                 if (MODE == MODE_ADD_VIRTUAL) {
-                  // 添加虚拟墙
+                    // 添加虚拟墙
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
-                 //  删除虚拟墙
+                    //  删除虚拟墙
                 } else {
                     originalMode = MODE;
                     MODE = MODE_DRAG;
@@ -388,10 +389,10 @@ public class MapView extends View {
 //                        //TODO 提示虚拟墙数量超最大数
 ////                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
 //                    } else {
-                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                        virtualCanvas.save();
-                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
-                        virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
+                    virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                    virtualCanvas.save();
+                    virtualCanvas.drawPath(existvirtualPath, virtualPaint);
+                    virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
 //                    }
                 }
                 invalidate();
@@ -473,8 +474,8 @@ public class MapView extends View {
             if (scare < 0.6f) {
                 scare = 0.6f;
             }
-            if(scare>4.5f){
-                scare=4.5f;
+            if (scare > 4.5f) {
+                scare = 4.5f;
             }
 
         }
@@ -532,14 +533,14 @@ public class MapView extends View {
         return result;
     }
 
-    private int getUsefulWallNum(){
-        int num=0;
-        for (VirtualWallBean vb:virtualWallBeans) {
-            if (vb.getState()==1||vb.getState()==2){
+    private int getUsefulWallNum() {
+        int num = 0;
+        for (VirtualWallBean vb : virtualWallBeans) {
+            if (vb.getState() == 1 || vb.getState() == 2) {
                 num++;
             }
         }
-        Log.d(TAG,"useful wall number:"+num);
+        Log.d(TAG, "useful wall number:" + num);
         return num;
     }
 
@@ -622,20 +623,25 @@ public class MapView extends View {
                 if (vir.getState() != 3) {
                     float cx = matrixCoordinateX((vir.getPointfs()[0] + vir.getPointfs()[2]) / 2f);
                     float cy = matrixCoordinateY((vir.getPointfs()[1] + vir.getPointfs()[3]) / 2f);
-                    float k = (matrixCoordinateY(vir.getPointfs()[3]) - matrixCoordinateY(vir.getPointfs()[1])) / (matrixCoordinateX(vir.getPointfs()[2])
-                            - matrixCoordinateX(vir.getPointfs()[0]));
-                    //
-                    Log.d(TAG, "tanx:" + k);
                     float distance = 60;//偏移坐标中心点的距离
-                    float translationY = (float) (distance * (Math.sqrt(1 + k * k) / (1 + k * k)));
-                    float translationX = Math.abs(k) * translationY;
-
-                    if (k > 0) {
-                        cx += translationX;
-                        cy -= translationY;
+                    if ((matrixCoordinateX(vir.getPointfs()[2]) == matrixCoordinateX(vir.getPointfs()[0]))) {
+                        cx -= distance;
                     } else {
-                        cx -= translationX;
-                        cy -= translationY;
+                        float k = (matrixCoordinateY(vir.getPointfs()[3]) - matrixCoordinateY(vir.getPointfs()[1])) / (matrixCoordinateX(vir.getPointfs()[2])
+                                - matrixCoordinateX(vir.getPointfs()[0]));
+                        //
+                        Log.d(TAG, "tanx:" + k);
+
+                        float translationY = (float) (distance * (Math.sqrt(1 + k * k) / (1 + k * k)));
+                        float translationX = Math.abs(k) * translationY;
+
+                        if (k > 0) {
+                            cx += translationX;
+                            cy -= translationY;
+                        } else {
+                            cx -= translationX;
+                            cy -= translationY;
+                        }
                     }
                     float l = cx - deleteBitmap.getWidth() * scare / 2;
                     float t = cy - deleteBitmap.getWidth() * scare / 2;
@@ -657,8 +663,8 @@ public class MapView extends View {
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
-        if (slamCanvas==null){
-            isInitBuffer=false;
+        if (slamCanvas == null) {
+            isInitBuffer = false;
             initBuffer();
         }
         int x = 0, y = 0, length, totalCount = 0;
@@ -780,8 +786,8 @@ public class MapView extends View {
                 boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
             }
         }
-         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
-         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
+        endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
+        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
         boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         invalidate();

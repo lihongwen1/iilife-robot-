@@ -66,6 +66,11 @@ public class SelectActivity_x extends BackBaseActivity {
             startActivity(i);
         });
         tvTitle.setText(R.string.select_x_aty_add);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Constants.IS_FIRST_AP = true;
     }
 
