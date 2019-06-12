@@ -52,6 +52,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     TextView tv_guide_tip4;
     int start, strId, iconId;
     private int curStep;
+    private int tip3_id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,17 +75,20 @@ public class ApGuideActivityX900 extends BackBaseActivity {
         if (subdomain.equals(Constants.subdomain_x800)) {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x900;
+            tip3_id = R.string.ap_guide_already_open_wifi;
             open_key_id = R.drawable.gif_open_key_800;
             click_wifi_id = R.drawable.gif_click_wifi_800;
         } else if (subdomain.equals(Constants.subdomain_x900)) {
             // TODO change the picture to x900
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x900;
+            tip3_id = R.string.ap_guide_already_open_wifi;
             open_key_id = R.drawable.gif_open_key;
             click_wifi_id = R.drawable.gif_click_wifi;
         } else {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x7;
+            tip3_id = R.string.ap_guide_have_heard_didi;
             open_key_id = R.drawable.gif_open_key_787;
             click_wifi_id = R.drawable.gif_click_wifi_787;
         }
@@ -115,7 +119,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                 if (curStep == 1) {
                     ll_ap_step1.setVisibility(View.GONE);
                     ll_ap_step2.setVisibility(View.VISIBLE);
-                    rb_next_tip.setText(R.string.ap_guide_already_open_wifi);
+                    rb_next_tip.setText(tip3_id);
                     if (Constants.IS_FIRST_AP) {
                         bt_next.setText(R.string.add_aty_start_connect);
                     }
