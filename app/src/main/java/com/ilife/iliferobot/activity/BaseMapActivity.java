@@ -188,7 +188,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     public void initView() {
         errorPopup = new PopupWindow();
-        image_ele.setImageResource(R.drawable.map_aty_battery4_ing);
         electricityDrawable = (AnimationDrawable) image_animation.getBackground();
 
         image_setting.setVisibility(View.VISIBLE);
