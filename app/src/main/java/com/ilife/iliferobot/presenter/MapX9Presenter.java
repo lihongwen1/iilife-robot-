@@ -16,6 +16,7 @@ import com.accloud.service.ACObject;
 import com.accloud.utils.LogUtil;
 import com.google.gson.Gson;
 import com.ilife.iliferobot.activity.MapActivity_X9_;
+import com.ilife.iliferobot.activity.SettingActivity;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
 import com.ilife.iliferobot.utils.Constants;
@@ -343,15 +344,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     workTime = 0;
                     cleanArea = 0;
                 } else {
-                    if (!pointStrList.contains(x + "_" + y)) {
+//                    if (!pointStrList.contains(x + "_" + y)) {
                         pointList.add(x);
                         pointList.add(y);
                         pointStrList.add(x + "_" + y);
-                    }
+//                    }
                 }
             }
         }
-        if (pointList != null && pointList.size() > 0) {
+        if (pointList != null ) {
             mView.drawBoxMapX8(pointList);
         }
     }
@@ -423,8 +424,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     int x = DataUtils.bytesToInt(new byte[]{bytes_subscribe[j], bytes_subscribe[j + 1]}, 0);
                     int y = DataUtils.bytesToInt(new byte[]{bytes_subscribe[j + 2], bytes_subscribe[j + 3]}, 0);
                     if ((x == 0x7fff) & (y == 0x7fff)) {//出现错误的坐标信息，放弃所有数据
-                        mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
-                        mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
+//                        mView.updateCleanArea(Utils.getString(R.string.map_aty_gang));
+//                        mView.updateCleanTime(Utils.getString(R.string.map_aty_gang));
                         mView.cleanMapView();
                         realTimePoints.clear();
                         historyRoadList.clear();
@@ -859,6 +860,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         return curStatus;
     }
 
+    @Override
+    public boolean isRandomMode() {
+       return SpUtils.getInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE)==MsgCodeUtils.STATUE_RANDOM;
+    }
 
     @Override
     public void detachView() {

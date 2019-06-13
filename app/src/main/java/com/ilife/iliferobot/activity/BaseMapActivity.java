@@ -501,7 +501,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
-                } else {
+                } else if (mPresenter.isRandomMode()){
+                    mPresenter.sendToDeviceWithOption(ACSkills.get().enterRandomMode());
+                }else {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterPlanningMode());
                 }
                 break;

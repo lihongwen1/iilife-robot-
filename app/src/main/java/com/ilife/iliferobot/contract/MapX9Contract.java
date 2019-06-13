@@ -91,6 +91,7 @@ public interface MapX9Contract {
         void enterRechargeMode();
          boolean isMaxMode();
          void reverseMaxMode();
+         boolean isRandomMode();
     }
 
 }

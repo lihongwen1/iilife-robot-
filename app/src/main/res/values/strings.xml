@@ -44,6 +44,7 @@
     <string name="ap_guide_tip4">未听到，请重复上述操作</string>
     <string name="ap_guide_already_open_device">已打开</string>
     <string name="ap_guide_already_open_wifi">已听到“WiFi连接中”</string>
+    <string name="ap_guide_have_heard_didi">已听到“滴滴”声</string>
     <string name="ap_aty_setting">设置</string>
     <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
@@ -101,7 +102,7 @@
     <string name="personal_aty_bind_fail">绑定失败！</string>
     <string name="help_aty_commit_suc">提交成功</string>
     <string name="help_aty_commit">提交失败,请重试</string>
-    <string name="personal_aty_scan_code">请扫描二维码绑定机器人</string>
+    <string name="personal_aty_scan_code">扫描二维码共享机器人</string>
     <string name="personal_aty_support">技术支持</string>
     <string name="personal_aty_feedback">问题反馈</string>
     <string name="personal_input_email">请输入您的邮箱</string>
@@ -183,7 +184,7 @@
     <string name="setting_aty_strong">强力</string>
     <string name="setting_aty_nav_clean">规划清扫</string>
     <string name="setting_aty_random_clean">随机清扫</string>
-    <string name="setting_aty_confirm_reset">确认恢复出厂设置？</string>
+    <string name="setting_aty_confirm_reset">确认恢复出厂设置</string>
     <string name="setting_aty_reset_hint">所有清扫数据会被清除</string>
     <string name="setting_aty_devName">机器人名称</string>
     <string name="setting_aty_hit">请为您的机器人设置昵称</string>
@@ -209,7 +210,7 @@
     <string name="consume_aty_resetSide_over">重置后边刷会更新到最新状态</string>
     <string name="consume_aty_resetRoll">是否重置滚刷寿命</string>
     <string name="consume_aty_resetRoll_over">重置后滚刷会更新到最新状态</string>
-    <string name="consume_aty_resetFilter">是否重置滤网寿命？</string>
+    <string name="consume_aty_resetFilter">是否重置滤网寿命</string>
     <string name="consume_aty_resetFilter_over">重置后滤网会更新到最新状态</string>
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">设备离线</string>

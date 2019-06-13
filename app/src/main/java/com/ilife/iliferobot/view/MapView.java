@@ -755,6 +755,11 @@ public class MapView extends View {
         if (pointList == null) {
             return;
         }
+        if (pointList.size() == 0) {
+            boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            invalidate();
+            return;
+        }
         int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
         int x, y;
         for (int i = 1; i < pointList.size(); i += 2) {

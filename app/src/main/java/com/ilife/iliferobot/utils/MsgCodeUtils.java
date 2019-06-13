@@ -34,6 +34,7 @@ public class MsgCodeUtils {
     public static final int STATUE_ALONG=0X04;
     public static final int STATUE_SLEEPING=0X01;
     public static final int STATUE_WAIT=0X02;
+    public static final int STATUE_RANDOM=0x03;
     public static final int STATUE_PLANNING=0X06;
     public static final int STATUE_VIRTUAL_EDIT=0X07;
     public static final int STATUE_RECHARGE=0X08;

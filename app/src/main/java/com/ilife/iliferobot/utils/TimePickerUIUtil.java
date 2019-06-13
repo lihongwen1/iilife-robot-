@@ -44,9 +44,9 @@ public class TimePickerUIUtil {
         set_numberpicker_text_colour(minute_numberpicker, context);
         set_numberpicker_text_colour(ampm_numberpicker, context);
 
-        setNumberPickerDividerColor(hour_numberpicker, Color.rgb(255, 255, 255));
-        setNumberPickerDividerColor(minute_numberpicker, Color.rgb(255, 255, 255));
-        setNumberPickerDividerColor(ampm_numberpicker, Color.rgb(255, 255, 255));
+        setNumberPickerDividerColor(hour_numberpicker, Color.rgb(0xf5, 0xf7, 0xfa));
+        setNumberPickerDividerColor(minute_numberpicker, Color.rgb(0xf5, 0xf7, 0xfa));
+        setNumberPickerDividerColor(ampm_numberpicker, Color.rgb(0xf5, 0xf7, 0xfa));
 
         setPickerSize(hour_numberpicker, 100, context);
         setPickerSize(minute_numberpicker, 100, context);
@@ -78,7 +78,7 @@ public class TimePickerUIUtil {
             if (SelectionDividerField.getName().equals("mSelectionDivider")) {
                 SelectionDividerField.setAccessible(true);
                 try {
-                    SelectionDividerField.set(numberPicker, new ColorDrawable(Color.TRANSPARENT));
+                    SelectionDividerField.set(numberPicker, new ColorDrawable(color));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

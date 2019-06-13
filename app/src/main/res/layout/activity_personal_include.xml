@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_18"
             android:layout_toEndOf="@+id/image_tel1"
-            android:text="400-936-8886" />
+            android:text="400-963-8886" />
 
         <com.ilife.iliferobot.view.LightTextView
             style="@style/Text_12sp_33"
@@ -45,26 +45,26 @@
 
     <View style="@style/View_Line_Style" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@color/white">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@color/white">-->
 
-        <ImageView
-            android:id="@+id/image_email1"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_email" />
+        <!--<ImageView-->
+            <!--android:id="@+id/image_email1"-->
+            <!--android:layout_width="@dimen/dp_24"-->
+            <!--android:layout_height="@dimen/dp_24"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="@dimen/dp_30"-->
+            <!--android:background="@drawable/n_icon_email" />-->
 
-        <com.ilife.iliferobot.view.AvantGardTextView
-            style="@style/Text_14sp_33"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_18"
-            android:layout_toEndOf="@+id/image_email1"
-            android:text="Support@iliferobot.com" />
-    </RelativeLayout>
+        <!--<com.ilife.iliferobot.view.AvantGardTextView-->
+            <!--style="@style/Text_14sp_33"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="@dimen/dp_18"-->
+            <!--android:layout_toEndOf="@+id/image_email1"-->
+            <!--android:text="Support@iliferobot.com" />-->
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"

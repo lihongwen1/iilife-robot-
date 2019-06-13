@@ -81,6 +81,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     LinearLayout ll_water, ll_mode;
     ACDeviceMsg acDeviceMsg;
     ImageView imageView;
+    ImageView iv_find_robot;
     ReNameListener listener;
     ACDeviceDataMgr.PropertyReceiver propReceiver;
     WeakHandler handler = new WeakHandler(new Handler.Callback() {
@@ -91,6 +92,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                     rl_find.setClickable(true);
                     imageView.setVisibility(View.GONE);
                     imageView.clearAnimation();
+                    iv_find_robot.setVisibility(View.VISIBLE);
                     break;
             }
             return false;
@@ -156,6 +158,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
     public void initView() {
         context = this;
+        iv_find_robot=findViewById(R.id.iv_find_robot);
         imageView = (ImageView) findViewById(R.id.imageView);
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
@@ -241,7 +244,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x785)) {
             tv_type.setText(getString(R.string.setting_aty_type_x785));
             image_product.setImageResource(R.drawable.n_x785);
-        } else if (subdomain.equals(Constants.subdomain_a7)) {
+        } else if (subdomain.equals(Constants.subdomain_x787)) {
             tv_type.setText(getString(R.string.setting_aty_type_x787));
             image_product.setImageResource(R.drawable.n_x787);
         } else if (subdomain.equals(Constants.subdomain_x900)) {
@@ -279,7 +282,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     }
 
     public void setMode(int mode) {
-        boolean isRandom = mode == 0x03;
+        boolean isRandom = mode == MsgCodeUtils.STATUE_RANDOM;
         tv_mode.setText(isRandom ? getString(R.string.setting_aty_random_clean)
                 : getString(R.string.setting_aty_nav_clean));
         image_plan.setSelected(!isRandom);
@@ -381,6 +384,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 sendToDeviceWithOption(acDeviceMsg, physicalId);
                 rl_find.setClickable(false);
                 imageView.setVisibility(View.VISIBLE);
+                iv_find_robot.setVisibility(View.GONE);
                 imageView.startAnimation(animation);
                 break;
             case R.id.rl_plan:

@@ -25,6 +25,7 @@ import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.Constants;
 import com.ilife.iliferobot.utils.MsgCodeUtils;
+import com.ilife.iliferobot.utils.TimePickerUIUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.adapter.ClockAdapter;
@@ -168,7 +169,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
             View contentView = inflater.inflate(R.layout.layout_timepick_dialog, null);
             timePicker = (TimePicker) contentView.findViewById(R.id.timePicker);
 //            timePicker.setIs24HourView(true);
-//            TimePickerUIUtil.set_timepicker_text_colour(timePicker, context);
+            TimePickerUIUtil.set_timepicker_text_colour(timePicker, context);
             tv_confirm = (TextView) contentView.findViewById(R.id.tv_confirm);
             tv_cancel = (TextView) contentView.findViewById(R.id.tv_cancel);
             int width = (int) getResources().getDimension(R.dimen.dp_315);

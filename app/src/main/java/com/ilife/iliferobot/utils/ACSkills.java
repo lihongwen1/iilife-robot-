@@ -62,6 +62,11 @@ public class ACSkills {
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_PLANNING});
         return mAcDevMsg;
     }
+    public ACDeviceMsg enterRandomMode() {
+        mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
+        mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_RANDOM});
+        return mAcDevMsg;
+    }
 
     public ACDeviceMsg enterRechargeMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
