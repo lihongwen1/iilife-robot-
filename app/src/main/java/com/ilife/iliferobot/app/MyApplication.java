@@ -8,6 +8,7 @@ import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.utils.Constants;
 import com.ilife.iliferobot.utils.toast.Toasty;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -58,6 +59,7 @@ public class MyApplication extends MultiDexApplication {
         closeAndroidPDialog();
         configToast();
         initTypeface();
+        CrashReport.initCrashReport(getApplicationContext(), "76637b4e00", false);
     }
 
     private void initTypeface(){
