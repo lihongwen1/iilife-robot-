@@ -303,21 +303,18 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 new VoidCallback() {
                     @Override
                     public void success() {
-                        AC.classDataMgr().registerDataReceiver(new ACClassDataMgr.ClassDataReceiver() {
-                            @Override
-                            public void onReceive(String s, int i, String s1) {
-                                Log.d(TAG, "received map data------" + s1);
-                                if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
-                                    return;
-                                }
-                                if (subdomain.equals(Constants.subdomain_x900)) {
-                                    parseRealTimeMapX9(s1);
-                                } else {
-                                    Gson gson = new Gson();
-                                    RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
-                                    String clean_data = mapInfo.getClean_data();
-                                    parseRealTimeMapX8(clean_data);
-                                }
+                        AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
+                            Log.d(TAG, "received map data------" + s1);
+                            if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
+                                return;
+                            }
+                            if (subdomain.equals(Constants.subdomain_x900)) {
+                                parseRealTimeMapX9(s1);
+                            } else {
+                                Gson gson = new Gson();
+                                RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
+                                String clean_data = mapInfo.getClean_data();
+                                parseRealTimeMapX8(clean_data);
                             }
                         });
                     }

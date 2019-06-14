@@ -15,6 +15,9 @@ import com.ilife.iliferobot.utils.WifiUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 连接设备热点
+ */
 public class ConnectDeviceApActivity extends BackBaseActivity {
     @BindView(R.id.et_ssid)
     EditText et_ssid;
@@ -37,7 +40,7 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
     public void click(View v) {
         switch (v.getId()) {
             case R.id.bt_connect:
-                String ap_ssid=et_ssid.getText().toString();
+                String ap_ssid = et_ssid.getText().toString();
                 if (TextUtils.isEmpty(ap_ssid) || !ap_ssid.startsWith("Robot")) {
                     ToastUtils.showToast(this, getString(R.string.third_ap_aty_port_));
                 } else {
