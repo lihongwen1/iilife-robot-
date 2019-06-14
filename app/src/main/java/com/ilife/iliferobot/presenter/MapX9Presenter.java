@@ -109,6 +109,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     @Override
+    public String getSubDomain() {
+        return subdomain;
+    }
+
+    @Override
+    public String getPhysicalId() {
+        return physicalId;
+    }
+
+    @Override
     public String getRobotType() {
         return robotType;
     }
@@ -864,6 +874,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public boolean isRandomMode() {
         return SpUtils.getInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE) == MsgCodeUtils.STATUE_RANDOM;
     }
+
 
     @Override
     public void detachView() {

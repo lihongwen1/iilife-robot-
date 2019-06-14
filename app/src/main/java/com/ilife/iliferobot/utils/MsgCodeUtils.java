@@ -20,7 +20,7 @@ public class MsgCodeUtils {
     public static final int Appointment = 0x4A;
     //下发上传实时信息指令
     public static final int UPLOADMSG = 0x4D;
-    public static final int AdjustTime = 0X4C;
+    public static final int AdjustTime = 0x4C;
 
     //查询
     public static final int DevStatus = 0x41;
@@ -30,28 +30,28 @@ public class MsgCodeUtils {
     public static final int QueryVirtualWall = 0x45;//查询虚拟墙
 
     //模式
-    public static final int STATUE_POINT=0X05;
-    public static final int STATUE_ALONG=0X04;
-    public static final int STATUE_SLEEPING=0X01;
-    public static final int STATUE_WAIT=0X02;
+    public static final int STATUE_POINT=0x05;
+    public static final int STATUE_ALONG=0x04;
+    public static final int STATUE_SLEEPING=0x01;
+    public static final int STATUE_WAIT=0x02;
     public static final int STATUE_RANDOM=0x03;
-    public static final int STATUE_PLANNING=0X06;
-    public static final int STATUE_VIRTUAL_EDIT=0X07;
-    public static final int STATUE_RECHARGE=0X08;
-    public static final int STATUE_CHARGING =0X09;
-    public static final int STATUE_REMOTE_CONTROL =0X0A;
-    public static final int STATUE_CHARGING_ =0X0B;
-    public static final int STATUE_PAUSE =0X0C;
+    public static final int STATUE_PLANNING=0x06;
+    public static final int STATUE_VIRTUAL_EDIT=0x07;
+    public static final int STATUE_RECHARGE=0x08;
+    public static final int STATUE_CHARGING =0x09;
+    public static final int STATUE_REMOTE_CONTROL =0x0A;
+    public static final int STATUE_CHARGING_ =0x0B;
+    public static final int STATUE_PAUSE =0x0C;
     //遥控器
-    public static final int PROCEED_NO_RESPONSE =0X00;
-    public static final int PROCEED_FORWARD =0X01;
-    public static final int PROCEED_BACK =0X02;
-    public static final int PROCEED_LEFT =0X03;
-    public static final int PROCEED_RIGHT =0X04;
-    public static final int PROCEED_PAUSE =0X05;
+    public static final int PROCEED_NO_RESPONSE =0x00;
+    public static final int PROCEED_FORWARD =0x01;
+    public static final int PROCEED_BACK =0x02;
+    public static final int PROCEED_LEFT =0x03;
+    public static final int PROCEED_RIGHT =0x04;
+    public static final int PROCEED_PAUSE =0x05;
     //清洁
-    public static final int CLEANNING_CLEANING_NORMAL =0X00;
-    public static final int CLEANNING_CLEANING_MAX =0X01;
+    public static final int CLEANNING_CLEANING_NORMAL =0x00;
+    public static final int CLEANNING_CLEANING_MAX =0x01;
 
 
 

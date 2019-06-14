@@ -86,7 +86,7 @@ public class ACSkills {
         return mAcDevMsg;
     }
 
-    public ACDeviceMsg turnNoResponse() {
+    public ACDeviceMsg turnPause() {
         mAcDevMsg.setCode(MsgCodeUtils.Proceed);
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.PROCEED_PAUSE});
         return mAcDevMsg;
@@ -98,11 +98,6 @@ public class ACSkills {
         return mAcDevMsg;
     }
 
-    public ACDeviceMsg normalSuction() {
-        mAcDevMsg.setCode(MsgCodeUtils.Proceed);
-        mAcDevMsg.setContent(new byte[]{MsgCodeUtils.PROCEED_FORWARD});
-        return mAcDevMsg;
-    }
 
     public ACDeviceMsg cleaningNormal(int mopForce) {
         mAcDevMsg.setCode(MsgCodeUtils.CleanForce);

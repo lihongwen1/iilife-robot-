@@ -53,7 +53,8 @@ public interface MapX9Contract {
     }
 
     interface Presenter {
-
+        String getSubDomain();
+        String getPhysicalId();
         String getRobotType();
         void initTimer();
 

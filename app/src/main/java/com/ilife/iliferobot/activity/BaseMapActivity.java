@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,9 +36,18 @@ import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTouch;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
     final String TAG = MapActivity_X9_.class.getSimpleName();
@@ -490,7 +501,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
             R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_cancel_virtual_x9, R.id.tv_ensure_virtual_x9
-            , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.tv_bottom_recharge_x8, R.id.image_right, R.id.image_left, R.id.image_control_back, R.id.image_forward
+            , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.tv_bottom_recharge_x8
             , R.id.tv_appointment_x9
     })
     public void onViewClick(View v) {
@@ -500,9 +511,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
-                } else if (mPresenter.isRandomMode()){
+                } else if (mPresenter.isRandomMode()) {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterRandomMode());
-                }else {
+                } else {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterPlanningMode());
                 }
                 break;
@@ -579,20 +590,76 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 mMapView.setMODE(MapView.MODE_NONE);
                 showClearWallDialog();
                 break;
-            /* 遥控器方向键*/
-            case R.id.image_left:
-                mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
-                break;
-            case R.id.image_right:
-                mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
-                break;
-            case R.id.image_forward:
-                mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
-                break;
-            case R.id.image_control_back://max吸力
-                mPresenter.reverseMaxMode();
-                break;
+        }
+    }
 
+    private Disposable remoteDisposable;
+
+    /**
+     * x785 x787支持长按持续前进旋转
+     * x800，x900只支持点击前进旋转（用touch事件的up事件模拟）
+     *
+     * @param v
+     * @param event
+     */
+    @OnTouch({R.id.image_right, R.id.image_left, R.id.image_control_back, R.id.image_forward})
+    public void onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: //手指按下
+                if (v.getId() != R.id.image_control_back) {
+                    v.setSelected(true);
+                }
+                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
+                    remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
+                        switch (v.getId()) {
+                            /* 遥控器方向键*/
+                            case R.id.image_left:
+                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
+                                break;
+                            case R.id.image_right:
+                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
+                                break;
+                            case R.id.image_forward:
+                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
+                                break;
+                        }
+                    });
+
+                }
+                break;
+            case MotionEvent.ACTION_MOVE: //手指移动（从手指按下到抬起 move多次执行）
+                break;
+            case MotionEvent.ACTION_UP: //手指抬起
+                if (v.getId()!=R.id.image_control_back){
+                    v.setSelected(false);
+                }
+                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
+                    if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
+                        remoteDisposable.dispose();
+                    }
+                    if (v.getId() == R.id.image_control_back) {//max吸力
+                        mPresenter.reverseMaxMode();
+                    } else {
+                        mPresenter.sendToDeviceWithOption(ACSkills.get().turnPause());
+                    }
+                } else {
+                    switch (v.getId()) {
+                        /* 遥控器方向键*/
+                        case R.id.image_left:
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
+                            break;
+                        case R.id.image_right:
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
+                            break;
+                        case R.id.image_forward:
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
+                            break;
+                        case R.id.image_control_back://max吸力
+                            mPresenter.reverseMaxMode();
+                            break;
+                    }
+                }
+                break;
         }
     }
 
@@ -614,12 +681,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         layout_remote_control.setVisibility(View.GONE);
     }
 
-    private void updateDirectionUi(int selectId) {
-        image_forward.setSelected(selectId == R.id.image_forward);
-        image_max.setSelected(selectId == R.id.image_control_back);
-        image_right.setSelected(selectId == R.id.image_right);
-        image_left.setSelected(selectId == R.id.image_left);
-    }
 
     @Override
     public void showVirtualEdit() {
