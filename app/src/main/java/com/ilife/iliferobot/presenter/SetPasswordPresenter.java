@@ -6,7 +6,6 @@ import com.accloud.service.ACAccountMgr;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.utils.DeviceUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.SetPasswrodContract;

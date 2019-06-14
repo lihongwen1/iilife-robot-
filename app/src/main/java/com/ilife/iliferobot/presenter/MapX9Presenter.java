@@ -2,7 +2,6 @@ package com.ilife.iliferobot.presenter;
 
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
@@ -19,17 +18,17 @@ import com.ilife.iliferobot.activity.MapActivity_X9_;
 import com.ilife.iliferobot.activity.SettingActivity;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.DeviceUtils;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.activity.MainActivity;
 import com.ilife.iliferobot.contract.MapX9Contract;
 import com.ilife.iliferobot.entity.PropertyInfo;
 import com.ilife.iliferobot.entity.RealTimeMapInfo;
-import com.ilife.iliferobot.utils.ACSkills;
+import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.utils.DataUtils;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.TimeUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
@@ -195,7 +194,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "getRealTimeMap e = " + e.toString());
+                MyLogger.e(TAG, "getRealTimeMap e = " + e.toString());
             }
         });
     }
@@ -211,7 +210,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (!isViewAttached()) {
                     return;
                 }
-                Log.d(TAG, "getHistoryRoad()-----------");
+                MyLogger.d(TAG, "getHistoryRoad()-----------");
                 ArrayList<ACObject> objects = acMsg.get("data");
                 if (objects != null && objects.size() > 0) {
                     for (int i = 0; i < objects.size(); i++) {
@@ -269,7 +268,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int startY = DataUtils.bytesToInt(new byte[]{resp[i - 5], resp[i - 4]}, 0);//4,5
                         int endX = DataUtils.bytesToInt(new byte[]{resp[i - 3], resp[i - 2]}, 0);//6,7
                         int endY = DataUtils.bytesToInt(new byte[]{resp[i - 1], resp[i]}, 0);//8,9
-                        Log.d("queryVirtualWall", "original:" + startX + "---" + startY + "---" + endX + "----" + endY);
+                        MyLogger.d("queryVirtualWall", "original:" + startX + "---" + startY + "---" + endX + "----" + endY);
                         //显示坐标(加移量后)
                         int sx = startX + 750;
                         int sy = 1500 - (startY + 750);
@@ -279,7 +278,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         existPointList.add(dataPoint);
                         //TODO saveQueryRect
 //                        saveQueryRect(dataPoint);
-                        Log.d("queryVirtualWall", sx + "---" + sy + "---" + ex + "----" + ey);
+                        MyLogger.d("queryVirtualWall", sx + "---" + sy + "---" + ex + "----" + ey);
                     }
 
                     wallPointList.clear();
@@ -304,7 +303,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     @Override
                     public void success() {
                         AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
-                            Log.d(TAG, "received map data------" + s1);
+                            MyLogger.d(TAG, "received map data------" + s1);
                             if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
                                 return;
                             }
@@ -347,7 +346,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
                 int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
                 if ((x == 0x7fff) & (y == 0x7fff)) {
-                    MyLog.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
+                    MyLogger.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
                     pointList.clear();
                     pointStrList.clear();
                     workTime = 0;
@@ -507,7 +506,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mopForce = bytes[4];
                             isMaxMode = bytes[3] == 0x01;
                             voiceOpen = bytes[6] == 0x01;
-                            Log.d(TAG, "set statue,and statue code is 430:" + curStatus);
+                            MyLogger.d(TAG, "set statue,and statue code is 430:" + curStatus);
                             setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                             mView.updateCleanArea(getAreaValue());
                             mView.updateCleanTime(getTimeValue());
@@ -563,7 +562,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_REMOTE_CONTROL);
         }
         mView.showBottomView();
-        Log.d(TAG, "set statue,and statue code is:" + curStatus);
+        MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
         if (curStatus == 0x08) { //回充
             mView.updateRecharge(true);
             mView.setTvUseStatus(MapActivity_X9_.TAG_RECHAGRGE);
@@ -627,10 +626,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void initPropReceiver() {
         propertyReceiver = (s, l, s1) -> {
-            MyLog.e(TAG, "onPropertyReceive ==== " + s1);
+            MyLogger.e(TAG, "onPropertyReceive ==== " + s1);
             if (isViewAttached()) {
                 PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
-                MyLog.e(TAG, "initPropReceiver onPropertyReceive errorCode = " + info.getError_info());
+                MyLogger.e(TAG, "initPropReceiver onPropertyReceive errorCode = " + info.getError_info());
                 errorCode = info.getError_info();
                 batteryNo = info.getBattery_level();
                 curStatus = info.getWork_pattern();
@@ -638,7 +637,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 mopForce = info.getCleaning_cleaning();
                 voiceOpen = info.getVoice_mode() == 0x01;
                 device_type=info.getDevice_type();
-                Log.d(TAG, "set statue,and statue code is 571:" + curStatus);
+                MyLogger.d(TAG, "set statue,and statue code is 571:" + curStatus);
                 setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                 mView.updateCleanArea(getAreaValue());
                 mView.updateCleanTime(getTimeValue());
@@ -782,13 +781,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     virtualContentBytes[(t - 1) * 8 + 7] = endxBytes[1];
                     virtualContentBytes[(t - 1) * 8 + 8] = endyBytes[0];
                     virtualContentBytes[(t - 1) * 8 + 9] = endyBytes[1];
-                    MyLog.e(TAG, "byte arry==:" + startxBytes[0] + "," + startxBytes[1] + "," + startyBytes[0] + "," + startyBytes[1] + "," + endxBytes[0] + "," + endxBytes[1] + "," + endyBytes[0] + "," + endyBytes[1]);
-                    MyLog.e(TAG, "byte arry==:" + Integer.toHexString(startxBytes[0]) + "," + Integer.toHexString(startxBytes[1]) + "," + Integer.toHexString(startyBytes[0]) + "," + Integer.toHexString(startyBytes[1]) + "," + Integer.toHexString(endxBytes[0]) + "," + Integer.toHexString(endxBytes[1]) + "," + Integer.toHexString(endyBytes[0]) + "," + Integer.toHexString(endyBytes[1]));
-                    MyLog.e(TAG, "xia fa qian wei zhuanhua zuo biao :" + "(" + floats[0] + "," + floats[1] + ")" + ":" + "(" + floats[2] + "," + floats[3] + ")");
-                    MyLog.e(TAG, "xia fa qian zhuanhua hou zuo biao :" + "(" + x1 + "," + y1 + ")" + ":" + "(" + x2 + "," + y2 + ")");
+                    MyLogger.e(TAG, "byte arry==:" + startxBytes[0] + "," + startxBytes[1] + "," + startyBytes[0] + "," + startyBytes[1] + "," + endxBytes[0] + "," + endxBytes[1] + "," + endyBytes[0] + "," + endyBytes[1]);
+                    MyLogger.e(TAG, "byte arry==:" + Integer.toHexString(startxBytes[0]) + "," + Integer.toHexString(startxBytes[1]) + "," + Integer.toHexString(startyBytes[0]) + "," + Integer.toHexString(startyBytes[1]) + "," + Integer.toHexString(endxBytes[0]) + "," + Integer.toHexString(endxBytes[1]) + "," + Integer.toHexString(endyBytes[0]) + "," + Integer.toHexString(endyBytes[1]));
+                    MyLogger.e(TAG, "xia fa qian wei zhuanhua zuo biao :" + "(" + floats[0] + "," + floats[1] + ")" + ":" + "(" + floats[2] + "," + floats[3] + ")");
+                    MyLogger.e(TAG, "xia fa qian zhuanhua hou zuo biao :" + "(" + x1 + "," + y1 + ")" + ":" + "(" + x2 + "," + y2 + ")");
                 }
             } else {
-                MyLog.e(TAG, "sendLists is null");
+                MyLogger.e(TAG, "sendLists is null");
             }
             sendToDeviceWithOptionVirtualWall(ACSkills.get().setVirtualWall(virtualContentBytes), physicalId);
         }).start();

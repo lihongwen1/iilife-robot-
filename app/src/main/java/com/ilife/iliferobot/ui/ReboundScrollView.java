@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.utils.MyLogger;
 
 /**
  * Created by chengjiaping on 2017/7/4.
@@ -178,9 +178,9 @@ public class ReboundScrollView extends ScrollView {
      * 判断是否滚动到顶部
      */
     private boolean isCanPullDown() {
-        MyLog.e(TAG, "getScrollY() = " + getScrollY());
-        MyLog.e(TAG, "contentView.getHeight() = " + contentView.getHeight());
-        MyLog.e(TAG, "getHeight() = " + getHeight());
+        MyLogger.e(TAG, "getScrollY() = " + getScrollY());
+        MyLogger.e(TAG, "contentView.getHeight() = " + contentView.getHeight());
+        MyLogger.e(TAG, "getHeight() = " + getHeight());
         return getScrollY() == 0 ||
                 contentView.getHeight() < getHeight() + getScrollY();
     }

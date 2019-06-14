@@ -32,6 +32,7 @@ import com.google.zxing.camera.CameraManager;
 import com.google.zxing.camera.PlanarYUVLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.MyLogger;
 
 import java.util.Hashtable;
 
@@ -53,7 +54,7 @@ final class DecodeHandler extends Handler {
     public void handleMessage(Message message) {
         switch (message.what) {
             case R.id.decode:
-                //Log.d(TAG, "Got decode message");
+                //MyLogger.d(TAG, "Got decode message");
                 decode((byte[]) message.obj, message.arg1, message.arg2);
                 break;
             case R.id.quit:
@@ -96,12 +97,12 @@ final class DecodeHandler extends Handler {
 
         if (rawResult != null) {
             long end = System.currentTimeMillis();
-            Log.d(TAG, "Found barcode (" + (end - start) + " ms):\n" + rawResult.toString());
+            MyLogger.d(TAG, "Found barcode (" + (end - start) + " ms):\n" + rawResult.toString());
             Message message = Message.obtain(activity.getHandler(), R.id.decode_succeeded, rawResult);
             Bundle bundle = new Bundle();
             bundle.putParcelable(DecodeThread.BARCODE_BITMAP, source.renderCroppedGreyscaleBitmap());
             message.setData(bundle);
-            //Log.d(TAG, "Sending decode succeeded message...");
+            //MyLogger.d(TAG, "Sending decode succeeded message...");
             message.sendToTarget();
         } else {
             Message message = Message.obtain(activity.getHandler(), R.id.decode_failed);

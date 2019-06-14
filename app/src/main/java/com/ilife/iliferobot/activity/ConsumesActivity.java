@@ -13,11 +13,10 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 

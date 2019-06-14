@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.ilife.iliferobot.app.MyApplication;
+import com.ilife.iliferobot.utils.MyLogger;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class WifiScanReceiver extends BroadcastReceiver {
             List<ScanResult> results=wifiManager.getScanResults();
             if (results != null) {
                 for (ScanResult scanResult:results) {
-                    Log.d("WifiScanReceiver","ssid:"+scanResult.SSID);
+                    MyLogger.d("WifiScanReceiver","ssid:"+scanResult.SSID);
                 }
-                Log.d("WifiScanReceiver", "results size: " + results.size());
+                MyLogger.d("WifiScanReceiver", "results size: " + results.size());
             }
         }
     }

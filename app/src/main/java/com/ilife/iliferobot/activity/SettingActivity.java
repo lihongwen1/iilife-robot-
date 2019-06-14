@@ -31,15 +31,15 @@ import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.DeviceUtils;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.entity.PropertyInfo;
 import com.ilife.iliferobot.listener.ReNameListener;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
@@ -543,7 +543,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "sendToDeviceWithOption error " + e.toString());
+                MyLogger.e(TAG, "sendToDeviceWithOption error " + e.toString());
                 if (imageView.getVisibility() == View.VISIBLE) {
                     handler.sendEmptyMessage(TAG_FIND_DONE);
                 }

@@ -2,12 +2,16 @@ package com.ilife.iliferobot.app;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.toast.Toasty;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.reflect.Constructor;
@@ -34,8 +38,8 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
-        Log.d("MyApplication",BuildConfig.Area+"---");
+        MyLogger.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
+        MyLogger.d("MyApplication",BuildConfig.Area+"---");
         instance = (MyApplication) getApplicationContext();
         if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
             AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
@@ -59,7 +63,18 @@ public class MyApplication extends MultiDexApplication {
         closeAndroidPDialog();
         configToast();
         initTypeface();
+        /**
+         * tencent bugly crash日志上传
+         */
         CrashReport.initCrashReport(getApplicationContext(), "76637b4e00", false);
+        /**
+         * 日志打印
+         */
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .tag(BuildConfig.FLAVOR)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+
     }
 
     private void initTypeface(){

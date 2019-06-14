@@ -11,7 +11,6 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -21,6 +20,7 @@ import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.model.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DataUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -182,7 +182,7 @@ public class MapView extends View {
      * @param roadList
      */
     public void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
-        Log.d(TAG, "drawRoadMap-----");
+        MyLogger.d(TAG, "drawRoadMap-----");
         roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
@@ -210,7 +210,7 @@ public class MapView extends View {
                 } else {
                     roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
                 }
-                Log.d("roadx", "x:" + historyRoadList.get(k) + "---y:" + (1500 - historyRoadList.get(k + 1)));
+                MyLogger.d("roadx", "x:" + historyRoadList.get(k) + "---y:" + (1500 - historyRoadList.get(k + 1)));
             }
         }
         roadCanvas.drawPath(roadPath, roadPaint);
@@ -268,10 +268,10 @@ public class MapView extends View {
         if (baseScare >= maxScare) {
             baseScare = maxScare;
         }
-        Log.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
+        MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
         deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
-        Log.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
+        MyLogger.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
     }
 
 
@@ -321,7 +321,7 @@ public class MapView extends View {
     protected void onDraw(Canvas canvas) {
         matrix.reset();
         matrix.postTranslate(dragX, dragY);
-        Log.d("SelfPaint", "Scare" + scare + "---tansX:" + dragX + "---" + dragY + "--sx" + sCenter.x + "---sy" + sCenter.y);
+        MyLogger.d("SelfPaint", "Scare" + scare + "---tansX:" + dragX + "---" + dragY + "--sx" + sCenter.x + "---sy" + sCenter.y);
         matrix.postScale(scare, scare, sCenter.x, sCenter.y);
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
@@ -470,7 +470,7 @@ public class MapView extends View {
         if (Math.abs(afterDistance - beforeDistance) > 10) {
 //            sCenter = midPoint(event);
             scare = (afterDistance / beforeDistance) * originalScare;
-            Log.d("scare", "---" + scare);
+            MyLogger.d("scare", "---" + scare);
             if (scare < 0.6f) {
                 scare = 0.6f;
             }
@@ -540,7 +540,7 @@ public class MapView extends View {
                 num++;
             }
         }
-        Log.d(TAG, "useful wall number:" + num);
+        MyLogger.d(TAG, "useful wall number:" + num);
         return num;
     }
 
@@ -630,7 +630,7 @@ public class MapView extends View {
                         float k = (matrixCoordinateY(vir.getPointfs()[3]) - matrixCoordinateY(vir.getPointfs()[1])) / (matrixCoordinateX(vir.getPointfs()[2])
                                 - matrixCoordinateX(vir.getPointfs()[0]));
                         //
-                        Log.d(TAG, "tanx:" + k);
+                        MyLogger.d(TAG, "tanx:" + k);
 
                         float translationY = (float) (distance * (Math.sqrt(1 + k * k) / (1 + k * k)));
                         float translationX = Math.abs(k) * translationY;
@@ -765,7 +765,7 @@ public class MapView extends View {
         for (int i = 1; i < pointList.size(); i += 2) {
             x = -pointList.get(i - 1);
             y = -pointList.get(i);
-            Log.d(TAG, "800--x:" + x + "---y:" + -y);
+            MyLogger.d(TAG, "800--x:" + x + "---y:" + -y);
             if (minX > x) {
                 minX = x;
             }

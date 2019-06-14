@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.ilife.iliferobot.utils.MyLogger;
+
 public class KeyboardLinearLayout extends LinearLayout {
     private static final String TAG = KeyboardLinearLayout.class.getSimpleName();
     public static final byte KEYBOARD_STATE_SHOW = -3;
@@ -51,14 +53,14 @@ public class KeyboardLinearLayout extends LinearLayout {
             if (mListener != null) {
                 mListener.onKeyBoardStateChange(KEYBOARD_STATE_SHOW);
             }
-            Log.w(TAG, "show keyboard.......");
+            MyLogger.w(TAG, "show keyboard.......");
         }
         if (mHasInit && mHasKeybord && mHeight == b) {
             mHasKeybord = false;
             if (mListener != null) {
                 mListener.onKeyBoardStateChange(KEYBOARD_STATE_HIDE);
             }
-            Log.w(TAG, "hide keyboard.......");
+            MyLogger.w(TAG, "hide keyboard.......");
         }
     }
 

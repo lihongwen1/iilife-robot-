@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.ilife.iliferobot.utils.MyLogger;
+
 public class RoundProgressBar extends View {
     /**
      * 画笔对象的引用
@@ -112,7 +114,7 @@ public class RoundProgressBar extends View {
         paint.setAntiAlias(true); // 消除锯齿
         canvas.drawCircle(centre, centre, radius, paint); // 画出圆环
 
-        Log.e("log", centre + "");
+        MyLogger.e("log", centre + "");
 
         /**
          * 画圆弧 ，画圆环的进度

@@ -85,7 +85,7 @@ public class BitmapUtils {
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            MyLog.e("compressBitmap e", e.toString());
+            MyLogger.e("compressBitmap e", e.toString());
         }
         return bitmap;
     }

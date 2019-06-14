@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.ilife.iliferobot.activity.SelectActivity_x;
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.utils.MyLogger;
 
 public class MyRelativeLayout extends RelativeLayout {
     //    private final String TAG = MyRelativeLayout.class.getSimpleName();
@@ -28,12 +28,12 @@ public class MyRelativeLayout extends RelativeLayout {
             case MotionEvent.ACTION_DOWN:
                 int downX = (int) ev.getX();
                 int downY = (int) ev.getY();
-                MyLog.e(TAG, "onInterceptTouchEvent downX = " + downX + " downY = " + downY);
+                MyLogger.e(TAG, "onInterceptTouchEvent downX = " + downX + " downY = " + downY);
                 if (mRect != null && mRect.contains(downX, downY)) {
-                    MyLog.e(TAG, "消费了事件");
+                    MyLogger.e(TAG, "消费了事件");
                     return true;
                 } else {
-                    MyLog.e(TAG, "没有消费事件");
+                    MyLogger.e(TAG, "没有消费事件");
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -41,7 +41,7 @@ public class MyRelativeLayout extends RelativeLayout {
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_CANCEL:
-                MyLog.e(TAG, "onInterceptTouchEvent ACTION_CANCEL");
+                MyLogger.e(TAG, "onInterceptTouchEvent ACTION_CANCEL");
                 break;
         }
         return false;
@@ -53,12 +53,12 @@ public class MyRelativeLayout extends RelativeLayout {
             case MotionEvent.ACTION_DOWN:
                 downX = (int) event.getX();
                 downY = (int) event.getY();
-                MyLog.e(TAG, "ACTION_DOWN downX = " + downX + " downY = " + downY);
+                MyLogger.e(TAG, "ACTION_DOWN downX = " + downX + " downY = " + downY);
                 break;
             case MotionEvent.ACTION_UP:
                 int upX = (int) event.getX();
                 int upY = (int) event.getY();
-                MyLog.e(TAG, "ACTION_UP upX = " + upX + " upY = " + upY);
+                MyLogger.e(TAG, "ACTION_UP upX = " + upX + " upY = " + upY);
                 if (mRect.contains(downX, downY) &&
                         mRect.contains(upX, upY)) {
                     Intent i = new Intent(mContext, SelectActivity_x.class);

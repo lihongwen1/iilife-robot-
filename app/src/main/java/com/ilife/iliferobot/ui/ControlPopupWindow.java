@@ -13,9 +13,9 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 
@@ -155,7 +155,7 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
                 setAllUnEnable();
                 v.setEnabled(true);
                 v.setSelected(true);
-                MyLog.e(TAG, "onTouch  MotionEvent.ACTION_DOWN System.currentTimeMillis()-lastDownTime<400  " + (System.currentTimeMillis() - lastDownTime < 400));
+                MyLogger.e(TAG, "onTouch  MotionEvent.ACTION_DOWN System.currentTimeMillis()-lastDownTime<400  " + (System.currentTimeMillis() - lastDownTime < 400));
                 if (System.currentTimeMillis() - lastDownTime < 400) {
                     v.setSelected(false);
                     setAllEnable();
@@ -172,7 +172,7 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
                 timeTask.run();
                 acDeviceMsg.setContent(new byte[]{0x05});
                 sendToDeviceWithOption(acDeviceMsg, physicalDeviceId);
-                MyLog.e(TAG, "MotionEvent.ACTION_UP   sendToDeviceWithOption 0x05");
+                MyLogger.e(TAG, "MotionEvent.ACTION_UP   sendToDeviceWithOption 0x05");
             }
             return true;
         }
@@ -210,7 +210,7 @@ public class ControlPopupWindow extends PopupWindow implements View.OnClickListe
                     break;
             }
             sendToDeviceWithOption(acDeviceMsg, physicalDeviceId);
-            MyLog.e(TAG, "ACTION_DOWN Task run  sendToDeviceWithOption " + acDeviceMsg.getContent()[0]);
+            MyLogger.e(TAG, "ACTION_DOWN Task run  sendToDeviceWithOption " + acDeviceMsg.getContent()[0]);
         }
     }
 

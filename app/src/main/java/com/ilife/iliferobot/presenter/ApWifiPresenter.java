@@ -4,7 +4,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.ACDeviceActivator;
@@ -15,12 +14,12 @@ import com.accloud.service.ACUserDevice;
 import com.accloud.utils.LogUtil;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.contract.ApWifiContract;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.WifiUtils;
@@ -69,11 +68,11 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     }
                     wifiManager.startScan();
                     Thread.sleep(4000);
-                    MyLog.d(TAG, "扫描目标wifi~~~~");
+                    MyLogger.d(TAG, "扫描目标wifi~~~~");
                     mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
                     times++;
                 }
-                MyLog.d(TAG, "扫描目标wifi结束" + mApSsid);
+                MyLogger.d(TAG, "扫描目标wifi结束" + mApSsid);
 //            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
                 if (mApSsid == null || mApSsid.isEmpty()) {
                     e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
@@ -81,7 +80,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     e.onComplete();
                 }
             } catch (Exception ex) {
-                MyLog.d(TAG, "扫描目标wifi异常");
+                MyLogger.d(TAG, "扫描目标wifi异常");
             }
 
         });
@@ -91,7 +90,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     public void connectToDevice() {
         apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
-                Log.d(TAG, "update progress");
+                MyLogger.d(TAG, "update progress");
                 mView.updateBindProgress("", (int) (aLong * 5));
             }
         });
@@ -104,13 +103,13 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                         observeOn(AndroidSchedulers.mainThread()).
                         subscribe(device ->
                         {
-                            Log.d(TAG, "bind success");
+                            MyLogger.d(TAG, "bind success");
                             if (isViewAttached()) {
                                 mView.bindSuccess(device);
                             }
                         }, throwable ->
                         {
-                            Log.d(TAG, "bind fail");
+                            MyLogger.d(TAG, "bind fail");
                             if (isViewAttached()) {
                                 mView.bindFail(throwable.getMessage());
                             }
@@ -138,16 +137,16 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 connectPwd = mView.getPassWord();
 //                mView.updateBindProgress("连接设备热点成功" + connectSsid, 70);
             }
-            MyLog.d(TAG, "设备开始连接wifi：" + connectSsid + "是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
+            MyLogger.d(TAG, "设备开始连接wifi：" + connectSsid + "是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
             boolean isSuccess = WifiUtils.getSsid(MyApplication.getInstance()).equals(connectSsid);
             if (!isSuccess) {
                 isSuccess = WifiUtils.connectToAp_(wifiManager, connectSsid, connectPwd, WifiUtils.getCipherType(connectSsid, wifiManager));
             }
             if (isSuccess) {
-                MyLog.d(TAG, "连接设备热点成功！");
+                MyLogger.d(TAG, "连接设备热点成功！");
                 completableEmitter.onComplete();
             } else {
-                MyLog.d(TAG, "连接到热点失败");
+                MyLogger.d(TAG, "连接到热点失败");
                 completableEmitter.onError(new Exception("连接到" + connectSsid + "失败！"));
             }
         });
@@ -158,7 +157,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
         WifiInfo info = wifiManager.getConnectionInfo();
         if (info != null) {
             String bssid = info.getBSSID();
-            MyLog.e(TAG, "bssid = " + bssid);
+            MyLogger.e(TAG, "bssid = " + bssid);
             if (!TextUtils.isEmpty(bssid)) {
                 BigInteger id = new BigInteger(bssid.replace(":", ""), 16);
                 long mac;
@@ -211,28 +210,28 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     public void success(Boolean aBoolean) {
                         //设备配置SSID与Password成功
 //                        mView.updateBindProgress("设备配置SSID成功", 60);
-                        MyLog.d(TAG, "设备配置ssid成功！");
+                        MyLogger.d(TAG, "设备配置ssid成功！");
                     }
 
                     @Override
                     public void error(ACException e) {
                         //设备配置SSID与Password失败
 //                    emitter.onError(new Exception("设置ssid失败"));
-                        MyLog.d(TAG, "设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
+                        MyLogger.d(TAG, "设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
                     }
                 }, new PayloadCallback<ACDeviceBind>() {
                     @Override
                     public void success(ACDeviceBind deviceBind) {
 //                    physicalId = deviceBind.getPhysicalDeviceId();
                         //设备已成功连接，通过ACDeviceBind获取到物理ID进行绑定设备操作
-                        MyLog.d(TAG, "设备连云成功");
+                        MyLogger.d(TAG, "设备连云成功");
 //                        mView.updateBindProgress("设备连云成功", 70);
 //                    emitter.onComplete();
                     }
 
                     @Override
                     public void error(ACException e) {
-                        MyLog.d(TAG, "设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
+                        MyLogger.d(TAG, "设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
 //                    emitter.onError(e);
                         //此处一般为1993的超时错误，建议处理逻辑为页面上提示配网失败，提示用户检查自己输入的WIFI信息是否正确等，回到上述第一步骤，重新开始所有配网步骤。
                     }
@@ -257,14 +256,14 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             AC.bindMgr().bindDevice(SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN), bindPhysicalId, "", new PayloadCallback<ACUserDevice>() {
                 @Override
                 public void success(ACUserDevice userDevice) {
-                    MyLog.e(TAG, "设备绑定成功！ " + userDevice.toString());
+                    MyLogger.e(TAG, "设备绑定成功！ " + userDevice.toString());
                     mView.updateBindProgress("设备绑定成功", 100);
                     emitter.onSuccess(userDevice);
                 }
 
                 @Override
                 public void error(ACException e) {
-                    MyLog.e(TAG, "绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
+                    MyLogger.e(TAG, "绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
                     emitter.onError(e);
                 }
             });

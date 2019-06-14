@@ -19,14 +19,14 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.RecyclerViewDivider;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.adapter.HistoryAdapter_New_x9;
 import com.ilife.iliferobot.entity.HistoryRecord_x9;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.DeviceUtils;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
@@ -108,7 +108,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
 
     private void getHistoryRecord() {
         index++;
-        MyLog.e(TAG, "getHistoryRecord " + index);
+        MyLogger.e(TAG, "getHistoryRecord " + index);
         ACMsg req = new ACMsg();
         req.put("record_index", index);
         req.setName("searchCleanHistory");

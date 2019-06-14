@@ -31,6 +31,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.camera.CameraManager;
 import com.google.zxing.view.ViewfinderResultPointCallback;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.MyLogger;
 
 import java.util.Vector;
 
@@ -68,7 +69,7 @@ public final class CaptureActivityHandler extends Handler {
     public void handleMessage(Message message) {
         switch (message.what) {
             case R.id.auto_focus:
-                //Log.d(TAG, "Got auto-focus message");
+                //MyLogger.d(TAG, "Got auto-focus message");
                 // When one auto focus pass finishes, start another. This is the closest thing to
                 // continuous AF. It does seem to hunt a bit, but I'm not sure what else to do.
                 if (state == State.PREVIEW) {
@@ -76,11 +77,11 @@ public final class CaptureActivityHandler extends Handler {
                 }
                 break;
             case R.id.restart_preview:
-                Log.d(TAG, "Got restart preview message");
+                MyLogger.d(TAG, "Got restart preview message");
                 restartPreviewAndDecode();
                 break;
             case R.id.decode_succeeded:
-                Log.d(TAG, "Got decode succeeded message");
+                MyLogger.d(TAG, "Got decode succeeded message");
                 state = State.SUCCESS;
                 Bundle bundle = message.getData();
 
@@ -97,12 +98,12 @@ public final class CaptureActivityHandler extends Handler {
                 CameraManager.get().requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
                 break;
             case R.id.return_scan_result:
-                Log.d(TAG, "Got return scan result message");
+                MyLogger.d(TAG, "Got return scan result message");
                 activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
                 activity.finish();
                 break;
             case R.id.launch_product_query:
-                Log.d(TAG, "Got product query message");
+                MyLogger.d(TAG, "Got product query message");
                 String url = (String) message.obj;
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);

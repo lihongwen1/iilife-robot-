@@ -7,12 +7,12 @@ import android.util.Base64;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.MapView;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.entity.HistoryRecord_x9;
 import com.ilife.iliferobot.utils.DataUtils;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
 
 import java.text.SimpleDateFormat;
@@ -65,7 +65,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             String slamData = mapList.get(0);
             if (!TextUtils.isEmpty(slamData)) {
                 slamBytes = Base64.decode(slamData, Base64.DEFAULT);
-                MyLog.e(TAG, "slamBytes:" + slamBytes.length);
+                MyLogger.e(TAG, "slamBytes:" + slamBytes.length);
                 drawSlamMap(slamBytes);
             }
             //历史路径
@@ -73,17 +73,17 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             if (!TextUtils.isEmpty(roadData)) {
                 roadBytes = Base64.decode(roadData, Base64.DEFAULT);
                 drawRoad(roadBytes);
-                MyLog.e(TAG, "roadBytes:" + roadBytes.length + "<--->");
+                MyLogger.e(TAG, "roadBytes:" + roadBytes.length + "<--->");
             }
         }
     }
 
     private void drawRoad(byte[] roadBytes) {
         if (roadBytes == null || roadBytes.length == 0) {
-            MyLog.e(TAG, "bytes is null");
+            MyLogger.e(TAG, "bytes is null");
             return;
         } else {
-            MyLog.e(TAG, "bytes is not null：" + roadBytes.length);
+            MyLogger.e(TAG, "bytes is not null：" + roadBytes.length);
             if (roadBytes.length >= 4 && roadBytes.length % 4 == 0) {
                 for (int j = 0; j < roadBytes.length; j += 4) {
                     int pointx = DataUtils.bytesToInt(new byte[]{roadBytes[j], roadBytes[j + 1]}, 0);//2,3
@@ -92,7 +92,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     historyPointsList.add((pointy * 224) / 100 + 750);
                 }
             } else {
-                MyLog.e(TAG, "bytes is not null222：" + roadBytes.length);
+                MyLogger.e(TAG, "bytes is not null222：" + roadBytes.length);
             }
         }
         drawHistoryRoad();
@@ -174,7 +174,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             xMax = record.getSlam_xMax();
             yMax = 1500 - record.getSlam_yMin();
             yMin = 1500 - record.getSlam_yMax();
-            MyLog.e(TAG, "getDate===:" + xMin + "<--->" + xMax + "<--->" + yMin + "<--->" + yMax + "<--->");
+            MyLogger.e(TAG, "getDate===:" + xMin + "<--->" + xMax + "<--->" + yMin + "<--->" + yMax + "<--->");
             long time_ = record.getStart_time();
             String date = generateTime(time_, getString(R.string.history_adapter_month_day));
             tv_title.setText(date);

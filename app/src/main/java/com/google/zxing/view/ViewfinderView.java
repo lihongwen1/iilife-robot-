@@ -326,9 +326,9 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
             if (bitmapRect != null && bitmapRect.contains(downX, downY)) {//点击到了flashlight
                 isOpen = !isOpen;
 //          if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-//            MyLog.e(TAG,"1111111111111111111111");
+//            MyLogger.e(TAG,"1111111111111111111111");
 //          } else {
-//            MyLog.e(TAG,"2222222222222222222222");
+//            MyLogger.e(TAG,"2222222222222222222222");
 //          }
                 if (isOpen) {
                     openFlash();

@@ -137,7 +137,7 @@ public class TimeUtil {
 
     public static int getDifferMinutes() {
         int differ = (int) (getMinuteTime(TimeZone.getDefault()) - getMinuteTime(TimeZone.getTimeZone("GMT")));
-//        Log.e(TAG, "getDifferMinutes:  相差的分钟数为"+differ);
+//        MyLogger.e(TAG, "getDifferMinutes:  相差的分钟数为"+differ);
         return differ;
     }
 

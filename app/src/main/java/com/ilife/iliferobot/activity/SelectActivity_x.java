@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.adapter.X_seriesAdapter;
 import com.ilife.iliferobot.utils.SpUtils;

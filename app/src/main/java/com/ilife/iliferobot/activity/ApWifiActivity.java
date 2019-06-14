@@ -17,6 +17,7 @@ import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.contract.ApWifiContract;
 import com.ilife.iliferobot.presenter.ApWifiPresenter;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
@@ -97,7 +98,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-        Log.d(TAG, "绑定失败：    " + message);
+        MyLogger.d(TAG, "绑定失败：    " + message);
         startActivity(new Intent(this, BindFailActivity.class));
         finish();
     }

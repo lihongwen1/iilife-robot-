@@ -37,6 +37,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.R;
@@ -44,7 +45,6 @@ import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DisplayUtil;
 import com.ilife.iliferobot.utils.GlideCircleTransform;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -345,7 +345,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
             if (data != null) {
                 String shareCode = data.getStringExtra(CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN);
                 if (!TextUtils.isEmpty(shareCode)) {
-                    MyLog.e(TAG, "onActivityResult shareCode = " + shareCode);
+                    MyLogger.e(TAG, "onActivityResult shareCode = " + shareCode);
                     bindDevice(shareCode);
                 }
             }

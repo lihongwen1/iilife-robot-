@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.ilife.iliferobot.activity.LoginActivity;
 import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.ui.SlidingMenu;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.utils;
+package com.ilife.iliferobot.able;
 
 import com.accloud.service.ACDeviceMsg;
 

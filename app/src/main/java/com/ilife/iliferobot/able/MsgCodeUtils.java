@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.utils;
+package com.ilife.iliferobot.able;
 
 /**
  * Created by chenjiaping on 2017/8/3.

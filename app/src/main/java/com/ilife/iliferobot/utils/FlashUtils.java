@@ -37,7 +37,7 @@ public class FlashUtils {
             }
 
         } catch (CameraAccessException e) {
-            MyLog.e("FlashUtils", e.toString());
+            MyLogger.e("FlashUtils", e.toString());
             e.printStackTrace();
         }
     }

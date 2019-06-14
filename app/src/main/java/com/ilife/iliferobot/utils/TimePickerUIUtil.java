@@ -66,7 +66,7 @@ public class TimePickerUIUtil {
                 ((EditText) child).setTextColor(color);
                 number_picker.invalidate();
             } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
-                Log.i(TAG, "set_numberpicker_text_colour: " + e);
+                MyLogger.i(TAG, "set_numberpicker_text_colour: " + e);
             }
         }
     }

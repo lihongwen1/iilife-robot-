@@ -23,13 +23,13 @@ import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.contract.MainContract;
 import com.ilife.iliferobot.presenter.MainPresenter;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.adapter.DevListAdapter;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         if (acUserDevices.size() == 0) {
             showButton();
         } else {
-            MyLog.e(TAG, "getDeviceList success " + acUserDevices.get(0).getPhysicalDeviceId());
+            MyLogger.e(TAG, "getDeviceList success " + acUserDevices.get(0).getPhysicalDeviceId());
             mAcUserDevices.addAll(acUserDevices);
             showList();
         }

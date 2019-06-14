@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.Utils;
 
 import butterknife.BindView;

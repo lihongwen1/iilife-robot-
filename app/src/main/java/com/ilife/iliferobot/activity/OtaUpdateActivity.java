@@ -1,10 +1,6 @@
 package com.ilife.iliferobot.activity;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,9 +14,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.accloud.cloudservice.AC;
@@ -29,14 +22,12 @@ import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Constants;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.utils.DialogUtils;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.SpUtils;
-import com.ilife.iliferobot.view.RoundProgressBar;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -83,7 +74,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
             switch (msg.what) {
                 case SET_PROGRESSBAR:
                     int progress = (int) msg.obj;
-                    MyLog.e(TAG, "moni progress==:" + progress);
+                    MyLogger.e(TAG, "moni progress==:" + progress);
                     if (progress == 100) {
                     }
                     break;
@@ -123,7 +114,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
         showLoadingDialog();
         initData();
         startTimer();
-        MyLog.e(TAG, "onCreate==:");
+        MyLogger.e(TAG, "onCreate==:");
     }
 
     @Override
@@ -154,7 +145,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
             public void run() {
                 if (isUpdating) {
                     checkOtaUpdate();
-                    MyLog.e(TAG, "cur_time:" + System.currentTimeMillis());
+                    MyLogger.e(TAG, "cur_time:" + System.currentTimeMillis());
                 }
             }
         };
@@ -173,7 +164,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
             public void success(ACDeviceMsg deviceMsg) {
                 hideLoadingDialog();
                 byte[] resp = deviceMsg.getContent();
-                MyLog.e(TAG, "sendToDevice_CheckUptate success==:" + resp.length + "<--->" + "firmwareStatus:" + resp[0]);
+                MyLogger.e(TAG, "sendToDevice_CheckUptate success==:" + resp.length + "<--->" + "firmwareStatus:" + resp[0]);
                 if (resp != null && resp.length > 0) {
                     byte firmwareStatus = resp[0];
                     if (isFromSetting) {//从设置界面进来
@@ -207,7 +198,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                                 break;
                             case 0x02://正在更新
                                 byte progress = resp[1];//更新进度
-                                MyLog.e(TAG, "updating progress===:" + progress);
+                                MyLogger.e(TAG, "updating progress===:" + progress);
                                 if (isPBFinished) {
                                     return;
                                 }
@@ -217,7 +208,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                             case 0x03://更新成功
                                 String newest_version = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
                                 byte suc_prg = resp[1];//更新进度
-                                MyLog.e(TAG, "update success progress===:" + suc_prg);
+                                MyLogger.e(TAG, "update success progress===:" + suc_prg);
                                 Message msg = new Message();
                                 msg.obj = newest_version;
                                 msg.what = UPDATE_SUCCESS;
@@ -232,15 +223,15 @@ public class OtaUpdateActivity extends BackBaseActivity {
                     }
                 } else {
                     hideLoadingDialog();
-                    MyLog.e(TAG, "resp is null");
+                    MyLogger.e(TAG, "resp is null");
                 }
             }
 
             @Override
             public void error(ACException e) {
                 index++;
-                MyLog.e(TAG, "check update error Index==:" + index);
-                MyLog.e(TAG, "check update error cur_time:" + System.currentTimeMillis());
+                MyLogger.e(TAG, "check update error Index==:" + index);
+                MyLogger.e(TAG, "check update error cur_time:" + System.currentTimeMillis());
                 if (isSuccess) {//第一次则不继续查询进入时如果失败，在更新中时如果失败则继续查询
                     isUpdating = false;
                 }
@@ -248,7 +239,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                     isUpdating = false;
                     handler.sendEmptyMessage(UPDATE_FAILED);
                 }
-                MyLog.e(TAG, "sendToDevice_CheckUptate error==:" + e.toString());
+                MyLogger.e(TAG, "sendToDevice_CheckUptate error==:" + e.toString());
             }
         });
     }
@@ -259,7 +250,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
             @Override
             public void run() {
                 if (sendp <= progress) {
-                    MyLog.e(TAG, "moni==:" + sendp);
+                    MyLogger.e(TAG, "moni==:" + sendp);
                     Message msg = new Message();
                     msg.what = SET_PROGRESSBAR;
                     msg.obj = sendp;
@@ -269,7 +260,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                     if (sendp > 100) {
                         sendtimer.cancel();
                         handler.sendEmptyMessageDelayed(AFTER_CHECK, 5 * 1000);
-                        MyLog.e(TAG, "progress finish==:" + sendp);
+                        MyLogger.e(TAG, "progress finish==:" + sendp);
                     }
                 }
             }
@@ -296,13 +287,13 @@ public class OtaUpdateActivity extends BackBaseActivity {
                     ll_update.setVisibility(View.VISIBLE);
                     fl_version.setVisibility(View.GONE);
                 }
-                MyLog.e(TAG, "sendToDevice_OtaUptate success==:");
+                MyLogger.e(TAG, "sendToDevice_OtaUptate success==:");
             }
 
             @Override
             public void error(ACException e) {
                 ToastUtils.showErrorToast(context, e.getErrorCode());
-                MyLog.e(TAG, "sendToDevice_OtaUptate error==" + e.toString());
+                MyLogger.e(TAG, "sendToDevice_OtaUptate error==" + e.toString());
             }
         });
     }

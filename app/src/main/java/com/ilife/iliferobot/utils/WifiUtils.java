@@ -136,7 +136,7 @@ public class WifiUtils {
             //则清除旧有配置
 //            mWifiManager.removeNetwork(tempConfig.networkId);
             isSucc = mWifiManager.enableNetwork(tempConfig.networkId, true);
-            Log.e(TAG, "createWifiConfig: " + isSucc);
+            MyLogger.e(TAG, "createWifiConfig: " + isSucc);
         } else {
             //不需要密码的场景
             if (type == WIFICIPHER_NOPASS) {
@@ -164,7 +164,7 @@ public class WifiUtils {
             int netId = mWifiManager.addNetwork(config);
             mWifiManager.disconnect();
             isSucc = mWifiManager.enableNetwork(netId, true);
-            Log.e(TAG, "createWifiConfig: " + isSucc);
+            MyLogger.e(TAG, "createWifiConfig: " + isSucc);
         }
         return isSucc;
     }

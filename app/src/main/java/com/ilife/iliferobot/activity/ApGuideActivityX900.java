@@ -2,11 +2,7 @@ package com.ilife.iliferobot.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,7 +12,7 @@ import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.view.GifView;
 import com.ilife.iliferobot.view.ToggleRadioButton;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.SpUtils;
 
 import butterknife.BindView;

@@ -210,7 +210,7 @@ public final class CameraManager {
     public void requestAutoFocus(Handler handler, int message) {
         if (camera != null && previewing) {
             autoFocusCallback.setHandler(handler, message);
-            //Log.d(TAG, "Requesting auto-focus callback");
+            //MyLogger.d(TAG, "Requesting auto-focus callback");
             camera.autoFocus(autoFocusCallback);
         }
     }
@@ -273,7 +273,7 @@ public final class CameraManager {
 //      int leftOffset = (screenResolution.x - width) / 2;
 //      int topOffset = (screenResolution.y - height) / 2;
 //      framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
-//      Log.d(TAG, "Calculated framing rect: " + framingRect);
+//      MyLogger.d(TAG, "Calculated framing rect: " + framingRect);
 //    }
 //    return framingRect;
 //  }

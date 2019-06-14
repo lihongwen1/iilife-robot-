@@ -7,7 +7,7 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.activity.LoginActivity;
 import com.ilife.iliferobot.contract.ForgetPasswordContract;

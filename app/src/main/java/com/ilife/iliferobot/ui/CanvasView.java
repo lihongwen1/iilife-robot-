@@ -23,11 +23,11 @@ import com.accloud.service.ACObject;
 import com.google.gson.Gson;
 
 import com.ilife.iliferobot.entity.RealTimeMapInfo;
-import com.ilife.iliferobot.utils.Constants;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.DataUtils;
-import com.ilife.iliferobot.utils.DeviceUtils;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.R;
 
 import java.util.ArrayList;
@@ -303,7 +303,7 @@ public class CanvasView extends View implements View.OnTouchListener {
                                         int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
                                         int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
                                         if ((x == 0x7fff) & (y == 0x7fff)) {
-                                            MyLog.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
+                                            MyLogger.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
                                             pointList.clear();
                                             pointStrList.clear();
                                             invalidate();
@@ -328,7 +328,7 @@ public class CanvasView extends View implements View.OnTouchListener {
 
                     @Override
                     public void error(ACException e) {
-                        MyLog.e(TAG, "subscribeRealTimeMap e " + e.toString());
+                        MyLogger.e(TAG, "subscribeRealTimeMap e " + e.toString());
                     }
                 }
         );
@@ -361,7 +361,7 @@ public class CanvasView extends View implements View.OnTouchListener {
                         int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
                         int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
                         if ((x == 0x7fff) & (y == 0x7fff)) {
-                            MyLog.e(TAG, "getRealTimeMap (x==0x7fff)&(y==0x7fff) 地图被清掉了");
+                            MyLogger.e(TAG, "getRealTimeMap (x==0x7fff)&(y==0x7fff) 地图被清掉了");
                             pointList.clear();
                             pointStrList.clear();
                             invalidate();
@@ -384,7 +384,7 @@ public class CanvasView extends View implements View.OnTouchListener {
 
             @Override
             public void error(ACException e) {
-                MyLog.e(TAG, "getRealTimeMap e " + e.toString());
+                MyLogger.e(TAG, "getRealTimeMap e " + e.toString());
             }
         });
     }

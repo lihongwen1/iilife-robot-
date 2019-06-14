@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.utils;
+package com.ilife.iliferobot.able;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.listener.ReNameListener;
 import com.ilife.iliferobot.R;
 

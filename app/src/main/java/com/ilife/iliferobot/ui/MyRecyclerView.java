@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.ilife.iliferobot.utils.MyLog;
+import com.ilife.iliferobot.utils.MyLogger;
 
 public class MyRecyclerView extends RecyclerView {
     //    private final String TAG = MyRecyclerView.class.getSimpleName();
@@ -24,7 +24,7 @@ public class MyRecyclerView extends RecyclerView {
             case MotionEvent.ACTION_DOWN:
                 int downX = (int) e.getX();
                 int downY = (int) e.getY();
-                MyLog.e(TAG, "onInterceptTouchEvent ACTION_DOWN  downX = " + downX + " downY = " + downY);
+                MyLogger.e(TAG, "onInterceptTouchEvent ACTION_DOWN  downX = " + downX + " downY = " + downY);
                 break;
             case MotionEvent.ACTION_UP:
                 break;
@@ -41,7 +41,7 @@ public class MyRecyclerView extends RecyclerView {
             case MotionEvent.ACTION_DOWN:
                 int downX = (int) e.getX();
                 int downY = (int) e.getY();
-                MyLog.e(TAG, "onTouchEvent ACTION_DOWN  downX = " + downX + " downY = " + downY);
+                MyLogger.e(TAG, "onTouchEvent ACTION_DOWN  downX = " + downX + " downY = " + downY);
                 break;
             case MotionEvent.ACTION_UP:
                 break;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.utils.MsgCodeUtils;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
 /**

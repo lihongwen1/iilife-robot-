@@ -11,16 +11,15 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.presenter.QuickLoginPresenter;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.SuperEditText;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.QuickLoginContract;
-import com.ilife.iliferobot.utils.MyLog;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -137,7 +136,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         } else {
             super.onBackPressed();
         }
-        MyLog.e(TAG, "onBackPressed====");
+        MyLogger.e(TAG, "onBackPressed====");
     }
 
     @Override
@@ -176,7 +175,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
 
     @Override
     public void onCountDownFinish() {
-        Log.d("QuickLogin", "是否是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
+        MyLogger.d("QuickLogin", "是否是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
         tv_count_down.setVisibility(View.GONE);
         tv_send_code.setVisibility(View.VISIBLE);
         tv_send_code.setText(R.string.resend);
