@@ -14,6 +14,15 @@ public class PropertyInfo {
     private int vacuum_cleaning;
     private int voice_mode;
     private int work_pattern;
+    private int device_type;
+
+    public int getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(int device_type) {
+        this.device_type = device_type;
+    }
 
     public int getBattery_level() {
         return battery_level;
@@ -99,6 +108,7 @@ public class PropertyInfo {
                 ", vacuum_cleaning=" + vacuum_cleaning +
                 ", voice_mode=" + voice_mode +
                 ", work_pattern=" + work_pattern +
+                ", device_type=" + device_type +
                 '}';
     }
 }

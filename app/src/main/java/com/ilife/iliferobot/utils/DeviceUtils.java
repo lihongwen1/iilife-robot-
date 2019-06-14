@@ -268,33 +268,33 @@ public class DeviceUtils {
         if (errCode != 0) {
             str = context.getString(R.string.map_aty_exception);
         } else {
-            if (b == 0x00) {
+            if (b == MsgCodeUtils.STATUE_OFF_LINE) {
                 str = context.getString(R.string.device_adapter_device_offline);
-            } else if (b == 0x01) {
+            } else if (b == MsgCodeUtils.STATUE_SLEEPING) {
                 str = context.getString(R.string.map_aty_sleep);
-            } else if (b == 0x02) {
+            } else if (b == MsgCodeUtils.STATUE_WAIT) {
                 str = context.getString(R.string.map_aty_standby_mode);
-            } else if (b == 0x03) {
+            } else if (b == MsgCodeUtils.STATUE_RANDOM) {
                 str = context.getString(R.string.map_aty_random);
-            } else if (b == 0x04) {
+            } else if (b == MsgCodeUtils.STATUE_ALONG) {
                 str = context.getString(R.string.map_aty_along);
-            } else if (b == 0x05) {
+            } else if (b == MsgCodeUtils.STATUE_POINT) {
                 str = context.getString(R.string.map_aty_point);
-            } else if (b == 0x06) {
+            } else if (b == MsgCodeUtils.STATUE_PLANNING) {
                 str = context.getString(R.string.map_aty_plan_mode);
-            } else if (b == 0x07) {
+            } else if (b == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {
                 str = context.getString(R.string.map_aty_edit_mode);
-            } else if (b == 0x08) {
+            } else if (b == MsgCodeUtils.STATUE_RECHARGE) {
                 str = context.getString(R.string.map_aty_recharge);
-            } else if (b == 0x09) {
+            } else if (b == MsgCodeUtils.STATUE_CHARGING) {
                 str = context.getString(R.string.map_aty_charge);
-            } else if (b == 0x0A) {
+            } else if (b == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
                 str = context.getString(R.string.map_aty_remote);
-            } else if (b == 0x0B) {
+            } else if (b == MsgCodeUtils.STATUE_CHARGING_) {
                 str = context.getString(R.string.map_aty_charge);
-            } else if (b == 0x0C) {
+            } else if (b == MsgCodeUtils.STATUE_PAUSE) {
                 str = context.getString(R.string.map_aty_pause);
-            } else if (b == 0x0D) {
+            } else if (b == MsgCodeUtils.STATUE_TEMPORARY_POINT) {
                 str = context.getString(R.string.map_aty_temp_keypoint);
             }
         }

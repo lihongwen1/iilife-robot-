@@ -57,6 +57,13 @@ public class ACSkills {
         return mAcDevMsg;
     }
 
+    public ACDeviceMsg enterPauseMode() {
+        mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
+        mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_PAUSE});
+        return mAcDevMsg;
+    }
+
+
     public ACDeviceMsg enterPlanningMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_PLANNING});

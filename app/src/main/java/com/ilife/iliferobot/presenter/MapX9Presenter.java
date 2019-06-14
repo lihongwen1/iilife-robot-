@@ -59,7 +59,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
     private List<int[]> existPointList = new ArrayList<>();
-    boolean isWork, hasAppoint, isMaxMode, voiceOpen;//hasSart标记point动画启动状态
+    boolean isWork, hasAppoint, isMaxMode, voiceOpen;
+
     /**
      * 实时地图相关
      */
@@ -72,6 +73,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * 查询设备状态相关
      */
     private int mopForce;
+    private int device_type;
     private byte sendByte;
     private byte[] virtualContentBytes;
 
@@ -638,6 +640,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 isMaxMode = info.getVacuum_cleaning() == MsgCodeUtils.CLEANNING_CLEANING_MAX;
                 mopForce = info.getCleaning_cleaning();
                 voiceOpen = info.getVoice_mode() == 0x01;
+                device_type=info.getDevice_type();
                 Log.d(TAG, "set statue,and statue code is 571:" + curStatus);
                 setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                 mView.updateCleanArea(getAreaValue());
@@ -848,6 +851,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         } else {
             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_can_not_execute));
         }
+    }
+
+    @Override
+    public int getDevice_type() {
+        return device_type;
     }
 
     @Override

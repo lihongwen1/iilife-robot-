@@ -510,7 +510,16 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
-                    mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                    if (mPresenter.getDevice_type() == 128) {//128只会出现在日规的x800中
+                        UniversalDialog universalDialog = new UniversalDialog();
+                        universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTIp(Utils.getString(R.string.please_set_task))
+                                .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task))
+                                .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode())).setOnRightButtonClck(() ->
+                                mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode()))
+                                .show(getSupportFragmentManager(), "choose_action");
+                    } else {
+                        mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                    }
                 } else if (mPresenter.isRandomMode()) {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterRandomMode());
                 } else {
@@ -630,7 +639,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case MotionEvent.ACTION_MOVE: //手指移动（从手指按下到抬起 move多次执行）
                 break;
             case MotionEvent.ACTION_UP: //手指抬起
-                if (v.getId()!=R.id.image_control_back){
+                if (v.getId() != R.id.image_control_back) {
                     v.setSelected(false);
                 }
                 if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
