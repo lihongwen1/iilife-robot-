@@ -50,6 +50,11 @@ public class BindSucActivity extends BackBaseActivity {
     }
 
     @Override
+    protected boolean canGoBack() {
+        return false;
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.activity_bind_suc;
     }

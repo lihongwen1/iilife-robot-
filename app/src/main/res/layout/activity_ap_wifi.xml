@@ -5,7 +5,22 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <include layout="@layout/template_top_title" />
+    <LinearLayout
+        android:id="@+id/image_back"
+        style="@style/Aty_top_rl_bg"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/Image_Back_Style"
+            android:layout_marginStart="@dimen/dp_14"
+            android:contentDescription="@null" />
+
+        <TextView
+            style="@style/Text_16sp_33"
+            android:text="@string/personal_aty_cancel" />
+    </LinearLayout>
 
     <com.ilife.iliferobot.view.RegularTextView
         android:layout_width="wrap_content"
@@ -36,8 +51,7 @@
         android:progress="0" />
 
     <TextView
-        android:layout_marginTop="@dimen/dp_30"
-        android:text="@string/please_not_exit_app"
         style="@style/Text_14sp_33"
-        />
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/please_not_exit_app" />
 </LinearLayout>

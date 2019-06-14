@@ -46,5 +46,6 @@ public interface ApWifiContract {
 
         Single<ACUserDevice> bindDevice();
         Completable detectTargetWifi();
+        void cancelApWifi();
     }
 }

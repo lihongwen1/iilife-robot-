@@ -17,6 +17,11 @@ public class BindFailActivity extends BackBaseActivity {
     TextView title;
 
     @Override
+    protected boolean canGoBack() {
+        return false;
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.activity_bind_fail;
     }
@@ -30,7 +35,7 @@ public class BindFailActivity extends BackBaseActivity {
     @OnClick(R.id.bt_retry)
     public void onclick(View v) {
         if (v.getId() == R.id.bt_retry) {
-            Constants.IS_FIRST_AP=false;
+            Constants.IS_FIRST_AP = false;
             Intent intent = new Intent(this, FirstApActivity.class);
             startActivity(intent);
             finish();

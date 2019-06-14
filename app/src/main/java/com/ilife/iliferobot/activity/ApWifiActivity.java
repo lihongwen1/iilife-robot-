@@ -4,16 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.contract.ApWifiContract;
 import com.ilife.iliferobot.presenter.ApWifiPresenter;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.ToastUtils;
 
 import butterknife.BindView;
 
@@ -24,14 +29,10 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     private final String TAG = ApWifiActivity.class.getSimpleName();
     public static final String EXTAR_DEVID = "EXTAR_DEVID";
     Context context;
-    @BindView(R.id.tv_top_title)
-    TextView tv_title;
     @BindView(R.id.tv_bind_progress)
     TextView tv_bind_progress;
     @BindView(R.id.pb_bind_progress)
     ProgressBar pb_BindProgress;
-
-
     private String ssid;
     private String password;
 
@@ -49,6 +50,11 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         mPresenter.attachView(this);
     }
 
+    @Override
+    protected boolean isChildPage() {
+        return true;
+    }
+
     public void initData() {
         context = this;
         ssid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
@@ -62,8 +68,6 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void initView() {
-        tv_title.setText("配网中");
-
     }
 
     /**
@@ -93,7 +97,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-        Log.d(TAG,"绑定失败：    "+message);
+        Log.d(TAG, "绑定失败：    " + message);
         startActivity(new Intent(this, BindFailActivity.class));
         finish();
     }
@@ -112,4 +116,11 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         });
 
     }
+
+    @Override
+    protected void beforeFinish() {
+        //取消配网，并结束页面
+        mPresenter.cancelApWifi();
+    }
+
 }

@@ -56,15 +56,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected boolean isChildPage() {
         return false;
     }
+    protected boolean canGoBack(){
+        return true;
+    }
 
-    ;
+    protected  void beforeFinish(){
 
+    }
     @Override
     public void onBackPressed() {
+        if (!canGoBack()){//拦截返回事件
+            return;
+        }
         if (!isChildPage() && System.currentTimeMillis() - exitTime >= 2000) {
             ToastUtils.showToast(this, getString(R.string.main_aty_press_exit));
             exitTime = System.currentTimeMillis();
         } else {
+            beforeFinish();
             super.onBackPressed();
         }
     }

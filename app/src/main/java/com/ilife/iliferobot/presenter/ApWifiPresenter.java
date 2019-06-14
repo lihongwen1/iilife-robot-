@@ -272,13 +272,13 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     }
 
     @Override
-    public void detachView() {
-        super.detachView();
+    public void cancelApWifi() {
         if (apProgressDsiposable != null && apProgressDsiposable.isDisposed()) {
             apProgressDsiposable.dispose();
         }
         if (apWifiDisposable != null && !apWifiDisposable.isDisposed()) {
             apWifiDisposable.dispose();
         }
+        activator.stopAbleLink();
     }
 }
