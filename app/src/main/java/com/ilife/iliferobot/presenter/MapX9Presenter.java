@@ -125,13 +125,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     /**
-     * 包含3s查询实时地图和查询虚拟墙
+     * 包含3s查询实时地图(slam map)和查询虚拟墙
      */
     public void initTimer() {
-        getRealTimeMap();//need get real time map in the first time enter
         if (!subdomain.equals(Constants.subdomain_x900)) {//只有x900需要每3s获取实时地图
             return;
         }
+        getRealTimeMap();//need get real time map in the first time enter
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -563,22 +563,27 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == 0x08) { //回充
+        if (curStatus == MsgCodeUtils.STATUE_SLEEPING||(robotType.equals("X900")&&curStatus==MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待機不顯示地圖
+            mView.cleanMapView();
+        } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
+            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_RECHAGRGE);
-        } else if (curStatus == 0x07) {//虚拟墙编辑模式
+        } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//虚拟墙编辑模式
             isVirtualEdit = true;
             mView.showVirtualEdit();
             mView.setMapViewVisible(true);
-        } else if (curStatus == 0x05) { //重点
+        } else if (curStatus == MsgCodeUtils.STATUE_POINT) { //重点
             mView.updatePoint(true);
+            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_KEYPOINT);
-        } else if (curStatus == 0x0A) { //遥控
-//            mView.setTvUseStatusVisible(true);
-        } else if (curStatus == 0x04) {//沿墙模式
+        } else if (curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) { //遥控
+            mView.setTvUseStatusVisible(true);
+        } else if (curStatus == MsgCodeUtils.STATUE_ALONG) {//沿墙模式
             mView.updateAlong(true);
+            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_ALONG);
-        } else if (canEdit(curStatus)) {
+        } else {
             mView.showBottomView();
         }
     }
@@ -586,16 +591,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public boolean canEdit(int curStatus) {
         // 0X02待机 0x06规划 0x08回冲 0x09充电 0x0D 临时中点 0x0C暂停
-        return curStatus == 0x02 || curStatus == 0x06 || curStatus == 0x08 ||
-                curStatus == 0x09 || curStatus == 0x0D || curStatus == 0x0C;
+        return curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RECHARGE ||
+                curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_TEMPORARY_POINT || curStatus == MsgCodeUtils.STATUE_PAUSE;
     }
 
 
     @Override
     public boolean isWork(int curStatus) {
-        return curStatus == 0x03 || curStatus == 0x04 ||
-                curStatus == 0x05 || curStatus == 0x06 ||
-                curStatus == 0x08;
+        return curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_ALONG ||
+                curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING ||
+                curStatus == MsgCodeUtils.STATUE_RECHARGE;
     }
 
 
@@ -636,7 +641,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 isMaxMode = info.getVacuum_cleaning() == MsgCodeUtils.CLEANNING_CLEANING_MAX;
                 mopForce = info.getCleaning_cleaning();
                 voiceOpen = info.getVoice_mode() == 0x01;
-                device_type=info.getDevice_type();
+                device_type = info.getDevice_type();
                 MyLogger.d(TAG, "set statue,and statue code is 571:" + curStatus);
                 setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                 mView.updateCleanArea(getAreaValue());
@@ -699,6 +704,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             @Override
             public void success(ACDeviceMsg deviceMsg) {
                 switch (deviceMsg.getCode()) {
+                    case MsgCodeUtils.UPLOADMSG:
+                        MyLogger.d(TAG, "上传实时信息" + deviceMsg.getContent()[0]);
+                        break;
                     case MsgCodeUtils.CleanForce://更新max mode
                         byte[] resp = deviceMsg.getContent();
                         isMaxMode = resp[0] == 0x01;
@@ -723,7 +731,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         byte[] bytes = deviceMsg.getContent();
                         curStatus = bytes[0];
                         if (curStatus == sendByte) {
-                            setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
+//                            setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
                                 ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
@@ -819,7 +827,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT&&!subdomain.equals(Constants.subdomain_x900)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -835,7 +843,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG &&!subdomain.equals(Constants.subdomain_x900))|| curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());

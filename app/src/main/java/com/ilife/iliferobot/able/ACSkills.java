@@ -117,5 +117,10 @@ public class ACSkills {
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.CLEANNING_CLEANING_MAX, (byte) mopForce});
         return mAcDevMsg;
     }
+    public ACDeviceMsg upLoadRealMsg(int upLoad) {
+        mAcDevMsg.setCode(MsgCodeUtils.UPLOADMSG);
+        mAcDevMsg.setContent(new byte[]{(byte) upLoad});
+        return mAcDevMsg;
+    }
 
 }

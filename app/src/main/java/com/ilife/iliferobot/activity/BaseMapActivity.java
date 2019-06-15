@@ -23,6 +23,7 @@ import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.MapView;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.MapX9Contract;
@@ -615,6 +616,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 }
                 if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
                     remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
+                        MyLogger.d(TAG,"下发方向移动指令");
                         switch (v.getId()) {
                             /* 遥控器方向键*/
                             case R.id.image_left:

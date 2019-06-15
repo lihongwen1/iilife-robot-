@@ -43,7 +43,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_4"
                     android:singleLine="true"
-                    android:text="@string/map_aty_standby_mode" />
+                    android:text="@string/map_aty_gang" />
             </RelativeLayout>
 
             <View

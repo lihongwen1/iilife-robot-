@@ -245,6 +245,7 @@ public class MapView extends View {
         virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
     }
 
@@ -765,7 +766,6 @@ public class MapView extends View {
         for (int i = 1; i < pointList.size(); i += 2) {
             x = -pointList.get(i - 1);
             y = -pointList.get(i);
-            MyLogger.d(TAG, "800--x:" + x + "---y:" + -y);
             if (minX > x) {
                 minX = x;
             }

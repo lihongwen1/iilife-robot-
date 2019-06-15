@@ -21,7 +21,6 @@ public class MapActivity_X8_ extends BaseMapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.getRealTimeMap();
         mPresenter.subscribeRealTimeMap();
     }
 
@@ -53,9 +52,9 @@ public class MapActivity_X8_ extends BaseMapActivity {
     public void showRemoteView() {
         if (mPresenter.isWork(mPresenter.getCurStatus()) || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_SLEEPING) {
             ToastUtils.showToast(context, getString(R.string.map_aty_can_not_execute));
-        } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_|| mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING) {
+        } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_ || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING) {
             ToastUtils.showToast(context, getString(R.string.map_aty_charge));
-        }else {
+        } else {
             USE_MODE = USE_MODE_REMOTE_CONTROL;
             mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
             showBottomView();
@@ -96,12 +95,25 @@ public class MapActivity_X8_ extends BaseMapActivity {
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
 
         }
-        if (mPresenter.getCurStatus()==MsgCodeUtils.STATUE_PLANNING){
+        if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
             setNavigationBarColor(R.color.color_ff1b92e2);
-        }else {
+        } else {
             setNavigationBarColor(R.color.white);
         }
         tv_start.setSelected(isSelect);
         image_center.setSelected(isSelect);//remote control start button
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
+
     }
 }
