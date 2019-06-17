@@ -226,10 +226,11 @@ public class MapView extends View {
             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
-        } else {
+        } else if (endX != 0 && endY != 0) {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
+
         invalidate();
     }
 

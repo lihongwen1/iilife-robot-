@@ -47,6 +47,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     @BindView(R.id.tv_lean_area)
     TextView tv_lean_area;
     private String subdomain;
+    private boolean isDrawMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,9 +112,13 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        if (isDrawMap) {//避免多次刷新UI
+            return;
+        }
+        isDrawMap = true;
         if (subdomain.equals(Constants.subdomain_x900)) {
             drawHistoryMap();
-        }else {
+        } else {
             drawHistoryMapX8();
         }
     }
@@ -148,10 +153,10 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     x = (i - byteList.size() / length / 2);
                     float y = (j * 8 + k - length * 4);
                     if ((mapdata & tempdata) == tempdata) {
-                        if(subdomain.equals(Constants.subdomain_x800)){
+                        if (subdomain.equals(Constants.subdomain_x800)) {
                             pointList.add((int) y);
                             pointList.add((int) x);
-                        }else {
+                        } else {
                             pointList.add((int) x);
                             pointList.add((int) y);
                         }
