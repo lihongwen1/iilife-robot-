@@ -47,4 +47,5 @@
     <color name="successColor">#388E3C</color>
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#4c4c4c</color>
+    <color name="foregroundColor">#774c4c4c</color>
 </resources>

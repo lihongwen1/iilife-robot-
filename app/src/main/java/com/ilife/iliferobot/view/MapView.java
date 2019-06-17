@@ -64,7 +64,6 @@ public class MapView extends View {
     private Canvas boxCanvas;
     private Bitmap boxBitmap;
     private Paint boxPaint;
-    private float endX, endY;
 
     public MapView(Context context) {
         super(context);
@@ -186,8 +185,8 @@ public class MapView extends View {
         roadPath.reset();
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.save();
-        float startX = 0, startY = 0;//标记起点坐标
-//        绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+        float startX = 0, startY = 0, endX = 0, endY = 0;//标记起点坐标
+//        绘制最新路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
@@ -200,9 +199,13 @@ public class MapView extends View {
                 }
             }
         }
-
+//        绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
         if (historyRoadList != null && historyRoadList.size() > 0) {
             for (int k = 0; k < historyRoadList.size() - 1; k += 2) {
+                if (k == historyRoadList.size() - 2) {
+                    endX = matrixCoordinateX(historyRoadList.get(k));
+                    endY = matrixCoordinateY(1500 - historyRoadList.get(k + 1));
+                }
                 if (k == 0) {
                     startX = matrixCoordinateX(historyRoadList.get(0));
                     startY = matrixCoordinateY(1500 - historyRoadList.get(1));
@@ -221,6 +224,9 @@ public class MapView extends View {
         if (roadList != null && roadList.size() > 2) {
             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
+            positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+        } else {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
@@ -753,6 +759,7 @@ public class MapView extends View {
      * @param pointList
      */
     public void drawBoxMapX8(ArrayList<Integer> pointList) {
+        float endY = 0, endX = 0;
         if (pointList == null) {
             return;
         }

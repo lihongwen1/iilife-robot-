@@ -172,7 +172,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
         TextView item_delete;
         ImageView image_product;
         SlidingMenu slidingMenu;
-        ImageView iv_add_device;
+        View iv_add_device;
 
         MyViewHolder(View itemView, int type) {
             super(itemView);
@@ -182,7 +182,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
                 tv_name = (TextView) itemView.findViewById(R.id.tv_name);
                 tv_status2 = (TextView) itemView.findViewById(R.id.tv_status2);
                 item_delete = (TextView) itemView.findViewById(R.id.item_delete);
-                image_product = (ImageView) itemView.findViewById(R.id.image_product);
+                image_product = itemView.findViewById(R.id.image_product);
                 slidingMenu = (SlidingMenu) itemView.findViewById(R.id.slidingMenu);
 
             }

@@ -827,7 +827,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900)&& !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -843,7 +843,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900)&& !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
