@@ -14,6 +14,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.util.Consumer;
+
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.presenter.QuickLoginPresenter;
 import com.ilife.iliferobot.utils.MyLogger;
@@ -66,38 +68,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     public void initView() {
         activity = this;
         context = this;
-        et_verification_code.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mPresenter.isCodeEmpty();
-            }
-        });
-        et_phone_number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mPresenter.isMobileUseful();
-            }
-        });
+        et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         String str = Utils.getString(R.string.have_account_and_login);
         SpannableString spannableString = new SpannableString(str);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.bt_bg_unpress_color)), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -123,6 +94,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 mPresenter.checkVerificationCode();
                 break;
             case R.id.tv_send_code:
+                mPresenter.isMobileUseful();
                 mPresenter.sendVerification();
                 break;
         }

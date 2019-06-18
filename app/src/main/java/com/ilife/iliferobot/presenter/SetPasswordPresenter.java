@@ -6,9 +6,11 @@ import com.accloud.service.ACAccountMgr;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.base.BasePresenter;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.SetPasswrodContract;
+import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 
 public class SetPasswordPresenter extends BasePresenter<SetPasswrodContract.View> implements SetPasswrodContract.Presenter {
@@ -47,7 +49,8 @@ public class SetPasswordPresenter extends BasePresenter<SetPasswrodContract.View
                 accountMgr = AC.accountMgr();
             }
             //emai和phone可以任选其一;nickName为可选项，没有时传空字符串
-            accountMgr.register("", mView.getPhone(), mView.getPw(), "", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
+            boolean isPhone= UserUtils.isPhone(mView.getPhone());
+            accountMgr.register(isPhone?"":mView.getPhone(), isPhone?mView.getPhone():"", mView.getPw(), "", mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
                 @Override
                 public void success(ACUserInfo userInfo) {
                     //获得用户userId和nickName，由此进入主页或设备管理

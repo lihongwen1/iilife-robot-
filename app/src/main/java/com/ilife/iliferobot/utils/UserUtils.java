@@ -18,7 +18,14 @@ import java.util.regex.Pattern;
 
 public class UserUtils {
 
-    public static boolean isPhone(String phone){
+    public static boolean isPhone(String phone) {
+//        if (phone.length() == 11) {
+//            Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");//新加所有18段 17段
+//            Matcher m = p.matcher(phone);
+//            return m.matches();
+//        } else {
+//            return false;
+//        }
         Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");//新加所有18段 17段
         Matcher m = p.matcher(phone);
         return m.matches();

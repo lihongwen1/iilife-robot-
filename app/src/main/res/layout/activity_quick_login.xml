@@ -29,8 +29,8 @@
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_84"
             android:layout_marginEnd="@dimen/dp_30"
-            android:hint="@string/edit_phone_tip"
-            android:inputType="phone"
+            android:hint="@string/login_aty_email"
+            android:inputType="textEmailAddress"
             app:ic_left_click="@drawable/n_icon_personal"
             app:ic_left_unclick="@drawable/n_icon_personal"
             app:isBottomShowLine="true"
@@ -59,7 +59,8 @@
             <com.ilife.iliferobot.view.RegularTextView
                 android:id="@+id/tv_send_code"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_gravity="end|center_vertical"
                 android:text="@string/get_ver_code_tip"
                 android:textColor="@color/color_f08300"
@@ -76,13 +77,14 @@
         </FrameLayout>
 
         <View
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0"/>
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1" />
+
         <LinearLayout
-            android:layout_marginBottom="@dimen/dp_75"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_75"
             android:orientation="vertical">
 
             <com.ilife.iliferobot.view.ShadowContainer

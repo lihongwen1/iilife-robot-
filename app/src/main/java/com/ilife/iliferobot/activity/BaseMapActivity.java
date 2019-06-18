@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -24,6 +26,7 @@ import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.view.CustomPopupWindow;
 import com.ilife.iliferobot.view.MapView;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.MapX9Contract;
@@ -60,6 +63,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_RIGHT = 0x07;
     public static final int TAG_FORWAD = 0x08;
     Context context;
+    private CustomPopupWindow customPopupWindow;
     @BindView(R.id.rl_top)
     View rl_top;
     @BindView(R.id.rl_status)
@@ -115,14 +119,10 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     ImageView image_center;
     PopupWindow errorPopup;
     AnimationDrawable electricityDrawable;
-    @BindView(R.id.tv_cancel_virtual_x9)
-    TextView tv_cancle_virtual;
     @BindView(R.id.tv_add_virtual_x9)
     TextView tv_add_virtual;
     @BindView(R.id.tv_delete_virtual_x9)
     TextView tv_delete_virtual;
-    @BindView(R.id.tv_ensure_virtual_x9)
-    TextView tv_ensure_virtual;
     @BindView(R.id.image_control_back)
     ImageView image_max;
     @BindView(R.id.image_forward)
@@ -496,7 +496,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
-            R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_cancel_virtual_x9, R.id.tv_ensure_virtual_x9
+            R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_close_virtual_x9
             , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.tv_bottom_recharge_x8
             , R.id.tv_appointment_x9
     })
@@ -587,13 +587,34 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     mMapView.setMODE(MapView.MODE_DELETE_VIRTUAL);
                 }
                 break;
-            case R.id.tv_ensure_virtual_x9://保存虚拟墙模式
-                mMapView.setMODE(MapView.MODE_NONE);
-                showSaveWallDialog();
-                break;
-            case R.id.tv_cancel_virtual_x9:// TODO 取消的
-                mMapView.setMODE(MapView.MODE_NONE);
-                showClearWallDialog();
+            case R.id.tv_close_virtual_x9://弹出退出虚拟墙的的pop
+                CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
+                if (customPopupWindow == null) {
+                    builder.cancelTouchout(false).view(R.layout.pop_virtual_wall).widthDimenRes(R.dimen.dp_315).
+                            addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
+                                mMapView.undoAllOperation();
+                                /**
+                                 * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
+                                 */
+                                mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
+                                if (customPopupWindow != null && customPopupWindow.isShowing()) {
+                                    customPopupWindow.disMissPop(this);
+                                }
+                            }).addViewOnclick(R.id.tv_ensure_virtual_x9, v12 -> {
+                        if (customPopupWindow != null && customPopupWindow.isShowing()) {
+                            customPopupWindow.disMissPop(this);
+                        }
+                        mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
+                    }).addViewOnclick(R.id.cancel_virtual_pop, v13 -> {
+                        if (customPopupWindow != null && customPopupWindow.isShowing()) {
+                            customPopupWindow.disMissPop(this);
+                        }
+                    });
+                    customPopupWindow = builder.build();
+                }
+                if (!customPopupWindow.isShowing()) {
+                    customPopupWindow.showAtLocation(this, findViewById(R.id.fl_map), Gravity.BOTTOM, 0, (int) getResources().getDimension(R.dimen.dp_10));
+                }
                 break;
         }
     }
@@ -616,7 +637,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 }
                 if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
                     remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
-                        MyLogger.d(TAG,"下发方向移动指令");
+                        MyLogger.d(TAG, "下发方向移动指令");
                         switch (v.getId()) {
                             /* 遥控器方向键*/
                             case R.id.image_left:

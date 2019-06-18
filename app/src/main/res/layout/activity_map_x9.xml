@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_map"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -305,6 +306,7 @@
                 android:src="@drawable/operation_icon_closed" />
         </FrameLayout>
 
+        <!--虚拟墙-->
         <FrameLayout
             android:paddingBottom="@dimen/dp_24"
             android:id="@+id/fl_virtual_wall"
@@ -312,25 +314,14 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_color_f5f7fa"
             android:visibility="gone">
-
             <TextView
-                android:id="@+id/tv_cancel_virtual_x9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="@string/personal_aty_cancel"
-                android:textColor="#ff8fc31f"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_ensure_virtual_x9"
+                android:id="@+id/tv_close_virtual_x9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@string/ensure"
+                android:text="@string/ota_aty_back"
                 android:textColor="@color/color_f08300"
                 android:textSize="16sp" />
 
