@@ -108,7 +108,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                 break;
         }
         UniversalDialog universalDialog = new UniversalDialog();
-        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(title).setHintTIp(hint).
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(title).setHintTip(hint).
                 setOnRightButtonClck(() -> {
                     bytes = new byte[]{0x00, 0x00, 0x00, 0x00, 0x00};
                     index = ids.indexOf(tag);

@@ -50,8 +50,8 @@
     <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
 
-    <string name="ap_aty_robot_wifi">机器热点：</string>
-    <string name="third_ap_aty_tip1">*小贴士：机器连接上家庭WiFi后自生成\"Robot-XXXX\"的机器热点，默认密码:123456789 </string>
+    <string name="ap_aty_robot_wifi">机器Wi-Fi：</string>
+    <string name="third_ap_aty_tip1">*小贴士：机器连接上家庭WiFi后自生成\"Robot-XXXX\"的机器WiFi，默认密码:123456789 </string>
 
     <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
     <string name="third_ap_aty_port_">请选择Robot-XXXX开头的热点</string>
@@ -298,6 +298,6 @@
     <string name="finsh_cur_task">结束当前任务</string>
     <string name="pause_cur_task">暂停当前任务</string>
     <string name="virtual_wall_use_tip">1.请不要通过虚拟墙来隔离危险区域。\n\n2.虚拟墙是实验功能，存在不稳定性。\n\n3.人为移动主机或重新开机会清除虚拟墙设置。\n\n4.家中环境明显变化会导致地图错误和虚拟墙设置出现错误。
-         \n\n5.仅当主机完成本次清扫并成功返回充电座时，虚拟墙设置才会应用于下一次清扫。</string>
+          \n\n5.仅当主机完成本次清扫并成功返回充电座时，虚拟墙设置才会应用于下一次清扫。</string>
     <string name="virtual_tip_title">虚拟墙使用提示</string>
 </resources>

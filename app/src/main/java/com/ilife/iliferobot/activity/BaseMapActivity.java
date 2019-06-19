@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -63,7 +62,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_RIGHT = 0x07;
     public static final int TAG_FORWAD = 0x08;
     Context context;
-    private CustomPopupWindow customPopupWindow;
+    private CustomPopupWindow exitVirtualWallPop;
+    private UniversalDialog virtualWallTipDialog;
     @BindView(R.id.rl_top)
     View rl_top;
     @BindView(R.id.rl_status)
@@ -299,7 +299,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private void showSetWallDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
         universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.map_aty_set_wall)).exchangeButtonColor()
-                .setHintTIp(Utils.getString(R.string.map_aty_will_stop)).setOnRightButtonClck(() ->
+                .setHintTip(Utils.getString(R.string.map_aty_will_stop)).setOnRightButtonClck(() ->
                 mPresenter.enterVirtualMode()).show(getSupportFragmentManager(), "add_wall");
     }
 
@@ -309,7 +309,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private void showClearWallDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
         universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.map_aty_clear_wall)).
-                setHintTIp(Utils.getString(R.string.map_aty_clear_undo)).
+                setHintTip(Utils.getString(R.string.map_aty_clear_undo)).
                 setOnRightButtonClck(() ->
                 {
                     mMapView.undoAllOperation();
@@ -439,8 +439,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT) {
             mMapView.setMODE(MapView.MODE_NONE);
             mMapView.undoAllOperation();
-        }
-        if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT) {
             hideVirtualEdit();
         }
         if (curStatus != MsgCodeUtils.STATUE_RECHARGE) {
@@ -496,7 +494,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
-            R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_close_virtual_x9
+            R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_close_virtual_x9, R.id.ib_virtual_wall_tip
             , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.tv_bottom_recharge_x8
             , R.id.tv_appointment_x9
     })
@@ -508,7 +506,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
                     if (mPresenter.getDevice_type() == 128) {//128只会出现在日规的x800中
                         UniversalDialog universalDialog = new UniversalDialog();
-                        universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTIp(Utils.getString(R.string.please_set_task))
+                        universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
                                 .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task))
                                 .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode())).setOnRightButtonClck(() ->
                                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode()))
@@ -532,6 +530,14 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 } else {
                     showRemoteView();
                 }
+                break;
+            case R.id.ib_virtual_wall_tip://显示虚拟墙提示
+                if (virtualWallTipDialog == null) {
+                    virtualWallTipDialog = new UniversalDialog();
+                    virtualWallTipDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.virtual_tip_title))
+                            .setHintTip(Utils.getString(R.string.virtual_wall_use_tip), Gravity.LEFT, getResources().getColor(R.color.color_33));
+                }
+                virtualWallTipDialog.show(getSupportFragmentManager(), "virtual_wall_tip");
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
@@ -589,7 +595,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 break;
             case R.id.tv_close_virtual_x9://弹出退出虚拟墙的的pop
                 CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
-                if (customPopupWindow == null) {
+                if (exitVirtualWallPop == null) {
                     builder.cancelTouchout(false).view(R.layout.pop_virtual_wall).widthDimenRes(R.dimen.dp_315).
                             addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
                                 mMapView.undoAllOperation();
@@ -597,23 +603,23 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                                  * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
                                  */
                                 mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
-                                if (customPopupWindow != null && customPopupWindow.isShowing()) {
-                                    customPopupWindow.disMissPop(this);
+                                if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
+                                    exitVirtualWallPop.disMissPop(this);
                                 }
                             }).addViewOnclick(R.id.tv_ensure_virtual_x9, v12 -> {
-                        if (customPopupWindow != null && customPopupWindow.isShowing()) {
-                            customPopupWindow.disMissPop(this);
+                        if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
+                            exitVirtualWallPop.disMissPop(this);
                         }
                         mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
                     }).addViewOnclick(R.id.cancel_virtual_pop, v13 -> {
-                        if (customPopupWindow != null && customPopupWindow.isShowing()) {
-                            customPopupWindow.disMissPop(this);
+                        if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
+                            exitVirtualWallPop.disMissPop(this);
                         }
                     });
-                    customPopupWindow = builder.build();
+                    exitVirtualWallPop = builder.build();
                 }
-                if (!customPopupWindow.isShowing()) {
-                    customPopupWindow.showAtLocation(this, findViewById(R.id.fl_map), Gravity.BOTTOM, 0, (int) getResources().getDimension(R.dimen.dp_10));
+                if (!exitVirtualWallPop.isShowing()) {
+                    exitVirtualWallPop.showAtLocation(this, findViewById(R.id.fl_map), Gravity.BOTTOM, 0, (int) getResources().getDimension(R.dimen.dp_10));
                 }
                 break;
         }
@@ -724,6 +730,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         fl_virtual_wall.setVisibility(View.GONE);
         tv_add_virtual.setSelected(false);
         tv_delete_virtual.setSelected(false);
+        if (virtualWallTipDialog != null&& virtualWallTipDialog.isAdded()) {
+            virtualWallTipDialog.dismiss();
+        }
+        if (exitVirtualWallPop != null&&exitVirtualWallPop.isShowing()) {
+            exitVirtualWallPop.disMissPop(this);
+        }
     }
 
 

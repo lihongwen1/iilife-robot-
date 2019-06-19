@@ -265,7 +265,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     private void showLogoutDialog() {
         UniversalDialog logoutDialog = new UniversalDialog();
         logoutDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitleColor(getResources().getColor(R.color.color_f08300)).
-                setTitle(Utils.getString(R.string.personal_acy_exit)).setHintTIp(Utils.getString(R.string.personal_aty_exit_content)).
+                setTitle(Utils.getString(R.string.personal_acy_exit)).setHintTip(Utils.getString(R.string.personal_aty_exit_content)).
                 setOnRightButtonClck(() -> {
                     if (AC.accountMgr().isLogin()) {
                         AC.accountMgr().logout();

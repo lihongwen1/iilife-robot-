@@ -1,9 +1,13 @@
 package com.ilife.iliferobot.activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ public class UniversalDialog extends DialogFragment {
     public static final int TYPE_NORMAL_MID_BUTTON = 2;
     public static final int TYPE_NORMAL_MID_TITLE = 3;
     private String title, hintTip, midTitle, leftText, midText, rightText;
+    private int hintColor=-1, hintGravity=-1;
     private int type;
     private int titleColor = -1;
     private boolean exchangeColor;
@@ -33,6 +38,17 @@ public class UniversalDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.universal_dialog);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Window window = getDialog().getWindow();
+        getDialog().setCanceledOnTouchOutside(false);
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.width = (int) getResources().getDimension(R.dimen.dp_315);
+        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(wlp);
     }
 
     @Nullable
@@ -55,7 +71,7 @@ public class UniversalDialog extends DialogFragment {
             tv_left.setTextColor(getResources().getColor(R.color.color_595757));
             tv_right.setTextColor(getResources().getColor(R.color.color_f08300));
         }
-        if (titleColor!=-1){
+        if (titleColor != -1) {
             tv_dialog_title.setTextColor(titleColor);
         }
         if (title != null && !title.isEmpty()) {
@@ -66,6 +82,12 @@ public class UniversalDialog extends DialogFragment {
         }
         if (hintTip != null && !hintTip.isEmpty()) {
             tv_hint_tip.setText(hintTip);
+        }
+        if (hintGravity!=-1){
+            tv_hint_tip.setGravity(hintGravity);
+        }
+        if (hintColor!=-1){
+            tv_hint_tip.setTextColor(hintColor);
         }
         if (leftText != null && !leftText.isEmpty()) {
             tv_left.setText(leftText);
@@ -139,9 +161,16 @@ public class UniversalDialog extends DialogFragment {
         return this;
     }
 
-    public UniversalDialog setHintTIp(String tip) {
+    public UniversalDialog setHintTip(String tip) {
         this.hintTip = tip;
         return this;
+    }
+
+    public UniversalDialog setHintTip(String tip, int gravity, int color) {
+        this.hintTip = tip;
+        this.hintColor = color;
+        this.hintGravity = gravity;
+        return  this;
     }
 
     public UniversalDialog setMidText(String midText) {
@@ -155,7 +184,7 @@ public class UniversalDialog extends DialogFragment {
     }
 
     public UniversalDialog setLeftText(String leftText) {
-        this.leftText = midText;
+        this.leftText = leftText;
         return this;
     }
 

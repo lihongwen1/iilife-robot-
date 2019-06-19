@@ -10,6 +10,9 @@ import com.ilife.iliferobot.contract.MainContract;
 import java.util.List;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
+    /**
+     * 请求设备列表，刷新设备状态
+     */
     @Override
     public void getDeviceList() {
         AC.bindMgr().listDevicesWithStatus(new PayloadCallback<List<ACUserDevice>>() {

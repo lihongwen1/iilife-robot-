@@ -314,6 +314,14 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_color_f5f7fa"
             android:visibility="gone">
+            <ImageButton
+                android:background="@drawable/virtual_wall_tip"
+                android:id="@+id/ib_virtual_wall_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                />
             <TextView
                 android:id="@+id/tv_close_virtual_x9"
                 android:layout_width="wrap_content"

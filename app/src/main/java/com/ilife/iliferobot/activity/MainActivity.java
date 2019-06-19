@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     DevListAdapter adapter;
-    AlertDialog alertDialog;
     Dialog loadingDialog;
     LinearLayoutManager llm;
     @BindView(R.id.rootView)
@@ -136,7 +135,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 if (unbindDialog == null) {
                     unbindDialog = new UniversalDialog();
                     unbindDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.main_aty_unbind_device))
-                            .setHintTIp(Utils.getString(R.string.main_aty_unbind_device_tip)).setOnRightButtonClck(() -> {
+                            .setHintTip(Utils.getString(R.string.main_aty_unbind_device_tip)).setOnRightButtonClck(() -> {
                         loadingDialog.show();
                         AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
                             @Override
@@ -240,9 +239,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 i = new Intent(context, PersonalActivity.class);
                 startActivity(i);
                 break;
-            case R.id.rl_ok:
-                AlertDialogUtils.hidden(alertDialog);
-                break;
         }
     }
 
@@ -261,12 +257,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     }
 
     private void showOfflineDialog() {
-        View view = LayoutInflater.from(context).inflate(R.layout.offline_dialog, null);
-        RelativeLayout rl_ok = (RelativeLayout) view.findViewById(R.id.rl_ok);
-        rl_ok.setOnClickListener(this);
-        int width = (int) getResources().getDimension(R.dimen.dp_280);
-        int height = (int) getResources().getDimension(R.dimen.dp_150);
-        alertDialog = AlertDialogUtils.showDialogNoCancel(context, view, width, height);
+        UniversalDialog offLineDialog = new UniversalDialog();
+        offLineDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.dev_frag_offline))
+                .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dev_frag_ok))
+                .show(getSupportFragmentManager(), "offline");
     }
 
 
