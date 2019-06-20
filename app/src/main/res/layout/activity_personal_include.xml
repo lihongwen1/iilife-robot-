@@ -14,57 +14,157 @@
         android:text="@string/personal_aty_support"
         android:textColor="@color/color_33" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_tel_ilife"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_tel1"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_30"
-            android:background="@drawable/n_icon_tel" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white">
 
-        <com.ilife.iliferobot.view.AvantGardTextView
-            android:id="@+id/tv_telNum1"
-            style="@style/Text_14sp_33"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_18"
-            android:layout_toEndOf="@+id/image_tel1"
-            android:text="400-963-8886" />
+            <ImageView
+                android:id="@+id/image_tel1_all"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_30"
+                android:background="@drawable/n_icon_tel" />
 
-        <com.ilife.iliferobot.view.LightTextView
-            style="@style/Text_12sp_33"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_toEndOf="@+id/tv_telNum1"
-            android:text="@string/help_aty_time1" />
-    </RelativeLayout>
+            <com.ilife.iliferobot.view.AvantGardTextView
+                android:id="@+id/tv_telNum1"
+                style="@style/Text_14sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_toEndOf="@+id/image_tel1_all"
+                android:text="400-963-8886" />
 
-    <View style="@style/View_Line_Style" />
+            <com.ilife.iliferobot.view.LightTextView
+                style="@style/Text_12sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_toEndOf="@+id/tv_telNum1"
+                android:text="@string/help_aty_time1" />
+        </RelativeLayout>
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_60"-->
-        <!--android:background="@color/white">-->
+        <View style="@style/View_Line_Style" />
 
-        <!--<ImageView-->
-            <!--android:id="@+id/image_email1"-->
-            <!--android:layout_width="@dimen/dp_24"-->
-            <!--android:layout_height="@dimen/dp_24"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginStart="@dimen/dp_30"-->
-            <!--android:background="@drawable/n_icon_email" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white">
 
-        <!--<com.ilife.iliferobot.view.AvantGardTextView-->
-            <!--style="@style/Text_14sp_33"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginStart="@dimen/dp_18"-->
-            <!--android:layout_toEndOf="@+id/image_email1"-->
-            <!--android:text="Support@iliferobot.com" />-->
-    <!--</RelativeLayout>-->
+            <ImageView
+                android:id="@+id/image_email"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_30"
+                android:background="@drawable/n_icon_email" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                android:id="@+id/image_emailAdd"
+                style="@style/Text_14sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_toEndOf="@+id/image_email"
+                android:text="Support@iliferobot.com" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tel_zaco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/image_tel1"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_30"
+                android:background="@drawable/n_icon_tel" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                android:id="@+id/tv_telNum_eu"
+                style="@style/Text_14sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_toEndOf="@+id/image_tel1"
+                android:text="00800-42377961" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                style="@style/Text_12sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_toEndOf="@+id/tv_telNum_eu"
+                android:text="@string/help_aty_all_eu" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/image_tel_de"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_30"
+                android:background="@drawable/n_icon_tel" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                android:id="@+id/tv_telNum_de"
+                style="@style/Text_14sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_toEndOf="@+id/image_tel_de"
+                android:text="0209-513038-380" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                style="@style/Text_12sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_toEndOf="@+id/tv_telNum_de"
+                android:text="@string/help_aty_dir_de" />
+        </RelativeLayout>
+
+        <View
+            style="@style/View_Line_Style"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/image_email1"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_30"
+                android:background="@drawable/n_icon_email" />
+
+            <com.ilife.iliferobot.view.AvantGardTextView
+                android:id="@+id/image_emailAdd1"
+                style="@style/Text_14sp_33"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_toEndOf="@+id/image_email1"
+                android:text="support@zacorobot.eu" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -187,21 +287,24 @@
         </LinearLayout>
 
     </RelativeLayout>
-       <com.ilife.iliferobot.view.ShadowContainer
-           android:layout_marginTop="@dimen/dp_23"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           app:containerDeltaLength="@dimen/dp_8"
-           app:containerCornerRadius="@dimen/dp_25"
-           app:containerShadowRadius="@dimen/dp_6"
-           app:deltaY="@dimen/dp_2"
-           app:containerShadowColor="@color/color_f08300_66"
-           app:enable="true">
+
+    <com.ilife.iliferobot.view.ShadowContainer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_23"
+        app:containerCornerRadius="@dimen/dp_25"
+        app:containerDeltaLength="@dimen/dp_8"
+        app:containerShadowColor="@color/color_f08300_66"
+        app:containerShadowRadius="@dimen/dp_6"
+        app:deltaY="@dimen/dp_2"
+        app:enable="true">
+
         <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/bt_confirm"
             style="@style/Button_Style"
             android:text="@string/confirm" />
-       </com.ilife.iliferobot.view.ShadowContainer>
+    </com.ilife.iliferobot.view.ShadowContainer>
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

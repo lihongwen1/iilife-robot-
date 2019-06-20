@@ -303,4 +303,7 @@
     <string name="virtual_wall_use_tip">1.请不要通过虚拟墙来隔离危险区域。\n\n2.虚拟墙是实验功能，存在不稳定性。\n\n3.人为移动主机或重新开机会清除虚拟墙设置。\n\n4.家中环境明显变化会导致地图错误和虚拟墙设置出现错误。
           \n\n5.仅当主机完成本次清扫并成功返回充电座时，虚拟墙设置才会应用于下一次清扫。</string>
     <string name="virtual_tip_title">虚拟墙使用提示</string>
+    <!--ZACO-->
+    <string name="help_aty_all_eu">(Free Call Europe)</string>
+    <string name="help_aty_dir_de">(Direct Line DE)</string>
 </resources>

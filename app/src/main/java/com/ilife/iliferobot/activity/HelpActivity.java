@@ -69,7 +69,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     Context context;
     LayoutInflater inflater;
     ScrollView scrollView;
-    TextView tv_numbs, tv_telNum1;
+    TextView tv_numbs, tv_telNum1, tv_telNum1_de, tv_telNum1_eu;
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
     ImageView image_add, image_1;
@@ -96,7 +96,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        initView();
         initFile();
     }
 
@@ -118,6 +117,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         image_1 = (ImageView) findViewById(R.id.image_1);
         image_add = (ImageView) findViewById(R.id.image_add);
         tv_telNum1 = findViewById(R.id.tv_telNum1);
+        tv_telNum1_de = findViewById(R.id.tv_telNum_de);
+        tv_telNum1_eu = findViewById(R.id.tv_telNum_eu);
         bt_confirm = (TextView) findViewById(R.id.bt_confirm);
         rl_type = (RelativeLayout) findViewById(R.id.rl_type);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -126,31 +127,15 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         image_1.setOnClickListener(this);
         et_type.setOnClickListener(this);
         image_add.setOnClickListener(this);
-        tv_telNum1.setOnClickListener(new MyListener());
+        tv_telNum1.setOnClickListener(this);
+        tv_telNum1_de.setOnClickListener(this);
+        tv_telNum1_eu.setOnClickListener(this);
         bt_confirm.setOnClickListener(this);
         et_content.addTextChangedListener(new MyTextWatcher());
-
-//        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-//        scrollView.setFocusable(true);
-//        scrollView.setFocusableInTouchMode(true);
-//        scrollView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                v.requestFocusFromTouch();
-//                return false;
-//            }
-//        });
-
-//        rootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > 0)){
-//                    ToastUtils.showToast(context,"show");
-//                }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > 0)){
-//                    ToastUtils.showToast(context,"hidden");
-//                }
-//            }
-//        });
+        if (!Utils.isIlife()){
+            findViewById(R.id.ll_tel_zaco).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -188,14 +173,15 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_telNum_de:
+            case R.id.tv_telNum_eu:
             case R.id.tv_telNum1:
-//                Intent intent = new Intent(Intent.ACTION_DIAL);
                 new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(@NonNull Permission permission) throws Exception {
                         if (permission.granted) {
                             Intent intent = new Intent(Intent.ACTION_CALL);
-                            Uri data = Uri.parse("tel:" + "4009368886");
+                            Uri data = Uri.parse("tel:" +((TextView)v).getText().toString().trim());
                             intent.setData(data);
                             startActivity(intent);
                         } else {
@@ -411,32 +397,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             if (!alertDialog.isShowing()) {
                 alertDialog.show();
             }
-        }
-    }
-
-    class MyListener implements View.OnClickListener {
-        @Override
-        public void onClick(final View view) {
-            new RxPermissions(activity).requestEach(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Permission>() {
-                @Override
-                public void accept(@NonNull Permission permission) throws Exception {
-                    if (permission.granted) {
-                        String tel;
-                        if (view.getId() == R.id.tv_telNum1) {
-                            tel = "89299401228";
-                        } else {
-                            tel = "0034918607768";
-                        }
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        Uri data = Uri.parse("tel:" + tel);
-                        intent.setData(data);
-                        startActivity(intent);
-                    } else {
-                        // 用户拒绝了该权限，并且选中『不再询问』
-                        ToastUtils.showToast(context, getString(R.string.access_photo));
-                    }
-                }
-            }).dispose();
         }
     }
 }
