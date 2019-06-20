@@ -42,9 +42,9 @@ public class MyApplication extends MultiDexApplication {
         MyLogger.d("MyApplication",BuildConfig.Area+"---");
         instance = (MyApplication) getApplicationContext();
         if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
-            AC.init(this, Constants.MajorDomain, Constants.MajorDomainId);
+            AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID);
         } else { //测试环境
-            AC.init(this, Constants.MajorDomain, Constants.MajorDomainId,AC.TEST_MODE);
+            AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID,AC.TEST_MODE);
         }
         switch (BuildConfig.Area) {
             case 0:

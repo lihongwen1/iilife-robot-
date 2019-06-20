@@ -68,7 +68,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
 
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
 
-        if (subdomain.equals(Constants.subdomain_x800)) {
+        if (subdomain.equals(Constants.subdomain_x800)||subdomain.equals(Constants.subdomain_a9s)) {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x900;
             tip3_id = R.string.ap_guide_already_open_wifi;

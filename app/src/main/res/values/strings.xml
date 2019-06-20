@@ -82,7 +82,7 @@
     <string name="personal_aty_help">帮助</string>
     <string name="personal_aty_scan">扫一扫</string>
     <string name="personal_aty_share">机器共享</string>
-    <string name="personal_aty_version">版本V%1$s</string>
+    <string name="personal_aty_version">版本V%1$s %2$s</string>
     <string name="personal_aty_protocol">用户协议</string>
     <string name="personal_acy_exit">退出登录</string>
     <string name="personal_aty_cancel">取消</string>
@@ -219,6 +219,7 @@
     <string name="setting_aty_type_x900">ILIFE X900</string>
     <string name="setting_aty_type_x787">ILIFE X787</string>
     <string name="setting_aty_type_x785">ILIFE X785</string>
+    <string name="setting_aty_type_a9s">A9s</string>
     <string name="select_aty_x785">X785</string>
     <string name="select_aty_x787">X787</string>
     <string name="select_aty_x800">X800</string>

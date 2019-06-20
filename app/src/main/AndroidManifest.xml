@@ -91,6 +91,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.ilife.iliferobot.activity.ZacoProtocolActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.ilife.iliferobot.activity.ForgetPwdActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

@@ -6,6 +6,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.EditText;
 
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.app.MyApplication;
 
 
@@ -14,25 +15,28 @@ import com.ilife.iliferobot.app.MyApplication;
  */
 
 public class Utils {
-    public static  Typeface getTypeFace(Context context){
+    public static Typeface getTypeFace(Context context) {
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/SourceHanSansCNRegular.ttf");
         return tf;
     }
 
-    public static void setTransformationMethod(EditText editText, boolean isSelected){
-        editText.setTransformationMethod(isSelected? HideReturnsTransformationMethod.getInstance()
+    public static void setTransformationMethod(EditText editText, boolean isSelected) {
+        editText.setTransformationMethod(isSelected ? HideReturnsTransformationMethod.getInstance()
                 : PasswordTransformationMethod.getInstance());
     }
-    public static String getString(int id){
+
+    public static String getString(int id) {
         return MyApplication.getInstance().getString(id);
     }
 
+    public static  boolean isIlife() {
+        return BuildConfig.BRAND.equals("ILIFE");
+    }
 
     /**
      * 将dip或dp值转换为px值，保证尺寸大小不变
      *
-     * @param dipValue
-     *            （DisplayMetrics类中属性density）
+     * @param dipValue （DisplayMetrics类中属性density）
      * @return
      */
     public static int dip2px(Context context, float dipValue) {

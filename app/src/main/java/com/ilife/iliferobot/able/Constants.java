@@ -9,10 +9,6 @@ import com.accloud.cloudservice.ACDeviceActivator;
  */
 
 public class Constants {
-    //主域名
-    public static final String MajorDomain = "china-ilife";
-    //主域id
-    public static final long MajorDomainId = 5479;
     //子域
     public static final String subdomain = "zhiyitest";
     //430的子域
@@ -32,14 +28,20 @@ public class Constants {
     //A7的子域
     public static final String subdomain_a7 = "ilifex786";
 
+    //    ZACO
+    public static final String subdomain_a9s = "zacoa9s";
+
+
     public static final long subdomainId_x785 = 6231;
     public static final long subdomainId_x787 = 6422;
     public static final long subdomainId_x800 = 6312;
     public static final long subdomainId_A7 = 6370;
     public static final long subdomainId_x900 = 6369;
 
-    public static final int DEVICE_TYPE_QCLTLINK = ACDeviceActivator.QCLTLINK;
+//    ZACO
+    public static final long subdomaiId_a9s=6746;
 
+    public static final int DEVICE_TYPE_QCLTLINK = ACDeviceActivator.QCLTLINK;
 
 
     public static final int SERVICE_VERSION = 1;
@@ -55,5 +57,5 @@ public class Constants {
     public static final int CLOUD_ONLY = AC.ONLY_CLOUD;
 
     public static final int OTATYPE = 1;
-    public static boolean IS_FIRST_AP=true;//标记首次配网，可自动连接wifi，重试需要手动连接robot wifi
+    public static boolean IS_FIRST_AP = true;//标记首次配网，可自动连接wifi，重试需要手动连接robot wifi
 }

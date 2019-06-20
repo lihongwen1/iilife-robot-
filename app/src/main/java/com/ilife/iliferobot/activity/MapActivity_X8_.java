@@ -21,6 +21,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter.getRealTimeMap();
         mPresenter.subscribeRealTimeMap();
     }
 
@@ -29,6 +30,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
         super.initView();
         int rechargeModel = -1;
         switch (mPresenter.getRobotType()) {
+            case "a9s":
             case "X800":
                 rechargeModel = R.drawable.rechage_device_x800;
                 break;

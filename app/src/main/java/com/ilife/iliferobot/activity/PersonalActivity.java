@@ -36,6 +36,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
@@ -161,7 +162,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
 
         String version = getVersion();
         if (!TextUtils.isEmpty(version)) {
-            tv_version.setText(getString(R.string.personal_aty_version, version));
+            tv_version.setText(getString(R.string.personal_aty_version, version, BuildConfig.FLAVOR_NAME));
         }
     }
 
@@ -216,8 +217,13 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 showLogoutDialog();
                 break;
             case R.id.rl_protocol:
-                i = new Intent(context, ProtocolActivity.class);
-                startActivity(i);
+                if (Utils.isIlife()) {
+                    i = new Intent(context, ProtocolActivity.class);
+                    startActivity(i);
+                } else {
+                    i = new Intent(context, ZacoProtocolActivity.class);
+                    startActivity(i);
+                }
                 break;
             case R.id.tv_userName:
                 showRenameDialog();

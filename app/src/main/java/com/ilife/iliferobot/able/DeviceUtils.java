@@ -49,6 +49,8 @@ public class DeviceUtils {
             serviceName = BuildConfig.SERVICE_NAME_X900;
         } else if (subdomain.equals(Constants.subdomain_x787)) {
             serviceName = BuildConfig.SERVICE_NAME_X787;
+        } else if (subdomain.equals(Constants.subdomain_a9s)) {
+            serviceName = BuildConfig.SERVICE_NAME_A9s;
         } else {
             serviceName = BuildConfig.SERVICE_NAME_X430;
         }

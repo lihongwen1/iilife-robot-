@@ -103,6 +103,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             case Constants.subdomain_x787:
                 robotType = "X787";
                 break;
+            case Constants.subdomain_a9s:
+                robotType = "a9s";
+                break;
             default:
                 robotType = "X785";
                 break;
@@ -169,7 +172,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     int xMin = resp.getInt("slam_x_min");
                     int yMin = 1500 - resp.getInt("slam_y_max");
                     int yMax = 1500 - resp.getInt("slam_y_min");
-                    MyLogger.d(TAG,"xMax:"+xMax+"  xmin:"+xMin+"   ymax:"+yMax+"    ymin"+yMin);
+                    MyLogger.d(TAG, "xMax:" + xMax + "  xmin:" + xMin + "   ymax:" + yMax + "    ymin" + yMin);
                     if (!TextUtils.isEmpty(strMap)) {
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                         if (isViewAttached() && curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT
@@ -188,7 +191,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         return;
                     }
                     for (int i = 0; i < data.size(); i++) {
-                        parseRealTimeMapX8(data.get(i).getString("clean_data"));
+                        parseRealTimeMapX8(data.get(i).getString("clean_data"), false);
                     }
                 }
             }
@@ -314,7 +317,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 Gson gson = new Gson();
                                 RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
                                 String clean_data = mapInfo.getClean_data();
-                                parseRealTimeMapX8(clean_data);
+                                parseRealTimeMapX8(clean_data, true);
                             }
                         });
                     }
@@ -330,8 +333,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * x800绘制黄方格地图
      *
      * @param clean_data
+     * @param needDraw   for x8 series robot ,will be no need to draw map using these data,but save these data,when data is from the method -'getRealTimeMap'
      */
-    private void parseRealTimeMapX8(String clean_data) {
+    private void parseRealTimeMapX8(String clean_data, boolean needDraw) {
         if (!TextUtils.isEmpty(clean_data)) {
             byte[] bytes = Base64.decode(clean_data, Base64.DEFAULT);
             if ((bytes.length % 4) != 0) {
@@ -341,8 +345,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             byte[] byte_time = new byte[]{bytes[2], bytes[3]};
             workTime = DataUtils.bytesToInt2(byte_time, 0);
             cleanArea = DataUtils.bytesToInt2(byte_area, 0);
-            mView.updateCleanTime(getTimeValue());
-            mView.updateCleanArea(getAreaValue());
             for (int j = 7; j < bytes.length; j += 4) {
                 int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
                 int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
@@ -361,8 +363,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         }
-        if (pointList != null) {
+        if (needDraw && pointList != null) {
             mView.drawBoxMapX8(pointList);
+            mView.updateCleanTime(getTimeValue());
+            mView.updateCleanArea(getAreaValue());
         }
     }
 
@@ -564,7 +568,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_SLEEPING||(robotType.equals("X900")&&curStatus==MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待機不顯示地圖
+        if (curStatus == MsgCodeUtils.STATUE_SLEEPING || (robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待機不顯示地圖
             mView.cleanMapView();
         } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
@@ -667,8 +671,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     private String getTimeValue() {
+        MyLogger.d(TAG, "curStatus=======" + curStatus);
         int min = Math.round(workTime / 60f);
-        if (curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
+        if (curStatus == MsgCodeUtils.STATUE_OFF_LINE || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
@@ -828,7 +833,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900)&& !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900) && !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -844,7 +849,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900)&& !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900) && !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());

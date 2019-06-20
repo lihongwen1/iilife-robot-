@@ -50,10 +50,13 @@ public class SelectActivity_x extends BackBaseActivity {
     public void initView() {
         context = this;
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-        subdomains = new String[]{Constants.subdomain_x900, Constants.subdomain_x800, Constants.subdomain_x787, Constants.subdomain_x785};
-//        subdomains = new String[]{Constants.subdomain_x900,Constants.subdomain_x787,Constants.subdomain_x785};
-        subdomainIds = new long[]{Constants.subdomainId_x900, Constants.subdomainId_x800, Constants.subdomainId_x787, Constants.subdomainId_x785};
-//        subdomainIds = new long[]{Constants.subdomainId_x900,Constants.subdomainId_x787,Constants.subdomainId_x785};
+        if (Utils.isIlife()) {
+            subdomains = new String[]{Constants.subdomain_x900, Constants.subdomain_x800, Constants.subdomain_x787, Constants.subdomain_x785};
+            subdomainIds = new long[]{Constants.subdomainId_x900, Constants.subdomainId_x800, Constants.subdomainId_x787, Constants.subdomainId_x785};
+        } else {
+            subdomains=new String[]{Constants.subdomain_a9s};
+            subdomainIds=new long[]{Constants.subdomaiId_a9s};
+        }
 
         adapter = new X_seriesAdapter(context);
         recyclerView.setAdapter(adapter);
@@ -62,7 +65,6 @@ public class SelectActivity_x extends BackBaseActivity {
             SpUtils.saveString(context, KEY_SUBDOMAIN, subdomains[position]);
             SpUtils.saveLong(context, KEEY_SUBDOMAIN_ID, subdomainIds[position]);
             Intent i = new Intent(context, FirstApActivity.class);
-//          i.putExtra(EXTRA_SUBDOMAIN,subdomains[position]);
             startActivity(i);
         });
         tvTitle.setText(R.string.select_x_aty_add);
