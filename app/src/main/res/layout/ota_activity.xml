@@ -8,27 +8,54 @@
         android:id="@+id/rl_title"
         layout="@layout/template_top_title" />
 
-    <FrameLayout
-        android:layout_gravity="center_horizontal"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_24"
+        android:paddingBottom="@dimen/dp_24">
+
+        <com.ilife.iliferobot.view.MediumTextView
+            style="@style/Text_16sp_33"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="@string/ota_preupdate_title" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_6"
+            style="@style/Text_14sp_ac"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="@string/ota_preupdate_tip" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/fl_version"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="invisible">
 
-        <TextView
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/update" />
+
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/tv_cur_version"
             style="@style/Text_18sp_33"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_marginTop="@dimen/dp_24" />
 
-        <TextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/tv_target_version"
             style="@style/Text_18sp_33"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp_24" />
-    </FrameLayout>
+            android:layout_marginTop="@dimen/dp_18" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_update"
@@ -55,10 +82,6 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <TextView
-        style="@style/Text_14sp_ac"
-        android:layout_marginStart="@dimen/dp_30"
-        android:text="@string/ota_preupdate_tip" />
 
     <Button
         android:id="@+id/btn_update"

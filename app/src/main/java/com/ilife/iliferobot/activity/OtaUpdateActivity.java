@@ -35,7 +35,8 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class OtaUpdateActivity extends BackBaseActivity {
+public class
+OtaUpdateActivity extends BackBaseActivity {
     private final String TAG = OtaUpdateActivity.class.getSimpleName();
     private static final int SET_PROGRESSBAR = 1;
     private static final int UPDATE_FAILED = 2;
@@ -51,7 +52,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
     @BindView(R.id.btn_update)
     Button btn_update;
     @BindView(R.id.fl_version)
-    FrameLayout fl_version;
+    LinearLayout fl_version;
     @BindView(R.id.ll_update)
     LinearLayout ll_update;
     @BindView(R.id.tv_top_title)
@@ -86,6 +87,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                     ll_update.setVisibility(View.GONE);
                     tv_current.setText(getResources().getString(R.string.setting_ota_current_version, version));
                     tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, version));
+                    btn_update.setText(R.string.ota_aty_latest_ver);
                     sendp = 0;
                     if (otatimer != null) {
                         otatimer.cancel();
@@ -167,10 +169,12 @@ public class OtaUpdateActivity extends BackBaseActivity {
                 MyLogger.e(TAG, "sendToDevice_CheckUptate success==:" + resp.length + "<--->" + "firmwareStatus:" + resp[0]);
                 if (resp != null && resp.length > 0) {
                     byte firmwareStatus = resp[0];
+                    firmwareStatus=0x01;
                     if (isFromSetting) {//从设置界面进来
                         switch (firmwareStatus) {
                             case 0x00://无更新
                                 String curVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
+                                fl_version.setVisibility(View.VISIBLE);
                                 tv_current.setText(getResources().getString(R.string.setting_ota_current_version, curVersion));
                                 tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, curVersion));
                                 isUpdating = false;
@@ -178,6 +182,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
                             case 0x01://有更新
                                 String currVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
                                 String tarVersion = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
+                                fl_version.setVisibility(View.VISIBLE);
                                 tv_current.setText(getResources().getString(R.string.setting_ota_current_version, currVersion));
                                 tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, tarVersion));
                                 isUpdating = false;
@@ -310,6 +315,7 @@ public class OtaUpdateActivity extends BackBaseActivity {
     public void onClick(View v) {
         if (v.getId() == R.id.btn_update)
             otaUpdate();
+        btn_update.setText(R.string.updating_btn);
         btn_update.setSelected(false);
         btn_update.setClickable(false);
     }
