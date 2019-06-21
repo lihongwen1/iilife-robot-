@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
-import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.toast.Toasty;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -17,6 +16,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import androidx.multidex.MultiDexApplication;
 
@@ -30,21 +30,20 @@ public class MyApplication extends MultiDexApplication {
     private static MyApplication instance;
     public Typeface tf_light;
     public Typeface tf_regular;
-    public Typeface tf_english_regular;
+    public Typeface tf_robot_regular;
     public Typeface avantGard;
     public Typeface tf_medium;
-    public Typeface tf_itca;
 
     @Override
     public void onCreate() {
         super.onCreate();
         MyLogger.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
-        MyLogger.d("MyApplication",BuildConfig.Area+"---");
+        MyLogger.d("MyApplication", BuildConfig.Area + "---");
         instance = (MyApplication) getApplicationContext();
         if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
             AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID);
         } else { //测试环境
-            AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID,AC.TEST_MODE);
+            AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID, AC.TEST_MODE);
         }
         switch (BuildConfig.Area) {
             case 0:
@@ -77,14 +76,22 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-    private void initTypeface(){
-        tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
-        tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
-        tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
-        tf_itca = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
-        tf_english_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+    private void initTypeface() {
+        String lan = Locale.getDefault().getLanguage();
+        if (lan.equals("zh")) {
+            tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
+            tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
+            tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
+        } else {
+            tf_light = Typeface.createFromAsset(getAssets(), "fonts/ROBOTO-LIGHT.ttf");
+            tf_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+            tf_medium = Typeface.createFromAsset(getAssets(), "fonts/ROBOTO-MEDIUM.ttf");
+        }
+        tf_robot_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         avantGard = Typeface.createFromAsset(getAssets(), "fonts/ITCAvantGardeStd-Demi.ttf");
+
     }
+
     private void configToast() {
         Toasty.Config.getInstance().tintIcon(true).tintIcon(false).
                 setTextSize(16).allowQueue(false).apply();

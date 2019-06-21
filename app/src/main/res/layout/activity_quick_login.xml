@@ -19,6 +19,7 @@
             android:background="@drawable/logo" />
 
         <com.ilife.iliferobot.view.LightTextView
+            android:id="@+id/tv_slogan"
             style="@style/Text_16sp_33"
             android:layout_marginTop="@dimen/dp_20"
             android:text="@string/ilife_slogan" />

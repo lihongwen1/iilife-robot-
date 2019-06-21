@@ -342,7 +342,7 @@
                 android:drawableTop="@drawable/n_image_add"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
-                android:text="添加"
+                android:text="@string/add_virtual_wall"
                 android:textColor="#ff333333"
                 android:textSize="16sp" />
 
@@ -356,7 +356,7 @@
                 android:drawableTop="@drawable/n_image_delete"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
-                android:text="删减"
+                android:text="@string/delete_virtual_wall"
                 android:textColor="#ff333333"
                 android:textSize="16sp" />
         </FrameLayout>

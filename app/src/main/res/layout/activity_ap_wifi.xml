@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_52"
-        android:text="配网中"
+        android:text="@string/pairing_wifi"
         android:textColor="#ff333333"
         android:textSize="34sp" />
 

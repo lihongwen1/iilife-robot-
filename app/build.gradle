@@ -60,6 +60,7 @@ android {
             resValue "string", "app_name", "ZACO Robot"
             buildConfigField("String", "BRAND", "\"ZACO\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
@@ -80,6 +81,7 @@ android {
             resValue "string", "app_name", "ILIFE-ROBOT"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
@@ -100,6 +102,7 @@ android {
             resValue "string", "app_name", "智意机器人"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
@@ -120,6 +123,7 @@ android {
             resValue "string", "app_name", "ILIFE Robot Asia"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-AS\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-AS\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-AS\"")
@@ -140,6 +144,7 @@ android {
             resValue "string", "app_name", "ILIFE Robot America"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-US\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-US\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-US\"")
@@ -160,6 +165,7 @@ android {
             signingConfig signingConfigs.ilife
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
+            buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-EU\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-EU\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-EU\"")

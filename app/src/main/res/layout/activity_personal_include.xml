@@ -186,6 +186,7 @@
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_30"
+        android:inputType="textEmailAddress"
         android:background="@drawable/feedback_et_bg"
         android:hint="@string/personal_input_email"
         android:includeFontPadding="false"

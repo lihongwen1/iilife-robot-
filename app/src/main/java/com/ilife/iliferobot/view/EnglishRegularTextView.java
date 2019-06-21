@@ -25,7 +25,7 @@ public class EnglishRegularTextView extends TextView {
 
     public void setTypeFace() {
         if (!isInEditMode()) {
-            setTypeface(MyApplication.getInstance().tf_english_regular);
+            setTypeface(MyApplication.getInstance().tf_robot_regular);
         }
     }
 }

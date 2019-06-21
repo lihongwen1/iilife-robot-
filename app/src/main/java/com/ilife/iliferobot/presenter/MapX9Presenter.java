@@ -106,6 +106,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             case Constants.subdomain_a9s:
                 robotType = "a9s";
                 break;
+                case Constants.subdomain_a8s:
+                robotType = "a8s";
+                break;
             default:
                 robotType = "X785";
                 break;

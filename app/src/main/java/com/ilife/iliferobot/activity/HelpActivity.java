@@ -109,7 +109,11 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         activity = this;
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
-        types = getResources().getStringArray(R.array.device_name);
+        if (Utils.isIlife()) {
+            types = getResources().getStringArray(R.array.device_name_ilife);
+        } else {
+            types = getResources().getStringArray(R.array.device_name_zaco);
+        }
         tv_numbs = (TextView) findViewById(R.id.tv_numbs);
         et_email = (EditText) findViewById(R.id.et_email);
         et_type = (EditText) findViewById(R.id.et_type);
@@ -132,7 +136,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         tv_telNum1_eu.setOnClickListener(this);
         bt_confirm.setOnClickListener(this);
         et_content.addTextChangedListener(new MyTextWatcher());
-        if (!Utils.isIlife()){
+        if (!Utils.isIlife()) {
             findViewById(R.id.ll_tel_zaco).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
         }
@@ -181,7 +185,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                     public void accept(@NonNull Permission permission) throws Exception {
                         if (permission.granted) {
                             Intent intent = new Intent(Intent.ACTION_CALL);
-                            Uri data = Uri.parse("tel:" +((TextView)v).getText().toString().trim());
+                            Uri data = Uri.parse("tel:" + ((TextView) v).getText().toString().trim());
                             intent.setData(data);
                             startActivity(intent);
                         } else {

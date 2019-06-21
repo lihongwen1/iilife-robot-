@@ -80,7 +80,11 @@ public class BindSucActivity extends BackBaseActivity {
             image_device = R.drawable.rechage_device_x787;
         } else if (subdomain.equals(Constants.subdomain_x900)) {
             image_device = R.drawable.rechage_device_x900;
-        } else {
+        } else if (subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800)){
+            image_device = R.drawable.rechage_device_x800;
+        }else if (subdomain.equals(Constants.subdomain_a8s)){
+            image_device=R.drawable.rechage_device_a8s;
+        }else {
             image_device = R.drawable.rechage_device_x800;
         }
         String devName = getString(R.string.bind_suc_sty_robot_name);

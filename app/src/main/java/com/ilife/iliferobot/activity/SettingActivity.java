@@ -253,6 +253,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         } else if (subdomain.equals(Constants.subdomain_a9s)) {
             tv_type.setText(getString(R.string.setting_aty_type_a9s));
             image_product.setImageResource(R.drawable.n_a9s);
+        } else if (subdomain.equals(Constants.subdomain_a8s)) {
+            tv_type.setText(getString(R.string.setting_aty_type_a8s));
+            image_product.setImageResource(R.drawable.n_a8s);
         } else {
             rl_mode.setVisibility(View.GONE);
             tv_type.setText(getString(R.string.setting_aty_type_x800));
@@ -264,7 +267,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
             rl_mode.setVisibility(View.VISIBLE);
         }
-        if (subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
+        if (subdomain.equals(Constants.subdomain_a8s)||subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
             rl_voice.setVisibility(View.VISIBLE);
         }
 
@@ -473,12 +476,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                     ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
                     return;
                 }
-                if (!name.equals(devName)) {
-                    AlertDialogUtils.hidden(alterDialog);
-                    DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
-                } else {
-                    ToastUtils.showToast(context, getString(R.string.setting_aty_tip_same));
-                }
+                AlertDialogUtils.hidden(alterDialog);
+                DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
             }
         });
         int width = (int) getResources().getDimension(R.dimen.dp_315);

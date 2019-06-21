@@ -40,6 +40,9 @@ public class MapActivity_X8_ extends BaseMapActivity {
             case "X785":
                 rechargeModel = R.drawable.rechage_device_x785;
                 break;
+            case "a8s":
+                rechargeModel = R.drawable.rechage_device_a8s;
+                break;
         }
         if (rechargeModel != -1) {
             iv_recharge_model.setImageResource(rechargeModel);

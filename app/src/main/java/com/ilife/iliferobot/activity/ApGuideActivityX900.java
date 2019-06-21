@@ -68,7 +68,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
 
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
 
-        if (subdomain.equals(Constants.subdomain_x800)||subdomain.equals(Constants.subdomain_a9s)) {
+        if (subdomain.equals(Constants.subdomain_x800)) {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x900;
             tip3_id = R.string.ap_guide_already_open_wifi;
@@ -80,6 +80,18 @@ public class ApGuideActivityX900 extends BackBaseActivity {
             tip3_id = R.string.ap_guide_already_open_wifi;
             open_key_id = R.drawable.gif_open_key;
             click_wifi_id = R.drawable.gif_click_wifi;
+        } else if (subdomain.equals(Constants.subdomain_a9s)) {
+            tip1_id = R.string.ap_guide_aty_tip1_x900;
+            tip2_id = R.string.ap_guide_aty_tip2_a9s;
+            tip3_id = R.string.ap_guide_already_open_wifi_a9s;
+            open_key_id = R.drawable.gif_open_key;
+            click_wifi_id = R.drawable.gif_click_wifi;
+        } else if (subdomain.equals(Constants.subdomain_a8s)) {
+            tip1_id = R.string.ap_guide_aty_tip1_x900;
+            tip2_id = R.string.ap_guide_aty_tip2_x7;
+            tip3_id = R.string.ap_guide_have_heard_didi;
+            open_key_id = R.drawable.gif_open_key_a8s;
+            click_wifi_id = R.drawable.gif_click_wifi_a8s;
         } else {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
             tip2_id = R.string.ap_guide_aty_tip2_x7;

@@ -30,6 +30,7 @@ public class Constants {
 
     //    ZACO
     public static final String subdomain_a9s = "zacoa9s";
+    public static final String subdomain_a8s = "zacoa8";
 
 
     public static final long subdomainId_x785 = 6231;
@@ -40,6 +41,7 @@ public class Constants {
 
 //    ZACO
     public static final long subdomaiId_a9s=6746;
+    public static final long subdomaiId_a8s=6795;
 
     public static final int DEVICE_TYPE_QCLTLINK = ACDeviceActivator.QCLTLINK;
 

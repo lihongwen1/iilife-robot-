@@ -365,7 +365,7 @@
             android:layout_toStartOf="@+id/ota_right"
             android:layout_toEndOf="@+id/tv_ota_update"
             android:gravity="end"
-            android:text="@string/ota_aty_cur" />
+            android:text="@string/setting_ota_current_version" />
 
         <ImageView
             android:id="@+id/ota_right"

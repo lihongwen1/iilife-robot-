@@ -169,7 +169,6 @@ OtaUpdateActivity extends BackBaseActivity {
                 MyLogger.e(TAG, "sendToDevice_CheckUptate success==:" + resp.length + "<--->" + "firmwareStatus:" + resp[0]);
                 if (resp != null && resp.length > 0) {
                     byte firmwareStatus = resp[0];
-                    firmwareStatus=0x01;
                     if (isFromSetting) {//从设置界面进来
                         switch (firmwareStatus) {
                             case 0x00://无更新

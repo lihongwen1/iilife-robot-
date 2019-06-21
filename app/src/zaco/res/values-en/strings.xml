@@ -1,13 +1,13 @@
 <resources>
     <string name="login_aty_login">Login</string>
-    <string name="login_aty_email">Mobile/email</string>
+    <string name="login_aty_email">Email</string>
     <string name="login_aty_pw">New password (min. 6 characters)</string>
-    <string name="login_aty_input_email">Enter mobile/email</string>
+    <string name="login_aty_input_email">Enter email</string>
     <string name="login_aty_input_pw">Enter password</string>
     <string name="login_aty_pw_ensure">Reenter new password</string>
     <string name="login_aty_fw">Forgot password？</string>
     <string name="login_aty_wrong_email">Invalid account format</string>
-    <string name="regist_wrong_account">Please enter valid phone number / Email address</string>
+    <string name="regist_wrong_account">Please enter valid Email address</string>
     <string name="login_account_error">Incorrect user name</string>
     <string name="login_aty_account_no">Account is unavailable</string>
     <string name="login_aty_pw_error">Incorrect password</string>
@@ -51,7 +51,7 @@
     <string name="third_ap_aty_port_">Connect to WiFi starting with \"Robot-XXX\"</string>
     <string name="bind_suc_aty_name">Name your robot</string>
     <string name="bind_suc_sty_robot_done">Completed</string>
-    <string name="bind_suc_sty_robot_name">ILIFE robot vacuum</string>
+    <string name="bind_suc_sty_robot_name">ZACO robot vacuum</string>
     <string name="bind_aty_reName_suc">Nickname change completed</string>
     <string name="bind_aty_reName_fail">Nickname change failed</string>
     <string name="open_gps_location">Enable GPS</string>
@@ -249,7 +249,7 @@
     <string name="set_password">Set a password</string>
     <string name="no_device_tip_hi">Hi, good to see you again</string>
     <string name="no_device_tip_cleaning">Begin your cleaning journey</string>
-    <string name="x_series_robot">X Series robot vacuum</string>
+    <string name="x_series_robot">A Series robot vacuum</string>
     <string name="map_aty_temp_keypoint">Spot mode</string>
     <string name="robot_connected">Connected</string>
     <string name="back_to_recharge">Return to charging base</string>
@@ -269,7 +269,8 @@
     <string name="setting_ota_current_version">Current version:%1$s</string>
     <string name="setting_ota_targat_version">Latest version：%1$s</string>
     <string name="tip_troubleshoot">follow the steps to find possible problems:</string>
-    <string name="tip_troubles">1. Is robot in AP mode?\n\n2. Is WiFi password correct?\n\n3. Is mobile phone connected to non-5G WiFi?\n\n4. Is wireless router black/whitelist function disabled (MAC filtering)?</string>
+    <string name="tip_troubles">1. Is robot in AP mode?\n\n2. Is WiFi password correct?\n\n3. Is mobile phone connected to non-5G WiFi?\n\n4. Is wireless router black/whitelist function disabled (MAC filtering)?
+</string>
     <string name="retry">Retry</string>
     <string name="ap_wifi_timeout">Connection timed out</string>
     <string name="ota_preupdate_title">Before updating, check: </string>
@@ -284,7 +285,8 @@
 \n\n2.Electric wall is still a beta version. It has the risk of instability.
 \n\n3.Electril wall settings will be erased if the main body is moved or restarted.
 \n\n4.The environment changes at home will cause malfunctions of the map and electric wall.
-\n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the electric wall will apply to next cleaning mission.</string>
+\n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the electric wall will apply to next cleaning mission.
+</string>
     <string name="virtual_tip_title">Electric wall tips:</string>
     <string name="help_aty_all_eu">(Free Call Europe)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
@@ -292,7 +294,7 @@
     <string name="add_virtual_wall">Add</string>
     <string name="delete_virtual_wall">Delete</string>
     <string name="need_save_settings">Save the settings</string>
-    <string name="will_work_on_next_time">New settings will apply to the next cleaning mission.</string>
+    <string name="will_work_on_next_time">New settings will apply to the next cleaning mission.</string>
     <string name="save_and_back">Save and back</string>
     <string name="not_saved">Unsave</string>
     <string name="cancel_">Cancel</string>

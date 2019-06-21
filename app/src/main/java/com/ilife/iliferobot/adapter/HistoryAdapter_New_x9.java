@@ -45,10 +45,10 @@ public class HistoryAdapter_New_x9 extends RecyclerView.Adapter<HistoryAdapter_N
 
         long time_ = historyRecord.getStart_time();
 //        long time_ = Long.valueOf(time);
-        String data = generateTime(time_, context.getString(R.string.history_adapter_month_day));
+        String date = generateTime(time_, context.getString(R.string.history_adapter_month_day));
         String hour = generateTime(time_, context.getString(R.string.history_adapter_hour_minute));
 
-        holder.tv_date.setText(data);
+        holder.tv_date.setText(date);
         holder.tv_time.setText(hour);
 
         holder.rl_content.setOnClickListener(new View.OnClickListener() {

@@ -15,13 +15,15 @@
         <TextView
             style="@style/Text_16sp_33"
             android:layout_marginTop="@dimen/dp_20"
-            android:text="是否保存当前设置"
+            android:text="@string/need_save_settings"
             android:textStyle="bold" />
 
         <TextView
             style="@style/Text_16sp_ac"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="保存设置会在下次清扫时生效" />
+            android:paddingStart="@dimen/dp_6"
+            android:paddingEnd="@dimen/dp_6"
+            android:text="@string/will_work_on_next_time" />
 
         <View
             style="@style/View_Line_Style"
@@ -33,7 +35,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_marginTop="@dimen/dp_13"
-            android:text="保存并返回" />
+            android:text="@string/save_and_back" />
 
         <View
             style="@style/View_Line_Style"
@@ -46,7 +48,8 @@
             style="@style/Text_16sp_595757"
             android:layout_marginTop="@dimen/dp_13"
             android:layout_marginBottom="@dimen/dp_13"
-            android:text="不保存" />
+            android:text="@string/not_saved" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +65,7 @@
             android:layout_marginBottom="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_14"
             style="@style/Text_16sp_595757"
-            android:text="取消" />
+            android:text="@string/cancel_" />
     </LinearLayout>
 
 </LinearLayout>

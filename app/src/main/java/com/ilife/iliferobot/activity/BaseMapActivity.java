@@ -303,32 +303,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 mPresenter.enterVirtualMode()).show(getSupportFragmentManager(), "add_wall");
     }
 
-    /**
-     * 清除虚拟墙提示dialog
-     */
-    private void showClearWallDialog() {
-        UniversalDialog universalDialog = new UniversalDialog();
-        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.map_aty_clear_wall)).
-                setHintTip(Utils.getString(R.string.map_aty_clear_undo)).
-                setOnRightButtonClck(() ->
-                {
-                    mMapView.undoAllOperation();
-                    /**
-                     * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
-                     */
-                    mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
-                }).show(getSupportFragmentManager(), "undo_wall");
-    }
 
-
-    /**
-     * 下发虚拟墙信息到设备的提示dialog
-     */
-    private void showSaveWallDialog() {
-        UniversalDialog universalDialog = new UniversalDialog();
-        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_TITLE).setMidTitle(Utils.getString(R.string.map_aty_apply_wall)).exchangeButtonColor().setOnRightButtonClck(() ->
-                mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs())).show(getSupportFragmentManager(), "save_wall");
-    }
 
 
     /**
@@ -508,8 +483,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
                                 .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task))
-                                .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode())).setOnRightButtonClck(() ->
-                                mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode()))
+                                .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode())).setOnRightButtonClck(() ->
+                                mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode()))
                                 .show(getSupportFragmentManager(), "choose_action");
                     } else {
                         mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());

@@ -111,6 +111,8 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
                 Glide.with(context).load(R.drawable.n_x800).into(holder.image_product);
             } else if (subdomain.equals(Constants.subdomain_a9s)) {
                 Glide.with(context).load(R.drawable.n_a9s).into(holder.image_product);
+            } else if (subdomain.equals(Constants.subdomain_a8s)) {
+                Glide.with(context).load(R.drawable.n_a8s).into(holder.image_product);
             } else {
                 Glide.with(context).load(R.drawable.n_x800).into(holder.image_product);
             }

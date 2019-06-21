@@ -281,10 +281,10 @@
     <string name="finsh_cur_task">Finish</string>
     <string name="pause_cur_task">Pause</string>
     <string name="virtual_wall_use_tip">1.Please do not separate unsafe zone with electric wall
-\n\n2.Electric wall is still a beta version. It has the risk of instability.
-\n\n3.Electril wall settings will be erased if the main body is moved or restarted.
-\n\n4.The environment changes at home will cause malfunctions of the map and electric wall.
-\n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the electric wall will apply to next cleaning mission.</string>
+             \n\n2.Electric wall is still a beta version. It has the risk of instability.
+          \n\n3.Electril wall settings will be erased if the main body is moved or restarted.
+          \n\n4.The environment changes at home will cause malfunctions of the map and electric wall.
+           \n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the electric wall will apply to next cleaning mission.</string>
     <string name="virtual_tip_title">Electric wall tips:</string>
     <string name="help_aty_all_eu">(Free Call Europe)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>

@@ -25,6 +25,8 @@ import com.ilife.iliferobot.contract.QuickLoginContract;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -53,6 +55,8 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     TextView tv_count_down;
     @BindView(R.id.tv_login)
     TextView tv_login;
+    @BindView(R.id.tv_slogan)
+    TextView tv_slogan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,10 +73,25 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         activity = this;
         context = this;
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
-        String str = Utils.getString(R.string.have_account_and_login);
-        SpannableString spannableString = new SpannableString(str);
-        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.bt_bg_unpress_color)), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        String str_login = Utils.getString(R.string.have_account_and_login);
+        String lan = Locale.getDefault().getLanguage();
+        int index, endIndex;
+        String targetString;
+        if (lan.equals("zh")) {
+            targetString = "请登录";
+        } else if (lan.equals("de")) {
+            targetString = "Login now";
+        } else {
+            targetString = "Login now";
+        }
+        index = str_login.toString().indexOf(targetString);
+        endIndex = str_login.toString().indexOf(targetString) + targetString.length();
+        SpannableString spannableString = new SpannableString(str_login);
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.bt_bg_unpress_color)), index, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_login.setText(spannableString);
+        if (!Utils.isIlife()){
+            tv_slogan.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

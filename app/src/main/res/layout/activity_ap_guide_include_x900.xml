@@ -20,7 +20,7 @@
         <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/text_tip1"
             style="@style/Text_18sp_33"
-            android:layout_height="@dimen/dp_90"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_30"
@@ -46,7 +46,7 @@
         <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/text_tip2"
             style="@style/Text_18sp_33"
-            android:layout_height="@dimen/dp_90"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_30"
@@ -70,7 +70,7 @@
         <com.ilife.iliferobot.view.RegularTextView
             android:visibility="invisible"
             android:id="@+id/tv_guide_tip4"
-            android:layout_width="176dp"
+            android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:layout_marginTop="@dimen/dp_16"
             android:text="@string/ap_guide_tip4"
