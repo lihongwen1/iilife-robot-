@@ -60,8 +60,8 @@ public class MyApplication extends MultiDexApplication {
                 break;
         }
         closeAndroidPDialog();
-        configToast();
         initTypeface();
+        configToast();
         /**
          * tencent bugly crash日志上传
          */
@@ -93,7 +93,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void configToast() {
-        Toasty.Config.getInstance().tintIcon(true).tintIcon(false).
+        Toasty.Config.getInstance().tintIcon(true).tintIcon(false).setToastTypeface(tf_regular).
                 setTextSize(16).allowQueue(false).apply();
     }
 
