@@ -311,7 +311,7 @@ public class Toasty {
         if (shouldTint)
             drawableFrame = ToastyUtils.tint9PatchDrawableFrame(context, tintColor);
         else
-            drawableFrame = ToastyUtils.getDrawable(context, R.drawable.toast_frame);
+            drawableFrame = ToastyUtils.getDrawable(context, R.drawable.toast_bg);
         ToastyUtils.setBackground(toastLayout, drawableFrame);
 
         if (withIcon) {
