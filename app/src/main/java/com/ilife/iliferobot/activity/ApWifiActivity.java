@@ -3,23 +3,18 @@ package com.ilife.iliferobot.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.contract.ApWifiContract;
 import com.ilife.iliferobot.presenter.ApWifiPresenter;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
-import com.ilife.iliferobot.utils.ToastUtils;
 
 import butterknife.BindView;
 
@@ -29,13 +24,15 @@ import butterknife.BindView;
 public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements ApWifiContract.View {
     private final String TAG = ApWifiActivity.class.getSimpleName();
     public static final String EXTAR_DEVID = "EXTAR_DEVID";
+    public static final String EXTAR_ROBOT_SSID = "EXTAR_robot_SSID";
     Context context;
     @BindView(R.id.tv_bind_progress)
     TextView tv_bind_progress;
     @BindView(R.id.pb_bind_progress)
     ProgressBar pb_BindProgress;
-    private String ssid;
-    private String password;
+    private String homeSsid;
+    private String robot_ssid;
+    private String homePassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +55,9 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     public void initData() {
         context = this;
-        ssid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
-        password = (String) SpUtils.get(this, FirstApActivity.EXTRA_PASS, "unknown");
+        robot_ssid = getIntent().getStringExtra(EXTAR_ROBOT_SSID);
+        homeSsid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
+        homePassword = (String) SpUtils.get(this, FirstApActivity.EXTRA_PASS, "unknown");
     }
 
     @Override
@@ -76,17 +74,22 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
      */
     @Override
     public void bindDevice() {
-        mPresenter.connectToDevice();
+        if (robot_ssid == null || !robot_ssid.contains("Robot")) {
+            mPresenter.connectToDevice();
+        } else {
+            mPresenter.connectToDeviceWithSsid(robot_ssid);
+        }
+
     }
 
     @Override
-    public String getSsid() {
-        return ssid;
+    public String getHomeSsid() {
+        return homeSsid;
     }
 
     @Override
     public String getPassWord() {
-        return password;
+        return homePassword;
     }
 
     @Override

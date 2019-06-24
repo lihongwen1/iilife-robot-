@@ -16,6 +16,7 @@
         <EditText
             style="@style/EditText_16sp_ac"
             android:id="@+id/et_name"
+            android:inputType="textPersonName"
             android:hint="@string/user_nickname"
             android:layout_centerHorizontal="true"
             android:gravity="center"

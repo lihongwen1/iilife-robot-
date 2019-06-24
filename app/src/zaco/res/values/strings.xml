@@ -110,7 +110,7 @@
     <string name="help_aty_content_isnull">Your feedback</string>
     <string name="feedback_aty_count_limit">Word limit exceeded</string>
     <string name="capture_aty_scan">Scan QR code or barcode inside the square on the screen</string>
-    <string name="map_aty_title">Robot Vacuum Cleaner</string>
+    <string name="map_aty_title">%1$sRobot Vacuum Cleaner</string>
     <string name="map_aty_status">Current status</string>
     <string name="map_aty_gang">—</string>
     <string name="setting_aty_area">Cleaning area</string>
@@ -299,4 +299,5 @@
     <string name="not_saved">Unsave</string>
     <string name="cancel_">Cancel</string>
     <string name="pairing_wifi">Searching a network…</string>
+    <string name="name_max_length">Enter up to 12 characters</string>
 </resources>

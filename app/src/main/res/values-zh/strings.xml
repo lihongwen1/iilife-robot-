@@ -7,7 +7,7 @@
     <string name="login_aty_pw_ensure">确认新密码</string>
     <string name="login_aty_fw">忘记密码？</string>
     <string name="login_aty_wrong_email">账号格式不正确</string>
-    <string name="regist_wrong_account">请输入正确的手机号/邮箱</string>
+    <string name="regist_wrong_account">手机号/邮箱格式不正确</string>
     <string name="login_account_error">账号错误</string>
     <string name="login_aty_account_no">该账号未注册</string>
     <string name="login_aty_pw_error">密码不正确</string>
@@ -110,7 +110,7 @@
     <string name="help_aty_content_isnull">请输入反馈内容</string>
     <string name="feedback_aty_count_limit">您输入的字数已经超过了限制</string>
     <string name="capture_aty_scan">将二维码/条码放入框内，即可自动扫描</string>
-    <string name="map_aty_title">%1$s 智能扫地机器人</string>
+    <string name="map_aty_title">%1$s智能扫地机器人</string>
     <string name="map_aty_status">当前状态</string>
     <string name="map_aty_gang">—</string>
     <string name="setting_aty_area">清扫面积</string>
@@ -293,4 +293,5 @@
     <string name="not_saved">不保存</string>
     <string name="cancel_">取消</string>
     <string name="pairing_wifi">配网中</string>
+    <string name="name_max_length">最多输入12个字符</string>
 </resources>

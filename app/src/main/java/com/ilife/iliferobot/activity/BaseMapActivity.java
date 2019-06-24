@@ -49,6 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
     final String TAG = MapActivity_X9_.class.getSimpleName();
+    public static final String NOT_FIRST_VIRTUAL_WALL ="virtual_wall";
     public static final int VIRTUALWALL_MAXCOUNT = 0x12;
     public static final int SEND_VIRTUALDATA_SUCCESS = 0x15;
     public static final int SEND_VIRTUALDATA_FAILED = 0x16;
@@ -94,8 +95,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     TextView tv_control_x9;
     @BindView(R.id.tv_bottom_recharge_x9)
     TextView tv_bottom_recharge;
-    @BindView(R.id.image_top_menu)
-    ImageView image_setting;
+    @BindView(R.id.fl_top_menu)
+    FrameLayout fl_setting;
     @BindView(R.id.image_animation)
     ImageView image_animation;
     Animation animation, animation_alpha;
@@ -197,7 +198,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         errorPopup = new PopupWindow();
         electricityDrawable = (AnimationDrawable) image_animation.getBackground();
 
-        image_setting.setVisibility(View.VISIBLE);
+        fl_setting.setVisibility(View.VISIBLE);
         String devName = SpUtils.getSpString(context, MainActivity.KEY_DEVNAME);
         if (devName != null && !devName.isEmpty()) {
             tv_title.setText(devName);
@@ -468,7 +469,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     }
 
-    @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.image_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
+    @OnClick({R.id.image_center, R.id.tv_start_x9, R.id.tv_control_x9, R.id.fl_top_menu, R.id.tv_recharge_x9, R.id.tv_along_x9,
             R.id.tv_point_x9, R.id.tv_virtual_wall_x9, R.id.tv_close_virtual_x9, R.id.ib_virtual_wall_tip
             , R.id.tv_add_virtual_x9, R.id.tv_delete_virtual_x9, R.id.iv_control_close_x9, R.id.tv_bottom_recharge_x9, R.id.tv_bottom_recharge_x8
             , R.id.tv_appointment_x9
@@ -507,18 +508,13 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 }
                 break;
             case R.id.ib_virtual_wall_tip://显示虚拟墙提示
-                if (virtualWallTipDialog == null) {
-                    virtualWallTipDialog = new UniversalDialog();
-                    virtualWallTipDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.virtual_tip_title))
-                            .setHintTip(Utils.getString(R.string.virtual_wall_use_tip), Gravity.LEFT, getResources().getColor(R.color.color_33));
-                }
-                virtualWallTipDialog.show(getSupportFragmentManager(), "virtual_wall_tip");
+                showVirtualWallTip();
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                 break;
-            case R.id.image_top_menu:
+            case R.id.fl_top_menu:
                 Intent i = new Intent(context, SettingActivity.class);
                 startActivity(i);
                 break;
@@ -691,7 +687,21 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
 
     @Override
+    public void showVirtualWallTip() {
+        if (virtualWallTipDialog == null) {
+            virtualWallTipDialog = new UniversalDialog();
+            virtualWallTipDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.virtual_tip_title))
+                    .setHintTip(Utils.getString(R.string.virtual_wall_use_tip), Gravity.LEFT, getResources().getColor(R.color.color_33));
+        }
+        virtualWallTipDialog.show(getSupportFragmentManager(), "virtual_wall_tip");
+    }
+
+    @Override
     public void showVirtualEdit() {
+        if (!SpUtils.getBoolean(this, NOT_FIRST_VIRTUAL_WALL)){
+            showVirtualWallTip();
+            SpUtils.saveBoolean(this, NOT_FIRST_VIRTUAL_WALL,true);
+        }
         tv_add_virtual.setSelected(true);
         tv_delete_virtual.setSelected(false);
         mMapView.setMODE(MapView.MODE_ADD_VIRTUAL);

@@ -50,6 +50,7 @@ public interface MapX9Contract {
         void setCurrentBottom(int bottom);
         void setTvUseStatusVisible(boolean isVisible);
         void drawBoxMapX8(ArrayList<Integer> pointList);
+        void showVirtualWallTip();
     }
 
     interface Presenter {

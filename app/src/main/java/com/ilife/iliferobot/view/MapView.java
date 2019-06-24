@@ -593,7 +593,7 @@ public class MapView extends View {
      */
     public void drawVirtualWall(List<int[]> existPointList) {
         if (existPointList == null) {
-            drawVirtualWall();//Represents when the map is updating
+            drawVirtualWall();//Represents the slam map is updating
         } else if (existPointList.size() == 0) {
             virtualWallBeans.clear();
             drawVirtualWall();

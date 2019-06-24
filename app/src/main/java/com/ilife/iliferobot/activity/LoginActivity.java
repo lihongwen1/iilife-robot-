@@ -94,7 +94,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
                 String str_account = et_email.getText().toString().trim();
                 String str_pass = et_pass.getText().toString().trim();
                 if (!UserUtils.isEmail(str_account)&&!UserUtils.isPhone(str_account)){
-                    ToastUtils.showToast(context,getString(R.string.login_aty_wrong_email));
+                    ToastUtils.showToast(context,getString(R.string.regist_wrong_account));
                     return;
                 }
                 login(str_account,str_pass);

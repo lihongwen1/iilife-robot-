@@ -288,11 +288,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     private void showRenameDialog() {
         View v = inflater.inflate(R.layout.layout_user_name_dialog, null);
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-        UserUtils.setInputFilter(et_name);
-//        if (!TextUtils.isEmpty(userName)) {
-//            et_name.setText(userName);
-//            et_name.setSelection(userName.length());
-//        }
+//        UserUtils.setInputFilter(et_name);
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,6 +301,10 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 String name = et_name.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
+                    return;
+                }
+                if (name.length()>12){
+                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
                     return;
                 }
                 if (!name.equals(userName)) {

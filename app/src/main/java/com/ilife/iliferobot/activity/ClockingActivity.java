@@ -234,6 +234,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
                         bytes[startIndex + 2] = TimeUtil.getWeeks(position);
                         bytes[startIndex + 3] = (byte) hour;
                         bytes[startIndex + 4] = (byte) minute;
+
                         acDeviceMsg.setContent(bytes);
                         acDeviceMsg.setCode(MsgCodeUtils.Appointment);
                         sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
