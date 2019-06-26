@@ -64,6 +64,7 @@ public class MapView extends View {
     private Canvas boxCanvas;
     private Bitmap boxBitmap;
     private Paint boxPaint;
+    private int extra_map_length;
 
     public MapView(Context context) {
         super(context);
@@ -163,15 +164,20 @@ public class MapView extends View {
             return;
         }
         isInitBuffer = true;
-        roadBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        slagBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        virtualBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        extra_map_length = width;
+        roadBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        slagBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        virtualBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        boxBitmap = Bitmap.createBitmap(width + extra_map_length , height+ extra_map_length, Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         virtualCanvas = new Canvas(virtualBitmap);
         boxCanvas = new Canvas(boxBitmap);
         sCenter.set(width / 2f, height / 2f);
+        originalDragX = -extra_map_length / 2f;
+        dragX = originalDragX;
+        originalDragY = -extra_map_length / 2f;
+        dragY = originalDragY;
     }
 
     /**
@@ -277,8 +283,8 @@ public class MapView extends View {
             baseScare = maxScare;
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
-        deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
-        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
+        deviationX = (xMin + xMax) / 2f * baseScare - width / 2f - extra_map_length / 2f;
+        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f - extra_map_length / 2f;
         MyLogger.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
     }
 
@@ -392,6 +398,19 @@ public class MapView extends View {
                 } else if (MODE == MODE_DRAG || MODE == MODE_DELETE_VIRTUAL) {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
+
+                    if (dragX > 0) {
+                        dragX = 0;
+                    }
+                    if (dragX < -extra_map_length) {
+                        dragX = -extra_map_length;
+                    }
+                    if (dragY > 0) {
+                        dragY = 0;
+                    }
+                    if (dragY < -extra_map_length) {
+                        dragY = -extra_map_length;
+                    }
                 } else if (MODE == MODE_ADD_VIRTUAL) {
 //                    if (getUsefulWallNum() >= 10) {
 //                        //TODO 提示虚拟墙数量超最大数
@@ -593,7 +612,7 @@ public class MapView extends View {
      */
     public void drawVirtualWall(List<int[]> existPointList) {
         if (existPointList == null) {
-            drawVirtualWall();//Represents the slam map is updating
+            drawVirtualWall();//Represents when the map is updating
         } else if (existPointList.size() == 0) {
             virtualWallBeans.clear();
             drawVirtualWall();

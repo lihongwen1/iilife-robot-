@@ -49,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
     final String TAG = MapActivity_X9_.class.getSimpleName();
-    public static final String NOT_FIRST_VIRTUAL_WALL ="virtual_wall";
+    public static final String NOT_FIRST_VIRTUAL_WALL = "virtual_wall";
     public static final int VIRTUALWALL_MAXCOUNT = 0x12;
     public static final int SEND_VIRTUALDATA_SUCCESS = 0x15;
     public static final int SEND_VIRTUALDATA_FAILED = 0x16;
@@ -61,7 +61,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_ALONG = 0x05;
     public static final int TAG_LEFT = 0x06;
     public static final int TAG_RIGHT = 0x07;
-    public static final int TAG_FORWAD = 0x08;
+    public static final int TAG_FORWARD = 0x08;
     Context context;
     private CustomPopupWindow exitVirtualWallPop;
     private UniversalDialog virtualWallTipDialog;
@@ -305,8 +305,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
 
-
-
     /**
      * 组件异常
      *
@@ -375,7 +373,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 tv_use_control.setVisibility(View.VISIBLE);
                 tv_use_control.setText(getString(R.string.map_aty_use_left));
                 break;
-            case TAG_FORWAD:
+            case TAG_FORWARD:
                 tv_use_control.setVisibility(View.VISIBLE);
                 tv_use_control.setText(getString(R.string.map_aty_use_forward));
                 break;
@@ -490,6 +488,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     } else {
                         mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                     }
+                } else if (mPresenter.isLowPowerWorker()) {
+                    ToastUtils.showToast(getString(R.string.low_power));
                 } else if (mPresenter.isRandomMode()) {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterRandomMode());
                 } else {
@@ -522,10 +522,18 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 mPresenter.enterRechargeMode();
                 break;
             case R.id.tv_along_x9:  //done
-                mPresenter.enterAlongMode();
+                if (mPresenter.isLowPowerWorker()) {
+                    ToastUtils.showToast(getString(R.string.low_power));
+                   } else {
+                    mPresenter.enterAlongMode();
+                }
                 break;
             case R.id.tv_point_x9:  //done
-                mPresenter.enterPointMode();
+                if (mPresenter.isLowPowerWorker()) {
+                    ToastUtils.showToast(getString(R.string.low_power));
+                } else {
+                    mPresenter.enterPointMode();
+                }
                 break;
             case R.id.tv_appointment_x9://预约
                 Intent intent = new Intent(context, ClockingActivity.class);
@@ -698,9 +706,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     @Override
     public void showVirtualEdit() {
-        if (!SpUtils.getBoolean(this, NOT_FIRST_VIRTUAL_WALL)){
+        if (!SpUtils.getBoolean(this, NOT_FIRST_VIRTUAL_WALL)) {
             showVirtualWallTip();
-            SpUtils.saveBoolean(this, NOT_FIRST_VIRTUAL_WALL,true);
+            SpUtils.saveBoolean(this, NOT_FIRST_VIRTUAL_WALL, true);
         }
         tv_add_virtual.setSelected(true);
         tv_delete_virtual.setSelected(false);
@@ -715,10 +723,10 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         fl_virtual_wall.setVisibility(View.GONE);
         tv_add_virtual.setSelected(false);
         tv_delete_virtual.setSelected(false);
-        if (virtualWallTipDialog != null&& virtualWallTipDialog.isAdded()) {
+        if (virtualWallTipDialog != null && virtualWallTipDialog.isAdded()) {
             virtualWallTipDialog.dismiss();
         }
-        if (exitVirtualWallPop != null&&exitVirtualWallPop.isShowing()) {
+        if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
             exitVirtualWallPop.disMissPop(this);
         }
     }

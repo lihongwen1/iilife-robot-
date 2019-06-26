@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
     private final String TAG = "MapX9Presenter";
@@ -596,6 +595,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     @Override
+    public boolean isLowPowerWorker() {
+        return batteryNo<6&&curStatus!=MsgCodeUtils.STATUE_OFF_LINE;
+    }
+
+    @Override
     public boolean canEdit(int curStatus) {
         // 0X02待机 0x06规划 0x08回冲 0x09充电 0x0D 临时中点 0x0C暂停
         return curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RECHARGE ||
@@ -668,7 +672,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
+        if (curStatus==MsgCodeUtils.STATUE_OFF_LINE||curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
@@ -729,7 +733,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int subCode = deviceMsg.getContent()[0];
                         int tag_code = -1;
                         if (subCode == 0x01) {
-                            tag_code = MapActivity_X9_.TAG_FORWAD;
+                            tag_code = MapActivity_X9_.TAG_FORWARD;
                         } else if (subCode == 0x03) {
                             tag_code = MapActivity_X9_.TAG_LEFT;
                         } else if (subCode == 0x04) {

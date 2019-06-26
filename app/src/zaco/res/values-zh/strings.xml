@@ -294,4 +294,5 @@
     <string name="cancel_">取消</string>
     <string name="pairing_wifi">配网中</string>
     <string name="name_max_length">最多输入12个字符</string>
+    <string name="low_power">电量低,请充电!</string>
 </resources>

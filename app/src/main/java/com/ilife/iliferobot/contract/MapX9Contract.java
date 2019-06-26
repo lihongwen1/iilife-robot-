@@ -95,6 +95,7 @@ public interface MapX9Contract {
          boolean isMaxMode();
          void reverseMaxMode();
          boolean isRandomMode();
+         boolean isLowPowerWorker();
     }
 
 }
