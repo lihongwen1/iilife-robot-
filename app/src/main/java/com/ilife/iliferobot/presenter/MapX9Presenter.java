@@ -570,7 +570,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_SLEEPING || (robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待机不显示地图
+        if (curStatus==MsgCodeUtils.STATUE_CHARGING||curStatus==MsgCodeUtils.STATUE_CHARGING_||curStatus == MsgCodeUtils.STATUE_SLEEPING || (robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待机不显示地图
             mView.cleanMapView();
         } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);

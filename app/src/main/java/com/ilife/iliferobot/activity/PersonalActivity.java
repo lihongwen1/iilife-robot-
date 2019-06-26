@@ -288,7 +288,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     private void showRenameDialog() {
         View v = inflater.inflate(R.layout.layout_user_name_dialog, null);
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-//        UserUtils.setInputFilter(et_name);
+        UserUtils.setEmojiFilter(et_name);
         v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

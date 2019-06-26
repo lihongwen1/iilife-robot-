@@ -74,15 +74,29 @@ public class UserUtils {
         return m.matches();
     }
 
-    public static void setInputFilter(EditText editText) {
-        InputFilter filter = new InputFilter() {
+    public static void setEmojiFilter(EditText editText) {
+        InputFilter inputFilter = new InputFilter() {
+            Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                    Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (!isMatch(source.toString())) {
+                Matcher emojiMatcher = emoji.matcher(source);
+                if (emojiMatcher.find()) {
                     return "";
                 }
                 return null;
             }
+        };
+        editText.setFilters(new InputFilter[]{inputFilter});
+    }
+
+    public static void setInputFilter(EditText editText) {
+        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
+            if (!isMatch(source.toString())) {
+                return "";
+            }
+            return null;
         };
 
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12), filter});
