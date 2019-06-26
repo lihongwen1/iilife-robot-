@@ -14,6 +14,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.activity.MainActivity;
 import com.ilife.iliferobot.model.SlamLineBean;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
@@ -21,6 +23,7 @@ import com.ilife.iliferobot.model.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -164,11 +167,16 @@ public class MapView extends View {
             return;
         }
         isInitBuffer = true;
-        extra_map_length = width;
+        String subDomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
+        if (subDomain.equals(Constants.subdomain_x900)) {
+            extra_map_length = width;
+        } else {
+            extra_map_length = 0;
+        }
         roadBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
         slagBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
         virtualBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
-        boxBitmap = Bitmap.createBitmap(width + extra_map_length , height+ extra_map_length, Bitmap.Config.ARGB_8888);
+        boxBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         virtualCanvas = new Canvas(virtualBitmap);
@@ -398,29 +406,28 @@ public class MapView extends View {
                 } else if (MODE == MODE_DRAG || MODE == MODE_DELETE_VIRTUAL) {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
-
-                    if (dragX > 0) {
-                        dragX = 0;
-                    }
-                    if (dragX < -extra_map_length) {
-                        dragX = -extra_map_length;
-                    }
-                    if (dragY > 0) {
-                        dragY = 0;
-                    }
-                    if (dragY < -extra_map_length) {
-                        dragY = -extra_map_length;
+                    if (extra_map_length != 0) {//只有900该参数不为0
+                        if (dragX > 0) {
+                            dragX = 0;
+                        }
+                        if (dragX < -extra_map_length) {
+                            dragX = -extra_map_length;
+                        }
+                        if (dragY > 0) {
+                            dragY = 0;
+                        }
+                        if (dragY < -extra_map_length) {
+                            dragY = -extra_map_length;
+                        }
                     }
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-//                    if (getUsefulWallNum() >= 10) {
-//                        //TODO 提示虚拟墙数量超最大数
-////                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
-//                    } else {
-                    virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                    virtualCanvas.save();
-                    virtualCanvas.drawPath(existvirtualPath, virtualPaint);
-                    virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
-//                    }
+                    float distance = distance(downX, downY, x, y);
+                    if (distance > MIN_WALL_LENGTH) {
+                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                        virtualCanvas.save();
+                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
+                        virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
+                    }
                 }
                 invalidate();
                 break;
@@ -440,7 +447,7 @@ public class MapView extends View {
                     } else {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
-                            ToastUtils.showToast(Utils.getString(R.string.map_aty_too_short));
+//                            ToastUtils.showToast(Utils.getString(R.string.map_aty_too_short));
                         } else {
                             existvirtualPath.moveTo(downX, downY);
                             existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
