@@ -38,22 +38,22 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     @Override
     public void sendVerification() {
         //send code by cloud
-        if (!isPhoneUseful){
+        if (!isPhoneUseful) {
             return;
         }
         verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter ->
                 acAccountMgr.sendVerifyCode(mView.getPhone(), 1, new VoidCallback() {
-            @Override
-            public void success() {
-                completableEmitter.onComplete();
-            }
+                    @Override
+                    public void success() {
+                        completableEmitter.onComplete();
+                    }
 
-            @Override
-            public void error(ACException e) {
-                completableEmitter.onError(new Exception(Utils.getString(R.string.login_aty_timeout)));
-                //发送验证码失败
-            }
-        }))).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+                    @Override
+                    public void error(ACException e) {
+                        completableEmitter.onError(new Exception(Utils.getString(R.string.login_aty_timeout)));
+                        //发送验证码失败
+                    }
+                }))).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
             //发送验证码成功
         }, throwable -> {
             ToastUtils.showToast(throwable.getMessage());
@@ -72,12 +72,12 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void isMobileUseful() {
-        if (mView.getPhone().isEmpty()){
+        if (mView.getPhone().isEmpty()) {
             ToastUtils.showToast(Utils.getString(R.string.regist_wrong_account));
             isPhoneUseful = false;
             return;
         }
-        if (!UserUtils.isPhone(mView.getPhone())&&!UserUtils.isEmail(mView.getPhone())) {
+        if (!UserUtils.isPhone(mView.getPhone()) && !UserUtils.isEmail(mView.getPhone())) {
             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
             isPhoneUseful = false;
         } else {
@@ -137,6 +137,16 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         }
     }
 
+    @Override
+    public void finishCountDown() {
+        if (verCodeDisposable != null && !verCodeDisposable.isDisposed()) {
+            verCodeDisposable.dispose();
+        }
+        if (registerDisposable != null && !registerDisposable.isDisposed()) {
+            registerDisposable.dispose();
+        }
+        mView.onCountDownFinish();
+    }
 
     @Override
     public void detachView() {

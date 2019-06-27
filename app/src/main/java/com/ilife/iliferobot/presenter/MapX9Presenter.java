@@ -746,8 +746,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
                         curStatus = bytes[0];
-                        if (curStatus == sendByte) {
-//                            setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
+                        if (curStatus == sendByte&&robotType.equals("X900")) {
+                            setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
                                 ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
