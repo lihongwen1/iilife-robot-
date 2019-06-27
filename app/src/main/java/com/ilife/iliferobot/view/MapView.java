@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MapView extends View {
     private static String TAG = "MapView";
@@ -194,15 +195,25 @@ public class MapView extends View {
         roadCanvas.save();
         float startX = 0, startY = 0, endX = 0, endY = 0;//标记起点坐标
 //        绘制最新路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+        boolean flag = false;//新包数据标记
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
                     startX = matrixCoordinateX(roadList.get(0));
                     startY = matrixCoordinateY(1500 - roadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
-
                 } else {
-                    roadPath.lineTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    if (roadList.get(k) == 400 && roadList.get(k + 1) == 400) {
+                        flag = true;
+                        MyLogger.d(TAG, "new package data is arrived");
+                        continue;
+                    }
+                    if (flag) {
+                        flag = false;
+                        roadPath.moveTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    } else {
+                        roadPath.lineTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    }
                 }
             }
         }
@@ -218,7 +229,17 @@ public class MapView extends View {
                     startY = matrixCoordinateY(1500 - historyRoadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
                 } else {
-                    roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    if (historyRoadList.get(k) == 400 && historyRoadList.get(k + 1) == 400) {
+                        flag = true;
+                        MyLogger.d(TAG, "new package data is arrived");
+                        continue;
+                    }
+                    if (flag) {
+                        flag = false;
+                        roadPath.moveTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    } else {
+                        roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    }
                 }
             }
         }
