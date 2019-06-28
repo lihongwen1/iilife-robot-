@@ -305,9 +305,10 @@ public class MapView extends View {
             baseScare = maxScare;
         }
         if (baseScare < 3.0f) {
-            roadPaint.setStrokeWidth(2f);
+            roadPaint.setStrokeWidth(3f);
         } else {
             roadPaint.setStrokeWidth(4f);
+            
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f - extra_map_length / 2f;

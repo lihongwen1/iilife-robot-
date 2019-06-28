@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
     private final String TAG = "MapX9Presenter";
@@ -177,14 +178,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     MyLogger.d(TAG, "xMax:" + xMax + "  xmin:" + xMin + "   ymax:" + yMax + "    ymin" + yMin);
                     if (!TextUtils.isEmpty(strMap)) {
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
-                        if (isViewAttached() && curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT
-                                && curStatus != MsgCodeUtils.STATUE_RECHARGE&&curStatus!=MsgCodeUtils.STATUE_OFF_LINE) {
+                        if (isViewAttached()) {
                             //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式,0x08回冲模式下不更新地图
                             mView.updateSlam(xMin, xMax, yMin, yMax);
-                            mView.drawSlamMap(slamBytes);
-                            mView.drawRoadMap(realTimePoints, historyRoadList);
-                            mView.drawObstacle();
-                            mView.drawVirtualWall(null);//只是刷新虚拟墙
+                            if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT
+                                    && curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE) {
+                                mView.drawSlamMap(slamBytes);
+                                mView.drawRoadMap(realTimePoints, historyRoadList);
+                                mView.drawObstacle();
+                                mView.drawVirtualWall(null);//只是刷新虚拟墙
+                            }
                         }
                     }
                 } else {//x800系列
@@ -508,7 +511,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             voiceOpen = bytes[6] == 0x01;
                             int lastStatus = curStatus;
                             curStatus = bytes[0];
-                            if (lastStatus==MsgCodeUtils.STATUE_OFF_LINE&&curStatus!=MsgCodeUtils.STATUE_CHARGING&&curStatus!=MsgCodeUtils.STATUE_CHARGING_){
+                            if (lastStatus == MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING && curStatus != MsgCodeUtils.STATUE_CHARGING_) {
                                 //slam地图
                                 mView.drawSlamMap(slamBytes);
                                 //历史路径
@@ -548,7 +551,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
-
+        MyLogger.d(TAG,"setStatus----------curStatus"+curStatus);
         if (!isViewAttached()) {
             return;
         }
@@ -748,7 +751,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
                         curStatus = bytes[0];
-                        if (curStatus == sendByte && robotType.equals("X900")) {
+                        if (curStatus == sendByte) {
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
