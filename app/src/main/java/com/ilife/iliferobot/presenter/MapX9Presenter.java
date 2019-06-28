@@ -751,7 +751,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
                         curStatus = bytes[0];
-                        if (curStatus == sendByte) {
+                        if (curStatus == sendByte&&robotType.equals("X900")&&curStatus!=MsgCodeUtils.STATUE_WAIT) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
