@@ -14,16 +14,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.activity.MainActivity;
-import com.ilife.iliferobot.model.SlamLineBean;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
+import com.ilife.iliferobot.model.SlamLineBean;
 import com.ilife.iliferobot.model.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -31,11 +28,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
+//TODO 1.虚拟墙过滤空点数据；2.虚拟墙集合需要增加锁机制，避免数据错乱；
 public class MapView extends View {
-    private static String TAG = "MapView";
     private int width, height;
+    private static String TAG = "MapView";
     private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
     private Path roadPath, existvirtualPath, slamPath, obstaclePath;
     private float downX, downY;

@@ -41,8 +41,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
+//TODO 处理X900的暂停事件的模拟事件更新UI问题
+// TODO APP后台CPU消耗问题
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
     private final String TAG = "MapX9Presenter";
     private ACDeviceDataMgr.PropertyReceiver propertyReceiver;
@@ -551,7 +552,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
-        MyLogger.d(TAG,"setStatus----------curStatus"+curStatus);
+        MyLogger.d(TAG, "setStatus----------curStatus" + curStatus);
         if (!isViewAttached()) {
             return;
         }
@@ -751,7 +752,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
                         curStatus = bytes[0];
-                        if (curStatus == sendByte&&robotType.equals("X900")&&curStatus!=MsgCodeUtils.STATUE_WAIT) {//900的暂停模式发的是待机命令，不准确
+                        if (curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
