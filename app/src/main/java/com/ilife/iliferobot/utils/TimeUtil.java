@@ -1,5 +1,9 @@
 package com.ilife.iliferobot.utils;
 
+import android.util.Log;
+
+import com.accloud.utils.LogUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -177,7 +181,7 @@ public class TimeUtil {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
-
+        MyLogger.d(TAG,dayOfMonth+"---"+dayOfWeek+"---"+hour+"---"+minute+"--"+second);
         byte h_year = (byte) ((year & 0xff00) >> 8);
         byte l_year = (byte) (year & 0x00ff);
 

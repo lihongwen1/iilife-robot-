@@ -458,7 +458,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     private void showRenameDialog() {
         View v = inflater.inflate(R.layout.layout_name_dialog, null);
         final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-        UserUtils.setInputFilter(et_name);
+        UserUtils.setEmojiFilter(et_name);
         name = tv_name.getText().toString();
         TextView title = v.findViewById(R.id.tv_title);
         title.setText(name);

@@ -43,7 +43,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private static final String TAG = ApWifiPresenter.class.getName();
     private ACDeviceActivator activator;
     private WifiManager wifiManager;
-    private final String apWifiTarget = "Robot";
+    private final String apWifiTarget = "robot";
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
@@ -87,6 +87,37 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     }
 
     @Override
+    public void connectToDeviceWithSsid(String ssid) {
+        apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+            if (isViewAttached()) {
+                MyLogger.d(TAG, "update progress");
+                mView.updateBindProgress("", (int) (aLong * 5));
+            }
+        });
+        mApSsid = ssid;
+        apWifiDisposable = connectToAp(1).delay(8, TimeUnit.SECONDS).
+                andThen(broadCastWifi(mView.getHomeSsid(), mView.getPassWord())).
+                delay(18, TimeUnit.SECONDS)
+                .andThen(connectToAp(2)).delay(6, TimeUnit.SECONDS)
+                .andThen(bindDevice()).
+                        subscribeOn(Schedulers.io()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        subscribe(device ->
+                        {
+                            MyLogger.d(TAG, "bind success");
+                            if (isViewAttached()) {
+                                mView.bindSuccess(device);
+                            }
+                        }, throwable ->
+                        {
+                            MyLogger.d(TAG, "bind fail");
+                            if (isViewAttached()) {
+                                mView.bindFail(throwable.getMessage());
+                            }
+                        });
+    }
+
+    @Override
     public void connectToDevice() {
         apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
@@ -95,7 +126,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
             }
         });
         apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).
-                andThen(broadCastWifi(mView.getSsid(), mView.getPassWord())).
+                andThen(broadCastWifi(mView.getHomeSsid(), mView.getPassWord())).
                 delay(18, TimeUnit.SECONDS)
                 .andThen(connectToAp(2)).delay(6, TimeUnit.SECONDS)
                 .andThen(bindDevice()).
@@ -133,7 +164,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 connectPwd = apPassWord;
 //                mView.updateBindProgress("连接设备热点成功" + connectSsid, 40);
             } else {
-                connectSsid = mView.getSsid();
+                connectSsid = mView.getHomeSsid();
                 connectPwd = mView.getPassWord();
 //                mView.updateBindProgress("连接设备热点成功" + connectSsid, 70);
             }

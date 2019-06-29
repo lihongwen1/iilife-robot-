@@ -15,7 +15,7 @@ public interface ApWifiContract {
          * get ssid from  text view
          * @return
          */
-        String  getSsid();
+        String getHomeSsid();
 
         /**
          * get password from edit text view
@@ -29,6 +29,7 @@ public interface ApWifiContract {
     }
 
     interface Presenter {
+        void connectToDeviceWithSsid(String ssid);
         void connectToDevice();
         /**
          * connect to device AP

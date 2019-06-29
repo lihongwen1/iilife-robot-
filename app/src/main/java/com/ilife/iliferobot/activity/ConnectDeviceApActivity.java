@@ -45,7 +45,9 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
                     ToastUtils.showToast(this, getString(R.string.third_ap_aty_port_));
                 } else {
                     finish();
-                    startActivity(new Intent(this, ApWifiActivity.class));
+                    Intent intent=new Intent(this, ApWifiActivity.class);
+                    intent.putExtra(ApWifiActivity.EXTAR_ROBOT_SSID,ap_ssid);
+                    startActivity(intent);
                 }
                 break;
             case R.id.tv_set:

@@ -106,7 +106,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             case Constants.subdomain_a9s:
                 robotType = "a9s";
                 break;
-                case Constants.subdomain_a8s:
+            case Constants.subdomain_a8s:
                 robotType = "a8s";
                 break;
             default:
@@ -146,9 +146,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (!isViewAttached()) {
                     return;
                 }
-                if (curStatus == 0x06) {
+                if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
                     getRealTimeMap();
-                    queryVirtualWall();
                 }
             }
         };
@@ -266,9 +265,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
                 existPointList.clear();
                 byte[] resp = acDeviceMsg.getContent();
-                StringBuilder stringBuilder = new StringBuilder();
                 if (resp != null && resp.length > 0) {
                     byte count = resp[1];//虚拟墙总数
+                    MyLogger.d(TAG, "virtual wall count :" +count);
                     for (int i = 9; i < 8 * count + 2; i += 8) {
                         //地图坐标
                         int startX = DataUtils.bytesToInt(new byte[]{resp[i - 7], resp[i - 6]}, 0);//2,3
@@ -520,7 +519,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mView.updateCleanTime(getTimeValue());
                             mView.showErrorPopup(errorCode);
                             if (errorCode != 0) {
-                                mView.setMapViewVisible(false);
+                                mView.cleanMapView();
                             }
                         }
                     }
@@ -571,7 +570,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_SLEEPING || (robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待機不顯示地圖
+        if (curStatus==MsgCodeUtils.STATUE_CHARGING||curStatus==MsgCodeUtils.STATUE_CHARGING_||curStatus == MsgCodeUtils.STATUE_SLEEPING || (robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT)) {//休眠，或者x900的待机不显示地图
             mView.cleanMapView();
         } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
@@ -580,7 +579,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//虚拟墙编辑模式
             isVirtualEdit = true;
             mView.showVirtualEdit();
-            mView.setMapViewVisible(true);
         } else if (curStatus == MsgCodeUtils.STATUE_POINT) { //重点
             mView.updatePoint(true);
             mView.cleanMapView();
@@ -594,6 +592,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         } else {
             mView.showBottomView();
         }
+    }
+
+    @Override
+    public boolean isLowPowerWorker() {
+        return batteryNo<6&&curStatus!=MsgCodeUtils.STATUE_OFF_LINE;
     }
 
     @Override
@@ -626,12 +629,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_adjustTime, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void success(ACDeviceMsg acDeviceMsg) {
-
+                MyLogger.d(TAG, "adjust Time Success");
             }
 
             @Override
             public void error(ACException e) {
-
+                MyLogger.d(TAG, "adjust Time Fail");
             }
         });
     }
@@ -645,18 +648,22 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 MyLogger.e(TAG, "initPropReceiver onPropertyReceive errorCode = " + info.getError_info());
                 errorCode = info.getError_info();
                 batteryNo = info.getBattery_level();
-                curStatus = info.getWork_pattern();
                 isMaxMode = info.getVacuum_cleaning() == MsgCodeUtils.CLEANNING_CLEANING_MAX;
                 mopForce = info.getCleaning_cleaning();
                 voiceOpen = info.getVoice_mode() == 0x01;
                 device_type = info.getDevice_type();
+                int lastStatus=curStatus;
+                curStatus = info.getWork_pattern();
+                if (curStatus==MsgCodeUtils.STATUE_WAIT||((lastStatus==MsgCodeUtils.STATUE_VIRTUAL_EDIT||lastStatus==MsgCodeUtils.STATUE_RECHARGE)&&lastStatus!=curStatus)){//退出虚拟墙编辑模式时查询虚拟墙
+                    queryVirtualWall();
+                }
                 MyLogger.d(TAG, "set statue,and statue code is 571:" + curStatus);
                 setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                 mView.updateCleanArea(getAreaValue());
                 mView.updateCleanTime(getTimeValue());
                 mView.showErrorPopup(errorCode);
                 if (errorCode != 0) {
-                    mView.setMapViewVisible(false);
+                    mView.cleanMapView();
                 }
             }
         };
@@ -665,7 +672,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
+        if (curStatus==MsgCodeUtils.STATUE_OFF_LINE||curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
@@ -726,7 +733,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int subCode = deviceMsg.getContent()[0];
                         int tag_code = -1;
                         if (subCode == 0x01) {
-                            tag_code = MapActivity_X9_.TAG_FORWAD;
+                            tag_code = MapActivity_X9_.TAG_FORWARD;
                         } else if (subCode == 0x03) {
                             tag_code = MapActivity_X9_.TAG_LEFT;
                         } else if (subCode == 0x04) {
