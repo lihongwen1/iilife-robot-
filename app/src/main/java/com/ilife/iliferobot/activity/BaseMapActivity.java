@@ -524,7 +524,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case R.id.tv_along_x9:  //done
                 if (mPresenter.isLowPowerWorker()) {
                     ToastUtils.showToast(getString(R.string.low_power));
-                   } else {
+                } else {
                     mPresenter.enterAlongMode();
                 }
                 break;
@@ -738,7 +738,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         tv_along.setSelected(surStatues == 0x04);
         tv_recharge_x9.setSelected(surStatues == 0x08);
     }
-
 
     @Override
     public void drawBoxMapX8(ArrayList<Integer> pointList) {

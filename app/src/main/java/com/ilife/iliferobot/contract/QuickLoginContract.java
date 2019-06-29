@@ -26,5 +26,6 @@ public interface QuickLoginContract {
         Completable checkPhone();
         void checkVerificationCode();
         Completable countDown();
+        void finishCountDown();
     }
 }

@@ -42,7 +42,6 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     long exitTime;
     Context context;
     public static Activity activity;
-    private QuickLoginPresenter mPresenter;
     @BindView(R.id.et_verification_code)
     SuperEditText et_verification_code;
     @BindView(R.id.et_phone_number)
@@ -174,6 +173,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
 
     @Override
     public void goSetPassword() {
+        mPresenter.finishCountDown();
         Intent intent = new Intent(QuickLoginActivity.this, SetPasswordActivity.class);
         intent.putExtra(PHONE, getPhone());
         intent.putExtra(VER_CODE, getVerificationCode());

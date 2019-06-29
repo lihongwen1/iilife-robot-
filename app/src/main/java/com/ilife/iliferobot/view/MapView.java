@@ -3,25 +3,24 @@ package com.ilife.iliferobot.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.activity.MainActivity;
-import com.ilife.iliferobot.model.SlamLineBean;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
+import com.ilife.iliferobot.model.SlamLineBean;
 import com.ilife.iliferobot.model.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -30,10 +29,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+//TODO 1.虚拟墙过滤空点数据；2.虚拟墙集合需要增加锁机制，避免数据错乱；
 public class MapView extends View {
-    private static String TAG = "MapView";
     private int width, height;
-    private Paint slamPaint, obtaclePaint, roadPaint, virtualPaint, positionCirclePaint;
+    private static String TAG = "MapView";
+    private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
     private Path roadPath, existvirtualPath, slamPath, obstaclePath;
     private float downX, downY;
     private float beforeDistance, afterDistance;
@@ -49,6 +49,8 @@ public class MapView extends View {
     private float baseScare = 1;//基准坐标缩放比例，以slam边缘占据view3/4，与view同坐标中心为标准
 
     private PointF sCenter, downPoint;
+    private Bitmap roadBitmap, slagBitmap;
+    private Canvas roadCanvas, slamCanvas;
     private boolean isInitBuffer = false;
     private Matrix matrix;
     private float dragX, originalDragX, dragY, originalDragY;
@@ -61,6 +63,8 @@ public class MapView extends View {
     private static final int deleteIconW = 36;
     private List<RectF> deleteIconRectFs = new ArrayList<>(10);
 
+    private Canvas boxCanvas;
+    private Bitmap boxBitmap;
     private Paint boxPaint;
     private int extra_map_length;
     private RectF curVirtualWall = new RectF();
@@ -103,15 +107,6 @@ public class MapView extends View {
         slamPaint.setStrokeCap(Paint.Cap.ROUND);
         slamPaint.setColor(colors[1]);
         slamPaint.setStrokeWidth(1f);
-        obtaclePaint = new Paint();
-        obtaclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        obtaclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        obtaclePaint.setFilterBitmap(true);
-        obtaclePaint.setStrokeJoin(Paint.Join.ROUND);
-        obtaclePaint.setStrokeCap(Paint.Cap.ROUND);
-        obtaclePaint.setColor(colors[0]);
-        obtaclePaint.setStrokeWidth(1f);
-
         positionCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         positionCirclePaint.setStyle(Paint.Style.FILL);
         positionCirclePaint.setFilterBitmap(true);
@@ -171,6 +166,12 @@ public class MapView extends View {
             return;
         }
         isInitBuffer = true;
+        roadBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        slagBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        boxBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        roadCanvas = new Canvas(roadBitmap);
+        slamCanvas = new Canvas(slagBitmap);
+        boxCanvas = new Canvas(boxBitmap);
         sCenter.set(width / 2f, height / 2f);
         originalDragX = -extra_map_length / 2f;
         dragX = originalDragX;
@@ -187,17 +188,29 @@ public class MapView extends View {
     public void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
         MyLogger.d(TAG, "drawRoadMap-----");
         roadPath.reset();
+        roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        roadCanvas.save();
         float startX = 0, startY = 0, endX = 0, endY = 0;//标记起点坐标
 //        绘制最新路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+        boolean flag = false;//新包数据标记
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
                     startX = matrixCoordinateX(roadList.get(0));
                     startY = matrixCoordinateY(1500 - roadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
-
                 } else {
-                    roadPath.lineTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    if (roadList.get(k) == 400 && roadList.get(k + 1) == 400) {
+                        flag = true;
+                        MyLogger.d(TAG, "new package data is arrived");
+                        continue;
+                    }
+                    if (flag) {
+                        flag = false;
+                        roadPath.moveTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    } else {
+                        roadPath.lineTo(matrixCoordinateX(roadList.get(k)), matrixCoordinateY(1500 - roadList.get(k + 1)));
+                    }
                 }
             }
         }
@@ -213,23 +226,33 @@ public class MapView extends View {
                     startY = matrixCoordinateY(1500 - historyRoadList.get(1));
                     roadPath.moveTo(startX, startY);//设置起点
                 } else {
-                    roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    if (historyRoadList.get(k) == 400 && historyRoadList.get(k + 1) == 400) {
+                        flag = true;
+                        MyLogger.d(TAG, "new package data is arrived");
+                        continue;
+                    }
+                    if (flag) {
+                        flag = false;
+                        roadPath.moveTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    } else {
+                        roadPath.lineTo(matrixCoordinateX(historyRoadList.get(k)), matrixCoordinateY(1500 - historyRoadList.get(k + 1)));
+                    }
                 }
-                MyLogger.d("roadx", "x:" + historyRoadList.get(k) + "---y:" + (1500 - historyRoadList.get(k + 1)));
             }
         }
+        roadCanvas.drawPath(roadPath, roadPaint);
         if (startX != 0 && startY != 0) {
             positionCirclePaint.setColor(getResources().getColor(R.color.white));
-//            roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
+            roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
         }
         if (roadList != null && roadList.size() > 2) {
             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
-//            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         } else if (endX != 0 && endY != 0) {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
-//            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
 
         invalidate();
@@ -239,6 +262,10 @@ public class MapView extends View {
      * 绘制障碍物点
      */
     public void drawObstacle() {
+        slamPaint.setColor(colors[1]);
+        slamCanvas.drawPath(slamPath, slamPaint);
+        slamPaint.setColor(colors[0]);
+        slamCanvas.drawPath(obstaclePath, slamPaint);
         invalidate();
     }
 
@@ -246,6 +273,11 @@ public class MapView extends View {
      * 清除所有绘图痕迹
      */
     public void clean() {
+        deleteIconRectFs.clear();
+        existvirtualPath.reset();
+        slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
     }
 
@@ -268,6 +300,12 @@ public class MapView extends View {
         baseScare = Math.round(bigDecimal.floatValue());
         if (baseScare >= maxScare) {
             baseScare = maxScare;
+        }
+        if (baseScare < 3.0f) {
+            roadPaint.setStrokeWidth(3f);
+        } else {
+            roadPaint.setStrokeWidth(4f);
+            
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f - extra_map_length / 2f;
@@ -324,17 +362,18 @@ public class MapView extends View {
         matrix.postTranslate(dragX, dragY);
         MyLogger.d("SelfPaint", "Scare" + scare + "---tansX:" + dragX + "---" + dragY + "--sx" + sCenter.x + "---sy" + sCenter.y);
         matrix.postScale(scare, scare, sCenter.x, sCenter.y);
+        canvas.drawBitmap(slagBitmap, matrix, slamPaint);
+        canvas.drawBitmap(roadBitmap, matrix, roadPaint);
+        canvas.drawBitmap(boxBitmap, matrix, boxPaint);
+        //绘制虚拟墙
         canvas.setMatrix(matrix);
-        canvas.drawPath(slamPath, slamPaint);
-        canvas.drawPath(obstaclePath, obtaclePaint);
-        canvas.drawPath(roadPath, roadPaint);
         canvas.drawPath(existvirtualPath, virtualPaint);
         if (MODE == MODE_DELETE_VIRTUAL) {
             for (RectF rf : deleteIconRectFs) {
                 canvas.drawBitmap(deleteBitmap, rf.left, rf.top, virtualPaint);
             }
         }
-        if (curVirtualWall.left!=0) {
+        if (curVirtualWall.left != 0) {
             canvas.drawLine(curVirtualWall.left, curVirtualWall.top, curVirtualWall.right, curVirtualWall.bottom, virtualPaint);
         }
         super.onDraw(canvas);
@@ -456,7 +495,9 @@ public class MapView extends View {
                         if (vr.getDeleteIcon().contains(x, y)) {
 //                            ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
                             if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
-                                deleteIconRectFs.remove(vr.getNumber() - 1);
+                                if (deleteIconRectFs.size() > vr.getNumber() - 1) {
+                                    deleteIconRectFs.remove(vr.getNumber() - 1);
+                                }
                                 virtualWallBeans.remove(vr);
                             }
                             if (vr.getState() == 1) {//服务器上的虚拟墙，可能操作会被取消掉，只需要改变状态
@@ -686,17 +727,20 @@ public class MapView extends View {
      * 从(0,1500)开始向上一行行绘制slam map
      */
     public void drawSlamMap(byte[] slamBytes) {
-//        if (slamCanvas == null) {
-//            isInitBuffer = false;
-//            initBuffer();
-//        }
+        if (slamCanvas == null) {
+            isInitBuffer = false;
+            initBuffer();
+        }
         int x = 0, y = 0, length, totalCount = 0;
         if (slamBytes != null && slamBytes.length > 0) {
             slamPath.reset();
             obstaclePath.reset();
+            slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            slamCanvas.save();
             for (int i = 0; i < slamBytes.length; i += 3) {
                 byte attr = slamBytes[i];
                 length = DataUtils.bytesToInt2(new byte[]{slamBytes[i + 1], slamBytes[i + 2]}, 0);
+                slamPaint.setColor(colors[attr - 1]);
                 int distanceTo1500 = 1500 - totalCount;
                 switch (attr) {
                     case 0x03://未探索区域
@@ -772,49 +816,49 @@ public class MapView extends View {
      * @param pointList
      */
     public void drawBoxMapX8(ArrayList<Integer> pointList) {
-//        float endY = 0, endX = 0;
-//        if (pointList == null) {
-//            return;
-//        }
-//        if (pointList.size() == 0) {
-//            boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//            invalidate();
-//            return;
-//        }
-//        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
-//        int x, y;
-//        for (int i = 1; i < pointList.size(); i += 2) {
-//            x = -pointList.get(i - 1);
-//            y = -pointList.get(i);
-//            if (minX > x) {
-//                minX = x;
-//            }
-//            if (maxX < x) {
-//                maxX = x;
-//            }
-//            if (minY > y) {
-//                minY = y;
-//            }
-//            if (maxY < y) {
-//                maxY = y;
-//            }
-//        }
-//        updateSlam(minX, maxX, minY, maxY, 15);
-//        boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//        //绘制清扫区域的白方格
-//        boxPaint.setColor(getResources().getColor(R.color.white));
-//        boxPaint.setStrokeWidth((float) (baseScare - 1));
-//        if (pointList.size() > 0) {
-//            for (int i = 1; i < pointList.size(); i += 2) {
-//                x = -pointList.get(i - 1);
-//                y = -pointList.get(i);
-//                boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
-//            }
-//        }
-//        endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
-//        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
-//        positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
-//        boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
-//        invalidate();
+        float endY = 0, endX = 0;
+        if (pointList == null) {
+            return;
+        }
+        if (pointList.size() == 0) {
+            boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            invalidate();
+            return;
+        }
+        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
+        int x, y;
+        for (int i = 1; i < pointList.size(); i += 2) {
+            x = -pointList.get(i - 1);
+            y = -pointList.get(i);
+            if (minX > x) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            if (minY > y) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        updateSlam(minX, maxX, minY, maxY, 15);
+        boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        //绘制清扫区域的白方格
+        boxPaint.setColor(getResources().getColor(R.color.white));
+        boxPaint.setStrokeWidth((float) (baseScare - 1));
+        if (pointList.size() > 0) {
+            for (int i = 1; i < pointList.size(); i += 2) {
+                x = -pointList.get(i - 1);
+                y = -pointList.get(i);
+                boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
+            }
+        }
+        endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
+        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
+        positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+        boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+        invalidate();
     }
 }
