@@ -100,7 +100,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
     }
 
     @Override
-    public void confirm(boolean isRegister) {
+    public void confirm() {
         if (!UserUtils.checkPassword(mView.getPwd1())) {
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
             return;

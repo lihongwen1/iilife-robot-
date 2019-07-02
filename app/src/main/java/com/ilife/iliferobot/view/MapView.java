@@ -29,12 +29,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-//TODO 1.虚拟墙过滤空点数据；2.虚拟墙集合需要增加锁机制，避免数据错乱；
+//TODO 2.电子墙集合需要增加锁机制，避免数据错乱；
 public class MapView extends View {
     private int width, height;
     private static String TAG = "MapView";
     private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
-    private Path roadPath, existvirtualPath, slamPath, obstaclePath;
+    private Path roadPath, existVirtualPath, slamPath, obstaclePath, boxPath;
     private float downX, downY;
     private float beforeDistance, afterDistance;
     public static final int MODE_NONE = 1;
@@ -59,14 +59,13 @@ public class MapView extends View {
     private int[] colors;
     private List<VirtualWallBean> virtualWallBeans;
     private static final int MIN_WALL_LENGTH = 20;
-    private Bitmap deleteBitmap;//删除虚拟墙的bitmap
+    private Bitmap deleteBitmap;//删除电子墙的bitmap
     private static final int deleteIconW = 36;
     private List<RectF> deleteIconRectFs = new ArrayList<>(10);
 
     private Canvas boxCanvas;
     private Bitmap boxBitmap;
     private Paint boxPaint;
-    private int extra_map_length;
     private RectF curVirtualWall = new RectF();
 
     public MapView(Context context) {
@@ -93,7 +92,7 @@ public class MapView extends View {
         sCenter = new PointF(0, 0);
         downPoint = new PointF(0, 0);
         roadPath = new Path();
-        existvirtualPath = new Path();
+        existVirtualPath = new Path();
         slamPath = new Path();
         obstaclePath = new Path();
         deleteBitmap = BitmapUtils.decodeSampledBitmapFromResource(getResources(), R.drawable.n_icon_delete_virtual, deleteIconW, deleteIconW);
@@ -133,9 +132,10 @@ public class MapView extends View {
         virtualPaint.setStrokeWidth(3f);
 
         boxPaint = new Paint();
+        boxPath = new Path();
 
         /**
-         * 虚拟墙路径集合
+         * 电子墙路径集合
          */
         virtualWallBeans = new ArrayList<>();
     }
@@ -143,7 +143,7 @@ public class MapView extends View {
     /**
      * 设置地图模式
      *
-     * @param MODE MODE_VIRTUAL 虚拟墙编辑模式
+     * @param MODE MODE_VIRTUAL 电子墙编辑模式
      */
     public void setMODE(int MODE) {
         this.MODE = MODE;
@@ -166,17 +166,13 @@ public class MapView extends View {
             return;
         }
         isInitBuffer = true;
-        roadBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
-        slagBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
-        boxBitmap = Bitmap.createBitmap(width + extra_map_length, height + extra_map_length, Bitmap.Config.ARGB_8888);
+        roadBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        slagBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         roadCanvas = new Canvas(roadBitmap);
         slamCanvas = new Canvas(slagBitmap);
         boxCanvas = new Canvas(boxBitmap);
         sCenter.set(width / 2f, height / 2f);
-        originalDragX = -extra_map_length / 2f;
-        dragX = originalDragX;
-        originalDragY = -extra_map_length / 2f;
-        dragY = originalDragY;
     }
 
     /**
@@ -274,7 +270,7 @@ public class MapView extends View {
      */
     public void clean() {
         deleteIconRectFs.clear();
-        existvirtualPath.reset();
+        existVirtualPath.reset();
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -305,11 +301,10 @@ public class MapView extends View {
             roadPaint.setStrokeWidth(3f);
         } else {
             roadPaint.setStrokeWidth(4f);
-            
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
-        deviationX = (xMin + xMax) / 2f * baseScare - width / 2f - extra_map_length / 2f;
-        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f - extra_map_length / 2f;
+        deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
+        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
         MyLogger.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
     }
 
@@ -365,9 +360,9 @@ public class MapView extends View {
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
         canvas.drawBitmap(boxBitmap, matrix, boxPaint);
-        //绘制虚拟墙
+        //绘制电子墙
         canvas.setMatrix(matrix);
-        canvas.drawPath(existvirtualPath, virtualPaint);
+        canvas.drawPath(existVirtualPath, virtualPaint);
         if (MODE == MODE_DELETE_VIRTUAL) {
             for (RectF rf : deleteIconRectFs) {
                 canvas.drawBitmap(deleteBitmap, rf.left, rf.top, virtualPaint);
@@ -405,7 +400,7 @@ public class MapView extends View {
 
     // TODO 重绘事件不要太频繁，真正有需求的时候才能调用
     // TODO 屏幕坐标转设备坐标
-    ////删除虚拟墙的时候支持拖动,添加虚拟墙的时候支持缩放，NONE时支持缩放和拖动
+    ////删除电子墙的时候支持拖动,添加电子墙的时候支持缩放，NONE时支持缩放和拖动
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int me = event.getAction() & MotionEvent.ACTION_MASK;
@@ -417,9 +412,9 @@ public class MapView extends View {
                 downY = y;
                 downPoint.set(event.getX(), event.getY());
                 if (MODE == MODE_ADD_VIRTUAL) {
-                    // 添加虚拟墙
+                    // 添加电子墙
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
-                    //  删除虚拟墙
+                    //  删除电子墙
                 } else {
                     originalMode = MODE;
                     MODE = MODE_DRAG;
@@ -433,27 +428,9 @@ public class MapView extends View {
                 } else if (MODE == MODE_DRAG || MODE == MODE_DELETE_VIRTUAL) {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
-                    if (extra_map_length != 0) {//只有900该参数不为0
-                        if (dragX > 0) {
-                            dragX = 0;
-                        }
-                        if (dragX < -extra_map_length) {
-                            dragX = -extra_map_length;
-                        }
-                        if (dragY > 0) {
-                            dragY = 0;
-                        }
-                        if (dragY < -extra_map_length) {
-                            dragY = -extra_map_length;
-                        }
-                    }
                 } else if (MODE == MODE_ADD_VIRTUAL) {
                     float distance = distance(downX, downY, x, y);
                     if (distance > MIN_WALL_LENGTH) {
-//                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//                        virtualCanvas.save();
-//                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
-//                        virtualCanvas.drawLine(downX, downY, x, y, virtualPaint);
                         curVirtualWall.set(downX, downY, x, y);
                     }
                 }
@@ -468,18 +445,18 @@ public class MapView extends View {
 //                    invalidate();
                 } else if (MODE == MODE_ADD_VIRTUAL) {
                     if (getUsefulWallNum() >= 10) {
-                        // TODO 提示虚拟墙数量达到最大值
+                        // TODO 提示电子墙数量达到最大值
                         ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
 //                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 //                        virtualCanvas.save();
-//                        virtualCanvas.drawPath(existvirtualPath, virtualPaint);
+//                        virtualCanvas.drawPath(existVirtualPath, virtualPaint);
                     } else {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
 //                            ToastUtils.showToast(Utils.getString(R.string.map_aty_too_short));
                         } else {
-                            existvirtualPath.moveTo(downX, downY);
-                            existvirtualPath.lineTo(x, y);//加入到已存在的虚拟墙集合中去
+                            existVirtualPath.moveTo(downX, downY);
+                            existVirtualPath.lineTo(x, y);//加入到已存在的电子墙集合中去
                             VirtualWallBean virtualWallBean = new VirtualWallBean(virtualWallBeans.size() + 1, new int[]{(int) reMatrixCoordinateX(downX), (int) reMatrixCoordinateY(downY), (int) reMatrixCoordinateX(x), (int) reMatrixCoordinateY(y)}
                                     , 2);
                             virtualWallBeans.add(virtualWallBean);
@@ -493,21 +470,21 @@ public class MapView extends View {
                     while (iterator.hasNext()) {
                         vr = iterator.next();
                         if (vr.getDeleteIcon().contains(x, y)) {
-//                            ToastUtils.showToast("删除第" + vr.getNumber() + "条虚拟墙");
-                            if (vr.getState() == 2) {//新增的虚拟墙，还未保存到服务器，可以直接移除
+//                            ToastUtils.showToast("删除第" + vr.getNumber() + "条电子墙");
+                            if (vr.getState() == 2) {//新增的电子墙，还未保存到服务器，可以直接移除
                                 if (deleteIconRectFs.size() > vr.getNumber() - 1) {
                                     deleteIconRectFs.remove(vr.getNumber() - 1);
                                 }
                                 virtualWallBeans.remove(vr);
                             }
-                            if (vr.getState() == 1) {//服务器上的虚拟墙，可能操作会被取消掉，只需要改变状态
+                            if (vr.getState() == 1) {//服务器上的电子墙，可能操作会被取消掉，只需要改变状态
                                 vr.setState(3);
                             }
                             drawVirtualWall();
                             break;
                         }
                     }
-                    //删除虚拟墙的时候支持拖动
+                    //删除电子墙的时候支持拖动
                     originalDragX = dragX;
                     originalDragY = dragY;
                 } else if (MODE == MODE_DRAG) {
@@ -611,7 +588,7 @@ public class MapView extends View {
     }
 
     /**
-     * 撤销所有虚拟墙操作，恢复到与服务器数据一致的状态
+     * 撤销所有电子墙操作，恢复到与服务器数据一致的状态
      */
     public void undoAllOperation() {
         if (virtualWallBeans != null && virtualWallBeans.size() > 0) {
@@ -620,7 +597,7 @@ public class MapView extends View {
                 VirtualWallBean virtualWallBean = iterator.next();
                 if (virtualWallBean.getState() == 2) {
                     iterator.remove();
-                } else if (virtualWallBean.getState() == 3) {//被置为待删除的服务器虚拟墙恢复状态
+                } else if (virtualWallBean.getState() == 3) {//被置为待删除的服务器电子墙恢复状态
                     virtualWallBean.setState(1);
                 }
             }
@@ -629,7 +606,7 @@ public class MapView extends View {
     }
 
     /**
-     * 获取虚拟墙列表,包含新增，和删除
+     * 获取电子墙列表,包含新增，和删除
      *
      * @return
      */
@@ -645,9 +622,9 @@ public class MapView extends View {
 
 
     /**
-     * 查询到服务其虚拟墙数据后调用绘制虚拟墙
+     * 查询到服务其电子墙数据后调用绘制电子墙
      *
-     * @param existPointList 服务器虚拟墙数据集合
+     * @param existPointList 服务器电子墙数据集合
      */
     public void drawVirtualWall(List<int[]> existPointList) {
         if (existPointList == null) {
@@ -667,21 +644,21 @@ public class MapView extends View {
     }
 
     /**
-     * 绘制虚拟墙
+     * 绘制电子墙
      */
     public void drawVirtualWall() {
         if (virtualWallBeans == null) {
             return;
         }
         deleteIconRectFs.clear();
-        existvirtualPath.reset();
+        existVirtualPath.reset();
         for (VirtualWallBean vir : virtualWallBeans) {
             if (vir.getState() != 3) {
-                existvirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(vir.getPointfs()[1]));
-                existvirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(vir.getPointfs()[3]));
+                existVirtualPath.moveTo(matrixCoordinateX(vir.getPointfs()[0]), matrixCoordinateY(vir.getPointfs()[1]));
+                existVirtualPath.lineTo(matrixCoordinateX(vir.getPointfs()[2]), matrixCoordinateY(vir.getPointfs()[3]));
             }
         }
-        if (MODE == MODE_DELETE_VIRTUAL) {//删除虚拟墙模式，需要画出减号删除键
+        if (MODE == MODE_DELETE_VIRTUAL) {//删除电子墙模式，需要画出减号删除键
             RectF rectF;
             for (VirtualWallBean vir : virtualWallBeans) {
                 if (vir.getState() != 3) {
@@ -821,6 +798,7 @@ public class MapView extends View {
             return;
         }
         if (pointList.size() == 0) {
+            boxPath.reset();
             boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidate();
             return;
@@ -845,16 +823,18 @@ public class MapView extends View {
         }
         updateSlam(minX, maxX, minY, maxY, 15);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        boxPath.reset();
         //绘制清扫区域的白方格
         boxPaint.setColor(getResources().getColor(R.color.white));
-        boxPaint.setStrokeWidth((float) (baseScare - 1));
+        boxPaint.setStrokeWidth(1);
         if (pointList.size() > 0) {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);
                 y = -pointList.get(i);
-                boxCanvas.drawPoint(matrixCoordinateX(x), height - matrixCoordinateY(y), boxPaint);
+                boxPath.addRect(matrixCoordinateX(x), height - matrixCoordinateY(y),matrixCoordinateX(x)+baseScare-2, height - matrixCoordinateY(y)+baseScare-2, Path.Direction.CCW);
             }
         }
+        boxCanvas.drawPath(boxPath,boxPaint);
         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));

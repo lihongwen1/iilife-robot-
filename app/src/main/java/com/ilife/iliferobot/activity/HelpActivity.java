@@ -152,6 +152,13 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             } else {
                 uri = data.getData();
             }
+            if (uri==null){
+                return;
+            }
+            if (uri.toString().contains("video")){
+                //please select image files ,but video.
+                return;
+            }
             switch (curResId) {
                 case R.id.image_1:
                     bitmap_1 = BitmapUtils.compressBitmap(activity, uri, 180, 180);
@@ -245,15 +252,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 break;
             case R.id.rl_album:
                 AlertDialogUtils.hidden(alertDialog);
-//                if (AppUtils.isAppInstalled(context, "com.android.gallery3d")){
-//                    Intent intent = new Intent(Intent.ACTION_PICK,
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    intent.setPackage("com.android.gallery3d");
-//                    startActivityForResult(intent, ALBUM);
-//                }
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                intent.setPackage("com.android.gallery3d");
+                Intent intent = new Intent(Intent.ACTION_PICK,null);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
                 startActivityForResult(intent, ALBUM);
                 break;
             case R.id.bt_confirm:

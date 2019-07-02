@@ -100,7 +100,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
                 mPresenter.sendVerificationCode();
                 break;
             case R.id.bt_confirm:
-                 mPresenter.checkVerificationCode();
+                 mPresenter.confirm();
                 break;
             case R.id.image_show_1:
                 boolean isSelected = !image_show1.isSelected();

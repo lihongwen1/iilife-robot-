@@ -17,10 +17,6 @@ public class MapActivity_X9_ extends BaseMapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.queryVirtualWall();
-        mPresenter.initTimer();
-        mPresenter.getHistoryRoad();
-        mPresenter.subscribeRealTimeMap();
     }
 
     @Override

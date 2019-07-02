@@ -112,7 +112,7 @@
     <string name="capture_aty_scan">Scan QR code or barcode inside the square on the screen</string>
     <string name="map_aty_title">%1$sRobot Vacuum Cleaner</string>
     <string name="map_aty_status">Current status</string>
-    <string name="map_aty_gang">—</string>
+    <string name="map_aty_gang">— —</string>
     <string name="setting_aty_area">Cleaning area</string>
     <string name="setting_aty_end_reason">Task terminated:%1$s</string>
     <string name="map_aty_time">Cleaning time</string>
@@ -299,6 +299,6 @@
     <string name="not_saved">Unsave</string>
     <string name="cancel_">Cancel</string>
     <string name="pairing_wifi">Searching a network…</string>
-    <string name="name_max_length">Enter up to 12 characters</string>
+    <string name="name_max_length">Enter up to 30 characters</string>
     <string name="low_power">Low power</string>
 </resources>

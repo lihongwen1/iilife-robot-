@@ -306,7 +306,7 @@
                 android:src="@drawable/operation_icon_closed" />
         </FrameLayout>
 
-        <!--虚拟墙-->
+        <!--电子墙-->
         <FrameLayout
             android:paddingBottom="@dimen/dp_24"
             android:id="@+id/fl_virtual_wall"

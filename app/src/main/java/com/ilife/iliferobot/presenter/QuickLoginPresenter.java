@@ -73,7 +73,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     @Override
     public void isMobileUseful() {
         if (mView.getPhone().isEmpty()) {
-            ToastUtils.showToast(Utils.getString(R.string.regist_wrong_account));
+            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
             isPhoneUseful = false;
             return;
         }

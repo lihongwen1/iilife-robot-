@@ -46,7 +46,7 @@
     <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
     <string name="ap_aty_robot_wifi">机器热点：</string>
-    <string name="third_ap_aty_tip1">*小贴士：机器连接上家庭WiFi后自生成\"Robot-XXXX\"的机器热点，默认密码:123456789</string>
+    <string name="third_ap_aty_tip1">*小贴士:请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接.</string>
     <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
     <string name="third_ap_aty_port_">请先连接以Robot-XXXX开头的热点</string>
     <string name="bind_suc_aty_name">请为您的机器人命名</string>
@@ -112,7 +112,7 @@
     <string name="capture_aty_scan">将二维码/条码放入框内，即可自动扫描</string>
     <string name="map_aty_title">%1$s 智能扫地机器人</string>
     <string name="map_aty_status">当前状态</string>
-    <string name="map_aty_gang">—</string>
+    <string name="map_aty_gang">— —</string>
     <string name="setting_aty_area">清扫面积</string>
     <string name="setting_aty_end_reason">结束原因:%1$s</string>
     <string name="map_aty_time">清扫时长</string>
@@ -229,7 +229,7 @@
     <string name="map_aty_pause">暂停</string>
     <string name="map_virtual_wall">电子墙</string>
     <string name="ensure">确认</string>
-    <string name="map_aty_set_wall">是否进入电子墙编辑模式？</string>
+    <string name="map_aty_set_wall">是否进入电子墙编辑模式</string>
     <string name="map_aty_will_stop">此操作会暂停当前清扫工作</string>
     <string name="map_aty_edit_mode">编辑模式</string>
     <string name="map_aty_clear_undo">此操作会撤销当前所有更改</string>
@@ -280,7 +280,7 @@
     <string name="please_set_task">请为您的机器人设置当前任务</string>
     <string name="finsh_cur_task">结束当前任务</string>
     <string name="pause_cur_task">暂停当前任务</string>
-    <string name="virtual_wall_use_tip">1.请不要通过虚拟墙来隔离危险区域。\n\n2.虚拟墙是实验功能，存在不稳定性。\n\n3.人为移动主机或重新开机会清除虚拟墙设置。\n\n4.家中环境明显变化会导致地图错误和虚拟墙设置出现错误。\n\n5.仅当主机完成本次清扫并成功返回充电座时，虚拟墙设置才会应用于下一次清扫。   </string>
+    <string name="virtual_wall_use_tip">1.请不要通过电子墙来隔离危险区域。\n\n2.电子墙是实验功能，存在不稳定性。\n\n3.人为移动主机或重新开机会清除电子墙设置。\n\n4.家中环境明显变化会导致地图错误和电子墙设置出现错误。\n\n5.仅当主机完成本次清扫并成功返回充电座时，电子墙设置才会应用于下一次清扫。   </string>
     <string name="virtual_tip_title">电子墙使用提示</string>
     <string name="help_aty_all_eu">(Free Call Europe)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
@@ -293,6 +293,6 @@
     <string name="not_saved">不保存</string>
     <string name="cancel_">取消</string>
     <string name="pairing_wifi">配网中</string>
-    <string name="name_max_length">最多输入12个字符</string>
+    <string name="name_max_length">最多输入30个字符</string>
     <string name="low_power">电量低,请充电!</string>
 </resources>

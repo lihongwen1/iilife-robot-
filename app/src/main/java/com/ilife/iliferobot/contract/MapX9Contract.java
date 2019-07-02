@@ -68,7 +68,6 @@ public interface MapX9Contract {
 
         void subscribeRealTimeMap();
 
-        void getAppointmentMsg();
 
         void getDevStatus();
 

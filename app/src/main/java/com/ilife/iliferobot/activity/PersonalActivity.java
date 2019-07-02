@@ -303,7 +303,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                     ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
                     return;
                 }
-                if (name.length()>12){
+                if (name.length()>30){
                     ToastUtils.showToast(Utils.getString(R.string.name_max_length));
                     return;
                 }
@@ -410,7 +410,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     public void getOwnerList() {
         mDeviceList.clear();
         List<ACUserDevice> mAcUserDevices = MainActivity.mAcUserDevices;
-        if (mAcUserDevices.size() > 0) {
+        if (mAcUserDevices!=null&&mAcUserDevices.size() > 0) {
             for (int i = 0; i < mAcUserDevices.size(); i++) {
                 long ownerId = mAcUserDevices.get(i).getOwner();
                 if (ownerId == userId) {

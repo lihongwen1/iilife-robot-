@@ -60,7 +60,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
     private List<int[]> existPointList = new ArrayList<>();
-    boolean isWork, hasAppoint, isMaxMode, voiceOpen;
+    boolean isWork, isMaxMode, voiceOpen;
 
     /**
      * 实时地图相关
@@ -77,12 +77,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private int device_type;
     private byte sendByte;
     private byte[] virtualContentBytes;
-
     /**
      * x800实时地图数据
      */
     private ArrayList<Integer> pointList;// map集合
-    private ArrayList<String> pointStrList;//
+    private ArrayList<String> pointStrList;
+    private boolean isSubscribeRealMap, isInitSlamTimer;
 
     @Override
     public void attachView(MapX9Contract.View view) {
@@ -132,13 +132,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         return robotType;
     }
 
+
     /**
-     * 包含3s查询实时地图(slam map)和查询虚拟墙
+     * 包含3s查询实时地图(slam map)
      */
     public void initTimer() {
         if (!subdomain.equals(Constants.subdomain_x900)) {//只有x900需要每3s获取实时地图
             return;
         }
+        isInitSlamTimer = true;
         getRealTimeMap();//need get real time map in the first time enter
         timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -156,6 +158,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         timer.schedule(task, 0, 3 * 1000);
     }
 
+    /**
+     * x900 slam map
+     * x800 history road
+     */
     @Override
     public void getRealTimeMap() {
         if (!isViewAttached()) {//page destroyed
@@ -180,14 +186,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     if (!TextUtils.isEmpty(strMap)) {
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                         if (isViewAttached()) {
-                            //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07虚拟墙编辑模式,0x08回冲模式下不更新地图
+                            //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07电子墙编辑模式,0x08回冲模式下不更新地图
                             mView.updateSlam(xMin, xMax, yMin, yMax);
                             if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT
-                                    && curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE) {
+                                    && curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING_
+                                    && curStatus != MsgCodeUtils.STATUE_CHARGING) {
                                 mView.drawSlamMap(slamBytes);
                                 mView.drawRoadMap(realTimePoints, historyRoadList);
                                 mView.drawObstacle();
-                                mView.drawVirtualWall(null);//只是刷新虚拟墙
+                                mView.drawVirtualWall(null);//只是刷新电子墙
                             }
                         }
                     }
@@ -246,12 +253,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             }
                         }
                     }
-                    if (curStatus != MsgCodeUtils.STATUE_OFF_LINE) {
-                        //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
-                        mView.drawSlamMap(slamBytes);
-                        mView.drawRoadMap(realTimePoints, historyRoadList);
-                        mView.drawObstacle();
-                    }
+                    //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+                    mView.drawSlamMap(slamBytes);
+                    mView.drawRoadMap(realTimePoints, historyRoadList);
+                    mView.drawObstacle();
                 }
             }
 
@@ -263,20 +268,21 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     /**
-     * //TODO 虚拟墙实时更新
-     * 查询虚拟墙
+     * //TODO 电子墙实时更新
+     * 查询电子墙
      */
     public void queryVirtualWall() {
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, ACSkills.get().queryVirtual(), Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void success(ACDeviceMsg acDeviceMsg) {
-                if (!isViewAttached()) {
+                if (!isViewAttached() || curStatus == MsgCodeUtils.STATUE_RECHARGE ||
+                        curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_) {
                     return;
                 }
                 existPointList.clear();
                 byte[] resp = acDeviceMsg.getContent();
                 if (resp != null && resp.length > 0) {
-                    byte count = resp[1];//虚拟墙总数
+                    byte count = resp[1];//电子墙总数
                     MyLogger.d(TAG, "virtual wall count :" + count);
                     for (int i = 9; i < 8 * count + 2; i += 8) {
                         //地图坐标
@@ -290,13 +296,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int sy = 1500 - (startY + 750);
                         int ex = endX + 750;
                         int ey = 1500 - (endY + 750);
+                        if (sx == ex && sy == ey) {
+                            MyLogger.d("queryVirtualWall", "无效数据");
+                            continue;
+                        }
                         int[] dataPoint = {sx, sy, ex, ey};
                         existPointList.add(dataPoint);
-                        //TODO saveQueryRect
-//                        saveQueryRect(dataPoint);
                         MyLogger.d("queryVirtualWall", sx + "---" + sy + "---" + ex + "----" + ey);
                     }
-
                     wallPointList.clear();
                     wallPointList.addAll(existPointList);
                     mView.drawVirtualWall(existPointList);
@@ -311,6 +318,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
 
+    /**
+     * 订阅实时地图
+     */
     public void subscribeRealTimeMap() {
         Map<String, Object> primaryKey = new HashMap<>();
         primaryKey.put("device_id", deviceId);
@@ -318,14 +328,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 new VoidCallback() {
                     @Override
                     public void success() {
+                        isSubscribeRealMap = true;
                         AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
                             MyLogger.d(TAG, "received map data------" + s1);
-                            if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
+                            if (!isViewAttached()) {//
                                 return;
                             }
                             if (subdomain.equals(Constants.subdomain_x900)) {
                                 parseRealTimeMapX9(s1);
-                            } else {
+                            } else {//x800 x785 x787 series
                                 Gson gson = new Gson();
                                 RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
                                 String clean_data = mapInfo.getClean_data();
@@ -336,6 +347,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
                     @Override
                     public void error(ACException e) {
+                        MyLogger.d(TAG, "订阅实时地图异常" + e.getMessage());
                     }
                 }
         );
@@ -466,33 +478,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
     }
 
+
     /**
-     * 查询预约信息
+     * 获取设备状态
      */
-    @Override
-    public void getAppointmentMsg() {
-        ACDeviceMsg msg_clockInfo = new ACDeviceMsg(MsgCodeUtils.ClockInfos, new byte[]{0x00});
-        AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_clockInfo,
-                Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
-                    @Override
-                    public void success(ACDeviceMsg deviceMsg) {
-                        adjustTime();
-                        if (isViewAttached()) {
-                            byte[] resp = deviceMsg.getContent();
-                            if (resp != null && resp.length == 50) {
-                                hasAppoint = hasAppoint(resp);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void error(ACException e) {
-                        adjustTime();
-                        hasAppoint = false;
-                    }
-                });
-    }
-
     @Override
     public void getDevStatus() {
         ACDeviceMsg msg_devStatus = new ACDeviceMsg(MsgCodeUtils.DevStatus, new byte[]{0x00});
@@ -510,16 +499,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mopForce = bytes[4];
                             isMaxMode = bytes[3] == 0x01;
                             voiceOpen = bytes[6] == 0x01;
-                            int lastStatus = curStatus;
                             curStatus = bytes[0];
-                            if (lastStatus == MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING && curStatus != MsgCodeUtils.STATUE_CHARGING_) {
-                                //slam地图
-                                mView.drawSlamMap(slamBytes);
-                                //历史路径
-                                mView.drawRoadMap(realTimePoints, historyRoadList);
-                                //重绘障碍物
-                                mView.drawObstacle();
-                            }
+                            MyLogger.d(TAG, "gain the device statue and the status is :" + curStatus);
                             setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                             mView.updateCleanArea(getAreaValue());
                             mView.updateCleanTime(getTimeValue());
@@ -527,11 +508,33 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             if (errorCode != 0) {
                                 mView.cleanMapView();
                             }
+                            /**
+                             * 所有设备需调用
+                             */
+                            adjustTime();
+                            registerPropReceiver();
+                            //请求设备相关数据
+                            if (robotType.equals("X900")) {
+                                if (!isSubscribeRealMap) {
+                                    subscribeRealTimeMap();
+                                }
+                                if (!isInitSlamTimer) {
+                                    initTimer();
+                                }
+                                getHistoryRoad();
+                                queryVirtualWall();
+                            } else {//x800系列
+                                getRealTimeMap();
+                                if (!isSubscribeRealMap) {
+                                    subscribeRealTimeMap();
+                                }
+                            }
                         }
                     }
 
                     @Override
                     public void error(ACException e) {
+
                     }
                 });
     }
@@ -582,7 +585,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.updateRecharge(true);
             mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_RECHAGRGE);
-        } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//虚拟墙编辑模式
+        } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//电子墙编辑模式
             isVirtualEdit = true;
             mView.showVirtualEdit();
         } else if (curStatus == MsgCodeUtils.STATUE_POINT) { //重点
@@ -595,8 +598,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.updateAlong(true);
             mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_ALONG);
-        } else {
-            mView.showBottomView();
         }
     }
 
@@ -616,7 +617,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public boolean isWork(int curStatus) {
         return curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_ALONG ||
-                curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING ||
+                curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_TEMPORARY_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING ||
                 curStatus == MsgCodeUtils.STATUE_RECHARGE;
     }
 
@@ -645,6 +646,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         });
     }
 
+    /**
+     * 注册状态变化监听
+     */
     @Override
     public void initPropReceiver() {
         propertyReceiver = (s, l, s1) -> {
@@ -660,7 +664,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 device_type = info.getDevice_type();
                 int lastStatus = curStatus;
                 curStatus = info.getWork_pattern();
-                if (curStatus == MsgCodeUtils.STATUE_WAIT || ((lastStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT || lastStatus == MsgCodeUtils.STATUE_RECHARGE) && lastStatus != curStatus)) {//退出虚拟墙编辑模式时查询虚拟墙
+                if (curStatus==MsgCodeUtils.STATUE_PLANNING||(lastStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT && lastStatus != curStatus)) {//退出电子墙编辑模式时查询电子墙
                     queryVirtualWall();
                 }
                 MyLogger.d(TAG, "set statue,and statue code is 571:" + curStatus);
@@ -703,6 +707,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 new VoidCallback() {
                     @Override
                     public void success() {
+                        if (propertyReceiver == null) {
+                            initPropReceiver();
+                        }
                         AC.deviceDataMgr().registerPropertyReceiver(propertyReceiver);
                     }
 
@@ -720,6 +727,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {
+                MyLogger.d(TAG, "command failed reason" + e.getMessage());
                 ToastUtils.showErrorToast(MyApplication.getInstance(), e.getErrorCode());
             }
 
@@ -751,8 +759,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         break;
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
-                        curStatus = bytes[0];
-                        if (curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
+                        if (curStatus == MsgCodeUtils.STATUE_PLANNING && sendByte == MsgCodeUtils.STATUE_WAIT) {
+                            curStatus = MsgCodeUtils.STATUE_PAUSE;
+                            sendByte = MsgCodeUtils.STATUE_PAUSE;
+                        } else {
+                            curStatus = bytes[0];
+                        }
+                        if (curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
@@ -768,7 +781,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterVirtualMode() {
-        if (curStatus == MsgCodeUtils.STATUE_PLANNING) {//规划模式下进入虚拟墙
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING) {//规划模式下进入电子墙
             ACDeviceMsg acDeviceMsg = ACSkills.get().enterVirtualMode();
             sendByte = acDeviceMsg.getContent()[0];
             sendToDeviceWithOption(acDeviceMsg);
@@ -777,7 +790,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
 
     /**
-     * @param list SEND_VIR添加虚拟墙时为新增虚拟墙集合，EXIT_VIR 时，为null
+     * @param list SEND_VIR添加电子墙时为新增电子墙集合，EXIT_VIR 时，为null
      */
     public void sendVirtualWallData(final List<int[]> list) {
         wallPointList.clear();
@@ -825,7 +838,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
 
     /**
-     * 申请添加/删除虚拟墙
+     * 申请添加/删除电子墙
      *
      * @param acDeviceMsg
      * @param physicalDeviceId
@@ -914,6 +927,21 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public void detachView() {
         if (timer != null) {
             timer.cancel();
+        }
+        if (isSubscribeRealMap) {
+            Map<String, Object> primaryKey = new HashMap<>();
+            primaryKey.put("device_id", deviceId);
+            AC.classDataMgr().unSubscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL, new VoidCallback() {
+                @Override
+                public void success() {
+                    MyLogger.d(TAG, "unsubscribe real time map success");
+                }
+
+                @Override
+                public void error(ACException e) {
+                    MyLogger.d(TAG, "unsubscribe real time map fail");
+                }
+            });
         }
         super.detachView();
     }

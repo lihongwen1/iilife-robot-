@@ -5,7 +5,7 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     signingConfigs {
         ilife {
-            storeFile file('D:\\flylin_github_respostories\\qianming\\ilife.jks')
+            storeFile file('E:\\as_workspace\\ilife\\keystore_ilife\\ilife.jks')
             storePassword '123456'
             keyAlias = 'ilife'
             keyPassword '123456'

@@ -30,6 +30,6 @@ public interface ForgetPasswordContract {
         void sendVerificationCode();
         void checkVerificationCode();
         void resetPassword();
-        void confirm(boolean isRegister);
+        void confirm();
     }
 }

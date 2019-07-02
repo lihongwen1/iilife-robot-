@@ -21,8 +21,6 @@ public class MapActivity_X8_ extends BaseMapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.getRealTimeMap();
-        mPresenter.subscribeRealTimeMap();
     }
 
     @Override
@@ -107,18 +105,5 @@ public class MapActivity_X8_ extends BaseMapActivity {
         }
         tv_start.setSelected(isSelect);
         image_center.setSelected(isSelect);//remote control start button
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
-
     }
 }

@@ -149,7 +149,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 ToastUtils.showToast(context, getString(R.string.map_aty_set_fail));
                 break;
             case QUERYVIRTUAL_SUCCESS_SHOWLINE:
-                //TODO 绘制虚拟墙
+                //TODO 绘制电子墙
                 break;
             case VIRTUALWALL_MAXCOUNT:
                 ToastUtils.showToast(context, context.getString(R.string.map_aty_max_count));
@@ -180,10 +180,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getAppointmentMsg();
         mPresenter.getDevStatus();
-        mPresenter.initPropReceiver();
-        mPresenter.registerPropReceiver();
         updateMaxButton(mPresenter.isMaxMode());
     }
 
@@ -294,8 +291,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     /**
-     * 选择进入虚拟墙编辑模式
-     * 显示虚拟墙操作UI
+     * 选择进入电子墙编辑模式
+     * 显示电子墙操作UI
      */
     private void showSetWallDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
@@ -404,7 +401,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     /**
-     * 清空不常显示的布局,虚拟墙编辑模式，回冲动画，沿边动画，重点动画
+     * 清空不常显示的布局,电子墙编辑模式，回冲动画，沿边动画，重点动画
      *
      * @param curStatus
      */
@@ -486,7 +483,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode()))
                                 .show(getSupportFragmentManager(), "choose_action");
                     } else {
-                        mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                        if (mPresenter.getRobotType().equals("X900")) {
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                        } else {
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode());
+                        }
+
                     }
                 } else if (mPresenter.isLowPowerWorker()) {
                     ToastUtils.showToast(getString(R.string.low_power));
@@ -507,7 +509,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     showRemoteView();
                 }
                 break;
-            case R.id.ib_virtual_wall_tip://显示虚拟墙提示
+            case R.id.ib_virtual_wall_tip://显示电子墙提示
                 showVirtualWallTip();
                 break;
             case R.id.iv_control_close_x9:
@@ -539,7 +541,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 Intent intent = new Intent(context, ClockingActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_virtual_wall_x9://虚拟墙编辑模式
+            case R.id.tv_virtual_wall_x9://电子墙编辑模式
                 if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
                     showSetWallDialog();
                 } else {
@@ -550,7 +552,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     }
                 }
                 break;
-            case R.id.tv_add_virtual_x9://增加虚拟墙模式
+            case R.id.tv_add_virtual_x9://增加电子墙模式
                 if (mMapView.isInMode(MapView.MODE_ADD_VIRTUAL)) {
                     tv_add_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
@@ -561,7 +563,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     mMapView.setMODE(MapView.MODE_ADD_VIRTUAL);
                 }
                 break;
-            case R.id.tv_delete_virtual_x9://删除虚拟墙模式
+            case R.id.tv_delete_virtual_x9://删除电子墙模式
                 if (mMapView.isInMode(MapView.MODE_DELETE_VIRTUAL)) {
                     tv_delete_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
@@ -572,14 +574,14 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     mMapView.setMODE(MapView.MODE_DELETE_VIRTUAL);
                 }
                 break;
-            case R.id.tv_close_virtual_x9://弹出退出虚拟墙的的pop
+            case R.id.tv_close_virtual_x9://弹出退出电子墙的的pop
                 CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
                 if (exitVirtualWallPop == null) {
                     builder.cancelTouchout(false).view(R.layout.pop_virtual_wall).widthDimenRes(R.dimen.dp_315).
                             addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
                                 mMapView.undoAllOperation();
                                 /**
-                                 * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
+                                 * 退出电子墙编辑模式，相当于撤销所有操作，电子墙数据没有变化，无需发送数据到设备端
                                  */
                                 mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
                                 if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
@@ -742,5 +744,18 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void drawBoxMapX8(ArrayList<Integer> pointList) {
         mMapView.drawBoxMapX8(pointList);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
+
     }
 }

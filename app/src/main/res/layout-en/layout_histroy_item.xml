@@ -2,28 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_content"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_80"
     android:background="@color/white"
     android:paddingStart="@dimen/dp_30"
-    android:paddingEnd="@dimen/dp_30"
-    >
+    android:paddingEnd="@dimen/dp_30">
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/dp_18"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_18"
+        android:paddingBottom="@dimen/dp_18">
 
         <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_date"
             style="@style/Text_18sp_f08300"
-
             android:text="06月11日" />
 
         <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/tv_time"
             style="@style/Text_14sp_33"
             android:layout_below="@+id/tv_date"
-            android:layout_marginTop="-4dp"
             android:layout_alignStart="@+id/tv_date"
             android:text="17:17" />
 
@@ -31,10 +28,12 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20">
+
 
         <RelativeLayout
             android:layout_width="wrap_content"

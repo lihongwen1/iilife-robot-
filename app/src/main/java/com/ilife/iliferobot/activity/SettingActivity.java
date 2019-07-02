@@ -43,6 +43,7 @@ import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -474,6 +475,10 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 name = et_name.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
+                    return;
+                }
+                if (name.length()>30){
+                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
                     return;
                 }
                 AlertDialogUtils.hidden(alterDialog);

@@ -19,6 +19,7 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -80,11 +81,11 @@ public class BindSucActivity extends BackBaseActivity {
             image_device = R.drawable.rechage_device_x787;
         } else if (subdomain.equals(Constants.subdomain_x900)) {
             image_device = R.drawable.rechage_device_x900;
-        } else if (subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800)){
+        } else if (subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800)) {
             image_device = R.drawable.rechage_device_x800;
-        }else if (subdomain.equals(Constants.subdomain_a8s)){
-            image_device=R.drawable.rechage_device_a8s;
-        }else {
+        } else if (subdomain.equals(Constants.subdomain_a8s)) {
+            image_device = R.drawable.rechage_device_a8s;
+        } else {
             image_device = R.drawable.rechage_device_x800;
         }
         String devName = getString(R.string.bind_suc_sty_robot_name);
@@ -118,8 +119,12 @@ public class BindSucActivity extends BackBaseActivity {
         switch (v.getId()) {
             case R.id.bt_done:
                 name = et_devName.getText().toString().trim();
+                if (name.length() > 30) {
+                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
+                    break;
+                }
                 if (TextUtils.isEmpty(name)) {
-
+                    ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
                 } else {
                     DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
                 }
