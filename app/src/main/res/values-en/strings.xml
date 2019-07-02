@@ -134,7 +134,7 @@
     <string name="map_aty_use_left">Left</string>
     <string name="map_aty_use_right">Right</string>
     <string name="map_aty_use_forward">Forward</string>
-    <string name="map_aty_use_recharging_x9">Robot is charging</string>
+    <string name="map_aty_use_recharging_x9">Robot is recharging</string>
     <string name="map_aty_key_pointing_x9">Spot mode activated</string>
     <string name="map_aty_use_along">Edge mode activated</string>
     <string name="map_aty_can_not_execute">Can\'t be operated</string>

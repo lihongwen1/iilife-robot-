@@ -759,13 +759,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         break;
                     case MsgCodeUtils.WorkMode://下发工作模式
                         byte[] bytes = deviceMsg.getContent();
+                        int lastStatus=curStatus;
                         if (curStatus == MsgCodeUtils.STATUE_PLANNING && sendByte == MsgCodeUtils.STATUE_WAIT) {
                             curStatus = MsgCodeUtils.STATUE_PAUSE;
                             sendByte = MsgCodeUtils.STATUE_PAUSE;
                         } else {
                             curStatus = bytes[0];
                         }
-                        if (curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
+                        if (lastStatus!=MsgCodeUtils.STATUE_RECHARGE&&curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         } else {
                             if (curStatus == 0x0B) {//寻找模式
