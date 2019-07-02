@@ -43,7 +43,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private static final String TAG = ApWifiPresenter.class.getName();
     private ACDeviceActivator activator;
     private WifiManager wifiManager;
-    private final String apWifiTarget = "robot";
+    private final String apWifiTarget = "Robot";
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
