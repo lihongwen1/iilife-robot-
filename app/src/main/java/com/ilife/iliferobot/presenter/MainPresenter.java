@@ -4,8 +4,13 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
+import com.accloud.service.ACUserInfo;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
 import com.ilife.iliferobot.contract.MainContract;
+import com.ilife.iliferobot.utils.ToastUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.List;
 
@@ -24,7 +29,22 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
             @Override
             public void error(ACException e) {
-                mView.setRefreshOver();
+                if (e.getErrorCode() == 1993) {
+                    ToastUtils.showToast(Utils.getString(R.string.login_aty_timeout));
+                    mView.setRefreshOver();
+                } else {
+                    AC.accountMgr().forceUpdateRefreshToken(new PayloadCallback<ACUserInfo>() {
+                        @Override
+                        public void success(ACUserInfo acUserInfo) {
+                            getDeviceList();
+                        }
+                        @Override
+                        public void error(ACException e) {
+                            mView.loginInvalid();
+                            mView.setRefreshOver();
+                        }
+                    });
+                }
             }
         });
 

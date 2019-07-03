@@ -37,6 +37,7 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
 import com.bumptech.glide.Glide;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
@@ -114,8 +115,13 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         } else {
             types = getResources().getStringArray(R.array.device_name_zaco);
         }
-        tv_numbs = (TextView) findViewById(R.id.tv_numbs);
         et_email = (EditText) findViewById(R.id.et_email);
+        if (Utils.isChinaEnvironment()) {
+            et_email.setHint(R.string.login_aty_input_email);
+        } else {
+            et_email.setHint(R.string.personal_input_email);
+        }
+        tv_numbs = (TextView) findViewById(R.id.tv_numbs);
         et_type = (EditText) findViewById(R.id.et_type);
         et_content = (EditText) findViewById(R.id.et_content);
         image_1 = (ImageView) findViewById(R.id.image_1);
@@ -152,10 +158,10 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             } else {
                 uri = data.getData();
             }
-            if (uri==null){
+            if (uri == null) {
                 return;
             }
-            if (uri.toString().contains("video")){
+            if (uri.toString().contains("video")) {
                 //please select image files ,but video.
                 return;
             }
@@ -252,8 +258,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 break;
             case R.id.rl_album:
                 AlertDialogUtils.hidden(alertDialog);
-                Intent intent = new Intent(Intent.ACTION_PICK,null);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, ALBUM);
                 break;
             case R.id.bt_confirm:
@@ -272,9 +278,16 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                     ToastUtils.showToast(context, getString(R.string.help_aty_content_isnull));
                     return;
                 }
-                if (!UserUtils.isEmail(email)) {
-                    ToastUtils.showToast(context, getString(R.string.login_aty_wrong_email));
-                    return;
+                if (Utils.isChinaEnvironment()) {
+                    if (!UserUtils.isEmail(email) && !UserUtils.isPhone(email)) {
+                        ToastUtils.showToast(context, getString(R.string.regist_wrong_account));
+                        return;
+                    }
+                } else {
+                    if (!UserUtils.isEmail(email)) {
+                        ToastUtils.showToast(context, getString(R.string.regist_wrong_email));
+                        return;
+                    }
                 }
                 dialog.show();
                 commit(email, contents, type);

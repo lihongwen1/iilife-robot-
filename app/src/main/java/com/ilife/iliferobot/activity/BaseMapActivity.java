@@ -486,7 +486,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                         if (mPresenter.getRobotType().equals("X900")) {
                             mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                         } else {
-                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode());
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                         }
 
                     }

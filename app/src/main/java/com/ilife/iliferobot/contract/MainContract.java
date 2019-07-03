@@ -14,6 +14,7 @@ public interface MainContract {
         void showList();
         void setRefreshOver();
         void updateDeviceList(List<ACUserDevice> acUserDevices);
+        void loginInvalid();
     }
 
     interface Presenter{

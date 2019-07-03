@@ -56,6 +56,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.appcompat.app.AlertDialog;
@@ -303,8 +304,14 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                     ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
                     return;
                 }
-                if (name.length()>30){
-                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
+                int maxLength;
+                if (Utils.isChinaEnvironment()) {
+                    maxLength=12;
+                } else {
+                    maxLength=30;
+                }
+                if (name.length() > maxLength) {
+                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
                     return;
                 }
                 if (!name.equals(userName)) {

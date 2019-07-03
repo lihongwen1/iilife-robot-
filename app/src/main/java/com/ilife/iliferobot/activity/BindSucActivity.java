@@ -21,6 +21,8 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -119,9 +121,15 @@ public class BindSucActivity extends BackBaseActivity {
         switch (v.getId()) {
             case R.id.bt_done:
                 name = et_devName.getText().toString().trim();
-                if (name.length() > 30) {
-                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
-                    break;
+                int maxLength;
+                if (Utils.isChinaEnvironment()) {
+                    maxLength=12;
+                } else {
+                    maxLength=30;
+                }
+                if (name.length() > maxLength) {
+                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
+                    return;
                 }
                 if (TextUtils.isEmpty(name)) {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_hit));

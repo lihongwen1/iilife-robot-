@@ -29,8 +29,20 @@ public class Utils {
         return MyApplication.getInstance().getString(id);
     }
 
+    /**
+     * 是否是ILIFE品牌
+     * @return
+     */
     public static  boolean isIlife() {
         return BuildConfig.BRAND.equals("ILIFE");
+    }
+
+    /**
+     *
+     * 是否是国内环境
+     */
+    public static boolean isChinaEnvironment(){
+        return BuildConfig.Area==0;
     }
 
     /**

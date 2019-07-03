@@ -82,7 +82,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
-    private boolean isSubscribeRealMap, isInitSlamTimer;
+    private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus;
 
     @Override
     public void attachView(MapX9Contract.View view) {
@@ -204,7 +204,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         return;
                     }
                     for (int i = 0; i < data.size(); i++) {
-                        parseRealTimeMapX8(data.get(i).getString("clean_data"), false);
+                        parseRealTimeMapX8(data.get(i).getString("clean_data"));
                     }
                 }
             }
@@ -340,7 +340,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 Gson gson = new Gson();
                                 RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
                                 String clean_data = mapInfo.getClean_data();
-                                parseRealTimeMapX8(clean_data, true);
+                                parseRealTimeMapX8(clean_data);
                             }
                         });
                     }
@@ -357,9 +357,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * x800绘制黄方格地图
      *
      * @param clean_data
-     * @param needDraw   for x8 series robot ,will be no need to draw map using these data,but save these data,when data is from the method -'getRealTimeMap'
      */
-    private void parseRealTimeMapX8(String clean_data, boolean needDraw) {
+    private void parseRealTimeMapX8(String clean_data) {
         if (!TextUtils.isEmpty(clean_data)) {
             byte[] bytes = Base64.decode(clean_data, Base64.DEFAULT);
             if ((bytes.length % 4) != 0) {
@@ -387,7 +386,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         }
-        if (needDraw && pointList != null) {
+        if (pointList != null) {
             mView.drawBoxMapX8(pointList);
             mView.updateCleanTime(getTimeValue());
             mView.updateCleanArea(getAreaValue());
@@ -492,6 +491,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         if (!isViewAttached()) {
                             return;
                         }
+                        isGainDevStatus = true;
                         byte[] bytes = deviceMsg.getContent();
                         if (bytes != null) {
                             errorCode = bytes[8];
@@ -534,7 +534,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
                     @Override
                     public void error(ACException e) {
-
+                        isGainDevStatus = false;
+                        MyLogger.d(TAG, "gain the device status fail ,the reason is: " + e.getMessage());
                     }
                 });
     }
@@ -579,7 +580,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_SLEEPING || ((robotType.equals("X900") && curStatus == MsgCodeUtils.STATUE_WAIT))) {//休眠，或者x900的待机不显示地图
+        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_SLEEPING ||  curStatus == MsgCodeUtils.STATUE_WAIT) {//休眠，或者x900的待机不显示地图
             mView.cleanMapView();
         } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
@@ -654,6 +655,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         propertyReceiver = (s, l, s1) -> {
             MyLogger.e(TAG, "onPropertyReceive ==== " + s1);
             if (isViewAttached()) {
+                if (!isGainDevStatus) {
+                    MyLogger.d(TAG, "gain the device status again");
+                    getDevStatus();
+                }
                 PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
                 MyLogger.e(TAG, "initPropReceiver onPropertyReceive errorCode = " + info.getError_info());
                 errorCode = info.getError_info();
@@ -664,7 +669,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 device_type = info.getDevice_type();
                 int lastStatus = curStatus;
                 curStatus = info.getWork_pattern();
-                if (curStatus==MsgCodeUtils.STATUE_PLANNING||(lastStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT && lastStatus != curStatus)) {//退出电子墙编辑模式时查询电子墙
+                if (curStatus == MsgCodeUtils.STATUE_PLANNING || (lastStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT && lastStatus != curStatus)) {//退出电子墙编辑模式时查询电子墙
                     queryVirtualWall();
                 }
                 MyLogger.d(TAG, "set statue,and statue code is 571:" + curStatus);
@@ -691,7 +696,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     private String getTimeValue() {
-        MyLogger.d(TAG, "curStatus=======" + curStatus);
         int min = Math.round(workTime / 60f);
         if (curStatus == MsgCodeUtils.STATUE_OFF_LINE || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
                 || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
@@ -758,20 +762,28 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                         break;
                     case MsgCodeUtils.WorkMode://下发工作模式
+                        if (!isGainDevStatus) {
+                            getDevStatus();
+                            MyLogger.d(TAG, "gain the device status again");
+                        }
                         byte[] bytes = deviceMsg.getContent();
-                        int lastStatus=curStatus;
-                        if (curStatus == MsgCodeUtils.STATUE_PLANNING && sendByte == MsgCodeUtils.STATUE_WAIT) {
-                            curStatus = MsgCodeUtils.STATUE_PAUSE;
-                            sendByte = MsgCodeUtils.STATUE_PAUSE;
+                        int lastStatus = curStatus;
+
+                        if (robotType.equals("X900")) {
+                            if (lastStatus == MsgCodeUtils.STATUE_PLANNING && sendByte == MsgCodeUtils.STATUE_WAIT) {
+                                curStatus = MsgCodeUtils.STATUE_PAUSE;
+                                sendByte = MsgCodeUtils.STATUE_PAUSE;
+                            } else {
+                                curStatus = bytes[0];
+                            }
                         } else {
                             curStatus = bytes[0];
                         }
-                        if (lastStatus!=MsgCodeUtils.STATUE_RECHARGE&&curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte && robotType.equals("X900")) {//900的暂停模式发的是待机命令，不准确
+                        if (lastStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
-                        } else {
-                            if (curStatus == 0x0B) {//寻找模式
-                                ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
-                            }
+                        }
+                        if (curStatus == 0x0B) {//寻找模式
+                            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
                         }
                         break;
                 }

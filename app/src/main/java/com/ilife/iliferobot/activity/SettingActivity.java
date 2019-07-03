@@ -47,6 +47,7 @@ import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -159,7 +160,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
     public void initView() {
         context = this;
-        iv_find_robot=findViewById(R.id.iv_find_robot);
+        iv_find_robot = findViewById(R.id.iv_find_robot);
         imageView = (ImageView) findViewById(R.id.imageView);
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
@@ -268,7 +269,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
             rl_mode.setVisibility(View.VISIBLE);
         }
-        if (subdomain.equals(Constants.subdomain_a8s)||subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
+        if (subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
             rl_voice.setVisibility(View.VISIBLE);
         }
 
@@ -477,8 +478,14 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                     ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
                     return;
                 }
-                if (name.length()>30){
-                    ToastUtils.showToast(Utils.getString(R.string.name_max_length));
+                int maxLength;
+                if (Utils.isChinaEnvironment()) {
+                    maxLength=12;
+                } else {
+                    maxLength=30;
+                }
+                if (name.length() > maxLength) {
+                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
                     return;
                 }
                 AlertDialogUtils.hidden(alterDialog);

@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                     if (refreshLayout != null) {
                         refreshLayout.finishRefresh();
                     }
+                    DialogUtils.closeDialog(loadingDialog);
                     break;
             }
             return true;
@@ -206,6 +207,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         super.onWindowFocusChanged(hasFocus);
     }
 
+    @Override
+    public void loginInvalid() {
+        ToastUtils.showToast(Utils.getString(R.string.login_invalid));
+        startActivity(new Intent(MainActivity.this, QuickLoginActivity.class));
+        finish();
+    }
 
     @Override
     public void updateDeviceList(List<ACUserDevice> acUserDevices) {
@@ -245,15 +252,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void showButton() {
         refreshLayout.setVisibility(View.GONE);
         layout_no_device.setVisibility(View.VISIBLE);
-//        addImage.setVisibility(View.GONE);
-        DialogUtils.closeDialog(loadingDialog);
     }
 
     public void showList() {
         layout_no_device.setVisibility(View.GONE);
         refreshLayout.setVisibility(View.VISIBLE);
         adapter.notifyDataSetChanged();
-        DialogUtils.closeDialog(loadingDialog);
     }
 
     private void showOfflineDialog() {

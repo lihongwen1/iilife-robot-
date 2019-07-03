@@ -8,6 +8,7 @@
     <string name="login_aty_fw">Forgot password？</string>
     <string name="login_aty_wrong_email">Invalid account format</string>
     <string name="regist_wrong_account">Please enter valid Email address</string>
+    <string name="regist_wrong_email">Invalid email address</string>
     <string name="login_account_error">Incorrect user name</string>
     <string name="login_aty_account_no">Account is unavailable</string>
     <string name="login_aty_pw_error">Incorrect password</string>
@@ -261,7 +262,7 @@
     <string name="stop_work_reason5">App-controlled pause</string>
     <string name="stop_work_reason6">Error alert disabled</string>
     <string name="resend">Resend</string>
-    <string name="user_nickname">Give robot a nickname</string>
+    <string name="user_nickname">Please set the username</string>
     <string name="setting_aty_ota_upadta_success">Upgrade completed</string>
     <string name="ota_aty_back">Back</string>
     <string name="ota_aty_confirm">OK</string>
@@ -299,6 +300,7 @@
     <string name="not_saved">Unsave</string>
     <string name="cancel_">Cancel</string>
     <string name="pairing_wifi">Searching a network…</string>
-    <string name="name_max_length">Enter up to 30 characters</string>
+    <string name="name_max_length">Enter up to %1$s characters</string>
     <string name="low_power">Low power</string>
+    <string name="login_invalid">Login failed. Retry.</string>
 </resources>

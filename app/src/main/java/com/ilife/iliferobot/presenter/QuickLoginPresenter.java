@@ -13,6 +13,7 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -41,8 +42,18 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         if (!isPhoneUseful) {
             return;
         }
+        int templateId;
+        if (UserUtils.isPhone(mView.getPhone())) {
+            templateId = 1;
+        } else {
+            if (Utils.isChinaEnvironment()) {
+                templateId = 3;
+            } else {
+                templateId = 2;
+            }
+        }
         verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter ->
-                acAccountMgr.sendVerifyCode(mView.getPhone(), 1, new VoidCallback() {
+                acAccountMgr.sendVerifyCode(mView.getPhone(), templateId, new VoidCallback() {
                     @Override
                     public void success() {
                         completableEmitter.onComplete();
