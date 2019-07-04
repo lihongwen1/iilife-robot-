@@ -23,6 +23,7 @@ import com.ilife.iliferobot.contract.ApWifiContract;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.WifiUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +42,7 @@ import static android.content.Context.WIFI_SERVICE;
  */
 public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implements ApWifiContract.Presenter {
     private static final String TAG = ApWifiPresenter.class.getName();
+    private StringBuilder apMsg=new StringBuilder();
     private ACDeviceActivator activator;
     private WifiManager wifiManager;
     private final String apWifiTarget = "Robot";
@@ -75,11 +77,13 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 MyLogger.d(TAG, "扫描目标wifi结束" + mApSsid);
 //            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
                 if (mApSsid == null || mApSsid.isEmpty()) {
+                    apMsg.append("未发现Robot-XXXX开头的热点");
                     e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
                 } else {
                     e.onComplete();
                 }
             } catch (Exception ex) {
+                apMsg.append("扫描目标wifi异常");
                 MyLogger.d(TAG, "扫描目标wifi异常");
             }
 
@@ -112,7 +116,11 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                         {
                             MyLogger.d(TAG, "bind fail");
                             if (isViewAttached()) {
-                                mView.bindFail(throwable.getMessage());
+                                if (physicalId != null) {
+                                    mView.bindFail("物理id: " + physicalId + apMsg.toString());
+                                } else {
+                                    mView.bindFail(apMsg.toString());
+                                }
                             }
                         });
     }
@@ -142,7 +150,11 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                         {
                             MyLogger.d(TAG, "bind fail");
                             if (isViewAttached()) {
-                                mView.bindFail(throwable.getMessage());
+                                if (physicalId != null) {
+                                    mView.bindFail("物理id= " + physicalId + apMsg.toString());
+                                } else {
+                                    mView.bindFail(apMsg.toString());
+                                }
                             }
                         });
     }
@@ -178,6 +190,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 completableEmitter.onComplete();
             } else {
                 MyLogger.d(TAG, "连接到热点失败");
+                apMsg.append("连接到" + connectSsid + "失败！");
                 completableEmitter.onError(new Exception("连接到" + connectSsid + "失败！"));
             }
         });
@@ -233,6 +246,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 //            mView.updateBindProgress("发送家庭WiFi", 50);
             generatePhysicalId();
             if (TextUtils.isEmpty(physicalId) || !isTheSameDevice(mApSsid, physicalId)) {
+                apMsg.append("请先连接以Robot-XXXX开头的热点");
                 emitter.onError(new Exception(Utils.getString(R.string.third_ap_aty_port_)));
             } else {
 
@@ -248,6 +262,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     public void error(ACException e) {
                         //设备配置SSID与Password失败
 //                    emitter.onError(new Exception("设置ssid失败"));
+                        apMsg.append("设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
                         MyLogger.d(TAG, "设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
                     }
                 }, new PayloadCallback<ACDeviceBind>() {
@@ -262,6 +277,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
                     @Override
                     public void error(ACException e) {
+                        apMsg.append("设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
                         MyLogger.d(TAG, "设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
 //                    emitter.onError(e);
                         //此处一般为1993的超时错误，建议处理逻辑为页面上提示配网失败，提示用户检查自己输入的WIFI信息是否正确等，回到上述第一步骤，重新开始所有配网步骤。
@@ -294,6 +310,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
                 @Override
                 public void error(ACException e) {
+                    apMsg.append("绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
                     MyLogger.e(TAG, "绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
                     emitter.onError(e);
                 }

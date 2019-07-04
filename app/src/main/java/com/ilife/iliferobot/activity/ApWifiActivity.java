@@ -15,6 +15,7 @@ import com.ilife.iliferobot.presenter.ApWifiPresenter;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import butterknife.BindView;
 
@@ -101,7 +102,8 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-        MyLogger.d(TAG, "绑定失败：    " + message);
+        CrashReport.postCatchedException(new Exception(message));
+        MyLogger.d(TAG, "配网失败：    " + message);
         startActivity(new Intent(this, BindFailActivity.class));
         finish();
     }
