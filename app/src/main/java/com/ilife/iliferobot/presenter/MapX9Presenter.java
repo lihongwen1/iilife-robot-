@@ -535,6 +535,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     @Override
                     public void error(ACException e) {
                         isGainDevStatus = false;
+                        adjustTime();
+                        registerPropReceiver();
                         MyLogger.d(TAG, "gain the device status fail ,the reason is: " + e.getMessage());
                     }
                 });

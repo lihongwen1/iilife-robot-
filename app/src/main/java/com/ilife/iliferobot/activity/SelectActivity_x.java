@@ -51,8 +51,8 @@ public class SelectActivity_x extends BackBaseActivity {
         context = this;
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         if (Utils.isIlife()) {
-            subdomains = new String[]{Constants.subdomain_x900, Constants.subdomain_x800, Constants.subdomain_x787, Constants.subdomain_x785};
-            subdomainIds = new long[]{Constants.subdomainId_x900, Constants.subdomainId_x800, Constants.subdomainId_x787, Constants.subdomainId_x785};
+            subdomains = new String[]{/*Constants.subdomain_x900, */Constants.subdomain_x800, Constants.subdomain_x787, Constants.subdomain_x785};
+            subdomainIds = new long[]{/*Constants.subdomainId_x900,*/ Constants.subdomainId_x800, Constants.subdomainId_x787, Constants.subdomainId_x785};
         } else {
             subdomains=new String[]{Constants.subdomain_a9s,Constants.subdomain_a8s};
             subdomainIds=new long[]{Constants.subdomaiId_a9s,Constants.subdomaiId_a8s};

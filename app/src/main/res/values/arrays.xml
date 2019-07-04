@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="device_name_ilife">
-        <item>@string/select_aty_x900</item>
+        <!--<item>@string/select_aty_x900</item>-->
         <item>@string/select_aty_x800</item>
         <item>@string/select_aty_x787</item>
         <item>@string/select_aty_x785</item>
