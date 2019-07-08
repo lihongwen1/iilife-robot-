@@ -133,13 +133,10 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
             }
 
 
-            holder.item_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    closeOpenMenu();
-                    if (mOnClickListener != null) {
-                        mOnClickListener.onMenuClick(position);
-                    }
+            holder.item_delete.setOnClickListener(v -> {
+                closeOpenMenu();
+                if (mOnClickListener != null) {
+                    mOnClickListener.onMenuClick(position);
                 }
             });
             holder.slidingMenu.setCustomOnClickListener(new SlidingMenu.CustomOnClickListener() {
@@ -188,7 +185,6 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
                 item_delete = (TextView) itemView.findViewById(R.id.item_delete);
                 image_product = itemView.findViewById(R.id.image_product);
                 slidingMenu = (SlidingMenu) itemView.findViewById(R.id.slidingMenu);
-
             }
         }
     }

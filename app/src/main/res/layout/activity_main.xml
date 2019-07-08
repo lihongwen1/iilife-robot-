@@ -15,15 +15,18 @@
             android:text="@string/main_aty_my_robot"
             android:textStyle="bold" />
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/image_personal"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_22"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/n_icon_personal"
-            android:contentDescription="@null" />
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:background="@drawable/n_icon_personal"
+                android:contentDescription="@null" />
+        </FrameLayout>
     </RelativeLayout>
 
     <View

@@ -44,6 +44,9 @@
 
                     <com.ilife.iliferobot.view.MediumTextView
                         android:id="@+id/tv_name"
+                        android:layout_width="@dimen/dp_160"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         style="@style/Text_16sp_33" />
 
                     <com.ilife.iliferobot.view.LightTextView

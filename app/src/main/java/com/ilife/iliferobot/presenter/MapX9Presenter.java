@@ -386,7 +386,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         }
-        if (pointList != null) {
+        if (pointList!=null&& curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING_
+                && curStatus != MsgCodeUtils.STATUE_CHARGING&&curStatus != MsgCodeUtils.STATUE_WAIT) {
             mView.drawBoxMapX8(pointList);
             mView.updateCleanTime(getTimeValue());
             mView.updateCleanArea(getAreaValue());
@@ -573,7 +574,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING) {
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING||(curStatus==MsgCodeUtils.STATUE_RECHARGE&&!robotType.equals("X900"))) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
         if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
@@ -582,7 +583,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         mView.showBottomView();
         MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_SLEEPING ||  curStatus == MsgCodeUtils.STATUE_WAIT) {//休眠，或者x900的待机不显示地图
+        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT) {//休眠，或者x900的待机不显示地图
             mView.cleanMapView();
         } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
@@ -606,7 +607,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo < 6 && curStatus != MsgCodeUtils.STATUE_OFF_LINE;
+        return batteryNo <= 6;
     }
 
     @Override
@@ -877,7 +878,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || (curStatus == MsgCodeUtils.STATUE_POINT && !subdomain.equals(Constants.subdomain_x900) && !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG ||  curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -893,7 +894,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || (curStatus == MsgCodeUtils.STATUE_ALONG && !subdomain.equals(Constants.subdomain_x900) && !subdomain.equals(Constants.subdomain_x800)) || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());

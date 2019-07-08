@@ -10,6 +10,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,7 +63,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.tv_notice)
     TextView tv_notice;
     @BindView(R.id.image_personal)
-    ImageView image_personal;
+    FrameLayout image_personal;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)

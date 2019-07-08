@@ -453,7 +453,6 @@ public class MapView extends View {
                     } else {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
-//                            ToastUtils.showToast(Utils.getString(R.string.map_aty_too_short));
                         } else {
                             existVirtualPath.moveTo(downX, downY);
                             existVirtualPath.lineTo(x, y);//加入到已存在的电子墙集合中去

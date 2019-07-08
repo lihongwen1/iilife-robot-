@@ -43,14 +43,18 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
             return;
         }
         int templateId;
-        if (UserUtils.isPhone(mView.getPhone())) {
-            templateId = 1;
-        } else {
-            if (Utils.isChinaEnvironment()) {
-                templateId = 3;
+        if (Utils.isIlife()) {
+            if (UserUtils.isPhone(mView.getPhone())) {
+                templateId = 1;
             } else {
-                templateId = 2;
+                if (Utils.isChinaEnvironment()) {
+                    templateId = 3;
+                } else {
+                    templateId = 2;
+                }
             }
+        } else {//ZACO
+            templateId = 1;
         }
         verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter ->
                 acAccountMgr.sendVerifyCode(mView.getPhone(), templateId, new VoidCallback() {

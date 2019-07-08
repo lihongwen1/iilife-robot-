@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/dp_265"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_127"
             android:background="@drawable/logo" />
@@ -113,6 +113,7 @@
                 android:layout_gravity="bottom|center"
                 android:layout_marginTop="@dimen/dp_30"
                 android:text="@string/have_account_and_login" />
+
         </LinearLayout>
     </LinearLayout>
 

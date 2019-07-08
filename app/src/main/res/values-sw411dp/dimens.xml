@@ -66,6 +66,8 @@
 	<dimen name="dp_160">175.3600dp</dimen>
 	<dimen name="dp_180">197.2800dp</dimen>
 	<dimen name="dp_188">206.0480dp</dimen>
+	<dimen name="dp_195">213.7200dp</dimen>
+	<dimen name="dp_200">219.2000dp</dimen>
 	<dimen name="dp_203">222.4880dp</dimen>
 	<dimen name="dp_220">241.1200dp</dimen>
 	<dimen name="dp_222">243.3120dp</dimen>

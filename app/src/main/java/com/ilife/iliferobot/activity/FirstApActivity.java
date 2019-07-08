@@ -99,7 +99,7 @@ public class FirstApActivity extends BackBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().trim().length() > 0) {
+                if (s.toString().trim().length() >=8) {
                     bt_next.setSelected(true);
                     bt_next.setClickable(true);
                 } else {

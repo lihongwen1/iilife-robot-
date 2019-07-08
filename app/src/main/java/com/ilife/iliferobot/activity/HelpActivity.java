@@ -44,6 +44,7 @@ import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.KeyboardUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
@@ -328,12 +329,9 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
 
     public void initPopView(View view) {
         ListView listView = (ListView) view.findViewById(R.id.listView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                et_type.setText(types[position]);
-                typePop.dismiss();
-            }
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            et_type.setText(types[position]);
+            typePop.dismiss();
         });
     }
 
@@ -389,6 +387,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             @Override
             public void error(ACException e) {
                 dialog.dismiss();
+                MyLogger.d(TAG, getString(R.string.help_aty_commit)+e.getMessage()+"---"+e.getDescription());
                 ToastUtils.showToast(context, getString(R.string.help_aty_commit));
             }
         });

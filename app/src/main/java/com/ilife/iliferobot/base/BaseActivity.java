@@ -7,10 +7,14 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.utils.DialogUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -27,6 +31,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!Locale.getDefault().getLanguage().equals(MyApplication.getInstance().appInitLanguage)){
+            MyLogger.d("BaseActivity","app language is change");
+            MyApplication.getInstance().initTypeface();
+        }
 //        hideBottomUIMenu();
         setContentView(getLayoutId());
         mUnBinder = ButterKnife.bind(this);

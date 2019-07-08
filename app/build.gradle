@@ -23,8 +23,8 @@ android {
         applicationId "com.ilife.iliferobot"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 32
-        versionName '3.0.0'
+        versionCode 3
+        versionName '1.1.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions  "default"
@@ -55,9 +55,10 @@ android {
         zaco{
             dimension "default"
             applicationId "com.zacorobot_eu"
+            versionCode = 3
+            versionName = '1.1.0'
             signingConfig signingConfigs.zaco
             buildConfigField("int", "Area", "4")
-            resValue "string", "app_name", "ZACO Robot"
             buildConfigField("String", "BRAND", "\"ZACO\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
@@ -76,9 +77,10 @@ android {
         _China_Test {
             dimension "default"
             applicationId "com.ilife.iliferobot_test"
+            versionCode = 32
+            versionName = '3.0.0'
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "0")
-            resValue "string", "app_name", "ILIFE-ROBOT"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
@@ -96,10 +98,11 @@ android {
         /* 中国*/
         _China {
             dimension "default"
+            versionCode = 32
+            versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "0")
-            resValue "string", "app_name", "智意机器人"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
@@ -117,10 +120,11 @@ android {
         /*东南亚*/
         _SouthEast_Asia {
             dimension  "default"
+            versionCode = 32
+            versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "1")
-            resValue "string", "app_name", "ILIFE Robot Asia"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
@@ -138,10 +142,11 @@ android {
         /*美国*/
         _America {
             dimension "default"
+            versionCode = 32
+            versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_us"
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "3")
-            resValue "string", "app_name", "ILIFE Robot America"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
@@ -159,7 +164,8 @@ android {
         /*欧洲*/
         _Europe {
             dimension "default"
-            resValue "string", "app_name", "ILIFE Robot Europe"
+            versionCode = 32
+            versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife
@@ -238,7 +244,7 @@ dependencies {
     implementation files('libs/hiflying-iots-android-smartlink-8.2.0.jar')
     implementation 'commons-codec:commons-codec:20041127.091804'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation 'com.badoo.mobile:android-weak-handler:1.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-7'

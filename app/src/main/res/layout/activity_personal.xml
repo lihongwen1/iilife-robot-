@@ -140,10 +140,9 @@
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_toStartOf="@+id/image_forward_policy"
                     android:layout_toEndOf="@+id/image_protocol"
-                    android:text="@string/personal_aty_protocol"
+                    android:text="@string/user_agreement"
                     android:textColor="@color/color_33" />
 
                 <ImageView

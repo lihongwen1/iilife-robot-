@@ -9,6 +9,8 @@ import android.widget.EditText;
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.app.MyApplication;
 
+import java.util.Locale;
+
 
 /**
  * Created by chengjiaping on 2018/8/4.
@@ -36,6 +38,12 @@ public class Utils {
     public static  boolean isIlife() {
         return BuildConfig.BRAND.equals("ILIFE");
     }
+
+    public static  boolean isChineseLanguage(){
+        String lan = LanguageUtils.getDefaultLanguage();
+        return lan.equals("zh");
+    }
+
 
     /**
      *

@@ -68,11 +68,25 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 @Override
                 public void success(Boolean isExist) {
                     if (isExist) {
+                        int templateId;
+                        if (Utils.isIlife()) {
+                            if (UserUtils.isPhone(str_email)) {
+                                templateId = 1;
+                            } else {
+                                if (Utils.isChinaEnvironment()) {
+                                    templateId = 3;
+                                } else {
+                                    templateId = 2;
+                                }
+                            }
+                        } else {//ZACO
+                            templateId = 1;
+                        }
                         countDownDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
                                 observeOn(AndroidSchedulers.mainThread()).doOnNext(aLong ->
                                 mView.setCountDownValue(Long.toString(60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).
                                 doOnSubscribe(subscription -> mView.onStartCountDown()).subscribe();
-                        AC.accountMgr().sendVerifyCode(str_email, Constants.EMAIL_MODE_Europe, new VoidCallback() {
+                        AC.accountMgr().sendVerifyCode(str_email, templateId, new VoidCallback() {
                             @Override
                             public void success() {
 //                                ToastUtils.showToast(Utils.getString(R.string.register2_aty_obtain_suc));
@@ -95,7 +109,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 }
             });
         } else {
-            ToastUtils.showToast(Utils.getString(R.string.login_aty_wrong_email));
+            ToastUtils.showToast(Utils.getString(R.string.personal_input_email));
         }
     }
 

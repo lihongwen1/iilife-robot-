@@ -102,12 +102,20 @@
                 android:layout_toEndOf="@+id/image_tel1"
                 android:text="00800-42377961" />
 
-            <com.ilife.iliferobot.view.AvantGardTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_33"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_toEndOf="@+id/tv_telNum_eu"
                 android:text="@string/help_aty_all_eu" />
+
+            <com.ilife.iliferobot.view.RegularTextView
+                style="@style/Text_12sp_33"
+                android:layout_below="@+id/tv_telNum_eu"
+                android:layout_alignStart="@id/tv_telNum_eu"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="@string/zaco_phone_server_time" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -131,12 +139,19 @@
                 android:layout_toEndOf="@+id/image_tel_de"
                 android:text="0209-513038-380" />
 
-            <com.ilife.iliferobot.view.AvantGardTextView
+            <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_33"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_toEndOf="@+id/tv_telNum_de"
                 android:text="@string/help_aty_dir_de" />
+
+            <com.ilife.iliferobot.view.RegularTextView
+                style="@style/Text_12sp_33"
+                android:layout_below="@+id/tv_telNum_de"
+                android:layout_alignStart="@id/tv_telNum_de"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="@string/zaco_phone_server_time" />
         </RelativeLayout>
 
         <View
@@ -186,10 +201,10 @@
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_30"
-        android:inputType="textEmailAddress"
         android:background="@drawable/feedback_et_bg"
         android:hint="@string/personal_input_email"
         android:includeFontPadding="false"
+        android:inputType="textEmailAddress"
         android:paddingStart="@dimen/dp_18"
         android:textColorHint="@color/color_ac"
         android:textSize="@dimen/sp_14" />

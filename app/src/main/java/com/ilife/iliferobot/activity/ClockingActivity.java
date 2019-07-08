@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -172,9 +173,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
             TimePickerUIUtil.set_timepicker_text_colour(timePicker, context);
             tv_confirm = (TextView) contentView.findViewById(R.id.tv_confirm);
             tv_cancel = (TextView) contentView.findViewById(R.id.tv_cancel);
-            int width = (int) getResources().getDimension(R.dimen.dp_315);
-            int height = (int) getResources().getDimension(R.dimen.dp_300);
-            alertDialog = AlertDialogUtils.showDialogNoCancel(context, contentView, width, height);
+            alertDialog = AlertDialogUtils.showDialogNoCancel(context, contentView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         } else {
             if (!alertDialog.isShowing()) {
                 alertDialog.show();
@@ -190,7 +189,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
 //        } else {
 //            timePicker.setIs24HourView(false);
 //        }
-        if (subdomain.equals(Constants.subdomain_x900)||DateFormat.is24HourFormat(context)) {
+        if (DateFormat.is24HourFormat(context)) {
             timePicker.setIs24HourView(true);
         } else {
             timePicker.setIs24HourView(false);

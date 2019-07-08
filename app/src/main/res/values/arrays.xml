@@ -9,7 +9,7 @@
     </string-array>
     <string-array name="device_name_zaco">
         <item>@string/select_aty_a9s</item>
-        <item>@string/select_aty_a8s</item>
+        <!--<item>@string/select_aty_a8s</item>-->
     </string-array>
     <string-array name="array_week">
         <item>@string/clock_aty_sun</item>

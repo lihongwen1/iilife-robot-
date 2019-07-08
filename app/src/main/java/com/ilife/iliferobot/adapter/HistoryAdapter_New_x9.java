@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.entity.HistoryRecord_x9;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by chengjiaping on 2018/8/16.
@@ -34,7 +36,11 @@ public class HistoryAdapter_New_x9 extends RecyclerView.Adapter<HistoryAdapter_N
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(inflater.inflate(R.layout.layout_histroy_item, null));
+        if (Utils.isChineseLanguage()) {
+            return new MyViewHolder(inflater.inflate(R.layout.layout_histroy_item, null));
+        } else {
+            return new MyViewHolder(inflater.inflate(R.layout.layout_histroy_item_en, null));
+        }
     }
 
     @Override

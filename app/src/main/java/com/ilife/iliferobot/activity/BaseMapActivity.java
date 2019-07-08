@@ -475,20 +475,16 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
-                    if (mPresenter.getDevice_type() == 128) {//128只会出现在日规的x800中
+                    if ((mPresenter.getRobotType().equals("a9s") || mPresenter.getRobotType().equals("a8s") ||
+                            mPresenter.getDevice_type() == 128)&&mPresenter.getCurStatus()!=MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
-                                .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task))
+                                .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task)).exchangeButtonColor()
                                 .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode())).setOnRightButtonClck(() ->
                                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode()))
                                 .show(getSupportFragmentManager(), "choose_action");
                     } else {
-                        if (mPresenter.getRobotType().equals("X900")) {
-                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
-                        } else {
-                            mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
-                        }
-
+                        mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                     }
                 } else if (mPresenter.isLowPowerWorker()) {
                     ToastUtils.showToast(getString(R.string.low_power));

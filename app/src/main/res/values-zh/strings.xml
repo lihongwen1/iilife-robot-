@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">智意机器人</string>
     <string name="login_aty_login">登录</string>
     <string name="login_aty_email">手机号/邮箱</string>
     <string name="login_aty_pw">请输入新密码(6个字符以上)</string>
@@ -47,7 +48,8 @@
     <string name="wifi_guide_aty_tip2">提示：机器人暂时无法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未连接</string>
     <string name="ap_aty_robot_wifi">机器热点：</string>
-    <string name="third_ap_aty_tip1">*小贴士:请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接.</string>
+    <string name="third_ap_tip2">*小贴士:</string>
+    <string name="third_ap_aty_tip1">请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接.</string>
     <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
     <string name="third_ap_aty_port_">请先连接以Robot-XXXX开头的热点</string>
     <string name="bind_suc_aty_name">请为您的机器人命名</string>
@@ -75,7 +77,8 @@
     <string name="personal_aty_scan">扫一扫</string>
     <string name="personal_aty_share">机器共享</string>
     <string name="personal_aty_version">版本V%1$s %2$s</string>
-    <string name="personal_aty_protocol">用户协议</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="personal_aty_protocol">隐私政策与用户协议</string>
     <string name="personal_acy_exit">退出登录</string>
     <string name="personal_aty_cancel">取消</string>
     <string name="dialog_del_confirm">确定</string>
@@ -98,7 +101,7 @@
     <string name="personal_aty_scan_code">扫描二维码共享机器人</string>
     <string name="personal_aty_support">技术支持</string>
     <string name="personal_aty_feedback">问题反馈</string>
-    <string name="personal_input_email">请输入您的邮箱</string>
+    <string name="personal_input_email">请输入邮箱</string>
     <string name="personal_aty_chose_type">请选择您的产品型号</string>
     <string name="help_aty_content">请描述遇到的问题和现象</string>
     <string name="personal_aty_count">可输入字数140/140</string>
@@ -210,8 +213,8 @@
     <string name="setting_aty_type_x900">ILIFE X900</string>
     <string name="setting_aty_type_x787">ILIFE X787</string>
     <string name="setting_aty_type_x785">ILIFE X785</string>
-    <string name="setting_aty_type_a9s">A9s</string>
-    <string name="setting_aty_type_a8s">A8s</string>
+    <string name="setting_aty_type_a9s">ZACO A9s</string>
+    <string name="setting_aty_type_a8s">ZACO A8s</string>
     <string name="select_aty_x785">X785</string>
     <string name="select_aty_x787">X787</string>
     <string name="select_aty_x800">X800</string>
@@ -238,14 +241,14 @@
     <string name="map_aty_set_suc">电子墙设置成功！</string>
     <string name="map_aty_set_fail">电子墙设置失败！</string>
     <string name="map_aty_max_count">最多可设置10条电子墙!</string>
-    <string name="map_aty_too_short">电子墙太短！！</string>
     <string name="setting_aty_ota_update">固件升级</string>
     <string name="ota_aty_update_suc">升级成功！</string>
     <string name="ota_aty_latest_ver">当前已是最新版本</string>
     <string name="ilife_slogan">让保洁更简单 让生活更美好</string>
     <string name="verification_code_tip">请输入验证码</string>
     <string name="get_ver_code_tip">获取验证码</string>
-    <string name="have_account_and_login">已有账户？请登录</string>
+    <string name="have_account_and_login">已有账户？</string>
+    <string name="have_account_and_login1">请登录</string>
     <string name="quick_login">快速注册</string>
     <string name="set_password">设置密码</string>
     <string name="no_device_tip_hi">Hi，别来无恙</string>
@@ -256,7 +259,7 @@
     <string name="back_to_recharge">返回充电座</string>
     <string name="finish_the_cleaning">结束当前清扫</string>
     <string name="stop_work_reason1">完成清扫</string>
-    <string name="stop_work_reason2">低电量回冲停止</string>
+    <string name="stop_work_reason2">低电量回充停止</string>
     <string name="stop_work_reason3">遥控器暂停</string>
     <string name="stop_work_reason4">按键暂停</string>
     <string name="stop_work_reason5">App主动暂停</string>
@@ -297,4 +300,5 @@
     <string name="name_max_length">最多输入%1$s个字符</string>
     <string name="low_power">电量低，请充电!</string>
     <string name="login_invalid">登录失效,请重新登录</string>
+    <string name="zaco_phone_server_time">周一到周五 09:00 am – 17:00 pm</string>
 </resources>

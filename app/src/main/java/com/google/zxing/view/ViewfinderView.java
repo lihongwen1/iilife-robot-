@@ -111,7 +111,7 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
         labelText = getContext().getString(R.string.capture_aty_scan);
         labelTextSize = getContext().getResources().getDimension(R.dimen.sp_14);
 
-        // Initialize these once for performance rather than calling them every time in onDraw().
+        // Initialize these once for high performance rather than calling them every time in onDraw().
         paint = new Paint();
         paint.setAntiAlias(true);
         scannerAlpha = 0;
@@ -194,7 +194,16 @@ public final class ViewfinderView extends View implements View.OnTouchListener {
         paint.setTextAlign(Paint.Align.CENTER);
 //    canvas.drawText(labelText, frame.centerX(), baseline, paint);
         int baseLine = (int) (frame.bottom + getResources().getDimension(R.dimen.dp_30) + 20);
-        canvas.drawText(labelText, frame.centerX(), baseLine, paint);
+        int length=labelText.length();
+        if (length> 20) {
+            String label1 = labelText.substring(0,length/2);
+            String label2 = labelText.substring(length/2,length);
+            canvas.drawText(label1, frame.centerX(), baseLine, paint);
+            canvas.drawText(label2, frame.centerX(), baseLine+40, paint);
+        } else {
+            canvas.drawText(labelText, frame.centerX(), baseLine, paint);
+        }
+
         //================================================================================
     }
 

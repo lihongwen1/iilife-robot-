@@ -12,11 +12,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:background="@color/color_f6">
+        android:background="@color/white">
 
         <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/tv_robot_wifi"
-            style="@style/Text_12sp_33"
+            style="@style/Text_16sp_33"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_30"
             android:text="@string/ap_aty_robot_wifi" />
@@ -41,6 +41,13 @@
     </RelativeLayout>
 
     <View style="@style/View_Line_Style" />
+
+    <com.ilife.iliferobot.view.LightTextView
+        style="@style/Text_18sp_f08300"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:text="@string/third_ap_tip2" />
 
     <com.ilife.iliferobot.view.LightTextView
         style="@style/Text_12sp_ac"

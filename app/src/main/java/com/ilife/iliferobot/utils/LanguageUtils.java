@@ -2,6 +2,8 @@ package com.ilife.iliferobot.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.os.LocaleList;
 
 import java.util.Locale;
 
@@ -10,13 +12,19 @@ import java.util.Locale;
  */
 
 public class LanguageUtils {
-    @TargetApi(19)
-    public static boolean isDe(Context context) {
-        Locale locale = context.getResources().getConfiguration().getLocales().get(0);
-        String language = locale.getLanguage();
-        if (language.endsWith("DE") || language.endsWith("de"))
-            return true;
-        else
-            return false;
+
+
+    public static String getDefaultLanguage() {
+        Locale locale = Locale.getDefault();
+        return locale.getLanguage()+locale.getCountry();
+    }
+
+    public static String getPreferedLanguage() {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = LocaleList.getDefault().get(0);
+        } else locale = Locale.getDefault();
+
+        return  locale.getLanguage() + "-" + locale.getCountry();
     }
 }

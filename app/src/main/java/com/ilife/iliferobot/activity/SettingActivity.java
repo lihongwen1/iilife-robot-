@@ -499,26 +499,18 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
 
     private void showResetDialog() {
-        View v = inflater.inflate(R.layout.layout_reset_dialog, null);
-        v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+        UniversalDialog universalDialog=new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.setting_aty_confirm_reset))
+                .setHintTip(Utils.getString(R.string.setting_aty_reset_hint)).setOnRightButtonClck(new UniversalDialog.OnRightButtonClck() {
             @Override
-            public void onClick(View v) {
-                AlertDialogUtils.hidden(alterDialog);
-            }
-        });
-        v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick() {
                 AlertDialogUtils.hidden(alterDialog);
                 dialog.show();
                 acDeviceMsg.setCode(MsgCodeUtils.FactoryReset);
                 acDeviceMsg.setContent(new byte[]{0x01});
                 sendToDeviceFactoryReset(acDeviceMsg, physicalId);
             }
-        });
-        int width = (int) getResources().getDimension(R.dimen.dp_300);
-        int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
+        }).show(getSupportFragmentManager(),"reset");
     }
 
     public void sendToDeviceWithOption(ACDeviceMsg deviceMsg, final String physicalDeviceId) {
