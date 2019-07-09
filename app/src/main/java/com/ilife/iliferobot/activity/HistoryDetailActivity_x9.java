@@ -52,7 +52,6 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData();
     }
 
     @Override
@@ -153,7 +152,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     x = (i - byteList.size() / length / 2);
                     float y = (j * 8 + k - length * 4);
                     if ((mapdata & tempdata) == tempdata) {
-                        if (subdomain.equals(Constants.subdomain_x800)||subdomain.equals(Constants.subdomain_a8s)||subdomain.equals(Constants.subdomain_a9s)) {
+                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
                             pointList.add((int) y);
                             pointList.add((int) x);
                         } else {
@@ -169,8 +168,12 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
 
     }
 
-    private void getData() {//取出传递过来的集合
+    public void initData() {//取出传递过来的集合
+        historyPointsList = new ArrayList<>();
         subdomain = SpUtils.getSpString(this, MainActivity.KEY_SUBDOMAIN);
+        if (subdomain.equals(Constants.subdomain_a8s)) {
+            mapView.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
+        }
         Intent intent = getIntent();
         if (intent != null) {
             HistoryRecord_x9 record = (HistoryRecord_x9) intent.getSerializableExtra("Record");
@@ -224,7 +227,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     }
 
     public void initView() {
-        historyPointsList = new ArrayList<>();
+
     }
 
 }

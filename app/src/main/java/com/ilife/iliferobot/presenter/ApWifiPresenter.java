@@ -42,10 +42,9 @@ import static android.content.Context.WIFI_SERVICE;
  */
 public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implements ApWifiContract.Presenter {
     private static final String TAG = ApWifiPresenter.class.getName();
-    private StringBuilder apMsg=new StringBuilder();
+    private StringBuilder apMsg = new StringBuilder();
     private ACDeviceActivator activator;
     private WifiManager wifiManager;
-    private final String apWifiTarget = "Robot";
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
@@ -61,21 +60,17 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     @Override
     public Completable detectTargetWifi() {
         return Completable.create(e -> {
-            mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
-            int times = 0;
+
             try {
-                while (mApSsid == null || mApSsid.isEmpty()) {
-                    if (times >= 6) {
-                        break;
-                    }
+                int times = 1;
+                do {
                     wifiManager.startScan();
                     Thread.sleep(4000);
+                    mApSsid = WifiUtils.searchTargetWifi(wifiManager);
                     MyLogger.d(TAG, "扫描目标wifi~~~~");
-                    mApSsid = WifiUtils.searchTargetWifi(apWifiTarget, wifiManager);
                     times++;
-                }
+                } while ((mApSsid == null || mApSsid.isEmpty()) && times < 6);
                 MyLogger.d(TAG, "扫描目标wifi结束" + mApSsid);
-//            mView.updateBindProgress("扫描目标wifi结束" + mApSsid, 10);
                 if (mApSsid == null || mApSsid.isEmpty()) {
                     apMsg.append("未发现Robot-XXXX开头的热点");
                     e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));

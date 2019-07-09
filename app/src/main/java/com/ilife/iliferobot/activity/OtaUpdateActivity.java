@@ -112,9 +112,7 @@ OtaUpdateActivity extends BackBaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentValue();
-        initView();
         showLoadingDialog();
-        initData();
         startTimer();
         MyLogger.e(TAG, "onCreate==:");
     }
@@ -135,7 +133,7 @@ OtaUpdateActivity extends BackBaseActivity {
         title.setText(R.string.setting_aty_ota_update);
     }
 
-    private void initData() {
+    public void initData() {
         physicalDeviceId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
     }

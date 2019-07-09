@@ -40,6 +40,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mUnBinder = ButterKnife.bind(this);
         attachPresenter();
         initView();
+        initData();
         setAndroidNativeLightStatusBar();
     }
 
@@ -140,4 +141,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 初始化视图
      */
     public abstract void initView();
+
+    public void initData(){};
 }

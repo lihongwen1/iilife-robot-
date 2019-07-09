@@ -25,7 +25,7 @@ import butterknife.BindView;
 public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements ApWifiContract.View {
     private final String TAG = ApWifiActivity.class.getSimpleName();
     public static final String EXTAR_DEVID = "EXTAR_DEVID";
-    public static final String EXTAR_ROBOT_SSID = "EXTAR_robot_SSID";
+    public static final String EXTAR_ROBOT_SSID = "EXTAR_ROBOT_SSID";
     Context context;
     @BindView(R.id.tv_bind_progress)
     TextView tv_bind_progress;
