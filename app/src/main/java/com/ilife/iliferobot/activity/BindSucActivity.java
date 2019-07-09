@@ -87,6 +87,8 @@ public class BindSucActivity extends BackBaseActivity {
             image_device = R.drawable.rechage_device_x800;
         } else if (subdomain.equals(Constants.subdomain_a8s)) {
             image_device = R.drawable.rechage_device_a8s;
+        } else if (subdomain.equals(Constants.subdomain_v85)) {//TODO 替换V85回冲图
+            image_device = R.drawable.rechage_device_a8s;
         } else {
             image_device = R.drawable.rechage_device_x800;
         }

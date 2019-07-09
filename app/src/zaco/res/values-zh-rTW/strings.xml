@@ -215,12 +215,14 @@
     <string name="setting_aty_type_x785">ILIFE X785</string>
     <string name="setting_aty_type_a9s">ZACO A9s</string>
     <string name="setting_aty_type_a8s">ZACO A8s</string>
+    <string name="setting_aty_type_v85">ZACO V85</string>
     <string name="select_aty_x785">X785</string>
     <string name="select_aty_x787">X787</string>
     <string name="select_aty_x800">X800</string>
     <string name="select_aty_x900">X900</string>
     <string name="select_aty_a9s">A9s</string>
     <string name="select_aty_a8s">A8s</string>
+    <string name="select_aty_v85">V85</string>
     <string name="setting_aty_hit_">用戶名</string>
     <string name="consume_aty_text_2">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網並進行清潔。3&#8211;6個月可更換邊刷、5&#8211;12個月可更換滾刷、3&#8211;5個月可更換高效濾網。</string>
     <string name="access_camera">請授予訪問攝像頭的許可權</string>

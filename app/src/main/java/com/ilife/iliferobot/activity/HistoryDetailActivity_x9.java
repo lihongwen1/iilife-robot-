@@ -152,7 +152,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     x = (i - byteList.size() / length / 2);
                     float y = (j * 8 + k - length * 4);
                     if ((mapdata & tempdata) == tempdata) {
-                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
+                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v85)|| subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
                             pointList.add((int) y);
                             pointList.add((int) x);
                         } else {
