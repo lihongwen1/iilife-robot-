@@ -1,13 +1,12 @@
 package com.ilife.iliferobot.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,22 +15,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.UserUtils;
 
 
 public class UniversalDialog extends DialogFragment {
-    private TextView tv_left, tv_mid, tv_right, tv_dialog_title, tv_hint_tip, tv_mid_title;
+    private TextView tv_left, tv_mid, tv_right, tv_dialog_title, tv_mid_title;
+    private EditText et_hint_tip;
     private LinearLayout ll_normal;
     private OnLeftButtonClck onLeftButtonClck;
     private OnMidButtonClck onMidButtonClck;
     private OnRightButtonClck onRightButtonClck;
+    private OnRightButtonClckWithValue onRightButtonClckWithValue;
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_NORMAL_MID_BUTTON = 2;
     public static final int TYPE_NORMAL_MID_TITLE = 3;
     private String title, hintTip, midTitle, leftText, midText, rightText;
-    private int hintColor=-1, hintGravity=-1;
+    private int hintColor = -1, hintGravity = -1;
     private int type;
     private int titleColor = -1;
-    private boolean exchangeColor;
+    private boolean exchangeColor, canEdit;
 
 
     @Override
@@ -63,7 +65,7 @@ public class UniversalDialog extends DialogFragment {
         ll_normal = v.findViewById(R.id.ll_normal);
         tv_mid_title = v.findViewById(R.id.tv_mid_title);
         tv_dialog_title = v.findViewById(R.id.tv_dialog_title);
-        tv_hint_tip = v.findViewById(R.id.tv_dialog_hint_tip);
+        et_hint_tip = v.findViewById(R.id.et_dialog_hint_tip);
         tv_left = v.findViewById(R.id.tv_dialog_left);
         tv_mid = v.findViewById(R.id.tv_dialog_mid);
         tv_right = v.findViewById(R.id.tv_dialog_right);
@@ -72,7 +74,7 @@ public class UniversalDialog extends DialogFragment {
             tv_right.setTextColor(getResources().getColor(R.color.color_f08300));
         }
         if (titleColor != -1) {
-            tv_dialog_title.setTextColor(titleColor);
+//            tv_dialog_title.setTextColor(titleColor);
         }
         if (title != null && !title.isEmpty()) {
             tv_dialog_title.setText(title);
@@ -81,13 +83,17 @@ public class UniversalDialog extends DialogFragment {
             tv_mid_title.setText(midTitle);
         }
         if (hintTip != null && !hintTip.isEmpty()) {
-            tv_hint_tip.setText(hintTip);
+            et_hint_tip.setHint(hintTip);
         }
-        if (hintGravity!=-1){
-            tv_hint_tip.setGravity(hintGravity);
+        if (canEdit) {
+            UserUtils.setEmojiFilter(et_hint_tip);
+            et_hint_tip.setEnabled(true);
         }
-        if (hintColor!=-1){
-            tv_hint_tip.setTextColor(hintColor);
+        if (hintGravity != -1) {
+            et_hint_tip.setGravity(hintGravity);
+        }
+        if (hintColor != -1) {
+            et_hint_tip.setTextColor(hintColor);
         }
         if (leftText != null && !leftText.isEmpty()) {
             tv_left.setText(leftText);
@@ -104,7 +110,7 @@ public class UniversalDialog extends DialogFragment {
         }
         if (type == TYPE_NORMAL_MID_TITLE) {
             tv_dialog_title.setVisibility(View.GONE);
-            tv_hint_tip.setVisibility(View.GONE);
+            et_hint_tip.setVisibility(View.GONE);
             tv_mid_title.setVisibility(View.VISIBLE);
         }
 
@@ -118,6 +124,9 @@ public class UniversalDialog extends DialogFragment {
             dismiss();
             if (onRightButtonClck != null) {
                 onRightButtonClck.onClick();
+            }
+            if (onRightButtonClckWithValue != null) {
+                onRightButtonClckWithValue.onClick(et_hint_tip.getText().toString());
             }
         });
         tv_mid.setOnClickListener(v1 -> {
@@ -141,6 +150,10 @@ public class UniversalDialog extends DialogFragment {
         void onClick();
     }
 
+    public interface OnRightButtonClckWithValue {
+        void onClick(String value);
+    }
+
     public UniversalDialog setOnLeftButtonClck(OnLeftButtonClck onLeftButtonClck) {
         this.onLeftButtonClck = onLeftButtonClck;
         return this;
@@ -153,6 +166,11 @@ public class UniversalDialog extends DialogFragment {
 
     public UniversalDialog setOnRightButtonClck(OnRightButtonClck onRightButtonClck) {
         this.onRightButtonClck = onRightButtonClck;
+        return this;
+    }
+
+    public UniversalDialog setOnRightButtonWithValueClck(OnRightButtonClckWithValue onRightButtonClckWithValue) {
+        this.onRightButtonClckWithValue = onRightButtonClckWithValue;
         return this;
     }
 
@@ -170,7 +188,7 @@ public class UniversalDialog extends DialogFragment {
         this.hintTip = tip;
         this.hintColor = color;
         this.hintGravity = gravity;
-        return  this;
+        return this;
     }
 
     public UniversalDialog setMidText(String midText) {
@@ -205,6 +223,11 @@ public class UniversalDialog extends DialogFragment {
 
     public UniversalDialog setTitleColor(int color) {
         titleColor = color;
+        return this;
+    }
+
+    public UniversalDialog setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
         return this;
     }
 }

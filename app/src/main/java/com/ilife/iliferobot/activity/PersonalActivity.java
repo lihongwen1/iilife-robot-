@@ -262,13 +262,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         }
     }
 
-    private void showDeleteDialog() {
-        View contentView = inflater.inflate(R.layout.layout_del_dialog, null);
-        tv_content = contentView.findViewById(R.id.tv_content);
-        del_tv_title = (TextView) contentView.findViewById(R.id.del_tv_title);
-        alertDialog = AlertDialogUtils.showDialogNoCancel(context, contentView, dialog_width, dialog_height_);
-    }
-
     private void showLogoutDialog() {
         UniversalDialog logoutDialog = new UniversalDialog();
         logoutDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitleColor(getResources().getColor(R.color.color_f08300)).
@@ -287,53 +280,31 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     }
 
     private void showRenameDialog() {
-        View v = inflater.inflate(R.layout.layout_user_name_dialog, null);
-        final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-        UserUtils.setEmojiFilter(et_name);
-        v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialogUtils.hidden(alertDialog);
-            }
-        });
-        v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = et_name.getText().toString();
-                if (TextUtils.isEmpty(name)) {
-                    ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
-                    return;
-                }
-                int maxLength;
-                if (Utils.isChinaEnvironment()) {
-                    maxLength=12;
-                } else {
-                    maxLength=30;
-                }
-                if (name.length() > maxLength) {
-                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
-                    return;
-                }
-                if (!name.equals(userName)) {
-                    changeNickName(name);
-                }
-                AlertDialogUtils.hidden(alertDialog);
-            }
-        });
-        int width = (int) getResources().getDimension(R.dimen.dp_300);
-        int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alertDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
+        UniversalDialog logoutDialog = new UniversalDialog();
+        logoutDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setCanEdit(true).setTitle(Utils.getString(R.string.personal_aty_set_name))
+                .setHintTip(Utils.getString(R.string.user_nickname)).setOnRightButtonWithValueClck((name) -> {
+                    if (TextUtils.isEmpty(name)) {
+                        ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
+                        return;
+                    }
+                    int maxLength;
+                    if (Utils.isChinaEnvironment()) {
+                        maxLength = 12;
+                    } else {
+                        maxLength = 30;
+                    }
+                    if (name.length() > maxLength) {
+                        ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
+                        return;
+                    }
+                    if (!name.equals(userName)) {
+                        changeNickName(name);
+                    }
+                    AlertDialogUtils.hidden(alertDialog);
+
+                }).show(getSupportFragmentManager(), "rename");
     }
 
-    public void showPhotoDialog() {
-        View contentView = inflater.inflate(R.layout.dialog_helt_photo, null);
-        contentView.findViewById(R.id.rl_photo).setOnClickListener(this);
-        contentView.findViewById(R.id.rl_album).setOnClickListener(this);
-        int width = (int) getResources().getDimension(R.dimen.dp_300);
-        int height = (int) getResources().getDimension(R.dimen.dp_80);
-        int yOffset = (int) getResources().getDimension(R.dimen.dp_30);
-        alertDialog = AlertDialogUtils.showDialogBottom(context, contentView, width, height, yOffset);
-    }
 
     public void changeNickName(final String name) {
         AC.accountMgr().changeNickName(name, new VoidCallback() {
@@ -417,7 +388,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     public void getOwnerList() {
         mDeviceList.clear();
         List<ACUserDevice> mAcUserDevices = MainActivity.mAcUserDevices;
-        if (mAcUserDevices!=null&&mAcUserDevices.size() > 0) {
+        if (mAcUserDevices != null && mAcUserDevices.size() > 0) {
             for (int i = 0; i < mAcUserDevices.size(); i++) {
                 long ownerId = mAcUserDevices.get(i).getOwner();
                 if (ownerId == userId) {

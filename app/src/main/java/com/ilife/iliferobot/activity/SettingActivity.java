@@ -458,48 +458,33 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     }
 
     private void showRenameDialog() {
-        View v = inflater.inflate(R.layout.layout_name_dialog, null);
-        final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-        UserUtils.setEmojiFilter(et_name);
         name = tv_name.getText().toString();
-        TextView title = v.findViewById(R.id.tv_title);
-        title.setText(name);
-        v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialogUtils.hidden(alterDialog);
-            }
-        });
-        v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = et_name.getText().toString();
-                if (TextUtils.isEmpty(name)) {
-                    ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
-                    return;
-                }
-                int maxLength;
-                if (Utils.isChinaEnvironment()) {
-                    maxLength=12;
-                } else {
-                    maxLength=30;
-                }
-                if (name.length() > maxLength) {
-                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
-                    return;
-                }
-                AlertDialogUtils.hidden(alterDialog);
-                DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
-            }
-        });
-        int width = (int) getResources().getDimension(R.dimen.dp_315);
-        int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
+        UniversalDialog universalDialog = new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setCanEdit(true).setTitle(name).setHintTip(Utils.getString(R.string.setting_aty_hit))
+                .setOnRightButtonWithValueClck(value -> {
+                    name = value;
+                    if (TextUtils.isEmpty(name)) {
+                        ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
+                        return;
+                    }
+                    int maxLength;
+                    if (Utils.isChinaEnvironment()) {
+                        maxLength = 12;
+                    } else {
+                        maxLength = 30;
+                    }
+                    if (name.length() > maxLength) {
+                        ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
+                        return;
+                    }
+                    AlertDialogUtils.hidden(alterDialog);
+                    DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                }).show(getSupportFragmentManager(), "rename");
     }
 
 
     private void showResetDialog() {
-        UniversalDialog universalDialog=new UniversalDialog();
+        UniversalDialog universalDialog = new UniversalDialog();
         universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.setting_aty_confirm_reset))
                 .setHintTip(Utils.getString(R.string.setting_aty_reset_hint)).setOnRightButtonClck(new UniversalDialog.OnRightButtonClck() {
             @Override
@@ -510,7 +495,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 acDeviceMsg.setContent(new byte[]{0x01});
                 sendToDeviceFactoryReset(acDeviceMsg, physicalId);
             }
-        }).show(getSupportFragmentManager(),"reset");
+        }).show(getSupportFragmentManager(), "reset");
     }
 
     public void sendToDeviceWithOption(ACDeviceMsg deviceMsg, final String physicalDeviceId) {

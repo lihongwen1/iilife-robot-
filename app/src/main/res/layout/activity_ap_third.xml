@@ -42,7 +42,7 @@
 
     <View style="@style/View_Line_Style" />
 
-    <com.ilife.iliferobot.view.LightTextView
+    <com.ilife.iliferobot.view.MediumTextView
         style="@style/Text_18sp_f08300"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_14"

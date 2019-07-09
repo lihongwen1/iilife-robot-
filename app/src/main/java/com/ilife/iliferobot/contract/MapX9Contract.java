@@ -12,6 +12,7 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
+        void setDevName();
         void showRemoteView();
         void updateSlam(int xMin, int xMax, int yMin, int yMax);
 

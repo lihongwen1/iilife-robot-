@@ -193,7 +193,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         // 输出apk名称为one_v1.0.0.apk
-                        def fileName = "${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
+                        def fileName = "${variant.productFlavors[0].name}_v${variant.productFlavors[0].versionName}.apk"
                         outputFileName = fileName
                     }
             }

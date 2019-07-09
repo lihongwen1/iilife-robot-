@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -65,6 +66,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     Context context;
     private CustomPopupWindow exitVirtualWallPop;
     private UniversalDialog virtualWallTipDialog;
+    @BindView(R.id.ll_map_container)
+    LinearLayout ll_map_container;
     @BindView(R.id.rl_top)
     View rl_top;
     @BindView(R.id.rl_status)
@@ -181,6 +184,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     protected void onResume() {
         super.onResume();
         mPresenter.getDevStatus();
+        setDevName();
         updateMaxButton(mPresenter.isMaxMode());
     }
 
@@ -191,18 +195,21 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         animation_alpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
     }
 
-    public void initView() {
-        errorPopup = new PopupWindow();
-        electricityDrawable = (AnimationDrawable) image_animation.getBackground();
-
-        fl_setting.setVisibility(View.VISIBLE);
+    @Override
+    public void setDevName() {
         String devName = SpUtils.getSpString(context, MainActivity.KEY_DEVNAME);
         if (devName != null && !devName.isEmpty()) {
             tv_title.setText(devName);
         } else {
             tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
         }
+    }
 
+    public void initView() {
+        errorPopup = new PopupWindow();
+        electricityDrawable = (AnimationDrawable) image_animation.getBackground();
+        setDevName();
+        fl_setting.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -476,7 +483,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
                     if ((mPresenter.getRobotType().equals("a9s") || mPresenter.getRobotType().equals("a8s") ||
-                            mPresenter.getDevice_type() == 128)&&mPresenter.getCurStatus()!=MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
+                            mPresenter.getDevice_type() == 128) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
                                 .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task)).exchangeButtonColor()

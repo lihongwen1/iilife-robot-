@@ -25,11 +25,11 @@ public class X_seriesAdapter extends RecyclerView.Adapter<X_seriesAdapter.MyView
     public X_seriesAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         if (Utils.isIlife()) {
-            drawables = new int[]{/*R.drawable.n_x900,*/ R.drawable.n_x800, R.drawable.n_x787, R.drawable.n_x785};
-            names = new String[]{/*"ILIFE X900", */"ILIFE X800", "ILIFE X787", "ILIFE X785"};
+            drawables = new int[]{R.drawable.n_x900, R.drawable.n_x800, R.drawable.n_x787, R.drawable.n_x785};
+            names = new String[]{"ILIFE X900", "ILIFE X800", "ILIFE X787", "ILIFE X785"};
         }else {
-            drawables = new int[]{R.drawable.n_a9s/*,R.drawable.n_a8s*/};
-            names=new String[]{"ZACO A9s"/*,"ZACO A8s"*/};
+            drawables = new int[]{R.drawable.n_a9s,R.drawable.n_a8s};
+            names=new String[]{"ZACO A9s","ZACO A8s"};
         }
     }
 
