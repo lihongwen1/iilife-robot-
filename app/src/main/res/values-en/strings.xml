@@ -193,7 +193,7 @@
     <string name="clock_aty_fri">Friday</string>
     <string name="clock_aty_sat">Saturday</string>
     <string name="clock_aty_set_time">Set a schedule</string>
-    <string name="setting_aty_duration">Cleaning time</string>
+    <string name="setting_aty_duration">Time</string>
     <string name="history_adapter_month_day">MM/dd</string>
     <string name="history_adapter_hour_minute">HH:mm</string>
     <string name="history_aty_no_record">No cleaning history</string>
@@ -249,7 +249,7 @@
     <string name="ilife_slogan">Make cleaning easier  Make life better</string>
     <string name="verification_code_tip">Verification code</string>
     <string name="get_ver_code_tip"> Get verification code</string>
-    <string name="have_account_and_login">Already have an account?</string>
+    <string name="have_account_and_login">Already have an account</string>
     <string name="have_account_and_login1"> Login now</string>
     <string name="quick_login">Quick registration</string>
     <string name="set_password">Set a password</string>
@@ -286,12 +286,12 @@
     <string name="please_set_task">Please set a task for your robot</string>
     <string name="finsh_cur_task">Finish</string>
     <string name="pause_cur_task">Pause</string>
-    <string name="virtual_wall_use_tip">1.Please do not separate unsafe zone with electric wall
-             \n\n2.Electric wall is still a beta version. It has the risk of instability.
-          \n\n3.Electril wall settings will be erased if the main body is moved or restarted.
-          \n\n4.The environment changes at home will cause malfunctions of the map and electric wall.
-           \n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the electric wall will apply to next cleaning mission.</string>
-    <string name="virtual_tip_title">Electric wall tips:</string>
+    <string name="virtual_wall_use_tip">1.Please do not separate unsafe zone with ElectroWall
+             \n\n2.ElectroWall is still a beta version. It has the risk of instability.
+          \n\n3.ElectroWall settings will be erased if the main body is moved or restarted.
+          \n\n4.The environment changes at home will cause malfunctions of the map and ElectroWall.
+           \n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the ElectroWall will apply to next cleaning mission.</string>
+    <string name="virtual_tip_title">ElectroWall tips:</string>
     <string name="help_aty_all_eu">(Free Call Europe)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
     <string name="connectting_device">Searching a network…</string>

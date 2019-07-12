@@ -367,6 +367,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         tv_use_control.setTextColor(getResources().getColor(R.color.white));
         switch (tag) {
             case TAG_NORMAL:
+                tv_use_control.setText("");
                 tv_use_control.setVisibility(View.GONE);
                 break;
             case TAG_CONTROL:
@@ -402,11 +403,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
 
-    @Override
-    public void setTvUseStatusVisible(boolean isVisible) {
-        tv_use_control.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-    }
-
     /**
      * 清空不常显示的布局,电子墙编辑模式，回冲动画，沿边动画，重点动画
      *
@@ -427,7 +423,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 electricityDrawable.stop();
             }
         }
-        tv_use_control.setVisibility(View.GONE);
+        if (curStatus != MsgCodeUtils.STATUE_REMOTE_CONTROL) {
+            setTvUseStatus(TAG_NORMAL);
+        }
     }
 
     @Override
@@ -435,12 +433,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         if (layout_recharge.getVisibility() == View.VISIBLE && isRecharge) {//避免重复刷新UI导致异常
             return;
         }
-        cleanMapView();
         layout_recharge.setVisibility(View.VISIBLE);
         tv_bottom_recharge.setSelected(isRecharge);
         tv_bottom_recharge_x8.setSelected(isRecharge);
         electricityDrawable.start();
     }
+
 
     @Override
     /**

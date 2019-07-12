@@ -264,7 +264,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     private void showOfflineDialog() {
         UniversalDialog offLineDialog = new UniversalDialog();
         offLineDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.dev_frag_offline))
-                .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dev_frag_ok))
+                .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dialog_del_confirm))
                 .show(getSupportFragmentManager(), "offline");
     }
 

@@ -80,9 +80,9 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public Completable countDown() {
-        return Completable.fromPublisher(Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
+        return Completable.fromPublisher(Flowable.intervalRange(0, 59, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(aLong -> mView.setCountDownValue(Long.toString(60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).doOnSubscribe(subscription -> mView.onStartCountDown()));
+                .doOnNext(aLong -> mView.setCountDownValue((60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).doOnSubscribe(subscription -> mView.onStartCountDown()));
     }
 
     @Override

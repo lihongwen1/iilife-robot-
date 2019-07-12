@@ -174,6 +174,7 @@ OtaUpdateActivity extends BackBaseActivity {
                                 fl_version.setVisibility(View.VISIBLE);
                                 tv_current.setText(getResources().getString(R.string.setting_ota_current_version, curVersion));
                                 tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, curVersion));
+                                btn_update.setText(getResources().getString(R.string.ota_aty_latest_ver));
                                 isUpdating = false;
                                 break;
                             case 0x01://有更新

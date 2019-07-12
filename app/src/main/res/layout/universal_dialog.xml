@@ -22,6 +22,8 @@
             android:enabled="false"
             android:id="@+id/et_dialog_hint_tip"
             style="@style/EditText_14sp_ac"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_8"
             android:layout_below="@+id/tv_dialog_title"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/dp_30"

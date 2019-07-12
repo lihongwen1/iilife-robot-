@@ -42,6 +42,10 @@ public class MapActivity_X8_ extends BaseMapActivity {
                 ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
                 rechargeModel = R.drawable.rechage_device_a8s;
                 break;
+            case "v85":
+                rechargeModel=R.drawable.rechage_device_v85;
+                break;
+
         }
         if (rechargeModel != -1) {
             iv_recharge_model.setImageResource(rechargeModel);

@@ -26,6 +26,9 @@ import com.ilife.iliferobot.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +70,7 @@ public class MapView extends View {
     private Bitmap boxBitmap;
     private Paint boxPaint;
     private RectF curVirtualWall = new RectF();
+    private ArrayList<Integer> pointList = new ArrayList<>();
 
     public MapView(Context context) {
         super(context);
@@ -789,19 +793,21 @@ public class MapView extends View {
     /**
      * 绘制x800的黄方格地图
      *
-     * @param pointList
+     * @param dataList
      */
-    public void drawBoxMapX8(ArrayList<Integer> pointList) {
-        float endY = 0, endX = 0;
-        if (pointList == null) {
+    public void drawBoxMapX8(ArrayList<Integer> dataList) {
+        if (dataList == null) {
             return;
         }
-        if (pointList.size() == 0) {
+        if (dataList.size() == 0) {
             boxPath.reset();
             boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidate();
             return;
         }
+        pointList.clear();
+        pointList.addAll(dataList);
+        float endY, endX;
         int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
         int x, y;
         for (int i = 1; i < pointList.size(); i += 2) {
@@ -830,10 +836,10 @@ public class MapView extends View {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);
                 y = -pointList.get(i);
-                boxPath.addRect(matrixCoordinateX(x), height - matrixCoordinateY(y),matrixCoordinateX(x)+baseScare-2, height - matrixCoordinateY(y)+baseScare-2, Path.Direction.CCW);
+                boxPath.addRect(matrixCoordinateX(x), height - matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - 2, height - matrixCoordinateY(y) + baseScare - 2, Path.Direction.CCW);
             }
         }
-        boxCanvas.drawPath(boxPath,boxPaint);
+        boxCanvas.drawPath(boxPath, boxPaint);
         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));

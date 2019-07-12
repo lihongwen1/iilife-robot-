@@ -192,9 +192,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         if (isViewAttached()) {
                             //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07电子墙编辑模式,0x08回冲模式下不更新地图
                             mView.updateSlam(xMin, xMax, yMin, yMax);
-                            if (curStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT
-                                    && curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING_
-                                    && curStatus != MsgCodeUtils.STATUE_CHARGING) {
+                            if (isDrawMap()) {
                                 mView.drawSlamMap(slamBytes);
                                 mView.drawRoadMap(realTimePoints, historyRoadList);
                                 mView.drawObstacle();
@@ -258,9 +256,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                     }
                     //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
-                    mView.drawSlamMap(slamBytes);
-                    mView.drawRoadMap(realTimePoints, historyRoadList);
-                    mView.drawObstacle();
+                    if (isDrawMap()) {
+                        mView.drawSlamMap(slamBytes);
+                        mView.drawRoadMap(realTimePoints, historyRoadList);
+                        mView.drawObstacle();
+                    }
                 }
             }
 
@@ -390,8 +390,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         }
-        if (pointList!=null&& curStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_OFF_LINE && curStatus != MsgCodeUtils.STATUE_CHARGING_
-                && curStatus != MsgCodeUtils.STATUE_CHARGING&&curStatus != MsgCodeUtils.STATUE_WAIT) {
+        if (pointList != null && curStatus == MsgCodeUtils.STATUE_PLANNING) {
             mView.drawBoxMapX8(pointList);
             mView.updateCleanTime(getTimeValue());
             mView.updateCleanArea(getAreaValue());
@@ -411,9 +410,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             cleanArea = mapInfo.getReal_clean_area();
             mView.updateCleanTime(getTimeValue());
             mView.updateCleanArea(getAreaValue());
-            if (curStatus == MsgCodeUtils.STATUE_RECHARGE || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING) {//回冲不绘制路径
-                return;
-            }
             if (mapInfo.getPackage_num() == 1) {//包数量 1包
                 bytes_subscribe = Base64.decode(mapInfo.getClean_data(), Base64.DEFAULT);
             } else { //包数量 多包
@@ -469,7 +465,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 /**
                  * 绘制地图
                  */
-                if (realTimePoints.size() > 0) {
+                if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
 
                     //slam地图
                     mView.drawSlamMap(slamBytes);
@@ -578,7 +574,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING||(curStatus==MsgCodeUtils.STATUE_RECHARGE&&!robotType.equals("X900"))) {
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
         if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
@@ -586,32 +582,32 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_REMOTE_CONTROL);
         }
         mView.showBottomView();
-        MyLogger.d(TAG, "set statue,and statue code is:" + curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT) {//休眠，或者x900的待机不显示地图
+        if (!isDrawMap()) {
             mView.cleanMapView();
-        } else if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
+        }
+        if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
             mView.updateRecharge(true);
-            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_RECHAGRGE);
         } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//电子墙编辑模式
             isVirtualEdit = true;
             mView.showVirtualEdit();
         } else if (curStatus == MsgCodeUtils.STATUE_POINT) { //重点
             mView.updatePoint(true);
-            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_KEYPOINT);
-        } else if (curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) { //遥控
-            mView.setTvUseStatusVisible(true);
         } else if (curStatus == MsgCodeUtils.STATUE_ALONG) {//沿墙模式
             mView.updateAlong(true);
-            mView.cleanMapView();
             mView.setTvUseStatus(MapActivity_X9_.TAG_ALONG);
         }
     }
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo <= 6;
+        return batteryNo!=0&&batteryNo <= 6;
+    }
+
+    @Override
+    public boolean isDrawMap() {
+        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE;
     }
 
     @Override
@@ -629,15 +625,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 curStatus == MsgCodeUtils.STATUE_RECHARGE;
     }
 
-
-    private boolean hasAppoint(byte[] resp) {
-        for (int j = 1; j <= 31; j += 5) {
-            if (resp[j] != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void adjustTime() {
         ACDeviceMsg msg_adjustTime = new ACDeviceMsg(MsgCodeUtils.AdjustTime, TimeUtil.getTimeBytes());
@@ -694,8 +681,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (curStatus == MsgCodeUtils.STATUE_OFF_LINE || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
-                || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
+        if (!isDrawMap()) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return area + "㎡";
@@ -704,8 +690,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (curStatus == MsgCodeUtils.STATUE_OFF_LINE || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_RECHARGE
-                || curStatus == MsgCodeUtils.STATUE_CHARGING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL) {
+        if (!isDrawMap()) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return min + "min";
@@ -882,7 +867,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG ||  curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -898,7 +883,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if (curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());

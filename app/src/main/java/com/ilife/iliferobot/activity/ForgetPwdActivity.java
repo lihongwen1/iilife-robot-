@@ -61,9 +61,9 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
             str_email = bundle.getString(LoginActivity.STR_EMAIL);
             if (!TextUtils.isEmpty(str_email)){
                 et_email.setText(str_email);
-                et_email.setEnabled(false);
             }
         }
+       unusableBtnConfirm();
     }
 
 

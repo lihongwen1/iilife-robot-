@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <com.ilife.iliferobot.view.RegularTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/text_tip1"
             style="@style/Text_18sp_33"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.ilife.iliferobot.view.RegularTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/text_tip2"
             style="@style/Text_18sp_33"
             android:layout_height="wrap_content"

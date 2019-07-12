@@ -73,11 +73,6 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         activity = this;
         context = this;
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
-        String str_login = Utils.getString(R.string.have_account_and_login);
-        String str_login1 = Utils.getString(R.string.have_account_and_login1);
-        SpannableString spannableString = new SpannableString(str_login+str_login1);
-        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_f08300)), str_login.length(), str_login.length()+str_login1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_login.setText(spannableString);
         if (!Utils.isIlife()) {
             tv_slogan.setVisibility(View.INVISIBLE);
         }

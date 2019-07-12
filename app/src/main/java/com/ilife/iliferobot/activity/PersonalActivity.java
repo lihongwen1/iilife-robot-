@@ -283,26 +283,25 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         UniversalDialog logoutDialog = new UniversalDialog();
         logoutDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setCanEdit(true).setTitle(Utils.getString(R.string.personal_aty_set_name))
                 .setHintTip(Utils.getString(R.string.user_nickname)).setOnRightButtonWithValueClck((name) -> {
-                    if (TextUtils.isEmpty(name)) {
-                        ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
-                        return;
-                    }
-                    int maxLength;
-                    if (Utils.isChinaEnvironment()) {
-                        maxLength = 12;
-                    } else {
-                        maxLength = 30;
-                    }
-                    if (name.length() > maxLength) {
-                        ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
-                        return;
-                    }
-                    if (!name.equals(userName)) {
-                        changeNickName(name);
-                    }
-                    AlertDialogUtils.hidden(alertDialog);
-
-                }).show(getSupportFragmentManager(), "rename");
+            if (TextUtils.isEmpty(name)) {
+                ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
+                return;
+            }
+            int maxLength;
+            if (Utils.isChinaEnvironment()) {
+                maxLength = 12;
+            } else {
+                maxLength = 30;
+            }
+            if (name.length() > maxLength) {
+                ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
+                return;
+            }
+            if (!name.equals(userName)) {
+                changeNickName(name);
+            }
+            logoutDialog.dismiss();
+        }).show(getSupportFragmentManager(), "rename");
     }
 
 

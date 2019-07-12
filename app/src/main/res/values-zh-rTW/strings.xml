@@ -78,7 +78,7 @@
     <string name="personal_aty_share">機器共享</string>
     <string name="personal_aty_version">版本V%1$s %2$s</string>
     <string name="user_agreement">用戶協議</string>
-    <string name="personal_aty_protocol">隱私政策與用戶協議</string>
+    <string name="personal_aty_protocol">隱私政策與服務協議</string>
     <string name="personal_acy_exit">退出登錄</string>
     <string name="personal_aty_cancel">取消</string>
     <string name="dialog_del_confirm">確定</string>
@@ -275,7 +275,7 @@
     <string name="setting_ota_current_version">當前版本：%1$s</string>
     <string name="setting_ota_targat_version">最新版本：%1$s</string>
     <string name="tip_troubleshoot">請按以下步驟排查可能存在的問題</string>
-    <string name="tip_troubles">1.確保輸入的WiFi密碼正確無誤； \n2.確保您的設備已經進入到配網模式；\n3.確保手機不是連接5G信號的 WiFi；\n4.確保無線路由器已關閉黑白名單（mac地址過 濾功能）             </string>
+    <string name="tip_troubles">1.確保輸入的WiFi密碼正確無誤；\n\n2.確保您的設備已經進入到配網模式；\n\n3.確保手機不是連接5G信號的 WiFi；\n\n4.確保無線路由器已關閉黑白名單(mac地址過濾功能)。</string>
     <string name="retry">重試</string>
     <string name="ap_wifi_timeout">配網超時</string>
     <string name="ota_preupdate_title">升級前請確保</string>
@@ -292,7 +292,7 @@
     <string name="help_aty_dir_de">(Direct Line DE)</string>
     <string name="connectting_device">配網中</string>
     <string name="add_virtual_wall">添加</string>
-    <string name="delete_virtual_wall">刪除</string>
+    <string name="delete_virtual_wall">刪减</string>
     <string name="need_save_settings">是否保存當前設置</string>
     <string name="will_work_on_next_time">保存設置會在下次清掃時生效</string>
     <string name="save_and_back">保存並返回</string>

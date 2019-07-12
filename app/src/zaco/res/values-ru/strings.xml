@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name"> ILIFE робот-пылесос</string>
+
+    <string name="login_aty_email">Телефон/эл. почта</string>
+
+    <string name="login_aty_input_email">Введите телефон/эл. почту</string>
+
+    <string name="regist_wrong_account">Неверный телефон/эл.почта</string>
+</resources>

@@ -23,7 +23,7 @@
 
         <TextView
             android:layout_marginTop="@dimen/dp_6"
-            style="@style/Text_14sp_ac"
+            style="@style/Text_14sp_33"
             android:layout_marginStart="@dimen/dp_30"
             android:text="@string/ota_preupdate_tip" />
     </LinearLayout>
@@ -88,5 +88,5 @@
         style="@style/Button_Style_quick_login"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginBottom="64dp"
-        android:text="@string/update_button" />
+        />
 </LinearLayout>

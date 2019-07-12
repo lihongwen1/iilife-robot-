@@ -88,6 +88,7 @@ public class UniversalDialog extends DialogFragment {
         if (canEdit) {
             UserUtils.setEmojiFilter(et_hint_tip);
             et_hint_tip.setEnabled(true);
+            et_hint_tip.setBackground(getResources().getDrawable(R.drawable.shape_edittext_bg));
         }
         if (hintGravity != -1) {
             et_hint_tip.setGravity(hintGravity);
@@ -121,9 +122,9 @@ public class UniversalDialog extends DialogFragment {
             }
         });
         tv_right.setOnClickListener(v1 -> {
-            dismiss();
             if (onRightButtonClck != null) {
                 onRightButtonClck.onClick();
+                dismiss();
             }
             if (onRightButtonClckWithValue != null) {
                 onRightButtonClckWithValue.onClick(et_hint_tip.getText().toString());

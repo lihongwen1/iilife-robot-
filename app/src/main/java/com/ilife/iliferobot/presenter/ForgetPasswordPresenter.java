@@ -82,9 +82,9 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                         } else {//ZACO
                             templateId = 1;
                         }
-                        countDownDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
+                        countDownDisposable = Flowable.intervalRange(0, 59, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
                                 observeOn(AndroidSchedulers.mainThread()).doOnNext(aLong ->
-                                mView.setCountDownValue(Long.toString(60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).
+                                mView.setCountDownValue((60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).
                                 doOnSubscribe(subscription -> mView.onStartCountDown()).subscribe();
                         AC.accountMgr().sendVerifyCode(str_email, templateId, new VoidCallback() {
                             @Override
@@ -109,7 +109,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 }
             });
         } else {
-            ToastUtils.showToast(Utils.getString(R.string.personal_input_email));
+            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
         }
     }
 

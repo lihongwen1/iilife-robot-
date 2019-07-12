@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ILIFE Robot</string>
+
+    <string name="login_aty_email">携帯番号／メールアドレス</string>
+
+    <string name="login_aty_input_email">携帯/メールアドレスを入力してください</string>
+
+    <string name="regist_wrong_account">間違った携帯電話/ Eメール</string>
+</resources>

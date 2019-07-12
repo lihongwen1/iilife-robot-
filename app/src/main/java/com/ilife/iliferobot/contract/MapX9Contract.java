@@ -49,7 +49,6 @@ public interface MapX9Contract {
         void updateRecharge(boolean isRecharge);
         void updateMaxButton(boolean isMaXMode);
         void setCurrentBottom(int bottom);
-        void setTvUseStatusVisible(boolean isVisible);
         void drawBoxMapX8(ArrayList<Integer> pointList);
         void showVirtualWallTip();
     }
@@ -96,6 +95,11 @@ public interface MapX9Contract {
          void reverseMaxMode();
          boolean isRandomMode();
          boolean isLowPowerWorker();
+        /**
+         * 是否绘制map
+         * @return
+         */
+         boolean isDrawMap();
     }
 
 }
