@@ -8,7 +8,7 @@
     <string name="login_aty_pw_ensure">Reenter new password</string>
     <string name="login_aty_fw">Forgot password？</string>
     <string name="login_aty_wrong_email">Invalid account format</string>
-    <string name="regist_wrong_account">Please enter valid phone number / Email address</string>
+    <string name="regist_wrong_account">Incorrect mobile/email</string>
     <string name="regist_wrong_email">Invalid email address</string>
     <string name="login_account_error">Incorrect user name</string>
     <string name="login_aty_account_no">Account is unavailable</string>
@@ -249,7 +249,7 @@
     <string name="ilife_slogan">Make cleaning easier  Make life better</string>
     <string name="verification_code_tip">Verification code</string>
     <string name="get_ver_code_tip"> Get verification code</string>
-    <string name="have_account_and_login">Already have an account</string>
+    <string name="have_account_and_login">Already have an account?</string>
     <string name="have_account_and_login1"> Login now</string>
     <string name="quick_login">Quick registration</string>
     <string name="set_password">Set a password</string>
@@ -292,7 +292,7 @@
           \n\n4.The environment changes at home will cause malfunctions of the map and ElectroWall.
            \n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the ElectroWall will apply to next cleaning mission.</string>
     <string name="virtual_tip_title">ElectroWall tips:</string>
-    <string name="help_aty_all_eu">(Free Call Europe)</string>
+    <string name="help_aty_all_eu">(European Free Call)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
     <string name="connectting_device">Searching a network…</string>
     <string name="add_virtual_wall">Add</string>
@@ -304,7 +304,8 @@
     <string name="cancel_">Cancel</string>
     <string name="pairing_wifi">Searching a network…</string>
     <string name="name_max_length">Enter up to %1$s characters</string>
-    <string name="low_power">Low power</string>
+    <string name="low_power">Low battery, please charge.</string>
     <string name="login_invalid">Login failed. Retry.</string>
-    <string name="zaco_phone_server_time">Monday - Friday 09:00 am – 17:00 pm</string>
+    <string name="zaco_phone_server_time">Mon - Fri 09:00 – 17:00</string>
+    <string name="start_random_cleaning">Auto mode activated</string>
 </resources>

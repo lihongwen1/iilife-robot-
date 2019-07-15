@@ -49,7 +49,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
-    final String TAG = MapActivity_X9_.class.getSimpleName();
+    final String TAG = BaseMapActivity.class.getSimpleName();
     public static final String NOT_FIRST_VIRTUAL_WALL = "virtual_wall";
     public static final int VIRTUALWALL_MAXCOUNT = 0x12;
     public static final int SEND_VIRTUALDATA_SUCCESS = 0x15;
@@ -63,6 +63,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_LEFT = 0x06;
     public static final int TAG_RIGHT = 0x07;
     public static final int TAG_FORWARD = 0x08;
+    public static final int TAG_RANDOM = 0x09;
     Context context;
     private CustomPopupWindow exitVirtualWallPop;
     private UniversalDialog virtualWallTipDialog;
@@ -398,6 +399,10 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case TAG_ALONG:
                 tv_use_control.setVisibility(View.VISIBLE);
                 tv_use_control.setText(getString(R.string.map_aty_use_along));
+                break;
+            case TAG_RANDOM:
+                tv_use_control.setVisibility(View.VISIBLE);
+                tv_use_control.setText(getString(R.string.start_random_cleaning));
                 break;
         }
     }

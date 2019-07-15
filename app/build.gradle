@@ -56,7 +56,7 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 3
-            versionName = '1.1.0'
+            versionName = '1.1.1'
             signingConfig signingConfigs.zaco
             buildConfigField("int", "Area", "4")
             buildConfigField("String", "BRAND", "\"ZACO\"")

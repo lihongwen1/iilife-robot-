@@ -16,8 +16,6 @@ import com.ilife.iliferobot.utils.ToastUtils;
  */
 
 public class MapActivity_X8_ extends BaseMapActivity {
-    public static final String INTENT_ACTION = "com.example.MapActivity";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

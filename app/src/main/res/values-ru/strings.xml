@@ -289,7 +289,7 @@
     <string name="pause_cur_task">Пауза</string>
     <string name="virtual_wall_use_tip">1.Пожалуйста, не отделяйте небезопасную зону электростеной\n2.Электростена - все еще бета-версия. Есть риск нестабильности.\n3.Настройки электростены будут удалены если робот будет перемещен или перезапущен.\n4.Изменение обстановки в доме могут вызвать недочеты в работе карты и электростены.\n5.Только после того, как робот завершит текущую уборку и успешно вернется на зарядную станцию, настройки электростены будут применены к следующему заданию по уборке.</string>
     <string name="virtual_tip_title">Примечания по электростене:</string>
-    <string name="help_aty_all_eu">(Free Call Europe)</string>
+    <string name="help_aty_all_eu">(European Free Call)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
     <string name="connectting_device">Поиск в сети ...</string>
     <string name="add_virtual_wall">Добавить</string>
@@ -304,5 +304,6 @@
     <string name="low_power">Низкий заряд батареи, пожалуйста, зарядите.</string>
     <string name="login_invalid">Ошибка входа. Повторите попытку.</string>
     <string name="zaco_phone_server_time">(Пн-пт: 09:00-17:00)</string>
+    <string name="start_random_cleaning">Автоматический режим активирован</string>
 
 </resources>

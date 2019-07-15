@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">ZACO機械人</string>
+    <string name="app_name">ZACO</string>
 
     <string name="login_aty_email">郵箱</string>
 
     <string name="login_aty_input_email">請輸入郵箱</string>
 
     <string name="regist_wrong_account">郵箱格式不正確</string>
+
+    <string name="bind_suc_sty_robot_name">ZACO掃地機</string>
 </resources>

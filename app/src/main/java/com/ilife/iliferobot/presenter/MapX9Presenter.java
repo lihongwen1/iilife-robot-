@@ -14,6 +14,7 @@ import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.accloud.utils.LogUtil;
 import com.google.gson.Gson;
+import com.ilife.iliferobot.activity.BaseMapActivity;
 import com.ilife.iliferobot.activity.MapActivity_X9_;
 import com.ilife.iliferobot.activity.SettingActivity;
 import com.ilife.iliferobot.app.MyApplication;
@@ -53,7 +54,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private long deviceId;
     private String physicalId, subdomain, robotType;
     private Gson gson;
-    boolean isVirtualEdit;
     private byte[] slamBytes;
     private int curStatus, errorCode, batteryNo, workTime, cleanArea;
     private Timer timer;
@@ -83,7 +83,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus;
-
+    private boolean haveMap=true;//标记机型是否有地图
     @Override
     public void attachView(MapX9Contract.View view) {
         super.attachView(view);
@@ -112,6 +112,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 robotType = "a8s";
                 break;
             case Constants.subdomain_v85:
+                haveMap=false;
                 robotType = "v85";
                 break;
 
@@ -390,10 +391,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
             }
         }
+        mView.updateCleanTime(getTimeValue());
+        mView.updateCleanArea(getAreaValue());
         if (pointList != null && curStatus == MsgCodeUtils.STATUE_PLANNING) {
             mView.drawBoxMapX8(pointList);
-            mView.updateCleanTime(getTimeValue());
-            mView.updateCleanArea(getAreaValue());
         }
     }
 
@@ -585,19 +586,27 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (!isDrawMap()) {
             mView.cleanMapView();
         }
-        if (curStatus == MsgCodeUtils.STATUE_RECHARGE) { //回充
-            mView.updateRecharge(true);
-            mView.setTvUseStatus(MapActivity_X9_.TAG_RECHAGRGE);
-        } else if (curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT) {//电子墙编辑模式
-            isVirtualEdit = true;
-            mView.showVirtualEdit();
-        } else if (curStatus == MsgCodeUtils.STATUE_POINT) { //重点
-            mView.updatePoint(true);
-            mView.setTvUseStatus(MapActivity_X9_.TAG_KEYPOINT);
-        } else if (curStatus == MsgCodeUtils.STATUE_ALONG) {//沿墙模式
-            mView.updateAlong(true);
-            mView.setTvUseStatus(MapActivity_X9_.TAG_ALONG);
+        switch (curStatus){
+            case MsgCodeUtils.STATUE_RECHARGE://回充
+                mView.updateRecharge(true);
+                mView.setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
+                break;
+            case  MsgCodeUtils.STATUE_VIRTUAL_EDIT://电子墙编辑模式
+                mView.showVirtualEdit();
+                break;
+            case  MsgCodeUtils.STATUE_POINT://重点
+                mView.updatePoint(true);
+                mView.setTvUseStatus(BaseMapActivity.TAG_KEYPOINT);
+                break;
+            case MsgCodeUtils.STATUE_ALONG://沿墙模式
+                mView.updateAlong(true);
+                mView.setTvUseStatus(BaseMapActivity.TAG_ALONG);
+                break;
+            case MsgCodeUtils.STATUE_RANDOM:
+                mView.setTvUseStatus(BaseMapActivity.TAG_RANDOM);
+                break;
         }
+
     }
 
     @Override
@@ -607,7 +616,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isDrawMap() {
-        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE;
+        return haveMap&&(curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE);
     }
 
     @Override
@@ -681,7 +690,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (!isDrawMap()) {
+        if (!isDrawMap()&&curStatus!=MsgCodeUtils.STATUE_RANDOM) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return area + "㎡";
@@ -690,7 +699,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (!isDrawMap()) {
+        if (!isDrawMap()&&curStatus!=MsgCodeUtils.STATUE_RANDOM) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return min + "min";
@@ -743,11 +752,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         int subCode = deviceMsg.getContent()[0];
                         int tag_code = -1;
                         if (subCode == 0x01) {
-                            tag_code = MapActivity_X9_.TAG_FORWARD;
+                            tag_code = BaseMapActivity.TAG_FORWARD;
                         } else if (subCode == 0x03) {
-                            tag_code = MapActivity_X9_.TAG_LEFT;
+                            tag_code = BaseMapActivity.TAG_LEFT;
                         } else if (subCode == 0x04) {
-                            tag_code = MapActivity_X9_.TAG_RIGHT;
+                            tag_code = BaseMapActivity.TAG_RIGHT;
                         }
                         if (tag_code != -1) {
                             mView.setTvUseStatus(tag_code);
@@ -854,13 +863,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             public void success(ACDeviceMsg acDeviceMsg) {
                 existPointList.clear();
                 existPointList.addAll(wallPointList);
-                mView.sendHandler(MapActivity_X9_.SEND_VIRTUALDATA_SUCCESS);
+                mView.sendHandler(BaseMapActivity.SEND_VIRTUALDATA_SUCCESS);
                 mView.drawVirtualWall(existPointList);
             }
 
             @Override
             public void error(ACException e) {
-                mView.sendHandler(MapActivity_X9_.SEND_VIRTUALDATA_FAILED);
+                mView.sendHandler(BaseMapActivity.SEND_VIRTUALDATA_FAILED);
             }
         });
     }

@@ -205,7 +205,7 @@
     <string name="consume_aty_resetSide_over">サイドブラシの状態はリセット後に更新されます</string>
     <string name="consume_aty_resetRoll">ローラーブラシの寿命を今すぐリセットしますか？</string>
     <string name="consume_aty_resetRoll_over">ローラーブラシの状態はリセット後に更新されます</string>
-    <string name="consume_aty_resetFilter">今HEPAフィルターの寿命をリセットしますか？</string>
+    <string name="consume_aty_resetFilter">今高性能フィルターフィルターの寿命をリセットしますか？</string>
     <string name="consume_aty_resetFilter_over">フィルタステータスはリセット後に更新されます</string>
     <string name="consume_aty_reset_suc">リセット完了</string>
     <string name="clock_aty_dev_offline">デバイスはオフラインです</string>
@@ -288,7 +288,7 @@
     <string name="pause_cur_task">一時停止</string>
     <string name="virtual_wall_use_tip">1.危険区域を仮想壁で隔離しないでください。\n\n2.仮想壁は実験段階のため、不安定性を伴います。\n\n3.手動でホストを移動するか、再起動するか、仮想壁の設定を取り消しできます。\n\n4.家庭環境の著しい変化は、地図の誤りや仮想壁の設定に誤りをもたらす可能性があります。\n\n5.仮想壁の設定は、ホストが掃引を完了して、クレードルに正常に戻ったときにのみ、</string>
     <string name="virtual_tip_title">仮想壁の使い方のヒント</string>
-    <string name="help_aty_all_eu">(Free Call Europe)</string>
+    <string name="help_aty_all_eu">(European Free Call)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
     <string name="connectting_device">ネットワークを検索しています…</string>
     <string name="add_virtual_wall">追加します</string>
@@ -303,4 +303,5 @@
     <string name="low_power">電池残量が少なくなります。</string>
     <string name="login_invalid">ログインが失敗しました。もう一度ログインしてください。</string>
     <string name="zaco_phone_server_time">（月曜日〜金曜日：09：00〜17：00）</string>
+    <string name="start_random_cleaning">オートモード有効</string>
 </resources>
