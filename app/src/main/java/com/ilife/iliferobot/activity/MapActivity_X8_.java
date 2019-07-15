@@ -43,7 +43,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
                 rechargeModel = R.drawable.rechage_device_a8s;
                 break;
             case "v85":
-                rechargeModel=R.drawable.rechage_device_v85;
+                rechargeModel = R.drawable.rechage_device_v85;
                 break;
 
         }
@@ -101,10 +101,13 @@ public class MapActivity_X8_ extends BaseMapActivity {
             tv_control_x9.setVisibility(View.VISIBLE);
             tv_bottom_recharge.setVisibility(View.GONE);
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
-
         }
         if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
-            setNavigationBarColor(R.color.color_ff1b92e2);
+            if (mPresenter.getRobotType().equals("a8s")) {
+                setNavigationBarColor(R.color.moka_color);
+            } else {
+                setNavigationBarColor(R.color.color_ff1b92e2);
+            }
         } else {
             setNavigationBarColor(R.color.white);
         }
