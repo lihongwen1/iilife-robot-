@@ -248,10 +248,10 @@ public class MapView extends View {
         if (roadList != null && roadList.size() > 2) {
             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
-            positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+            positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         } else if (endX != 0 && endY != 0) {
-            positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+            positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
 
@@ -842,7 +842,7 @@ public class MapView extends View {
         boxCanvas.drawPath(boxPath, boxPaint);
         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
-        positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
+        positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
         boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         invalidate();
     }
