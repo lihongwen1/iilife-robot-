@@ -15,21 +15,24 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.accloud.cloudservice.AC;
@@ -37,7 +40,6 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
 import com.bumptech.glide.Glide;
-import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
@@ -48,13 +50,19 @@ import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.SpaceItemDecoration;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -70,34 +78,32 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     final int CROP_PIC = 0x03;
     Context context;
     LayoutInflater inflater;
-    ScrollView scrollView;
-    TextView tv_numbs, tv_telNum1, tv_telNum1_de, tv_telNum1_eu;
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
-    ImageView image_add, image_1;
-    TextView bt_confirm;
     File captureFile, albumFile;
     PopupWindow typePop;
     AlertDialog alertDialog;
     String[] types;
-    int curResId;
-    private Bitmap bitmap_1;
-    private Bitmap bitmap_2;
-    private byte[] byte1;
-    private byte[] byte2;
     Activity activity;
     View view;
-    ArrayList<String> permissions;
-    int index;
     Uri takePicUri;
     Dialog dialog;
+    @BindView(R.id.tv_numbs)
+    TextView tv_numbs;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
+    @BindView(R.id.rv_feed_image)
+    RecyclerView rv_feed_image;
+    @BindView(R.id.image_add)
+    ImageView image_add;
+    private List<Bitmap> images = new ArrayList<>();
+    private RvAdapter rvAdapter;
+    private int replacePosition = -1;//标记需要替换的feed image的位置
+    private int permissionFlag = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initFile();
     }
 
@@ -122,31 +128,35 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         } else {
             et_email.setHint(R.string.personal_input_email);
         }
-        tv_numbs = (TextView) findViewById(R.id.tv_numbs);
         et_type = (EditText) findViewById(R.id.et_type);
         et_content = (EditText) findViewById(R.id.et_content);
-        image_1 = (ImageView) findViewById(R.id.image_1);
-        image_add = (ImageView) findViewById(R.id.image_add);
-        tv_telNum1 = findViewById(R.id.tv_telNum1);
-        tv_telNum1_de = findViewById(R.id.tv_telNum_de);
-        tv_telNum1_eu = findViewById(R.id.tv_telNum_eu);
-        bt_confirm = (TextView) findViewById(R.id.bt_confirm);
         rl_type = (RelativeLayout) findViewById(R.id.rl_type);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
         view = findViewById(R.id.view);
         tv_title.setText(R.string.personal_aty_help);
-        image_1.setOnClickListener(this);
-        et_type.setOnClickListener(this);
-        image_add.setOnClickListener(this);
-        tv_telNum1.setOnClickListener(this);
-        tv_telNum1_de.setOnClickListener(this);
-        tv_telNum1_eu.setOnClickListener(this);
-        bt_confirm.setOnClickListener(this);
         et_content.addTextChangedListener(new MyTextWatcher());
         if (!Utils.isIlife()) {
             findViewById(R.id.ll_tel_zaco).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
         }
+        rv_feed_image.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rv_feed_image.setAdapter(rvAdapter = new RvAdapter());
+        rv_feed_image.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6),true));
+        rvAdapter.setOnItemClick(new OnItemClick() {
+            @Override
+            public void onImgClick(int postion) {
+                replacePosition = postion;
+                showPhotoDialog();
+            }
+
+            @Override
+            public void onDeleteImgClick(int position) {
+                if (images.size() > position) {
+                    images.remove(position);
+                    image_add.setVisibility(images.size() == 2 ? View.GONE : View.VISIBLE);
+                    rvAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -166,82 +176,72 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 //please select image files ,but video.
                 return;
             }
-            switch (curResId) {
-                case R.id.image_1:
-                    bitmap_1 = BitmapUtils.compressBitmap(activity, uri, 180, 180);
-                    byte1 = BitmapUtils.bitmapToByte(bitmap_1);
-                    image_1.setVisibility(View.VISIBLE);
-                    Glide.with(context).load(byte1).into(image_1);
-                    break;
-                case R.id.image_add:
-                    if (image_1.getVisibility() == View.GONE) {
-                        bitmap_1 = BitmapUtils.compressBitmap(activity, uri, 180, 180);
-                        byte1 = BitmapUtils.bitmapToByte(bitmap_1);
-                        image_1.setVisibility(View.VISIBLE);
-                        Glide.with(context).load(byte1).into(image_1);
-                    } else {
-                        bitmap_2 = BitmapUtils.compressBitmap(activity, uri, 180, 180);
-                        byte2 = BitmapUtils.bitmapToByte(bitmap_2);
-                        Glide.with(context).load(byte2).into(image_add);
-                    }
+            Bitmap bitmap = BitmapUtils.compressBitmap(activity, uri, 180, 180);
+            if (replacePosition != -1) {
+                images.remove(replacePosition);
+                images.add(replacePosition, bitmap);
+                replacePosition = -1;
+            } else {
+                images.add(bitmap);
+                image_add.setVisibility(images.size() == 2 ? View.GONE : View.VISIBLE);
             }
+            rvAdapter.notifyDataSetChanged();
         }
     }
 
-    @Override
+
+    @OnClick({R.id.tv_telNum_de, R.id.tv_telNum_eu, R.id.tv_telNum1, R.id.et_type, R.id.image_add
+            , R.id.bt_confirm})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_telNum_de:
             case R.id.tv_telNum_eu:
             case R.id.tv_telNum1:
-                new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(@NonNull Permission permission) throws Exception {
-                        if (permission.granted) {
-                            Intent intent = new Intent(Intent.ACTION_CALL);
-                            Uri data = Uri.parse("tel:" + ((TextView) v).getText().toString().trim());
-                            intent.setData(data);
-                            startActivity(intent);
-                        } else {
-                            // 用户拒绝了该权限，并且选中『不再询问』
-                            ToastUtils.showToast(context, getString(R.string.access_photo));
-                        }
+                new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(permission -> {
+                    if (permission.granted) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        Uri data = Uri.parse("tel:" + ((TextView) v).getText().toString().trim());
+                        intent.setData(data);
+                        startActivity(intent);
+                    } else {
+                        // 用户拒绝了该权限，并且选中『不再询问』
+                        ToastUtils.showToast(context, getString(R.string.access_photo));
                     }
-                });
+                }).dispose();
                 break;
             case R.id.et_type:
                 showPopup();
                 break;
-            case R.id.image_1:
-                showPhotoDialog();
-                curResId = v.getId();
-                break;
             case R.id.image_add:
-                index = 0;
-                permissions.clear();
+                permissionFlag = 0;
                 new RxPermissions(this).requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA).subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(@NonNull Permission permission) throws Exception {
-                        index++;
-                        if (permission.granted) {
-                            permissions.add(permission.name);
-                        }
-                        if (index == 2) {
-                            if (permissions.size() == 2) {
-                                showPhotoDialog();
-                                curResId = R.id.image_add;
-                            } else if (permissions.size() == 1) {
-                                if (permissions.contains(Manifest.permission.CAMERA)) {
-                                    ToastUtils.showToast(context, getString(R.string.access_storage));
-                                } else {
-                                    ToastUtils.showToast(context, getString(R.string.access_camera));
-                                }
-                            } else {
-                                ToastUtils.showToast(context, getString(R.string.access_camera_storage));
-                            }
+                        Manifest.permission.CAMERA).subscribe(permission -> {
+                    if (permission.granted) {
+//                        11 - 3 10 - 2 01 - 1 00 - 0
+                        if (permission.name.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            permissionFlag+=2;
+                        } else {
+                            permissionFlag ++;
                         }
                     }
+                    if (permission.name.equals(Manifest.permission.CAMERA)) {
+                        switch (permissionFlag) {
+                            case 0:
+                                ToastUtils.showToast(context, getString(R.string.access_camera_storage));
+                                break;
+                            case 1:
+                                ToastUtils.showToast(context, getString(R.string.access_storage));
+                                break;
+                            case 2:
+                                ToastUtils.showToast(context, getString(R.string.access_camera));
+                                break;
+                            case 3:
+                                replacePosition = -1;
+                                showPhotoDialog();
+                                break;
+                        }
+                    }
+
                 });
                 break;
             case R.id.rl_photo:
@@ -303,7 +303,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         }
         captureFile = new File(imageFile, "capture.png");
         albumFile = new File(imageFile, "album.jpg");
-        permissions = new ArrayList<>();
     }
 
     public void showPopup() {
@@ -370,12 +369,11 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         feedback.addFeedback("description", contents);
         feedback.addFeedback("telephoneNumber", email);
         feedback.addFeedback("deviceType", type);
-        if (isByteUsable(byte1)) {
-            feedback.addFeedbackPicture("pictures", byte1);
+        for (Bitmap bm : images) {
+            byte[] img = BitmapUtils.bitmapToByte(bm);
+            feedback.addFeedbackPicture("pictures", img);
         }
-        if (isByteUsable(byte2)) {
-            feedback.addFeedbackPicture("pictures", byte2);
-        }
+
         AC.feedbackMgr().submitFeedback(feedback, new VoidCallback() {
             @Override
             public void success() {
@@ -387,18 +385,12 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             @Override
             public void error(ACException e) {
                 dialog.dismiss();
-                MyLogger.d(TAG, getString(R.string.help_aty_commit)+e.getMessage()+"---"+e.getDescription());
+                MyLogger.d(TAG, getString(R.string.help_aty_commit) + e.getMessage() + "---" + e.getDescription());
                 ToastUtils.showToast(context, getString(R.string.help_aty_commit));
             }
         });
     }
 
-    public boolean isByteUsable(byte[] bytes) {
-        if (bytes != null && bytes.length > 0) {
-            return true;
-        }
-        return false;
-    }
 
     public void showPhotoDialog() {
         if (alertDialog == null) {
@@ -415,4 +407,50 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             }
         }
     }
+
+    public interface OnItemClick {
+        void onImgClick(int postion);
+
+        void onDeleteImgClick(int position);
+    }
+
+    class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvHolder> {
+        private OnItemClick onItemClick;
+
+        @NotNull
+        @Override
+        public RvHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup parent, int viewType) {
+            return new RvHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed_image, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@androidx.annotation.NonNull RvHolder holder, int position) {
+            holder.iv_delete_img.setOnClickListener(v -> onItemClick.onDeleteImgClick(position));
+            holder.iv_feed_img.setOnClickListener(v -> onItemClick.onImgClick(position));
+            Glide.with(context).load(images.get(position)).into(holder.iv_feed_img);
+        }
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        public void setOnItemClick(OnItemClick itemClick) {
+            this.onItemClick = itemClick;
+        }
+
+        class RvHolder extends ViewHolder {
+
+            ImageView iv_feed_img;
+
+            ImageView iv_delete_img;
+
+            public RvHolder(@androidx.annotation.NonNull View itemView) {
+                super(itemView);
+                iv_delete_img = itemView.findViewById(R.id.iv_delete_img);
+                iv_feed_img = itemView.findViewById(R.id.iv_feed_img);
+            }
+        }
+    }
+
 }

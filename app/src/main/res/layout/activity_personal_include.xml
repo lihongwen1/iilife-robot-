@@ -233,7 +233,7 @@
     <com.ilife.iliferobot.view.LightEditText
         android:id="@+id/et_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_160"
+        android:layout_height="@dimen/dp_140"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_30"
@@ -259,39 +259,21 @@
             android:text="@string/personal_aty_count" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_30"
-        android:background="@drawable/feedback_et_bg">
-
-        <ImageView
-            android:id="@+id/image_add"
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_13"
-            android:layout_toEndOf="@+id/image_1"
-            android:background="@drawable/n_icon_addpictures"
-            android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/image_1"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_60"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:scaleType="fitXY"
-            android:visibility="gone" />
+        android:background="@drawable/feedback_et_bg"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_14"
+        android:paddingBottom="@dimen/dp_14">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_19"
-            android:layout_toEndOf="@+id/image_add">
+            android:layout_marginStart="@dimen/dp_13">
 
             <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_ac"
@@ -299,10 +281,31 @@
 
             <com.ilife.iliferobot.view.EnglishRegularTextView
                 style="@style/Text_12sp_ac"
+                android:layout_height="match_parent"
                 android:text="@string/help_aty_add_pic1" />
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:layout_marginTop="@dimen/dp_12"
+            android:orientation="horizontal">
+             <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/rv_feed_image"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginStart="@dimen/dp_6"
+                android:id="@+id/image_add"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_70"
+                android:background="@drawable/n_icon_addpictures"
+                android:scaleType="fitXY" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.ilife.iliferobot.view.ShadowContainer
         android:layout_width="wrap_content"
