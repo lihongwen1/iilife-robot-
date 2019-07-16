@@ -83,7 +83,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus;
-    private boolean haveMap=true;//标记机型是否有地图
+    private boolean haveMap = true;//标记机型是否有地图
+
     @Override
     public void attachView(MapX9Contract.View view) {
         super.attachView(view);
@@ -112,7 +113,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 robotType = "a8s";
                 break;
             case Constants.subdomain_v85:
-                haveMap=false;
+                haveMap = false;
                 robotType = "v85";
                 break;
 
@@ -190,15 +191,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     MyLogger.d(TAG, "xMax:" + xMax + "  xmin:" + xMin + "   ymax:" + yMax + "    ymin" + yMin);
                     if (!TextUtils.isEmpty(strMap)) {
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
-                        if (isViewAttached()) {
-                            //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃 0x07电子墙编辑模式,0x08回冲模式下不更新地图
+                        //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
+                        if (isViewAttached() && isDrawMap()) {
                             mView.updateSlam(xMin, xMax, yMin, yMax);
-                            if (isDrawMap()) {
-                                mView.drawSlamMap(slamBytes);
-                                mView.drawRoadMap(realTimePoints, historyRoadList);
-                                mView.drawObstacle();
-                                mView.drawVirtualWall(null);//只是刷新电子墙
-                            }
+                            mView.drawSlamMap(slamBytes);
+                            mView.drawRoadMap(realTimePoints, historyRoadList);
+                            mView.drawObstacle();
+                            mView.drawVirtualWall(null);//只是刷新电子墙
                         }
                     }
                 } else {//x800系列
@@ -206,8 +205,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     if (data == null || data.size() == 0) {
                         return;
                     }
+                    MyLogger.d(TAG, "data.size()          " + data.size());
                     for (int i = 0; i < data.size(); i++) {
                         parseRealTimeMapX8(data.get(i).getString("clean_data"));
+                    }
+                    mView.updateCleanTime(getTimeValue());
+                    mView.updateCleanArea(getAreaValue());
+                    if (isViewAttached() && isDrawMap()) {
+                        mView.drawBoxMapX8(pointList);
                     }
                 }
             }
@@ -341,11 +346,24 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             }
                             if (subdomain.equals(Constants.subdomain_x900)) {
                                 parseRealTimeMapX9(s1);
-                            } else {//x800 x785 x787 series
+                                if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
+                                    //slam地图
+                                    mView.drawSlamMap(slamBytes);
+                                    //历史路径
+                                    mView.drawRoadMap(realTimePoints, historyRoadList);
+                                    //重绘障碍物
+                                    mView.drawObstacle();
+                                }
+                            } else {//x800 x785 x787  a9s a8s  series
                                 Gson gson = new Gson();
                                 RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
                                 String clean_data = mapInfo.getClean_data();
                                 parseRealTimeMapX8(clean_data);
+                                mView.updateCleanTime(getTimeValue());
+                                mView.updateCleanArea(getAreaValue());
+                                if (pointList != null && curStatus == MsgCodeUtils.STATUE_PLANNING) {
+                                    mView.drawBoxMapX8(pointList);
+                                }
                             }
                         });
                     }
@@ -390,11 +408,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     }
                 }
             }
-        }
-        mView.updateCleanTime(getTimeValue());
-        mView.updateCleanArea(getAreaValue());
-        if (pointList != null && curStatus == MsgCodeUtils.STATUE_PLANNING) {
-            mView.drawBoxMapX8(pointList);
         }
     }
 
@@ -458,22 +471,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         wallPointList.clear();
                         return;
                     } else {
-                        realTimePoints.add(x * 224 / 100 + 750);
-                        realTimePoints.add(y * 224 / 100 + 750);
+                        if (realTimePoints != null) {
+                            realTimePoints.add(x * 224 / 100 + 750);
+                            realTimePoints.add(y * 224 / 100 + 750);
+                        }
                     }
-                }
-
-                /**
-                 * 绘制地图
-                 */
-                if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
-
-                    //slam地图
-                    mView.drawSlamMap(slamBytes);
-                    //历史路径
-                    mView.drawRoadMap(realTimePoints, historyRoadList);
-                    //重绘障碍物
-                    mView.drawObstacle();
                 }
             }
         }
@@ -586,15 +588,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (!isDrawMap()) {
             mView.cleanMapView();
         }
-        switch (curStatus){
+        switch (curStatus) {
             case MsgCodeUtils.STATUE_RECHARGE://回充
                 mView.updateRecharge(true);
                 mView.setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
                 break;
-            case  MsgCodeUtils.STATUE_VIRTUAL_EDIT://电子墙编辑模式
+            case MsgCodeUtils.STATUE_VIRTUAL_EDIT://电子墙编辑模式
                 mView.showVirtualEdit();
                 break;
-            case  MsgCodeUtils.STATUE_POINT://重点
+            case MsgCodeUtils.STATUE_POINT://重点
                 mView.updatePoint(true);
                 mView.setTvUseStatus(BaseMapActivity.TAG_KEYPOINT);
                 break;
@@ -611,12 +613,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo!=0&&batteryNo <= 6;
+        return batteryNo != 0 && batteryNo <= 6;
     }
 
     @Override
     public boolean isDrawMap() {
-        return haveMap&&(curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE);
+        return haveMap && (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE);
     }
 
     @Override
@@ -690,7 +692,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (!isDrawMap()&&curStatus!=MsgCodeUtils.STATUE_RANDOM) {
+        if (!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return area + "㎡";
@@ -699,7 +701,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (!isDrawMap()&&curStatus!=MsgCodeUtils.STATUE_RANDOM) {
+        if (!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return min + "min";

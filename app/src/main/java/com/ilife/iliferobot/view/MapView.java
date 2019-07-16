@@ -71,7 +71,7 @@ public class MapView extends View {
     private Paint boxPaint;
     private RectF curVirtualWall = new RectF();
     private ArrayList<Integer> pointList = new ArrayList<>();
-
+    private int endPositionRadius=6;
     public MapView(Context context) {
         super(context);
         init();
@@ -192,7 +192,7 @@ public class MapView extends View {
         roadCanvas.save();
         float startX = 0, startY = 0, endX = 0, endY = 0;//标记起点坐标
 //        绘制最新路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
-        boolean flag = false;//新包数据标记
+        boolean flag = false;//新包数据标记,用 x,y=400标记
         if (roadList != null && roadList.size() > 0) {
             for (int k = 0; k < roadList.size() - 1; k += 2) {
                 if (k == 0) {
@@ -202,7 +202,7 @@ public class MapView extends View {
                 } else {
                     if (roadList.get(k) == 400 && roadList.get(k + 1) == 400) {
                         flag = true;
-                        MyLogger.d(TAG, "new package data is arrived");
+                        MyLogger.d(TAG, "new package data is access");
                         continue;
                     }
                     if (flag) {
@@ -249,10 +249,10 @@ public class MapView extends View {
             endY = matrixCoordinateY(1500 - roadList.get(roadList.size() - 1));
             endX = matrixCoordinateX(roadList.get(roadList.size() - 2));
             positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), endPositionRadius), positionCirclePaint);
         } else if (endX != 0 && endY != 0) {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+            roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), endPositionRadius), positionCirclePaint);
         }
 
         invalidate();
@@ -843,7 +843,7 @@ public class MapView extends View {
         endY = height - matrixCoordinateY(-pointList.get(pointList.size() - 1));
         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-        boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+        boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), endPositionRadius), positionCirclePaint);
         invalidate();
     }
 }

@@ -256,7 +256,7 @@
     <string name="no_device_tip_hi">Hi, good to see you again</string>
     <string name="no_device_tip_cleaning">Begin your cleaning journey</string>
     <string name="x_series_robot">X Series robot vacuum</string>
-    <string name="map_aty_temp_keypoint">Spot mode</string>
+    <string name="map_aty_temp_keypoint">Spot</string>
     <string name="robot_connected">Connected</string>
     <string name="back_to_recharge">Return to charging dock</string>
     <string name="finish_the_cleaning">End current cleaning</string>

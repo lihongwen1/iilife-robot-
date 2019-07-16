@@ -249,7 +249,7 @@
     <string name="ilife_slogan">掃除を楽にして、生活を良くする</string>
     <string name="verification_code_tip">確認コードを入力してください</string>
     <string name="get_ver_code_tip">確認コード</string>
-    <string name="have_account_and_login">既存のアカウント</string>
+    <string name="have_account_and_login">既存のアカウント？</string>
     <string name="have_account_and_login1">ログインしてください</string>
     <string name="quick_login">クイック登録</string>
     <string name="set_password">パスワードを設定します</string>
