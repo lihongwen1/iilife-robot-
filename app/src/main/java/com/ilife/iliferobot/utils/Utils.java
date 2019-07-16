@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.ilife.iliferobot.BuildConfig;
@@ -41,6 +42,7 @@ public class Utils {
 
     public static  boolean isChineseLanguage(){
         String lan = LanguageUtils.getDefaultLanguage();
+       Log.d("LANGUAGE","语言：   "+lan);
         return lan.equals("zh");
     }
 

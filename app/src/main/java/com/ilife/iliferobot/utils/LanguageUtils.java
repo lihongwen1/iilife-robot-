@@ -16,7 +16,7 @@ public class LanguageUtils {
 
     public static String getDefaultLanguage() {
         Locale locale = Locale.getDefault();
-        return locale.getLanguage()+locale.getCountry();
+        return locale.getLanguage();
     }
 
     public static String getPreferedLanguage() {

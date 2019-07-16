@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.utils.LanguageUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.toast.Toasty;
@@ -39,6 +40,7 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        configToast();
         MyLogger.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
         MyLogger.d("MyApplication", BuildConfig.Area + "---");
         instance = (MyApplication) getApplicationContext();
@@ -63,7 +65,6 @@ public class MyApplication extends MultiDexApplication {
         }
         closeAndroidPDialog();
         initTypeface();
-        configToast();
         /**
          * tencent bugly crash日志上传
          */
@@ -79,7 +80,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     public void initTypeface() {
-        appInitLanguage=Locale.getDefault().getLanguage();
+        appInitLanguage= LanguageUtils.getDefaultLanguage();
         if (Utils.isChineseLanguage()) {
             tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
             tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");

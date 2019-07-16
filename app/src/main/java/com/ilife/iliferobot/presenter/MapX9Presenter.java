@@ -577,7 +577,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
+        if (curStatus == MsgCodeUtils.STATUE_RANDOM||curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
         if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
@@ -840,10 +840,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     virtualContentBytes[(t - 1) * 8 + 7] = endxBytes[1];
                     virtualContentBytes[(t - 1) * 8 + 8] = endyBytes[0];
                     virtualContentBytes[(t - 1) * 8 + 9] = endyBytes[1];
-                    MyLogger.e(TAG, "byte arry==:" + startxBytes[0] + "," + startxBytes[1] + "," + startyBytes[0] + "," + startyBytes[1] + "," + endxBytes[0] + "," + endxBytes[1] + "," + endyBytes[0] + "," + endyBytes[1]);
-                    MyLogger.e(TAG, "byte arry==:" + Integer.toHexString(startxBytes[0]) + "," + Integer.toHexString(startxBytes[1]) + "," + Integer.toHexString(startyBytes[0]) + "," + Integer.toHexString(startyBytes[1]) + "," + Integer.toHexString(endxBytes[0]) + "," + Integer.toHexString(endxBytes[1]) + "," + Integer.toHexString(endyBytes[0]) + "," + Integer.toHexString(endyBytes[1]));
-                    MyLogger.e(TAG, "xia fa qian wei zhuanhua zuo biao :" + "(" + floats[0] + "," + floats[1] + ")" + ":" + "(" + floats[2] + "," + floats[3] + ")");
-                    MyLogger.e(TAG, "xia fa qian zhuanhua hou zuo biao :" + "(" + x1 + "," + y1 + ")" + ":" + "(" + x2 + "," + y2 + ")");
                 }
             } else {
                 MyLogger.e(TAG, "sendLists is null");
