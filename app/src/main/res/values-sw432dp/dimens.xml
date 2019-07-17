@@ -55,6 +55,7 @@
 	<dimen name="dp_100">115.2000dp</dimen>
 	<dimen name="dp_110">126.7200dp</dimen>
 	<dimen name="dp_120">138.2400dp</dimen>
+	<dimen name="dp_124">142.8480dp</dimen>
 	<dimen name="dp_127">146.3040dp</dimen>
 	<dimen name="dp_134">154.3680dp</dimen>
 	<dimen name="dp_136">156.6720dp</dimen>

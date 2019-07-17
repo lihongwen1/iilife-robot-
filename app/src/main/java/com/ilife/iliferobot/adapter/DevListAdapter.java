@@ -17,9 +17,9 @@ import com.accloud.service.ACUserDevice;
 import com.bumptech.glide.Glide;
 import com.ilife.iliferobot.activity.LoginActivity;
 import com.ilife.iliferobot.activity.SelectActivity_x;
-import com.ilife.iliferobot.ui.SlidingMenu;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.view.SlideRecyclerView;
 
 import java.util.List;
 
@@ -31,30 +31,10 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
     private List<ACUserDevice> deviceList;
     private LayoutInflater inflater;
     private Context context;
+    private SlideRecyclerView slideRecyclerView;
 
-    private SlidingMenu mOpenMenu;
-    private SlidingMenu mScrollingMenu;
-
-    public SlidingMenu getScrollingMenu() {
-        return mScrollingMenu;
-    }
-
-    public void setScrollingMenu(SlidingMenu scrollingMenu) {
-        mScrollingMenu = scrollingMenu;
-    }
-
-    public void holdOpenMenu(SlidingMenu slidingMenu) {
-        mOpenMenu = slidingMenu;
-    }
-
-    public void closeOpenMenu() {
-        if (mOpenMenu != null && mOpenMenu.isOpen()) {
-            mOpenMenu.closeMenu();
-            mOpenMenu = null;
-        }
-    }
-
-    public DevListAdapter(Context context, List<ACUserDevice> deviceList) {
+    public DevListAdapter(Context context, List<ACUserDevice> deviceList, SlideRecyclerView slideRecyclerView) {
+        this.slideRecyclerView = slideRecyclerView;
         this.context = context;
         this.deviceList = deviceList;
         inflater = LayoutInflater.from(context);
@@ -102,8 +82,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
                 Glide.with(context).load(R.drawable.n_x785).into(holder.image_product);
             } else if (subdomain.equals(Constants.subdomain_x787)) {
                 Glide.with(context).load(R.drawable.n_x787).into(holder.image_product);
-            }
-            else if (subdomain.equals(Constants.subdomain_a7)) {
+            } else if (subdomain.equals(Constants.subdomain_a7)) {
                 Glide.with(context).load(R.drawable.n_x787).into(holder.image_product);
             } else if (subdomain.equals(Constants.subdomain_x900)) {
                 Glide.with(context).load(R.drawable.n_x900).into(holder.image_product);
@@ -136,17 +115,14 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
 
 
             holder.item_delete.setOnClickListener(v -> {
-                closeOpenMenu();
                 if (mOnClickListener != null) {
+                    slideRecyclerView.closeMenu();
                     mOnClickListener.onMenuClick(position);
                 }
             });
-            holder.slidingMenu.setCustomOnClickListener(new SlidingMenu.CustomOnClickListener() {
-                @Override
-                public void onClick() {
-                    if (mOnClickListener != null) {
-                        mOnClickListener.onContentClick(position);
-                    }
+            holder.itemView.setOnClickListener(v -> {
+                if (mOnClickListener != null && !slideRecyclerView.closeMenu()) {
+                    mOnClickListener.onContentClick(position);
                 }
             });
         }
@@ -174,7 +150,6 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
         TextView tv_status2;
         TextView item_delete;
         ImageView image_product;
-        SlidingMenu slidingMenu;
         View iv_add_device;
 
         MyViewHolder(View itemView, int type) {
@@ -186,7 +161,6 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.MyViewHo
                 tv_status2 = (TextView) itemView.findViewById(R.id.tv_status2);
                 item_delete = (TextView) itemView.findViewById(R.id.item_delete);
                 image_product = itemView.findViewById(R.id.image_product);
-                slidingMenu = (SlidingMenu) itemView.findViewById(R.id.slidingMenu);
             }
         }
     }

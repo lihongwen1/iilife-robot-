@@ -33,6 +33,7 @@ import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -65,12 +66,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.image_personal)
     FrameLayout image_personal;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    SlideRecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     DevListAdapter adapter;
     Dialog loadingDialog;
-    LinearLayoutManager llm;
     @BindView(R.id.rootView)
     LinearLayout rootView;
     @BindView(R.id.layout_no_device)
@@ -114,20 +114,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         activity = this;
         context = this;
         rect = new Rect();
-        llm = new LinearLayoutManager(context);
         loadingDialog = DialogUtils.createLoadingDialog_(context);
         mAcUserDevices = new ArrayList<>();
-        recyclerView.setLayoutManager(llm);
-        adapter = new DevListAdapter(context, mAcUserDevices);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        adapter = new DevListAdapter(context, mAcUserDevices,recyclerView);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                adapter.setScrollingMenu(null);
-            }
-        });
-
         bt_add.setOnClickListener(this);
         image_personal.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.getDeviceList());

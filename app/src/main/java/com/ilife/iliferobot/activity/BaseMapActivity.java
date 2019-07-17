@@ -73,8 +73,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     View rl_top;
     @BindView(R.id.rl_status)
     View anchorView;
-    @BindView(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
     @BindView(R.id.tv_time)
     TextView tv_time;
     @BindView(R.id.tv_area)

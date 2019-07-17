@@ -101,7 +101,7 @@ android {
         _China {
             dimension "default"
             versionCode = 33
-            versionName = '3.0.1'
+            versionName = '3.1.0'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "0")
