@@ -18,11 +18,12 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
+import com.ilife.iliferobot.adapter.HistoryAdapter;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.RecyclerViewDivider;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.adapter.HistoryAdapter_New_x9;
 import com.ilife.iliferobot.entity.HistoryRecord_x9;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.DeviceUtils;
@@ -47,7 +48,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
     private Long[] startTimes;
     private HistoryRecord_x9[] records;
     RecyclerView recyclerView;
-    HistoryAdapter_New_x9 adapter;
+    HistoryAdapter adapter;
     FrameLayout fl_noRecord;
     TextView tv_title;
     Dialog dialog;
@@ -75,20 +76,17 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         recordList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new HistoryAdapter_New_x9(context, recordList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.VERTICAL, 4,
-                ContextCompat.getColor(this, R.color.bg_color_f5f7fa)));
-        adapter.setOnClickListener(position -> {
-//                Intent intent = new Intent(HistoryActivity_x9.this,HistoryDetailActivity_x9.class);
-//                intent.putExtra("mapList",recordList.get(position).getHistoryData());
-//                startActivity(intent);
+        adapter = new HistoryAdapter(Utils.isChineseLanguage() ? R.layout.layout_histroy_item : R.layout.layout_histroy_item_en, recordList);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
             Intent intent = new Intent(HistoryActivity_x9.this, HistoryDetailActivity_x9.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("Record", recordList.get(position));
             intent.putExtras(bundle);
             startActivity(intent);
         });
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.VERTICAL, 4,
+                ContextCompat.getColor(this, R.color.bg_color_f5f7fa)));
     }
 
     public void initData() {

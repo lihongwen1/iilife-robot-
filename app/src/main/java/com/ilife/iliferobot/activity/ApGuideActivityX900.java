@@ -94,7 +94,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
             click_wifi_id = R.drawable.gif_click_wifi_a8s;
         } else if (subdomain.equals(Constants.subdomain_v85)) {
             tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_x7;
+            tip2_id =R.string.ap_guide_aty_tip2_v85;
             tip3_id = R.string.ap_guide_have_heard_didi;
             open_key_id = R.drawable.gif_open_key_v85;
             click_wifi_id = R.drawable.gif_click_wifi_v85;

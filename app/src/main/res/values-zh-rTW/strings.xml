@@ -43,7 +43,7 @@
     <string name="ap_guide_already_open_device">已打開</string>
     <string name="ap_guide_already_open_wifi">已聽到「WiFi連接中」</string>
     <string name="ap_guide_already_open_wifi_a9s">已聽到「WiFi連接中」</string>
-    <string name="ap_guide_have_heard_didi">已聽到「滴滴」聲</string>
+    <string name="ap_guide_have_heard_didi">已聽到「嘀嘀」聲</string>
     <string name="ap_aty_setting">設置</string>
     <string name="wifi_guide_aty_tip2">提示：機器人暫時無法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未連接</string>
@@ -304,4 +304,5 @@
     <string name="login_invalid">登錄失效,請重新登錄</string>
     <string name="zaco_phone_server_time">周一到周五 09:00 – 17:00</string>
     <string name="start_random_cleaning">已啟用隨機清掃</string>
+    <string name="ap_guide_aty_tip2_v85">長按機器的啟動鍵，8秒後聽到\"嘀\"的一聲，繼續長按聽到\"WiFi連接中\"後鬆開，WiFi指示燈閃爍。</string>
 </resources>

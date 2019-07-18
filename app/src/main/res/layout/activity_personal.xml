@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_134">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image_avatar"
@@ -23,8 +23,9 @@
             style="@style/Text_16sp_33"
             android:layout_below="@+id/image_avatar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_9"
             android:padding="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_9"
             android:text="@string/personal_aty_set_name" />
     </RelativeLayout>
 

@@ -304,4 +304,5 @@
     <string name="login_invalid">Login fehlgeschlagen, erneut versuchen</string>
     <string name="zaco_phone_server_time">Mo. - Fr. 09.00 – 17.00 Uhr</string>
     <string name="start_random_cleaning">"Auto-Modus aktiviert "</string>
+    <string name="ap_guide_aty_tip2_v85">Halten Sie die Taste 8 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
 </resources>

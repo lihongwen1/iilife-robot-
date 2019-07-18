@@ -42,6 +42,8 @@
                 style="@style/Text_12sp_33"
                 android:layout_alignBottom="@+id/tv_status1"
                 android:layout_toEndOf="@+id/tv_status1" />
+
+
         </RelativeLayout>
 
 
@@ -53,6 +55,12 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_30"
             android:background="@drawable/n_btn_forward" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_color_f5f7fa" />
     </RelativeLayout>
 
     <com.ilife.iliferobot.view.LightTextView

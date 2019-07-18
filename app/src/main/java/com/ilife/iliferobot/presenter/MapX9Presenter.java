@@ -43,6 +43,18 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableObserver;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 //TODO 处理X900的暂停事件的模拟事件更新UI问题
 // TODO APP后台CPU消耗问题
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
@@ -201,24 +213,44 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                     }
                 } else {//x800系列
-                    ArrayList<ACObject> data = resp.get("data");
-                    if (data == null || data.size() == 0) {
-                        return;
-                    }
-                    MyLogger.d(TAG, "data.size()          " + data.size());
-                    for (int i = 0; i < data.size(); i++) {
-                        parseRealTimeMapX8(data.get(i).getString("clean_data"));
-                    }
-                    mView.updateCleanTime(getTimeValue());
-                    mView.updateCleanArea(getAreaValue());
-                    if (isViewAttached() && isDrawMap()) {
-                        mView.drawBoxMapX8(pointList);
-                    }
+                    Completable.create(e -> {
+                        MyLogger.d(TAG, "数据处理线程-----" + Thread.currentThread().getName());
+                        ArrayList<ACObject> data = resp.get("data");
+                        if (data == null || data.size() == 0) {
+                            e.onError(new Throwable("data is null"));
+                        } else {
+                            for (int i = 0; i < data.size(); i++) {
+                                parseRealTimeMapX8(data.get(i).getString("clean_data"));
+                            }
+                            e.onComplete();
+                        }
+                    }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                             MyLogger.d(TAG,"处理线程--------------------------------------------------");
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            MyLogger.d(TAG, "Map处理线程-----" + Thread.currentThread().getName());
+                            mView.updateCleanTime(getTimeValue());
+                            mView.updateCleanArea(getAreaValue());
+                            if (isViewAttached() && isDrawMap()) {
+                                mView.drawBoxMapX8(pointList);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                             //数据处理异常
+                        }
+                    });
                 }
             }
 
             @Override
             public void error(ACException e) {
+                // TODO 需处理当历史地图请求失败时，需重新请求
                 MyLogger.e(TAG, "getRealTimeMap e = " + e.toString());
             }
         });
@@ -577,7 +609,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_RANDOM||curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
+        if (curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
         if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT

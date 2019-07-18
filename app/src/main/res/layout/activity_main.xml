@@ -17,13 +17,14 @@
 
         <FrameLayout
             android:id="@+id/image_personal"
-            android:layout_alignParentEnd="true"
             android:layout_width="@dimen/dp_50"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true">
+
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="@dimen/dp_22"
                 android:layout_height="@dimen/dp_22"
+                android:layout_gravity="center"
                 android:background="@drawable/n_icon_personal"
                 android:contentDescription="@null" />
         </FrameLayout>
@@ -38,10 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
-
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <com.ilife.iliferobot.view.SlideRecyclerView
             android:id="@+id/recyclerView"

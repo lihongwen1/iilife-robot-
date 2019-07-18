@@ -40,8 +40,10 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
 import com.bumptech.glide.Glide;
+import com.ilife.iliferobot.adapter.HelpFeedImgAdapter;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
@@ -63,6 +65,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -97,7 +100,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     @BindView(R.id.image_add)
     ImageView image_add;
     private List<Bitmap> images = new ArrayList<>();
-    private RvAdapter rvAdapter;
+    private HelpFeedImgAdapter rvAdapter;
     private int replacePosition = -1;//标记需要替换的feed image的位置
     private int permissionFlag = 0;
 
@@ -139,22 +142,21 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
         }
         rv_feed_image.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rv_feed_image.setAdapter(rvAdapter = new RvAdapter());
-        rv_feed_image.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6),true));
-        rvAdapter.setOnItemClick(new OnItemClick() {
-            @Override
-            public void onImgClick(int postion) {
-                replacePosition = postion;
-                showPhotoDialog();
-            }
-
-            @Override
-            public void onDeleteImgClick(int position) {
-                if (images.size() > position) {
-                    images.remove(position);
-                    image_add.setVisibility(images.size() == 2 ? View.GONE : View.VISIBLE);
-                    rvAdapter.notifyDataSetChanged();
-                }
+        rv_feed_image.setAdapter(rvAdapter = new HelpFeedImgAdapter(context,R.layout.item_feed_image,images));
+        rv_feed_image.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6), true));
+        rvAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.iv_feed_img:
+                    replacePosition = position;
+                    showPhotoDialog();
+                    break;
+                case R.id.iv_delete_img:
+                    if (images.size() > position) {
+                        images.remove(position);
+                        image_add.setVisibility(images.size() == 2 ? View.GONE : View.VISIBLE);
+                        rvAdapter.notifyDataSetChanged();
+                    }
+                    break;
             }
         });
     }
@@ -219,9 +221,9 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                     if (permission.granted) {
 //                        11 - 3 10 - 2 01 - 1 00 - 0
                         if (permission.name.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            permissionFlag+=2;
+                            permissionFlag += 2;
                         } else {
-                            permissionFlag ++;
+                            permissionFlag++;
                         }
                     }
                     if (permission.name.equals(Manifest.permission.CAMERA)) {
@@ -407,50 +409,4 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             }
         }
     }
-
-    public interface OnItemClick {
-        void onImgClick(int postion);
-
-        void onDeleteImgClick(int position);
-    }
-
-    class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvHolder> {
-        private OnItemClick onItemClick;
-
-        @NotNull
-        @Override
-        public RvHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup parent, int viewType) {
-            return new RvHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed_image, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(@androidx.annotation.NonNull RvHolder holder, int position) {
-            holder.iv_delete_img.setOnClickListener(v -> onItemClick.onDeleteImgClick(position));
-            holder.iv_feed_img.setOnClickListener(v -> onItemClick.onImgClick(position));
-            Glide.with(context).load(images.get(position)).into(holder.iv_feed_img);
-        }
-
-        @Override
-        public int getItemCount() {
-            return images.size();
-        }
-
-        public void setOnItemClick(OnItemClick itemClick) {
-            this.onItemClick = itemClick;
-        }
-
-        class RvHolder extends ViewHolder {
-
-            ImageView iv_feed_img;
-
-            ImageView iv_delete_img;
-
-            public RvHolder(@androidx.annotation.NonNull View itemView) {
-                super(itemView);
-                iv_delete_img = itemView.findViewById(R.id.iv_delete_img);
-                iv_feed_img = itemView.findViewById(R.id.iv_feed_img);
-            }
-        }
-    }
-
 }

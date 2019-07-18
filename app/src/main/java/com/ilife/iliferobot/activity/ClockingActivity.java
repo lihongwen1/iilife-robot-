@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.utils.TimePickerUIUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
@@ -35,6 +37,13 @@ import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.TimeUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
@@ -45,7 +54,7 @@ import butterknife.BindView;
  * Created by chenjiaping on 2017/7/25.
  */
 
-public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class ClockingActivity extends BackBaseActivity {
     final String TAG = ClockingActivity.class.getSimpleName();
     final String UNDER_LINE = "_";
     final int TAG_REFRESH_OVER = 0x01;
@@ -61,7 +70,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
     String subdomain;
     String physicalId;
     ACDeviceMsg acDeviceMsg;
-    SwipeRefreshLayout refreshLayout;
+    SmartRefreshLayout refreshLayout;
     ArrayList<NewClockInfo> clockInfos;
     String[] weeks;
     byte[] bytes;
@@ -76,20 +85,18 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case TAG_REFRESH_OVER:
-                    if (refreshLayout != null && refreshLayout.isRefreshing()) {
-                        refreshLayout.setRefreshing(false);
+                    if (refreshLayout != null) {
+                        refreshLayout.finishRefresh();
                     }
                     break;
             }
             return false;
         }
-    }) ;
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
-        intData();
         getClockInfo();
     }
 
@@ -101,10 +108,6 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus){
-//            strTimeFormat = android.provider.Settings.System.getString(cv,
-//                    android.provider.Settings.System.TIME_12_24);
-//        }
     }
 
     public void initView() {
@@ -113,22 +116,15 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
         clockInfos = new ArrayList<>();
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
-        adapter = new ClockAdapter(context, clockInfos);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setColorSchemeColors(getResources().
-                getColor(android.R.color.holo_blue_bright));
-        refreshLayout.setOnRefreshListener(this);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(adapter);
-        adapter.setListener(new ClockAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                showSetClockDialog(position);
-            }
-
-            @Override
-            public void onSwitchClick(int position) {
+        refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(refreshLayout -> getClockInfo());
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this));
+        adapter = new ClockAdapter(R.layout.layout_clock_item, clockInfos);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            showSetClockDialog(position);
+        });
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.image_status) {
                 int startIndex_;
                 if (position != 0) {
                     startIndex_ = (position - 1) * 5;
@@ -144,11 +140,15 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
                 acDeviceMsg.setCode(MsgCodeUtils.Appointment);
                 sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
             }
+
         });
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
 
-    private void intData() {
-//        cv = this.getContentResolver();
+    @Override
+    public void initData() {
         bytes = new byte[50];
         acDeviceMsg = new ACDeviceMsg();
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
@@ -197,13 +197,6 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
         timePicker.setCurrentHour((int) hour);
         timePicker.setCurrentMinute((int) minute);
     }
-
-    @Override
-    public void onRefresh() {
-        getClockInfo();
-    }
-
-
     class MyListener implements View.OnClickListener {
         int position;
 
@@ -275,7 +268,7 @@ public class ClockingActivity extends BackBaseActivity implements SwipeRefreshLa
                 }
                 DialogUtils.closeDialog(dialog);
                 adapter.notifyDataSetChanged();
-                handler.sendEmptyMessageDelayed(TAG_REFRESH_OVER, 1000);
+                handler.sendEmptyMessage(TAG_REFRESH_OVER);
             }
 
             @Override

@@ -71,7 +71,9 @@ public class MapView extends View {
     private Paint boxPaint;
     private RectF curVirtualWall = new RectF();
     private ArrayList<Integer> pointList = new ArrayList<>();
-    private int endPositionRadius=6;
+    private int endPositionRadius = 6;
+    private int paddingBottom;
+
     public MapView(Context context) {
         super(context);
         init();
@@ -281,6 +283,13 @@ public class MapView extends View {
         invalidate();
     }
 
+    public void setPaddingBottom(int paddingBottom) {
+        if (paddingBottom==0) {
+            this.paddingBottom = paddingBottom;
+            sCenter.set(width / 2f, (height - paddingBottom) / 2f);
+        }
+    }
+
     /**
      * @param xMin
      * @param xMax
@@ -295,7 +304,7 @@ public class MapView extends View {
             return;
         }
         double resultX = width * 0.80f / xLength;
-        double resultY = height * 0.80f / yLength;
+        double resultY = (height - paddingBottom) * 0.80f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = Math.round(bigDecimal.floatValue());
         if (baseScare >= maxScare) {
@@ -308,7 +317,7 @@ public class MapView extends View {
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
-        deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
+        deviationY = (yMax + yMin) / 2f * baseScare - (height - paddingBottom) / 2f;
         MyLogger.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
     }
 
@@ -792,13 +801,14 @@ public class MapView extends View {
 
     /**
      * 绘制x800的黄方格地图
-     *
+     * //TODO 数据去重，不用每次都绘制所有数据
      * @param dataList
      */
     public void drawBoxMapX8(ArrayList<Integer> dataList) {
         if (dataList == null) {
             return;
         }
+        MyLogger.d(TAG,"DATALIST-SIZE"+dataList.size());
         if (dataList.size() == 0) {
             boxPath.reset();
             boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);

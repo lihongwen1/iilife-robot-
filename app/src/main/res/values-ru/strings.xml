@@ -305,5 +305,6 @@
     <string name="login_invalid">Ошибка входа. Повторите попытку.</string>
     <string name="zaco_phone_server_time">(Пн-пт: 09:00-17:00)</string>
     <string name="start_random_cleaning">Автоматический режим активирован</string>
+    <string name="ap_guide_aty_tip2_v85">Нажмите и удерживайте в течение 8 секунд, и вы услышите гудение. Не выпускайте, пока голосовое объявление не скажет «Start WiFi pairing» Индикатор WiFi начнет мигать, как только робот войдет в режим AP.</string>
 
 </resources>
