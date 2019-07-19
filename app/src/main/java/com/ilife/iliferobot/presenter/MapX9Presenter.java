@@ -650,7 +650,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isDrawMap() {
-        return haveMap && (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE);
+        return haveMap && (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE||curStatus ==MsgCodeUtils.STATUE_VIRTUAL_EDIT);
     }
 
     @Override
