@@ -42,7 +42,6 @@ public interface MapX9Contract {
         void showBottomView();
         void updateOperationViewStatue(int surStatu);
         void showErrorPopup(int errorCode);
-        void sendHandler(int msgCode);
         void drawVirtualWall(List<int []> existPointList);
         void updateAlong(boolean isAlong);
         void updatePoint(boolean isPoint);

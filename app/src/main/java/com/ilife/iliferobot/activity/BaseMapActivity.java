@@ -51,10 +51,6 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
     final String TAG = BaseMapActivity.class.getSimpleName();
     public static final String NOT_FIRST_VIRTUAL_WALL = "virtual_wall";
-    public static final int VIRTUALWALL_MAXCOUNT = 0x12;
-    public static final int SEND_VIRTUALDATA_SUCCESS = 0x15;
-    public static final int SEND_VIRTUALDATA_FAILED = 0x16;
-    public static final int QUERYVIRTUAL_SUCCESS_SHOWLINE = 0x17;
     public static final int TAG_CONTROL = 0x01;
     public static final int TAG_NORMAL = 0x02;
     public static final int TAG_RECHAGRGE = 0x03;
@@ -142,24 +138,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int USE_MODE_NORMAL = 1;
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
-    WeakHandler handler = new WeakHandler(msg -> {
-        switch (msg.what) {
-            case SEND_VIRTUALDATA_SUCCESS:
-                ToastUtils.showToast(context, getString(R.string.map_aty_set_suc));
-                break;
-            case SEND_VIRTUALDATA_FAILED:
-                ToastUtils.showToast(context, getString(R.string.map_aty_set_fail));
-                break;
-            case QUERYVIRTUAL_SUCCESS_SHOWLINE:
-                //TODO 绘制电子墙
-                break;
-            case VIRTUALWALL_MAXCOUNT:
-                ToastUtils.showToast(context, context.getString(R.string.map_aty_max_count));
-                break;
-        }
-        return false;
-    });
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         initData();
@@ -210,12 +188,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         setDevName();
         fl_setting.setVisibility(View.VISIBLE);
     }
-
-    @Override
-    public void sendHandler(int msgCode) {
-        handler.sendEmptyMessage(msgCode);
-    }
-
 
     @Override
     public void updateCleanArea(String value) {

@@ -893,13 +893,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             public void success(ACDeviceMsg acDeviceMsg) {
                 existPointList.clear();
                 existPointList.addAll(wallPointList);
-                mView.sendHandler(BaseMapActivity.SEND_VIRTUALDATA_SUCCESS);
+                ToastUtils.showToast(Utils.getString(R.string.map_aty_set_suc));
                 mView.drawVirtualWall(existPointList);
             }
 
             @Override
             public void error(ACException e) {
-                mView.sendHandler(BaseMapActivity.SEND_VIRTUALDATA_FAILED);
+                ToastUtils.showToast(Utils.getString(R.string.map_aty_set_fail));
             }
         });
     }
