@@ -52,7 +52,7 @@
     <string name="third_ap_tip2">Совет:</string>
     <string name="third_ap_aty_tip1">Выберите соединение «Robot-XXXX». Введите пароль по умолчанию: 123456789. Вернитесь на текущую страницу и нажмите «Подключение ...»</string>
     <string name="ap_wifi_connet_no_wifi">Точка доступа "Robot-XXXX" не найдена</string>
-    <string name="third_ap_aty_port_">Пожалуйста, подключитесь к точке доступа, начиная с Robot-XXXX</string>
+    <string name="third_ap_aty_port_">Пожалуйста, подключитесь к точке доступа, начиная с \"Robot-\"</string>
     <string name="bind_suc_aty_name">Назовите  робота</string>
     <string name="bind_suc_sty_robot_done">Завершено</string>
     <string name="bind_suc_sty_robot_name">ILIFE робот-пылесос</string>

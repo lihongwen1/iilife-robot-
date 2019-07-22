@@ -52,7 +52,7 @@
     <string name="third_ap_tip2">*小贴士:</string>
     <string name="third_ap_aty_tip1">请选择机器生成的\"Robot-XXXX\"无线网络，默认密码123456789，连接后返回该页面，点击开始连接。</string>
     <string name="ap_wifi_connet_no_wifi">未发现Robot-XXXX开头的热点</string>
-    <string name="third_ap_aty_port_">请先连接以Robot-XXXX开头的热点</string>
+    <string name="third_ap_aty_port_">请先连接以\"Robot-\"开头的热点</string>
     <string name="bind_suc_aty_name">请为您的机器人命名</string>
     <string name="bind_suc_sty_robot_done">完成</string>
     <string name="bind_suc_sty_robot_name">ILIFE扫地机</string>
