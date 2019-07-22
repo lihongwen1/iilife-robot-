@@ -7,4 +7,5 @@
 
     <string name="regist_wrong_account">Неверный телефон/эл.почта</string>
     <string name="bind_suc_sty_robot_name">ZACO робот-пылесос</string>
+    <string name="x_series_robot">Робот пылесос серии</string>
 </resources>

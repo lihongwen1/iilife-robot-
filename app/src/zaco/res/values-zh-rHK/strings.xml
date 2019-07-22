@@ -8,4 +8,6 @@
     <string name="regist_wrong_account">郵箱格式不正確</string>
 
     <string name="bind_suc_sty_robot_name">ZACO掃地機</string>
+
+    <string name="x_series_robot">智能掃地機械人</string>
 </resources>
