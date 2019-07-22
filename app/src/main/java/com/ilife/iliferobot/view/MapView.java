@@ -26,20 +26,20 @@ import com.ilife.iliferobot.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 //TODO 2.电子墙集合需要增加锁机制，避免数据错乱；
+//TODO 2.移动导致绘图卡顿的bug;3.800updateslam异常
 public class MapView extends View {
+    private static final int TYPE_DRAW_CONDITION = 1;
+    private static final int TYPE_DRAW_NOW = 2;
     private int width, height;
     private static String TAG = "MapView";
     private Paint slamPaint, roadPaint, virtualPaint, positionCirclePaint;
     private Path roadPath, existVirtualPath, slamPath, obstaclePath, boxPath;
     private float downX, downY;
-    private float beforeDistance, afterDistance;
+    private float beforeDistance;
     public static final int MODE_NONE = 1;
     public static final int MODE_DRAG = 2;
     public static final int MODE_ZOOM = 3;
@@ -257,7 +257,7 @@ public class MapView extends View {
             roadCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), endPositionRadius), positionCirclePaint);
         }
 
-        invalidate();
+        invalidateUI(TYPE_DRAW_CONDITION);
     }
 
     /**
@@ -268,7 +268,7 @@ public class MapView extends View {
         slamCanvas.drawPath(slamPath, slamPaint);
         slamPaint.setColor(colors[0]);
         slamCanvas.drawPath(obstaclePath, slamPaint);
-        invalidate();
+        invalidateUI(TYPE_DRAW_CONDITION);
     }
 
     /**
@@ -280,11 +280,11 @@ public class MapView extends View {
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        invalidate();
+        invalidateUI(TYPE_DRAW_CONDITION);
     }
 
     public void setPaddingBottom(int paddingBottom) {
-        if (paddingBottom==0) {
+        if (paddingBottom == 0) {
             this.paddingBottom = paddingBottom;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
@@ -420,6 +420,8 @@ public class MapView extends View {
         float x = event.getX() / scare + getOffsetX();
         float y = event.getY() / scare + getOffsetY();
         switch (me) {
+            case MotionEvent.ACTION_CANCEL:
+                MODE=originalMode;
             case MotionEvent.ACTION_DOWN:
                 downX = x;
                 downY = y;
@@ -447,7 +449,7 @@ public class MapView extends View {
                         curVirtualWall.set(downX, downY, x, y);
                     }
                 }
-                invalidate();
+                invalidateUI(TYPE_DRAW_NOW);
                 break;
             case MotionEvent.ACTION_UP:
                 curVirtualWall.setEmpty();
@@ -506,11 +508,11 @@ public class MapView extends View {
                 MODE = originalMode;
                 break;
             case MotionEvent.ACTION_POINTER_UP:
+                MODE=originalMode;
                 originalScare = scare;
                 break;
-            case MotionEvent.ACTION_POINTER_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN://多指DOWN
                 if (event.getPointerCount() == 2) {
-                    originalMode = MODE;
                     MODE = MODE_ZOOM;
                     beforeDistance = distance(event);
                 }
@@ -521,7 +523,7 @@ public class MapView extends View {
     }
 
     private void calculateScare(MotionEvent event) {
-        afterDistance = distance(event);
+        float afterDistance = distance(event);
         if (Math.abs(afterDistance - beforeDistance) > 10) {
 //            sCenter = midPoint(event);
             scare = (afterDistance / beforeDistance) * originalScare;
@@ -707,7 +709,7 @@ public class MapView extends View {
             }
 
         }
-        invalidate();
+        invalidateUI(TYPE_DRAW_NOW);
     }
 
     List<SlamLineBean> lastLineBeans = new ArrayList<>();
@@ -801,42 +803,23 @@ public class MapView extends View {
 
     /**
      * 绘制x800的黄方格地图
-     * //TODO 数据去重，不用每次都绘制所有数据
+     *
      * @param dataList
      */
     public void drawBoxMapX8(ArrayList<Integer> dataList) {
         if (dataList == null) {
             return;
         }
-        MyLogger.d(TAG,"DATALIST-SIZE"+dataList.size());
         if (dataList.size() == 0) {
             boxPath.reset();
             boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            invalidate();
+            invalidateUI(TYPE_DRAW_CONDITION);
             return;
         }
         pointList.clear();
         pointList.addAll(dataList);
         float endY, endX;
-        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
         int x, y;
-        for (int i = 1; i < pointList.size(); i += 2) {
-            x = -pointList.get(i - 1);
-            y = -pointList.get(i);
-            if (minX > x) {
-                minX = x;
-            }
-            if (maxX < x) {
-                maxX = x;
-            }
-            if (minY > y) {
-                minY = y;
-            }
-            if (maxY < y) {
-                maxY = y;
-            }
-        }
-        updateSlam(minX, maxX, minY, maxY, 15);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         boxPath.reset();
         //绘制清扫区域的白方格
@@ -854,6 +837,21 @@ public class MapView extends View {
         endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
         positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
         boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), endPositionRadius), positionCirclePaint);
-        invalidate();
+        invalidateUI(TYPE_DRAW_CONDITION);
+    }
+
+    private void invalidateUI(int type) {
+        switch (type) {
+            case TYPE_DRAW_CONDITION:
+                if (MODE == MODE_NONE) {
+                    invalidate();
+                }else {
+                    MyLogger.d(TAG,"the redraw request is ignored ");
+                }
+                break;
+            case TYPE_DRAW_NOW:
+                invalidate();
+                break;
+        }
     }
 }

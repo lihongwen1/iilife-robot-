@@ -164,6 +164,28 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 }
             }
         }
+       if (pointList.size()<2){
+           return;
+       }
+        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
+        int x, y;
+        for (int i = 1; i < pointList.size(); i += 2) {
+            x = -pointList.get(i - 1);
+            y = -pointList.get(i);
+            if (minX > x) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            if (minY > y) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        mapView.updateSlam(minX, maxX, minY, maxY, 15);
         mapView.drawBoxMapX8(pointList);
 
     }

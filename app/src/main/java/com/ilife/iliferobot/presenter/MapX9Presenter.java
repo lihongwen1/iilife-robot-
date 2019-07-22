@@ -14,21 +14,21 @@ import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.accloud.utils.LogUtil;
 import com.google.gson.Gson;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.ACSkills;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.activity.BaseMapActivity;
+import com.ilife.iliferobot.activity.MainActivity;
 import com.ilife.iliferobot.activity.MapActivity_X9_;
 import com.ilife.iliferobot.activity.SettingActivity;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.able.DeviceUtils;
-import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.activity.MainActivity;
 import com.ilife.iliferobot.contract.MapX9Contract;
 import com.ilife.iliferobot.entity.PropertyInfo;
 import com.ilife.iliferobot.entity.RealTimeMapInfo;
-import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.utils.DataUtils;
-import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.TimeUtil;
@@ -44,15 +44,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableObserver;
-import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 //TODO 处理X900的暂停事件的模拟事件更新UI问题
@@ -94,8 +88,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
-    private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus;
+    private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
     private boolean haveMap = true;//标记机型是否有地图
+    private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
 
     @Override
     public void attachView(MapX9Contract.View view) {
@@ -205,7 +200,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                         //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
                         if (isViewAttached() && isDrawMap()) {
-                            mView.updateSlam(xMin, xMax, yMin, yMax);
+                            mView.updateSlam(xMin, xMax, yMin, yMax, 6);
                             mView.drawSlamMap(slamBytes);
                             mView.drawRoadMap(realTimePoints, historyRoadList);
                             mView.drawObstacle();
@@ -213,6 +208,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                     }
                 } else {//x800系列
+                    isGetHistory = true;
                     Completable.create(e -> {
                         MyLogger.d(TAG, "数据处理线程-----" + Thread.currentThread().getName());
                         ArrayList<ACObject> data = resp.get("data");
@@ -222,12 +218,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             for (int i = 0; i < data.size(); i++) {
                                 parseRealTimeMapX8(data.get(i).getString("clean_data"));
                             }
+                            updateSlamX8(pointList, 0);
                             e.onComplete();
                         }
                     }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                             MyLogger.d(TAG,"处理线程--------------------------------------------------");
+                            MyLogger.d(TAG, "处理线程--------------------------------------------------");
                         }
 
                         @Override
@@ -242,7 +239,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
                         @Override
                         public void onError(Throwable e) {
-                             //数据处理异常
+                            //数据处理异常
                         }
                     });
                 }
@@ -257,6 +254,32 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     @Override
+    public void updateSlamX8(ArrayList<Integer> src, int offset) {
+        MyLogger.d(TAG,"x800 计算数据边界偏移量：           "+offset);
+        if (src == null || src.size() < 2) {
+            return;
+        }
+        int x, y;
+        for (int i = offset+1; i < src.size(); i += 2) {
+            x = -src.get(i - 1);
+            y = -src.get(i);
+            if (minX > x) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            if (minY > y) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        mView.updateSlam(minX, maxX, minY, maxY, 15);
+    }
+
+    @Override
     public void getHistoryRoad() {
         final ACMsg req = new ACMsg();
         req.setName("searchCleanRoadDataMore");
@@ -267,6 +290,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (!isViewAttached()) {
                     return;
                 }
+                isGetHistory = true;
                 MyLogger.d(TAG, "getHistoryRoad()-----------");
                 ArrayList<ACObject> objects = acMsg.get("data");
                 if (objects != null && objects.size() > 0) {
@@ -390,7 +414,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 Gson gson = new Gson();
                                 RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
                                 String clean_data = mapInfo.getClean_data();
+                                int offset = pointList.size();
                                 parseRealTimeMapX8(clean_data);
+                                updateSlamX8(pointList, offset);
                                 mView.updateCleanTime(getTimeValue());
                                 mView.updateCleanArea(getAreaValue());
                                 if (pointList != null && curStatus == MsgCodeUtils.STATUE_PLANNING) {
@@ -557,10 +583,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 if (!isInitSlamTimer) {
                                     initTimer();
                                 }
-                                getHistoryRoad();
+                                if (!isGetHistory) {
+                                    getHistoryRoad();
+                                }
                                 queryVirtualWall();
                             } else {//x800系列
-                                getRealTimeMap();
+                                if (!isGetHistory) {
+                                    getRealTimeMap();
+                                }
                                 if (!isSubscribeRealMap) {
                                     subscribeRealTimeMap();
                                 }
@@ -650,7 +680,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isDrawMap() {
-        return haveMap && (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE||curStatus ==MsgCodeUtils.STATUE_VIRTUAL_EDIT);
+        return haveMap && (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT);
     }
 
     @Override
@@ -748,8 +778,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     public void success() {
                         if (propertyReceiver == null) {
                             initPropReceiver();
+                            AC.deviceDataMgr().registerPropertyReceiver(propertyReceiver);
                         }
-                        AC.deviceDataMgr().registerPropertyReceiver(propertyReceiver);
                     }
 
                     @Override

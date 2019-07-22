@@ -138,6 +138,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int USE_MODE_NORMAL = 1;
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         initData();
@@ -215,9 +216,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxscare) {
         mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, 6);
+        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare);
     }
 
     @Override
@@ -467,6 +468,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     } else {
                         mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                     }
+                } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {//适配器充电模式不允许启动机器
+                    ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
                 } else if (mPresenter.isLowPowerWorker()) {
                     ToastUtils.showToast(getString(R.string.low_power));
                 } else if (mPresenter.isRandomMode()) {

@@ -14,7 +14,7 @@ public interface MapX9Contract {
     interface View extends BaseView {
         void setDevName();
         void showRemoteView();
-        void updateSlam(int xMin, int xMax, int yMin, int yMax);
+        void updateSlam(int xMin, int xMax, int yMin, int yMaxm,int maxscare);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
 
@@ -99,6 +99,8 @@ public interface MapX9Contract {
          * @return
          */
          boolean isDrawMap();
+
+         void updateSlamX8(ArrayList<Integer> src,int offset);
     }
 
 }
