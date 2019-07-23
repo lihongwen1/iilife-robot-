@@ -421,7 +421,7 @@ public class MapView extends View {
         float y = event.getY() / scare + getOffsetY();
         switch (me) {
             case MotionEvent.ACTION_CANCEL:
-                MODE=originalMode;
+                MODE = originalMode;
             case MotionEvent.ACTION_DOWN:
                 downX = x;
                 downY = y;
@@ -508,7 +508,7 @@ public class MapView extends View {
                 MODE = originalMode;
                 break;
             case MotionEvent.ACTION_POINTER_UP:
-                MODE=originalMode;
+                MODE = originalMode;
                 originalScare = scare;
                 break;
             case MotionEvent.ACTION_POINTER_DOWN://多指DOWN
@@ -841,17 +841,18 @@ public class MapView extends View {
     }
 
     private void invalidateUI(int type) {
-        switch (type) {
-            case TYPE_DRAW_CONDITION:
-                if (MODE == MODE_NONE) {
-                    invalidate();
-                }else {
-                    MyLogger.d(TAG,"the redraw request is ignored ");
-                }
-                break;
-            case TYPE_DRAW_NOW:
-                invalidate();
-                break;
-        }
+        invalidate();
+//        switch (type) {
+//            case TYPE_DRAW_CONDITION:
+//                if (MODE == MODE_NONE) {
+//                    invalidate();
+//                }else {
+//                    MyLogger.d(TAG,"the redraw request is ignored ");
+//                }
+//                break;
+//            case TYPE_DRAW_NOW:
+//                invalidate();
+//                break;
+//        }
     }
 }

@@ -43,7 +43,7 @@
     <string name="ap_guide_already_open_device">已打開</string>
     <string name="ap_guide_already_open_wifi">已聽到「WiFi連接中」</string>
     <string name="ap_guide_already_open_wifi_a9s">已聽到「WiFi連接中」</string>
-    <string name="ap_guide_have_heard_didi">已聽到「嘀嘀」聲</string>
+    <string name="ap_guide_have_heard_didi">已聽到\"嘀嘀\"聲</string>
     <string name="ap_aty_setting">設置</string>
     <string name="wifi_guide_aty_tip2">提示：機械人暫時無法使用5G WiFi</string>
     <string name="add_aty_no_wifi">wifi未連接</string>

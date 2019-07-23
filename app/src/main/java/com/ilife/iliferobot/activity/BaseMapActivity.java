@@ -44,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -60,7 +61,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_RIGHT = 0x07;
     public static final int TAG_FORWARD = 0x08;
     public static final int TAG_RANDOM = 0x09;
-    Context context;
     private CustomPopupWindow exitVirtualWallPop;
     private UniversalDialog virtualWallTipDialog;
     @BindView(R.id.ll_map_container)
@@ -139,11 +139,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        initData();
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void attachPresenter() {
@@ -166,16 +161,17 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         updateMaxButton(mPresenter.isMaxMode());
     }
 
+    @Override
     public void initData() {
-        context = this;
-        animation = AnimationUtils.loadAnimation(context, R.anim.anims_ni);
+        super.initData();
+        animation = AnimationUtils.loadAnimation(this, R.anim.anims_ni);
         animation.setInterpolator(new LinearInterpolator());
-        animation_alpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
+        animation_alpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
     }
 
     @Override
     public void setDevName() {
-        String devName = SpUtils.getSpString(context, MainActivity.KEY_DEVNAME);
+        String devName = SpUtils.getSpString(this, MainActivity.KEY_DEVNAME);
         if (devName != null && !devName.isEmpty()) {
             tv_title.setText(devName);
         } else {
@@ -251,7 +247,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         boolean isShow = errorCode != 0;
         if (isShow) {
             if (errorPopup != null && !errorPopup.isShowing()) {
-                View contentView = LayoutInflater.from(context).inflate(R.layout.layout_popup_error, null);
+                View contentView = LayoutInflater.from(this).inflate(R.layout.layout_popup_error, null);
                 errorPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 errorPopup.setContentView(contentView);
                 initErrorPopup(errorCode, contentView);
@@ -291,7 +287,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private void initErrorPopup(int code, View contentView) {
         ImageView image_delete = contentView.findViewById(R.id.image_delete);
         TextView tv_error = contentView.findViewById(R.id.tv_error);
-        tv_error.setText(DeviceUtils.getErrorText(context, code));
+        tv_error.setText(DeviceUtils.getErrorText(this, code));
         image_delete.setOnClickListener(v -> {
             if (errorPopup != null) {
                 errorPopup.dismiss();
@@ -497,7 +493,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                 break;
             case R.id.fl_top_menu:
-                Intent i = new Intent(context, SettingActivity.class);
+                Intent i = new Intent(this, SettingActivity.class);
                 startActivity(i);
                 break;
             case R.id.tv_recharge_x9://回冲
@@ -518,7 +514,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 }
                 break;
             case R.id.tv_appointment_x9://预约
-                Intent intent = new Intent(context, ClockingActivity.class);
+                Intent intent = new Intent(this, ClockingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_virtual_wall_x9://电子墙编辑模式
@@ -602,7 +598,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (v.getId() != R.id.image_control_back) {
                     v.setSelected(true);
                 }
-                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
+                if (mPresenter.getRobotType().equals("v85") ||mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
                     remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
                         MyLogger.d(TAG, "下发方向移动指令");
                         switch (v.getId()) {
@@ -627,7 +623,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (v.getId() != R.id.image_control_back) {
                     v.setSelected(false);
                 }
-                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
+                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")||mPresenter.getRobotType().equals("v85")) {
                     if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
                         remoteDisposable.dispose();
                     }

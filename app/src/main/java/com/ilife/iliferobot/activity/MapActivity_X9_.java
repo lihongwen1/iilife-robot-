@@ -28,9 +28,9 @@ public class MapActivity_X9_ extends BaseMapActivity {
     @Override
     public void showRemoteView() {
         if (mPresenter.isWork(mPresenter.getCurStatus()) || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_SLEEPING) {
-            ToastUtils.showToast(context, getString(R.string.map_aty_can_not_execute));
+            ToastUtils.showToast(this, getString(R.string.map_aty_can_not_execute));
         } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_|| mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING) {
-            ToastUtils.showToast(context, getString(R.string.map_aty_charge));
+            ToastUtils.showToast(this, getString(R.string.map_aty_charge));
         } else {
             USE_MODE = USE_MODE_REMOTE_CONTROL;
             showBottomView();
