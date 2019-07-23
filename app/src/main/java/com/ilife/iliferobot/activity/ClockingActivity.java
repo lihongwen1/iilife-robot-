@@ -28,6 +28,7 @@ import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.TimePickerUIUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
@@ -97,6 +98,7 @@ public class ClockingActivity extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adjustTime();
         getClockInfo();
     }
 
@@ -236,7 +238,20 @@ public class ClockingActivity extends BackBaseActivity {
 
         }
     }
+    private void adjustTime() {
+        ACDeviceMsg msg_adjustTime = new ACDeviceMsg(MsgCodeUtils.AdjustTime, TimeUtil.getTimeBytes());
+        AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_adjustTime, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
+            @Override
+            public void success(ACDeviceMsg acDeviceMsg) {
+                MyLogger.d(TAG, "adjust Time Success");
+            }
 
+            @Override
+            public void error(ACException e) {
+                MyLogger.d(TAG, "adjust Time Fail");
+            }
+        });
+    }
 
     public void getClockInfo() {
         acDeviceMsg.setCode(MsgCodeUtils.ClockInfos);
