@@ -18,6 +18,7 @@ import androidx.core.util.Consumer;
 
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.presenter.QuickLoginPresenter;
+import com.ilife.iliferobot.utils.LanguageUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.SuperEditText;
 import com.ilife.iliferobot.R;
@@ -72,23 +73,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         activity = this;
         context = this;
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
-        String str_login = Utils.getString(R.string.have_account_and_login);
-        String lan = Locale.getDefault().getLanguage();
-        int index, endIndex;
-        String targetString;
-        if (lan.equals("zh")) {
-            targetString = "请登录";
-        } else if (lan.equals("de")) {
-            targetString = "Login now";
-        } else {
-            targetString = "Login now";
-        }
-        index = str_login.toString().indexOf(targetString);
-        endIndex = str_login.toString().indexOf(targetString) + targetString.length();
-        SpannableString spannableString = new SpannableString(str_login);
-        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.bt_bg_unpress_color)), index, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_login.setText(spannableString);
-        if (!Utils.isIlife()){
+        if (!Utils.isIlife()) {
             tv_slogan.setVisibility(View.INVISIBLE);
         }
     }

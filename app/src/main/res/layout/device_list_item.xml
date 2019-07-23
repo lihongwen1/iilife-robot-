@@ -1,85 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="horizontal"
     android:layout_height="@dimen/dp_120">
 
-    <View
-        android:id="@+id/view5"
+    <RelativeLayout
+        android:id="@+id/item_content"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/bg_color_f5f7fa" />
+        android:layout_height="match_parent">
 
-    <com.ilife.iliferobot.ui.SlidingMenu
-        android:id="@+id/slidingMenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/view5">
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30" />
 
-        <LinearLayout
-            android:id="@+id/item_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_toEndOf="@+id/image_product">
 
-            <RelativeLayout
-                android:id="@+id/item_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/image_product"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="@dimen/dp_100"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp_30" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:layout_toEndOf="@+id/image_product">
-
-                    <com.ilife.iliferobot.view.MediumTextView
-                        android:id="@+id/tv_name"
-                        style="@style/Text_16sp_33" />
-
-                    <com.ilife.iliferobot.view.LightTextView
-                        android:id="@+id/tv_status1"
-                        style="@style/Text_12sp_33"
-                        android:layout_below="@+id/tv_name"
-                        android:layout_marginTop="@dimen/dp_1"
-                        android:text="@string/device_adapter_device_status" />
-
-                    <com.ilife.iliferobot.view.LightTextView
-                        android:id="@+id/tv_status2"
-                        style="@style/Text_12sp_33"
-                        android:layout_alignBottom="@+id/tv_status1"
-                        android:layout_toEndOf="@+id/tv_status1" />
-                </RelativeLayout>
-
-
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/image_go"
-                    android:layout_width="@dimen/dp_24"
-                    android:layout_height="@dimen/dp_24"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/dp_30"
-                    android:background="@drawable/n_btn_forward" />
-            </RelativeLayout>
+            <com.ilife.iliferobot.view.MediumTextView
+                android:id="@+id/tv_name"
+                style="@style/Text_16sp_33"
+                android:layout_width="@dimen/dp_160"
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <com.ilife.iliferobot.view.LightTextView
-                android:id="@+id/item_delete"
-                android:layout_width="@dimen/dp_84"
-                android:layout_height="match_parent"
-                android:background="@color/color_f08300"
-                android:gravity="center"
-                android:text="@string/main_aty_unbind"
-                android:textColor="@color/color_ff"
-                android:textSize="@dimen/sp_12" />
-        </LinearLayout>
-    </com.ilife.iliferobot.ui.SlidingMenu>
-</RelativeLayout>
+                android:id="@+id/tv_status1"
+                style="@style/Text_12sp_33"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginTop="@dimen/dp_1"
+                android:text="@string/device_adapter_device_status" />
+
+            <com.ilife.iliferobot.view.LightTextView
+                android:id="@+id/tv_status2"
+                style="@style/Text_12sp_33"
+                android:layout_alignBottom="@+id/tv_status1"
+                android:layout_toEndOf="@+id/tv_status1" />
+
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/image_go"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:background="@drawable/n_btn_forward" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_color_f5f7fa" />
+    </RelativeLayout>
+
+    <com.ilife.iliferobot.view.LightTextView
+        android:id="@+id/item_delete"
+        android:layout_width="@dimen/dp_84"
+        android:layout_height="match_parent"
+        android:background="@color/color_f08300"
+        android:gravity="center"
+        android:text="@string/main_aty_unbind"
+        android:textColor="@color/color_ff"
+        android:textSize="@dimen/sp_12" />
+</LinearLayout>

@@ -16,13 +16,9 @@ import com.ilife.iliferobot.utils.ToastUtils;
  */
 
 public class MapActivity_X8_ extends BaseMapActivity {
-    public static final String INTENT_ACTION = "com.example.MapActivity";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.getRealTimeMap();
-        mPresenter.subscribeRealTimeMap();
     }
 
     @Override
@@ -41,8 +37,13 @@ public class MapActivity_X8_ extends BaseMapActivity {
                 rechargeModel = R.drawable.rechage_device_x785;
                 break;
             case "a8s":
+                ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
                 rechargeModel = R.drawable.rechage_device_a8s;
                 break;
+            case "v85":
+                rechargeModel = R.drawable.rechage_device_v85;
+                break;
+
         }
         if (rechargeModel != -1) {
             iv_recharge_model.setImageResource(rechargeModel);
@@ -98,27 +99,17 @@ public class MapActivity_X8_ extends BaseMapActivity {
             tv_control_x9.setVisibility(View.VISIBLE);
             tv_bottom_recharge.setVisibility(View.GONE);
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
-
         }
         if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
-            setNavigationBarColor(R.color.color_ff1b92e2);
+            if (mPresenter.getRobotType().equals("a8s")) {
+                setNavigationBarColor(R.color.moka_color);
+            } else {
+                setNavigationBarColor(R.color.color_ff1b92e2);
+            }
         } else {
             setNavigationBarColor(R.color.white);
         }
         tv_start.setSelected(isSelect);
         image_center.setSelected(isSelect);//remote control start button
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
-
     }
 }

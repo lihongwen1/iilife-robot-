@@ -5,7 +5,9 @@ import android.graphics.Typeface;
 
 import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.utils.LanguageUtils;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.toast.Toasty;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
@@ -28,6 +30,7 @@ import androidx.multidex.MultiDexApplication;
 public class MyApplication extends MultiDexApplication {
     private final String TAG = MyApplication.class.getSimpleName();
     private static MyApplication instance;
+    public String appInitLanguage;
     public Typeface tf_light;
     public Typeface tf_regular;
     public Typeface tf_robot_regular;
@@ -37,6 +40,7 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        configToast();
         MyLogger.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
         MyLogger.d("MyApplication", BuildConfig.Area + "---");
         instance = (MyApplication) getApplicationContext();
@@ -60,7 +64,6 @@ public class MyApplication extends MultiDexApplication {
                 break;
         }
         closeAndroidPDialog();
-        configToast();
         initTypeface();
         /**
          * tencent bugly crash日志上传
@@ -76,9 +79,9 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-    private void initTypeface() {
-        String lan = Locale.getDefault().getLanguage();
-        if (lan.equals("zh")) {
+    public void initTypeface() {
+        appInitLanguage= LanguageUtils.getDefaultLanguage();
+        if (Utils.isChineseLanguage()) {
             tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
             tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
             tf_medium = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNMedium.ttf");
@@ -93,7 +96,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void configToast() {
-        Toasty.Config.getInstance().tintIcon(true).tintIcon(false).
+        Toasty.Config.getInstance().tintIcon(true).tintIcon(false).setToastTypeface(tf_regular).
                 setTextSize(16).allowQueue(false).apply();
     }
 

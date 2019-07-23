@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.app.MyApplication;
+
+import java.util.Locale;
 
 
 /**
@@ -29,8 +32,27 @@ public class Utils {
         return MyApplication.getInstance().getString(id);
     }
 
+    /**
+     * 是否是ILIFE品牌
+     * @return
+     */
     public static  boolean isIlife() {
         return BuildConfig.BRAND.equals("ILIFE");
+    }
+
+    public static  boolean isChineseLanguage(){
+        String lan = LanguageUtils.getDefaultLanguage();
+       Log.d("LANGUAGE","语言：   "+lan);
+        return lan.equals("zh");
+    }
+
+
+    /**
+     *
+     * 是否是国内环境
+     */
+    public static boolean isChinaEnvironment(){
+        return BuildConfig.Area==0;
     }
 
     /**

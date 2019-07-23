@@ -51,7 +51,7 @@ public class DataUtils {
         return iOutcome;
     }
 
-    public static byte[] intToBytes(int value) {//虚拟墙坐标转byte数组
+    public static byte[] intToBytes(int value) {//电子墙坐标转byte数组
         byte[] src = new byte[2];
         src[0] = (byte) ((value >> 8) & 0xFF);
         src[1] = (byte) (value & 0xFF);

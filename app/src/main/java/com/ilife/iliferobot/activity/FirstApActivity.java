@@ -69,10 +69,9 @@ public class FirstApActivity extends BackBaseActivity {
         String ssid = WifiUtils.getSsid(context);
         if (!TextUtils.isEmpty(ssid) && !ssid.contains("unknown")) {
             tv_ssid.setText(ssid);
-        } else {
-            if (!checkGpsIsOpen()) {
-                goSetGps();
-            }
+        }
+        if (!checkGpsIsOpen()) {
+            goSetGps();
         }
     }
 
@@ -100,19 +99,19 @@ public class FirstApActivity extends BackBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                    if (s.toString().trim().length()>0){
-                        bt_next.setSelected(true);
-                        bt_next.setClickable(true);
-                    }else{
-                        bt_next.setSelected(false);
-                        bt_next.setClickable(false);
-                    }
+                if (s.toString().trim().length() >=8) {
+                    bt_next.setSelected(true);
+                    bt_next.setClickable(true);
+                } else {
+                    bt_next.setSelected(false);
+                    bt_next.setClickable(false);
+                }
 
             }
         });
     }
 
-    @OnClick({R.id.image_show_pass, R.id.bt_next,R.id.rl_select_wifi})
+    @OnClick({R.id.image_show_pass, R.id.bt_next, R.id.rl_select_wifi})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_show_pass:
@@ -128,16 +127,16 @@ public class FirstApActivity extends BackBaseActivity {
                 startActivity(i);
                 break;
             case R.id.bt_next:
-                ssid = tv_ssid.getText().toString();
-                if (TextUtils.isEmpty(ssid) || ssid.contains("unknown")) {
-                    if (!checkGpsIsOpen()) {
-                        goSetGps();
-                    } else {
-                        ToastUtils.showToast(context, getString(R.string.add_aty_no_wifi));
-                    }
+                if (!checkGpsIsOpen()) {
+                    goSetGps();
                     return;
+                } else {
+                    ssid = tv_ssid.getText().toString();
+                    if (TextUtils.isEmpty(ssid) || ssid.contains("unknown")) {
+                        ToastUtils.showToast(context, getString(R.string.add_aty_no_wifi));
+                        return;
+                    }
                 }
-
                 pass = et_pass.getText().toString().trim();
                 if (TextUtils.isEmpty(pass)) {
                     ToastUtils.showToast(context, getString(R.string.ap_aty_input_pass));

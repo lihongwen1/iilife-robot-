@@ -52,7 +52,6 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData();
     }
 
     @Override
@@ -153,7 +152,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     x = (i - byteList.size() / length / 2);
                     float y = (j * 8 + k - length * 4);
                     if ((mapdata & tempdata) == tempdata) {
-                        if (subdomain.equals(Constants.subdomain_x800)||subdomain.equals(Constants.subdomain_a8s)||subdomain.equals(Constants.subdomain_a9s)) {
+                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v85)|| subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
                             pointList.add((int) y);
                             pointList.add((int) x);
                         } else {
@@ -165,12 +164,38 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 }
             }
         }
+       if (pointList.size()<2){
+           return;
+       }
+        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
+        int x, y;
+        for (int i = 1; i < pointList.size(); i += 2) {
+            x = -pointList.get(i - 1);
+            y = -pointList.get(i);
+            if (minX > x) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            if (minY > y) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        mapView.updateSlam(minX, maxX, minY, maxY, 15);
         mapView.drawBoxMapX8(pointList);
 
     }
 
-    private void getData() {//取出传递过来的集合
+    public void initData() {//取出传递过来的集合
+        historyPointsList = new ArrayList<>();
         subdomain = SpUtils.getSpString(this, MainActivity.KEY_SUBDOMAIN);
+        if (subdomain.equals(Constants.subdomain_a8s)) {
+            mapView.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
+        }
         Intent intent = getIntent();
         if (intent != null) {
             HistoryRecord_x9 record = (HistoryRecord_x9) intent.getSerializableExtra("Record");
@@ -224,7 +249,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     }
 
     public void initView() {
-        historyPointsList = new ArrayList<>();
+
     }
 
 }

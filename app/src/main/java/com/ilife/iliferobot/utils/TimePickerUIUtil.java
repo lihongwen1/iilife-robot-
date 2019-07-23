@@ -48,9 +48,9 @@ public class TimePickerUIUtil {
         setNumberPickerDividerColor(minute_numberpicker, Color.rgb(0xf5, 0xf7, 0xfa));
         setNumberPickerDividerColor(ampm_numberpicker, Color.rgb(0xf5, 0xf7, 0xfa));
 
-        setPickerSize(hour_numberpicker, 100, context);
-        setPickerSize(minute_numberpicker, 100, context);
-        setPickerSize(ampm_numberpicker, 100, context);
+        setPickerSize(hour_numberpicker, 90, context);
+        setPickerSize(minute_numberpicker, 90, context);
+        setPickerSize(ampm_numberpicker, 90, context);
     }
 
     private static void set_numberpicker_text_colour(NumberPicker number_picker, Context context) {

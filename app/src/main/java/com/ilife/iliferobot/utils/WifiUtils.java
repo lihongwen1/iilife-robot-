@@ -30,15 +30,19 @@ public class WifiUtils {
     /**
      * 查找特定的wifi
      *
-     * @param wifiTag     such as start with robot
      * @param wifiManager
      * @return
      */
-    public static String searchTargetWifi(String wifiTag, WifiManager wifiManager) {
+    public static String searchTargetWifi(WifiManager wifiManager) {
         String targetSsid = "";
         List<ScanResult> list = wifiManager.getScanResults();//get wifi list
+        String ssid;
+        String mac;
         for (ScanResult scResult : list) {
-            if (!TextUtils.isEmpty(scResult.SSID) && scResult.SSID.contains(wifiTag)) {
+            ssid = scResult.SSID;
+            mac = scResult.BSSID;
+            MyLogger.d(TAG,"SSID:  "+ssid+"       mac:     "+mac);
+            if (ssid != null && ssid.length() == 10 && ssid.contains("Robot") && (mac.contains("84:5d:d7") || mac.contains("98:d8:63"))) {
                 targetSsid = scResult.SSID;
                 break;
             }
@@ -233,7 +237,7 @@ public class WifiUtils {
      * @param context
      * @return true 表示开启
      */
-    public static  boolean isOPenGPS(final Context context) {
+    public static boolean isOPenGPS(final Context context) {
         LocationManager locationManager
                 = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
@@ -252,7 +256,7 @@ public class WifiUtils {
      *
      * @param context
      */
-    public static  void openGPS(Context context) {
+    public static void openGPS(Context context) {
         Intent GPSIntent = new Intent();
         GPSIntent.setClassName("com.android.settings",
                 "com.android.settings.widget.SettingsAppWidgetProvider");

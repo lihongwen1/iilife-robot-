@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,12 +49,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
-    final String TAG = MapActivity_X9_.class.getSimpleName();
+    final String TAG = BaseMapActivity.class.getSimpleName();
     public static final String NOT_FIRST_VIRTUAL_WALL = "virtual_wall";
-    public static final int VIRTUALWALL_MAXCOUNT = 0x12;
-    public static final int SEND_VIRTUALDATA_SUCCESS = 0x15;
-    public static final int SEND_VIRTUALDATA_FAILED = 0x16;
-    public static final int QUERYVIRTUAL_SUCCESS_SHOWLINE = 0x17;
     public static final int TAG_CONTROL = 0x01;
     public static final int TAG_NORMAL = 0x02;
     public static final int TAG_RECHAGRGE = 0x03;
@@ -62,15 +59,16 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int TAG_LEFT = 0x06;
     public static final int TAG_RIGHT = 0x07;
     public static final int TAG_FORWARD = 0x08;
+    public static final int TAG_RANDOM = 0x09;
     Context context;
     private CustomPopupWindow exitVirtualWallPop;
     private UniversalDialog virtualWallTipDialog;
+    @BindView(R.id.ll_map_container)
+    LinearLayout ll_map_container;
     @BindView(R.id.rl_top)
     View rl_top;
     @BindView(R.id.rl_status)
     View anchorView;
-    @BindView(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
     @BindView(R.id.tv_time)
     TextView tv_time;
     @BindView(R.id.tv_area)
@@ -140,23 +138,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int USE_MODE_NORMAL = 1;
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
-    WeakHandler handler = new WeakHandler(msg -> {
-        switch (msg.what) {
-            case SEND_VIRTUALDATA_SUCCESS:
-                ToastUtils.showToast(context, getString(R.string.map_aty_set_suc));
-                break;
-            case SEND_VIRTUALDATA_FAILED:
-                ToastUtils.showToast(context, getString(R.string.map_aty_set_fail));
-                break;
-            case QUERYVIRTUAL_SUCCESS_SHOWLINE:
-                //TODO 绘制虚拟墙
-                break;
-            case VIRTUALWALL_MAXCOUNT:
-                ToastUtils.showToast(context, context.getString(R.string.map_aty_max_count));
-                break;
-        }
-        return false;
-    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -180,10 +161,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getAppointmentMsg();
         mPresenter.getDevStatus();
-        mPresenter.initPropReceiver();
-        mPresenter.registerPropReceiver();
+        setDevName();
         updateMaxButton(mPresenter.isMaxMode());
     }
 
@@ -194,25 +173,22 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         animation_alpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
     }
 
-    public void initView() {
-        errorPopup = new PopupWindow();
-        electricityDrawable = (AnimationDrawable) image_animation.getBackground();
-
-        fl_setting.setVisibility(View.VISIBLE);
+    @Override
+    public void setDevName() {
         String devName = SpUtils.getSpString(context, MainActivity.KEY_DEVNAME);
         if (devName != null && !devName.isEmpty()) {
             tv_title.setText(devName);
         } else {
             tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
         }
-
     }
 
-    @Override
-    public void sendHandler(int msgCode) {
-        handler.sendEmptyMessage(msgCode);
+    public void initView() {
+        errorPopup = new PopupWindow();
+        electricityDrawable = (AnimationDrawable) image_animation.getBackground();
+        setDevName();
+        fl_setting.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     public void updateCleanArea(String value) {
@@ -240,8 +216,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, 6);
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxscare) {
+        mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
+        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare);
     }
 
     @Override
@@ -294,8 +271,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     /**
-     * 选择进入虚拟墙编辑模式
-     * 显示虚拟墙操作UI
+     * 选择进入电子墙编辑模式
+     * 显示电子墙操作UI
      */
     private void showSetWallDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
@@ -363,6 +340,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         tv_use_control.setTextColor(getResources().getColor(R.color.white));
         switch (tag) {
             case TAG_NORMAL:
+                tv_use_control.setText("");
                 tv_use_control.setVisibility(View.GONE);
                 break;
             case TAG_CONTROL:
@@ -394,17 +372,16 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 tv_use_control.setVisibility(View.VISIBLE);
                 tv_use_control.setText(getString(R.string.map_aty_use_along));
                 break;
+            case TAG_RANDOM:
+                tv_use_control.setVisibility(View.VISIBLE);
+                tv_use_control.setText(getString(R.string.start_random_cleaning));
+                break;
         }
     }
 
 
-    @Override
-    public void setTvUseStatusVisible(boolean isVisible) {
-        tv_use_control.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-    }
-
     /**
-     * 清空不常显示的布局,虚拟墙编辑模式，回冲动画，沿边动画，重点动画
+     * 清空不常显示的布局,电子墙编辑模式，回冲动画，沿边动画，重点动画
      *
      * @param curStatus
      */
@@ -423,7 +400,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 electricityDrawable.stop();
             }
         }
-        tv_use_control.setVisibility(View.GONE);
+        if (curStatus != MsgCodeUtils.STATUE_REMOTE_CONTROL) {
+            setTvUseStatus(TAG_NORMAL);
+        }
     }
 
     @Override
@@ -431,12 +410,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         if (layout_recharge.getVisibility() == View.VISIBLE && isRecharge) {//避免重复刷新UI导致异常
             return;
         }
-        cleanMapView();
         layout_recharge.setVisibility(View.VISIBLE);
         tv_bottom_recharge.setSelected(isRecharge);
         tv_bottom_recharge_x8.setSelected(isRecharge);
         electricityDrawable.start();
     }
+
 
     @Override
     /**
@@ -478,16 +457,19 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
-                    if (mPresenter.getDevice_type() == 128) {//128只会出现在日规的x800中
+                    if ((mPresenter.getRobotType().equals("a9s") || mPresenter.getRobotType().equals("a8s") ||
+                            mPresenter.getDevice_type() == 128) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
-                                .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task))
+                                .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task)).exchangeButtonColor()
                                 .setOnLeftButtonClck(() -> mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode())).setOnRightButtonClck(() ->
                                 mPresenter.sendToDeviceWithOption(ACSkills.get().enterPauseMode()))
                                 .show(getSupportFragmentManager(), "choose_action");
                     } else {
                         mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
                     }
+                } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {//适配器充电模式不允许启动机器
+                    ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
                 } else if (mPresenter.isLowPowerWorker()) {
                     ToastUtils.showToast(getString(R.string.low_power));
                 } else if (mPresenter.isRandomMode()) {
@@ -507,7 +489,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     showRemoteView();
                 }
                 break;
-            case R.id.ib_virtual_wall_tip://显示虚拟墙提示
+            case R.id.ib_virtual_wall_tip://显示电子墙提示
                 showVirtualWallTip();
                 break;
             case R.id.iv_control_close_x9:
@@ -539,7 +521,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 Intent intent = new Intent(context, ClockingActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_virtual_wall_x9://虚拟墙编辑模式
+            case R.id.tv_virtual_wall_x9://电子墙编辑模式
                 if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
                     showSetWallDialog();
                 } else {
@@ -550,7 +532,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     }
                 }
                 break;
-            case R.id.tv_add_virtual_x9://增加虚拟墙模式
+            case R.id.tv_add_virtual_x9://增加电子墙模式
                 if (mMapView.isInMode(MapView.MODE_ADD_VIRTUAL)) {
                     tv_add_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
@@ -561,7 +543,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     mMapView.setMODE(MapView.MODE_ADD_VIRTUAL);
                 }
                 break;
-            case R.id.tv_delete_virtual_x9://删除虚拟墙模式
+            case R.id.tv_delete_virtual_x9://删除电子墙模式
                 if (mMapView.isInMode(MapView.MODE_DELETE_VIRTUAL)) {
                     tv_delete_virtual.setSelected(false);
                     mMapView.setMODE(MapView.MODE_NONE);
@@ -572,14 +554,14 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     mMapView.setMODE(MapView.MODE_DELETE_VIRTUAL);
                 }
                 break;
-            case R.id.tv_close_virtual_x9://弹出退出虚拟墙的的pop
+            case R.id.tv_close_virtual_x9://弹出退出电子墙的的pop
                 CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
                 if (exitVirtualWallPop == null) {
                     builder.cancelTouchout(false).view(R.layout.pop_virtual_wall).widthDimenRes(R.dimen.dp_315).
                             addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
                                 mMapView.undoAllOperation();
                                 /**
-                                 * 退出虚拟墙编辑模式，相当于撤销所有操作，虚拟墙数据没有变化，无需发送数据到设备端
+                                 * 退出电子墙编辑模式，相当于撤销所有操作，电子墙数据没有变化，无需发送数据到设备端
                                  */
                                 mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
                                 if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
@@ -742,5 +724,18 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void drawBoxMapX8(ArrayList<Integer> pointList) {
         mMapView.drawBoxMapX8(pointList);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
+
     }
 }

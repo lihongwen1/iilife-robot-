@@ -15,15 +15,19 @@
             android:text="@string/main_aty_my_robot"
             android:textStyle="bold" />
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/image_personal"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_22"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_30"
-            android:background="@drawable/n_icon_personal"
-            android:contentDescription="@null" />
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:layout_gravity="center"
+                android:background="@drawable/n_icon_personal"
+                android:contentDescription="@null" />
+        </FrameLayout>
     </RelativeLayout>
 
     <View
@@ -36,11 +40,7 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
+        <com.ilife.iliferobot.view.SlideRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

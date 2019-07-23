@@ -2,16 +2,15 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#f08300</color>
+    <color name="colorAccent">#ff4d00</color>
     <color name="colorTopPressed">#F1F1F1</color>
     <color name="colorTopNormal">#FFFFFF</color>
     <color name="tv_normal">#00bdb5</color>
     <color name="clock_aty_tv_pressed">#cbcbcb</color>
     <color name="clock_aty_tv_unpressed">#00bdb5</color>
 
-    <!--<color name="status_bar_color">#ffffff</color>-->
-    <color name="color_f08300">#f08300</color>
-    <color name="color_f08300_66">#40f08300</color>
+    <color name="color_f08300">#ffff4d00</color>
+    <color name="color_f08300_66">#40ff4d00</color>
     <color name="color_ff1b92e2">#ff1b92e2</color>
     <color name="color_ff">#ffffff</color>
     <color name="color_33">#333333</color>
@@ -48,4 +47,5 @@
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#4c4c4c</color>
     <color name="foregroundColor">#774c4c4c</color>
+    <color name="moka_color">#45362E</color>
 </resources>

@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <com.ilife.iliferobot.view.RegularTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/text_tip1"
             style="@style/Text_18sp_33"
             android:layout_height="wrap_content"
@@ -29,8 +29,8 @@
         <com.ilife.iliferobot.view.GifView
             android:layout_marginTop="@dimen/dp_8"
             android:id="@+id/gif_open_key"
-            android:layout_width="@dimen/dp_220"
-            android:layout_height="@dimen/dp_220"
+            android:layout_width="600px"
+            android:layout_height="600px"
             app:gif="@drawable/gif_open_key" />
     </LinearLayout>
 
@@ -43,7 +43,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.ilife.iliferobot.view.RegularTextView
+        <com.ilife.iliferobot.view.MediumTextView
             android:id="@+id/text_tip2"
             style="@style/Text_18sp_33"
             android:layout_height="wrap_content"
@@ -53,10 +53,10 @@
             android:text="@string/ap_guide_aty_tip2_x900" />
 
         <com.ilife.iliferobot.view.GifView
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
             android:id="@+id/gif_click_wifi"
-            android:layout_width="@dimen/dp_220"
-            android:layout_height="@dimen/dp_220"
+            android:layout_width="600px"
+            android:layout_height="600px"
             app:gif="@drawable/gif_click_wifi" />
     </LinearLayout>
 

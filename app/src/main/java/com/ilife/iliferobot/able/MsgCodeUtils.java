@@ -13,7 +13,7 @@ public class MsgCodeUtils {
     public static final int RestLifeTime = 0x4B;
     public static final int NoDisturbing = 0x4E;
     public static final int FactoryReset = 0x4F;
-    public static final int SetVirtualWall = 0x53;//下发虚拟墙
+    public static final int SetVirtualWall = 0x53;//下发电子墙
     public static final int CheckMachineInfo = 0x54;//获取主机固件信息
     public static final int DeviceUpdate = 0x55;//下发升级
     //下发预约指令
@@ -27,7 +27,7 @@ public class MsgCodeUtils {
     public static final int MatConditions = 0x44;
     public static final int ClockInfos = 0x42;
     public static final int HistoryRecord = 0x43;
-    public static final int QueryVirtualWall = 0x45;//查询虚拟墙
+    public static final int QueryVirtualWall = 0x45;//查询电子墙
 
     //模式
     public static final int STATUE_POINT = 0x05;

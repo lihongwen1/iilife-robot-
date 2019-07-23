@@ -69,6 +69,7 @@ public class ACSkills {
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_PLANNING});
         return mAcDevMsg;
     }
+
     public ACDeviceMsg enterRandomMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_RANDOM});
@@ -78,6 +79,12 @@ public class ACSkills {
     public ACDeviceMsg enterRechargeMode() {
         mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_RECHARGE});
+        return mAcDevMsg;
+    }
+
+    public ACDeviceMsg enterTemporaryPoint() {
+        mAcDevMsg.setCode(MsgCodeUtils.WorkMode);
+        mAcDevMsg.setContent(new byte[]{MsgCodeUtils.STATUE_TEMPORARY_POINT});
         return mAcDevMsg;
     }
 
@@ -117,6 +124,7 @@ public class ACSkills {
         mAcDevMsg.setContent(new byte[]{MsgCodeUtils.CLEANNING_CLEANING_MAX, (byte) mopForce});
         return mAcDevMsg;
     }
+
     public ACDeviceMsg upLoadRealMsg(int upLoad) {
         mAcDevMsg.setCode(MsgCodeUtils.UPLOADMSG);
         mAcDevMsg.setContent(new byte[]{(byte) upLoad});

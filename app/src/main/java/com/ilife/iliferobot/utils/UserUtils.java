@@ -67,7 +67,7 @@ public class UserUtils {
 
     public static boolean checkPassword(String pw) {
 //        String str = "^[A-Z0-9a-z]{6,18}$";
-        String str = "[a-z0-9A-Z`~!@#$%^&*()+=_|\\-{\\\\}'\":;,\\[\\].<>/?¥…]{6,12}";
+        String str = "[a-z0-9A-Z`~!@#$%^&*()+=_|\\-{\\\\}'\":;,\\[\\].<>/?¥…]{6,18}";
 //        String str = "^{6,18}$";
         Pattern p = Pattern.compile(str);
         Matcher m = p.matcher(pw);

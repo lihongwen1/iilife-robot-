@@ -112,9 +112,7 @@ OtaUpdateActivity extends BackBaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentValue();
-        initView();
         showLoadingDialog();
-        initData();
         startTimer();
         MyLogger.e(TAG, "onCreate==:");
     }
@@ -135,7 +133,7 @@ OtaUpdateActivity extends BackBaseActivity {
         title.setText(R.string.setting_aty_ota_update);
     }
 
-    private void initData() {
+    public void initData() {
         physicalDeviceId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
     }
@@ -176,6 +174,7 @@ OtaUpdateActivity extends BackBaseActivity {
                                 fl_version.setVisibility(View.VISIBLE);
                                 tv_current.setText(getResources().getString(R.string.setting_ota_current_version, curVersion));
                                 tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, curVersion));
+                                btn_update.setText(getResources().getString(R.string.ota_aty_latest_ver));
                                 isUpdating = false;
                                 break;
                             case 0x01://有更新

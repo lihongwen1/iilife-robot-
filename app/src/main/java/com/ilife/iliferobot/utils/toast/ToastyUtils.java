@@ -43,7 +43,7 @@ final class ToastyUtils {
     }
 
     static Drawable tint9PatchDrawableFrame(@NonNull Context context, @ColorInt int tintColor) {
-        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_frame);
+        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_bg);
         return tintIcon(toastDrawable, tintColor);
     }
 

@@ -13,6 +13,7 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -41,8 +42,22 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         if (!isPhoneUseful) {
             return;
         }
+        int templateId;
+        if (Utils.isIlife()) {
+            if (UserUtils.isPhone(mView.getPhone())) {
+                templateId = 1;
+            } else {
+                if (Utils.isChinaEnvironment()) {
+                    templateId = 3;
+                } else {
+                    templateId = 2;
+                }
+            }
+        } else {//ZACO
+            templateId = 1;
+        }
         verCodeDisposable = checkPhone().andThen(Completable.create(completableEmitter ->
-                acAccountMgr.sendVerifyCode(mView.getPhone(), 1, new VoidCallback() {
+                acAccountMgr.sendVerifyCode(mView.getPhone(), templateId, new VoidCallback() {
                     @Override
                     public void success() {
                         completableEmitter.onComplete();
@@ -65,15 +80,15 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public Completable countDown() {
-        return Completable.fromPublisher(Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
+        return Completable.fromPublisher(Flowable.intervalRange(0, 59, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(aLong -> mView.setCountDownValue(Long.toString(60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).doOnSubscribe(subscription -> mView.onStartCountDown()));
+                .doOnNext(aLong -> mView.setCountDownValue((60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).doOnSubscribe(subscription -> mView.onStartCountDown()));
     }
 
     @Override
     public void isMobileUseful() {
         if (mView.getPhone().isEmpty()) {
-            ToastUtils.showToast(Utils.getString(R.string.regist_wrong_account));
+            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
             isPhoneUseful = false;
             return;
         }

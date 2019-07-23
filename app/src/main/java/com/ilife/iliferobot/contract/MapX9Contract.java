@@ -12,8 +12,9 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
+        void setDevName();
         void showRemoteView();
-        void updateSlam(int xMin, int xMax, int yMin, int yMax);
+        void updateSlam(int xMin, int xMax, int yMin, int yMaxm,int maxscare);
 
         void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
 
@@ -41,14 +42,12 @@ public interface MapX9Contract {
         void showBottomView();
         void updateOperationViewStatue(int surStatu);
         void showErrorPopup(int errorCode);
-        void sendHandler(int msgCode);
         void drawVirtualWall(List<int []> existPointList);
         void updateAlong(boolean isAlong);
         void updatePoint(boolean isPoint);
         void updateRecharge(boolean isRecharge);
         void updateMaxButton(boolean isMaXMode);
         void setCurrentBottom(int bottom);
-        void setTvUseStatusVisible(boolean isVisible);
         void drawBoxMapX8(ArrayList<Integer> pointList);
         void showVirtualWallTip();
     }
@@ -68,7 +67,6 @@ public interface MapX9Contract {
 
         void subscribeRealTimeMap();
 
-        void getAppointmentMsg();
 
         void getDevStatus();
 
@@ -96,6 +94,13 @@ public interface MapX9Contract {
          void reverseMaxMode();
          boolean isRandomMode();
          boolean isLowPowerWorker();
+        /**
+         * 是否绘制map
+         * @return
+         */
+         boolean isDrawMap();
+
+         void updateSlamX8(ArrayList<Integer> src,int offset);
     }
 
 }

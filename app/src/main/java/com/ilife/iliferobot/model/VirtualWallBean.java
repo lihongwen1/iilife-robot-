@@ -3,7 +3,7 @@ package com.ilife.iliferobot.model;
 import android.graphics.RectF;
 
 /**
- * 虚拟墙数据结构类
+ * 电子墙数据结构类
  */
 public class VirtualWallBean {
     private  int number;

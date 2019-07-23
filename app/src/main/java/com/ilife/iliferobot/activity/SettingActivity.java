@@ -43,9 +43,11 @@ import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -158,7 +160,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
     public void initView() {
         context = this;
-        iv_find_robot=findViewById(R.id.iv_find_robot);
+        iv_find_robot = findViewById(R.id.iv_find_robot);
         imageView = (ImageView) findViewById(R.id.imageView);
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
@@ -256,6 +258,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         } else if (subdomain.equals(Constants.subdomain_a8s)) {
             tv_type.setText(getString(R.string.setting_aty_type_a8s));
             image_product.setImageResource(R.drawable.n_a8s);
+        } else if (subdomain.equals(Constants.subdomain_v85)) {
+            tv_type.setText(getString(R.string.setting_aty_type_v85));
+            image_product.setImageResource(R.drawable.n_v85);
         } else {
             rl_mode.setVisibility(View.GONE);
             tv_type.setText(getString(R.string.setting_aty_type_x800));
@@ -267,7 +272,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
             rl_mode.setVisibility(View.VISIBLE);
         }
-        if (subdomain.equals(Constants.subdomain_a8s)||subdomain.equals(Constants.subdomain_a9s)||subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
+        if (subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
             rl_voice.setVisibility(View.VISIBLE);
         }
 
@@ -456,57 +461,44 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     }
 
     private void showRenameDialog() {
-        View v = inflater.inflate(R.layout.layout_name_dialog, null);
-        final EditText et_name = (EditText) v.findViewById(R.id.et_name);
-        UserUtils.setEmojiFilter(et_name);
         name = tv_name.getText().toString();
-        TextView title = v.findViewById(R.id.tv_title);
-        title.setText(name);
-        v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialogUtils.hidden(alterDialog);
-            }
-        });
-        v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = et_name.getText().toString();
-                if (TextUtils.isEmpty(name)) {
-                    ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
-                    return;
-                }
-                AlertDialogUtils.hidden(alterDialog);
-                DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
-            }
-        });
-        int width = (int) getResources().getDimension(R.dimen.dp_315);
-        int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
+        UniversalDialog universalDialog = new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setCanEdit(true).setTitle(name).setHintTip(Utils.getString(R.string.setting_aty_hit))
+                .setOnRightButtonWithValueClck(value -> {
+                    name = value;
+                    if (TextUtils.isEmpty(name)) {
+                        ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
+                        return;
+                    }
+                    int maxLength;
+                    if (Utils.isChinaEnvironment()) {
+                        maxLength = 12;
+                    } else {
+                        maxLength = 30;
+                    }
+                    if (name.length() > maxLength) {
+                        ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
+                        return;
+                    }
+                    universalDialog.dismiss();
+                    DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                }).show(getSupportFragmentManager(), "rename");
     }
 
 
     private void showResetDialog() {
-        View v = inflater.inflate(R.layout.layout_reset_dialog, null);
-        v.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+        UniversalDialog universalDialog = new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.setting_aty_confirm_reset))
+                .setHintTip(Utils.getString(R.string.setting_aty_reset_hint)).setOnRightButtonClck(new UniversalDialog.OnRightButtonClck() {
             @Override
-            public void onClick(View v) {
-                AlertDialogUtils.hidden(alterDialog);
-            }
-        });
-        v.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick() {
                 AlertDialogUtils.hidden(alterDialog);
                 dialog.show();
                 acDeviceMsg.setCode(MsgCodeUtils.FactoryReset);
                 acDeviceMsg.setContent(new byte[]{0x01});
                 sendToDeviceFactoryReset(acDeviceMsg, physicalId);
             }
-        });
-        int width = (int) getResources().getDimension(R.dimen.dp_300);
-        int height = (int) getResources().getDimension(R.dimen.dp_140);
-        alterDialog = AlertDialogUtils.showDialogNoCancel(context, v, width, height);
+        }).show(getSupportFragmentManager(), "reset");
     }
 
     public void sendToDeviceWithOption(ACDeviceMsg deviceMsg, final String physicalDeviceId) {

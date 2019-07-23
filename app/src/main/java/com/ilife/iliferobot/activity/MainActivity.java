@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,24 +19,25 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.adapter.RobotListAdapter;
 import com.ilife.iliferobot.base.BaseActivity;
+import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.contract.MainContract;
 import com.ilife.iliferobot.presenter.MainPresenter;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.adapter.DevListAdapter;
-import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,14 +62,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @BindView(R.id.tv_notice)
     TextView tv_notice;
     @BindView(R.id.image_personal)
-    ImageView image_personal;
+    FrameLayout image_personal;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    SlideRecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    DevListAdapter adapter;
+    BaseQuickAdapter adapter;
     Dialog loadingDialog;
-    LinearLayoutManager llm;
     @BindView(R.id.rootView)
     LinearLayout rootView;
     @BindView(R.id.layout_no_device)
@@ -84,6 +83,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                     if (refreshLayout != null) {
                         refreshLayout.finishRefresh();
                     }
+                    DialogUtils.closeDialog(loadingDialog);
                     break;
             }
             return true;
@@ -112,72 +112,84 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         activity = this;
         context = this;
         rect = new Rect();
-        llm = new LinearLayoutManager(context);
         loadingDialog = DialogUtils.createLoadingDialog_(context);
         mAcUserDevices = new ArrayList<>();
-        recyclerView.setLayoutManager(llm);
-        adapter = new DevListAdapter(context, mAcUserDevices);
+        bt_add.setOnClickListener(this);
+        initAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                adapter.setScrollingMenu(null);
+        image_personal.setOnClickListener(this);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this));
+        refreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.getDeviceList());
+
+    }
+
+    private void initAdapter() {
+        adapter = new RobotListAdapter(context, mAcUserDevices);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            if (recyclerView.closeMenu()){
+                return;
+            }
+            if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
+                String subdomain = mAcUserDevices.get(position).getSubDomain();
+                SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
+                SpUtils.saveLong(context, KEY_DEVICEID, mAcUserDevices.get(position).getDeviceId());
+                SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
+                SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
+                SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
+                if (subdomain.equals(Constants.subdomain_x900)) {
+                    Intent i = new Intent(context, MapActivity_X9_.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(context, MapActivity_X8_.class);
+                    startActivity(i);
+                }
+            } else {
+                showOfflineDialog();
             }
         });
-
-        bt_add.setOnClickListener(this);
-        image_personal.setOnClickListener(this);
-        refreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.getDeviceList());
-        adapter.setOnClickListener(new DevListAdapter.OnClickListener() {
-            @Override
-            public void onMenuClick(final int position) {
-                if (unbindDialog == null) {
-                    unbindDialog = new UniversalDialog();
-                    unbindDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.main_aty_unbind_device))
-                            .setHintTip(Utils.getString(R.string.main_aty_unbind_device_tip)).setOnRightButtonClck(() -> {
-                        loadingDialog.show();
-                        AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
-                            @Override
-                            public void success() {
-                                mAcUserDevices.remove(position);
-                                adapter.notifyDataSetChanged();
-                                if (mAcUserDevices.size() == 0) {
-                                    showButton();
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.item_delete:
+                    recyclerView.closeMenu();
+                    if (unbindDialog == null) {
+                        unbindDialog = new UniversalDialog();
+                        unbindDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.main_aty_unbind_device))
+                                .setHintTip(Utils.getString(R.string.main_aty_unbind_device_tip)).setOnRightButtonClck(() -> {
+                            loadingDialog.show();
+                            AC.bindMgr().unbindDevice(mAcUserDevices.get(position).getSubDomain(), mAcUserDevices.get(position).deviceId, new VoidCallback() {
+                                @Override
+                                public void success() {
+                                    mAcUserDevices.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                    if (mAcUserDevices.size() == 0) {
+                                        showButton();
+                                    }
+                                    DialogUtils.closeDialog(loadingDialog);
                                 }
-                                DialogUtils.closeDialog(loadingDialog);
-                            }
 
-                            @Override
-                            public void error(ACException e) {
-                                ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
-                                DialogUtils.closeDialog(loadingDialog);
-                            }
+                                @Override
+                                public void error(ACException e) {
+                                    ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
+                                    DialogUtils.closeDialog(loadingDialog);
+                                }
+                            });
                         });
-                    });
-                }
-                unbindDialog.show(getSupportFragmentManager(), "unbind");
-            }
-
-            @Override
-            public void onContentClick(int position) {
-                if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
-                    String subdomain = mAcUserDevices.get(position).getSubDomain();
-                    SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
-                    SpUtils.saveLong(context, KEY_DEVICEID, mAcUserDevices.get(position).getDeviceId());
-                    SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
-                    SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
-                    SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-                    if (subdomain.equals(Constants.subdomain_x900)) {
-                        Intent i = new Intent(context, MapActivity_X9_.class);
-                        startActivity(i);
-                    } else {
-                        Intent i = new Intent(context, MapActivity_X8_.class);
-                        startActivity(i);
                     }
-                } else {
-                    showOfflineDialog();
-                }
+                    unbindDialog.show(getSupportFragmentManager(), "unbind");
+                    break;
+
+                case R.id.iv_add_device:
+                    //TODO 进入选择activity
+                    Intent i;
+                    if (AC.accountMgr().isLogin()) {
+                        i = new Intent(context, SelectActivity_x.class);
+                        context.startActivity(i);
+                    } else {
+                        i = new Intent(context, LoginActivity.class);
+                        context.startActivity(i);
+                    }
+                    break;
             }
         });
     }
@@ -206,6 +218,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         super.onWindowFocusChanged(hasFocus);
     }
 
+    @Override
+    public void loginInvalid() {
+        ToastUtils.showToast(Utils.getString(R.string.login_invalid));
+        startActivity(new Intent(MainActivity.this, QuickLoginActivity.class));
+        finish();
+    }
 
     @Override
     public void updateDeviceList(List<ACUserDevice> acUserDevices) {
@@ -245,21 +263,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void showButton() {
         refreshLayout.setVisibility(View.GONE);
         layout_no_device.setVisibility(View.VISIBLE);
-//        addImage.setVisibility(View.GONE);
-        DialogUtils.closeDialog(loadingDialog);
     }
 
     public void showList() {
         layout_no_device.setVisibility(View.GONE);
         refreshLayout.setVisibility(View.VISIBLE);
         adapter.notifyDataSetChanged();
-        DialogUtils.closeDialog(loadingDialog);
     }
 
     private void showOfflineDialog() {
         UniversalDialog offLineDialog = new UniversalDialog();
         offLineDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.dev_frag_offline))
-                .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dev_frag_ok))
+                .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dialog_del_confirm))
                 .show(getSupportFragmentManager(), "offline");
     }
 
