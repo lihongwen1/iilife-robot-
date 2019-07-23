@@ -269,10 +269,14 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x900)) {
             rl_update.setVisibility(View.VISIBLE);
         }
+        if(subdomain.equals(Constants.subdomain_v85)){
+            rl_mode.setVisibility(View.VISIBLE);
+            rl_record.setVisibility(View.GONE);
+        }
         if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
             rl_mode.setVisibility(View.VISIBLE);
         }
-        if (subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
+        if (subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
             rl_voice.setVisibility(View.VISIBLE);
         }
 
