@@ -1,11 +1,9 @@
 package com.ilife.iliferobot.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,24 +16,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.ACSkills;
+import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.able.DeviceUtils;
-import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.view.CustomPopupWindow;
-import com.ilife.iliferobot.view.MapView;
-import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.MapX9Contract;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
-import com.ilife.iliferobot.able.ACSkills;
-import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.CustomPopupWindow;
+import com.ilife.iliferobot.view.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +40,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -401,16 +396,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         }
     }
 
-    @Override
-    public void updateRecharge(boolean isRecharge) {
-        if (layout_recharge.getVisibility() == View.VISIBLE && isRecharge) {//避免重复刷新UI导致异常
-            return;
-        }
-        layout_recharge.setVisibility(View.VISIBLE);
-        tv_bottom_recharge.setSelected(isRecharge);
-        tv_bottom_recharge_x8.setSelected(isRecharge);
-        electricityDrawable.start();
-    }
 
 
     @Override

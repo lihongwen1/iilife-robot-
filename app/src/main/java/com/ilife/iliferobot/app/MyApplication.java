@@ -40,9 +40,8 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
         configToast();
-        MyLogger.d("MyApplication", getResources().getConfiguration().screenWidthDp + "----" + getResources().getConfiguration().screenHeightDp + "-----" + getResources().getConfiguration().densityDpi);
-        MyLogger.d("MyApplication", BuildConfig.Area + "---");
         instance = (MyApplication) getApplicationContext();
         if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
             AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID);

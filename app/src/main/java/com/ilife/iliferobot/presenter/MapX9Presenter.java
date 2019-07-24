@@ -73,7 +73,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
     private List<int[]> existPointList = new ArrayList<>();
-    boolean isWork, isMaxMode, voiceOpen;
+    boolean isMaxMode, voiceOpen;
 
     /**
      * 实时地图相关
@@ -666,7 +666,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_VOICE_OPEN, voiceOpen);
         }
         mView.clearAll(curStatus);//清空所有布局，以便根据status更新显示布局
-        isWork = isWork(curStatus);
+        boolean isWork = isWork(curStatus);
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
@@ -706,7 +706,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo != 0 && batteryNo <= 6;
+        return batteryNo != 0 && batteryNo <= 6&&(curStatus==MsgCodeUtils.STATUE_SLEEPING||curStatus==MsgCodeUtils.STATUE_WAIT);
     }
 
     /**
@@ -716,7 +716,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     @Override
     public boolean isDrawMap() {
-        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT;
+        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT||
+                (curStatus==MsgCodeUtils.STATUE_RECHARGE&&robotType.equals("X900"));
     }
 
     @Override

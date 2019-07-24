@@ -112,4 +112,17 @@ public class MapActivity_X8_ extends BaseMapActivity {
         tv_start.setSelected(isSelect);
         image_center.setSelected(isSelect);//remote control start button
     }
+
+    @Override
+    public void updateRecharge(boolean isRecharge) {
+        if (layout_recharge.getVisibility() == View.VISIBLE && isRecharge) {//避免重复刷新UI导致异常
+            return;
+        }
+        layout_remote_control.setVisibility(View.GONE);
+        tv_bottom_recharge.setSelected(isRecharge);
+        tv_bottom_recharge_x8.setSelected(isRecharge);
+        layout_recharge.setVisibility(View.VISIBLE);
+        electricityDrawable.start();
+    }
+
 }

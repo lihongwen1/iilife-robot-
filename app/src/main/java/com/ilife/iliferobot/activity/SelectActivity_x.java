@@ -68,7 +68,7 @@ public class SelectActivity_x extends BackBaseActivity {
         if (Utils.isIlife()) {
             robots.add(new CleanningRobot(R.drawable.n_x900, "ILIFE X900", Constants.subdomain_x900, Constants.subdomainId_x900));
             robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE X800", Constants.subdomain_x800, Constants.subdomainId_x800));
-            robots.add(new CleanningRobot(R.drawable.n_x787, "ILIFE X787", Constants.subdomain_x785, Constants.subdomainId_x785));
+            robots.add(new CleanningRobot(R.drawable.n_x787, "ILIFE X787", Constants.subdomain_x787, Constants.subdomainId_x787));
             robots.add(new CleanningRobot(R.drawable.n_x785, "ILIFE X785", Constants.subdomain_x785, Constants.subdomainId_x785));
         } else {
             robots.add(new CleanningRobot(R.drawable.n_a9s, "ZACO A9s", Constants.subdomain_a9s, Constants.subdomaiId_a9s));

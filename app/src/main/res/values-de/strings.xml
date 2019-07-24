@@ -39,6 +39,7 @@
     <string name="ap_guide_aty_tip2_x900">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
     <string name="ap_guide_aty_tip2_a9s">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
     <string name="ap_guide_aty_tip2_x7">Halten Sie die AP-Netzwerkverteilungstaste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie nicht los, bis Sie zwei Summtöne hören. Der Roboter wechselt in den AP-Modus und die WiFi-Anzeige beginnt zu blinken.</string>
+    <string name="ap_guide_aty_tip2_v85">Halten Sie die AP-Netzwerkverteilungstaste 8 Sekunden lang gedrückt, und Sie hören ein Summen. Der Roboter wechselt in den AP-Modus und die WiFi-Anzeige beginnt zu blinken.</string>
     <string name="ap_guide_tip4">Nicht gehört, bitte wiederholen</string>
     <string name="ap_guide_already_open_device">Roboter bereits eingeschaltet</string>
     <string name="ap_guide_already_open_wifi">WiFi-Verbindung bereits aktiviert</string>
@@ -304,5 +305,4 @@
     <string name="login_invalid">Login fehlgeschlagen, erneut versuchen</string>
     <string name="zaco_phone_server_time">Mo. - Fr. 09.00 – 17.00 Uhr</string>
     <string name="start_random_cleaning">"Auto-Modus aktiviert "</string>
-    <string name="ap_guide_aty_tip2_v85">Halten Sie die Taste 8 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
 </resources>

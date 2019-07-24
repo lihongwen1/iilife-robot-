@@ -22,14 +22,14 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
 
     public RobotListAdapter(Context context, @NonNull List<ACUserDevice> data) {
         super(data);
-        addItemType(TYPE_ADD,R.layout.layout_add_image);
-        addItemType(TYPE_ROBOT,R.layout.device_list_item);
+        addItemType(TYPE_ADD, R.layout.layout_add_image);
+        addItemType(TYPE_ROBOT, R.layout.device_list_item);
         this.context = context;
     }
 
     @Override
     public int getItemCount() {
-        return data.size()+1;
+        return data.size() + 1;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
     @Override
     protected void convert(@NonNull BaseViewHolder holder, int position) {
         int type = getItemViewType(position);
-        if (type ==TYPE_ADD) {//添加机器人按钮
+        if (type == TYPE_ADD) {//添加机器人按钮
             holder.addOnClickListener(R.id.iv_add_device);
         } else {
             String subdomain = data.get(position).getSubDomain();
@@ -69,6 +69,9 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     break;
                 case Constants.subdomain_v85:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v85);
+                    break;
+                default:
+                    holder.setImageResource(context, R.id.image_product,R.drawable.n_x800);
                     break;
             }
             holder.setText(R.id.tv_name, TextUtils.isEmpty(data.get(position).getName()) ? data.get(position).physicalDeviceId :

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources><string name="app_name">ILIFE Robot</string>
+<resources>
+    <string name="app_name">ILIFE Robot</string>
     <string name="login_aty_login">ログイン</string>
     <string name="login_aty_email">携帯番号／メールアドレス</string>
     <string name="login_aty_pw">新しいパスワード（6文字以上）</string>
@@ -39,6 +39,7 @@
     <string name="ap_guide_aty_tip2_x900">3秒後、「ドリップ」音が鳴らず、長押しして音声「WiFi接続中」を聞いてから放すと、AP配信モードに入り、WiFiインジケーターが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_a9s">3秒後、「ドリップ」音が鳴らず、長押しして音声「WiFi接続中」を聞いてから放すと、AP配信モードに入り、WiFiインジケーターが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_x7">本機のネットワーク配信ボタンを押したままにすると、3秒後にビープ音が鳴りますが、2回押し続けて放すと、WiFiアイコンが点滅します。</string>
+    <string name="ap_guide_aty_tip2_v85">APネットワーク配布キーを8秒間押し続けると、カチッという音がします。ロボットがAPモードに入り、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_tip4">音声アナウンスがない、この前の手順を再試行してください。</string>
     <string name="ap_guide_already_open_device">ロボットの電源が入っています</string>
     <string name="ap_guide_already_open_wifi">「WiFiに接続する」はすでに発表しました</string>
@@ -304,5 +305,4 @@
     <string name="login_invalid">ログインが失敗しました。もう一度ログインしてください。</string>
     <string name="zaco_phone_server_time">（月曜日〜金曜日：09：00〜17：00）</string>
     <string name="start_random_cleaning">オートモード有効</string>
-    <string name="ap_guide_aty_tip2_v85">8秒後、「ドリップ」音が鳴らず、長押しして音声「WiFi接続中」を聞いてから放すと、AP配信モードに入り、WiFiインジケーターが点滅し始めます。</string>
 </resources>
