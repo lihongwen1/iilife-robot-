@@ -10,6 +10,7 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.StatusBarUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +29,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected long exitTime;
     private Unbinder mUnBinder;
     private Dialog loadingDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Locale.getDefault().getLanguage().equals(MyApplication.getInstance().appInitLanguage)){
-            MyLogger.d("BaseActivity","app language is change");
+        if (!Locale.getDefault().getLanguage().equals(MyApplication.getInstance().appInitLanguage)) {
+            MyLogger.d("BaseActivity", "app language is change");
             MyApplication.getInstance().initTypeface();
         }
 //        hideBottomUIMenu();
@@ -44,19 +46,27 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         setAndroidNativeLightStatusBar();
     }
 
+    /**
+     * SYSTEM_UI_FLAG_LAYOUT_STABLE 白色图标
+     * SYSTEM_UI_FLAG_LIGHT_STATUS_BAR 黑色图标
+     */
     private void setAndroidNativeLightStatusBar() {
         View decor = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
         }
         setNavigationBarColor(R.color.white);
     }
 
-    protected void setNavigationBarColor(int colorId){
+    protected void setNavigationBarColor(int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(colorId));
         }
     }
+
     @Override
     public void attachPresenter() {
 
@@ -65,16 +75,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected boolean isChildPage() {
         return false;
     }
-    protected boolean canGoBack(){
+
+    protected boolean canGoBack() {
         return true;
     }
 
-    protected  void beforeFinish(){
+    protected void beforeFinish() {
 
     }
+
     @Override
     public void onBackPressed() {
-        if (!canGoBack()){//拦截返回事件
+        if (!canGoBack()) {//拦截返回事件
             return;
         }
         if (!isChildPage() && System.currentTimeMillis() - exitTime >= 2000) {
@@ -119,17 +131,20 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
-    protected void showLoadingDialog(){
-        if (loadingDialog==null){
-            loadingDialog= DialogUtils.createLoadingDialog_(this);
+
+    protected void showLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = DialogUtils.createLoadingDialog_(this);
         }
         loadingDialog.show();
     }
-    protected void hideLoadingDialog(){
-        if (loadingDialog!=null&&loadingDialog.isShowing()){
-           DialogUtils.closeDialog(loadingDialog);
+
+    protected void hideLoadingDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            DialogUtils.closeDialog(loadingDialog);
         }
     }
+
     /**
      * 设置布局
      *
@@ -142,5 +157,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     public abstract void initView();
 
-    public void initData(){};
+    public void initData() {
+    }
+
+    ;
 }

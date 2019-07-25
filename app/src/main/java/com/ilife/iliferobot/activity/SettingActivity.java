@@ -404,15 +404,15 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_plan:
                 if (!image_plan.isSelected()) {
-                    SpUtils.saveInt(context, physicalId + KEY_MODE, 0x06);
-                    mode = 0x06;
+                    SpUtils.saveInt(context, physicalId + KEY_MODE, MsgCodeUtils.STATUE_PLANNING);
+                    mode = MsgCodeUtils.STATUE_PLANNING;
                     setMode(mode);
                 }
                 break;
             case R.id.rl_random:
                 if (!image_random.isSelected()) {
-                    SpUtils.saveInt(context, physicalId + KEY_MODE, 0x03);
-                    mode = 0x03;
+                    SpUtils.saveInt(context, physicalId + KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
+                    mode = MsgCodeUtils.STATUE_RANDOM;
                     setMode(mode);
                 }
                 break;

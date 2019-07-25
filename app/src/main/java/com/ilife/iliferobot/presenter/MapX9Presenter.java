@@ -553,7 +553,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void getDevStatus() {
         Single.create((SingleOnSubscribe<ACDeviceMsg>) emitter -> {
-            MyLogger.d(TAG,"gain the device status");
+            MyLogger.d(TAG, "gain the device status");
             ACDeviceMsg msg_devStatus = new ACDeviceMsg(MsgCodeUtils.DevStatus, new byte[]{0x00});
             AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_devStatus,
                     Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
@@ -655,6 +655,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
+        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RANDOM) {//保存清掃模式
+            SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, curStatus);
+        }
         MyLogger.d(TAG, "setStatus----------curStatus" + curStatus);
         if (!isViewAttached()) {
             return;
@@ -706,7 +709,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo != 0 && batteryNo <= 6&&(curStatus==MsgCodeUtils.STATUE_SLEEPING||curStatus==MsgCodeUtils.STATUE_WAIT);
+        return batteryNo != 0 && batteryNo <= 6 && (curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT);
     }
 
     /**
@@ -716,8 +719,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     @Override
     public boolean isDrawMap() {
-        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT||
-                (curStatus==MsgCodeUtils.STATUE_RECHARGE&&robotType.equals("X900"));
+        return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT ||
+                (curStatus == MsgCodeUtils.STATUE_RECHARGE && robotType.equals("X900"));
     }
 
     @Override
@@ -963,7 +966,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterAlongMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("v85")) ||(curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("v85")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -979,7 +982,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("v85")) ||(curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("v85")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
