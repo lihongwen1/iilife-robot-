@@ -40,9 +40,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     private final String TAG = QuickLoginActivity.class.getSimpleName();
     public static final String PHONE = "phone";
     public static final String VER_CODE = "ver_code";
-    long exitTime;
     Context context;
-    public static Activity activity;
     @BindView(R.id.et_verification_code)
     SuperEditText et_verification_code;
     @BindView(R.id.et_phone_number)
@@ -70,7 +68,6 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
 
     @Override
     public void initView() {
-        activity = this;
         context = this;
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         if (!Utils.isIlife()) {
@@ -101,17 +98,6 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 mPresenter.sendVerification();
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() - exitTime >= 2000) {
-            ToastUtils.showToast(context, getString(R.string.main_aty_press_exit));
-            exitTime = System.currentTimeMillis();
-        } else {
-            super.onBackPressed();
-        }
-        MyLogger.e(TAG, "onBackPressed====");
     }
 
     @Override

@@ -95,8 +95,8 @@ public class BindSucActivity extends BackBaseActivity {
         String devName = getString(R.string.bind_suc_sty_robot_name);
         iv_bind_device.setImageResource(image_device);
         et_devName.setText(devName);
-        et_devName.setSelection(devName.length());
-        UserUtils.setInputFilter(et_devName);
+        et_devName.setSelection(et_devName.getText().toString().trim().length());
+        UserUtils.setInputFilter(et_devName,Utils.getInputMaxLength());
 
         listener = new ReNameListener() {
             @Override
@@ -105,7 +105,7 @@ public class BindSucActivity extends BackBaseActivity {
                 SpUtils.saveString(context, "devName", name);
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
-                finish();
+                removeActivity();
             }
 
             @Override
@@ -113,7 +113,7 @@ public class BindSucActivity extends BackBaseActivity {
                 ToastUtils.showToast(context, getString(R.string.bind_aty_reName_fail));
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
-                finish();
+                removeActivity();
             }
         };
     }
@@ -123,14 +123,8 @@ public class BindSucActivity extends BackBaseActivity {
         switch (v.getId()) {
             case R.id.bt_done:
                 name = et_devName.getText().toString().trim();
-                int maxLength;
-                if (Utils.isChinaEnvironment()) {
-                    maxLength=12;
-                } else {
-                    maxLength=30;
-                }
-                if (name.length() > maxLength) {
-                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,maxLength+""));
+                if (name.length() > Utils.getInputMaxLength()) {
+                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,Utils.getInputMaxLength()+""));
                     return;
                 }
                 if (TextUtils.isEmpty(name)) {

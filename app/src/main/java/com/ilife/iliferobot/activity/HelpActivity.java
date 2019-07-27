@@ -381,7 +381,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             public void success() {
                 dialog.dismiss();
                 ToastUtils.showToast(context, getString(R.string.help_aty_commit_suc));
-                finish();
+                removeActivity();
             }
 
             @Override

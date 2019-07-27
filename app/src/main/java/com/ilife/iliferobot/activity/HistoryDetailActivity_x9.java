@@ -124,6 +124,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
 
     private void drawHistoryMapX8() {
         //decode data
+        MyLogger.d(TAG,"1111111111111111111111");
         int length = 0;
         List<Byte> byteList = new ArrayList<>();
         ArrayList<Integer> pointList = new ArrayList<>();
@@ -167,6 +168,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
        if (pointList.size()<2){
            return;
        }
+        MyLogger.d(TAG,"222222222222222222222222222");
         int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
         int x, y;
         for (int i = 1; i < pointList.size(); i += 2) {
@@ -185,6 +187,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 maxY = y;
             }
         }
+        MyLogger.d(TAG,"333333333333333333333333         "+pointList.size());
         mapView.updateSlam(minX, maxX, minY, maxY, 15);
         mapView.drawBoxMapX8(pointList);
 

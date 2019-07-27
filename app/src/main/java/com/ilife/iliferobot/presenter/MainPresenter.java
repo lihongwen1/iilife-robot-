@@ -23,12 +23,17 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         AC.bindMgr().listDevicesWithStatus(new PayloadCallback<List<ACUserDevice>>() {
             @Override
             public void success(List<ACUserDevice> acUserDevices) {
-                mView.updateDeviceList(acUserDevices);
-                mView.setRefreshOver();
+                if (isViewAttached()) {
+                    mView.updateDeviceList(acUserDevices);
+                    mView.setRefreshOver();
+                }
             }
 
             @Override
             public void error(ACException e) {
+                if (!isViewAttached()) {
+                    return;
+                }
                 if (e.getErrorCode() == 1993) {
                     ToastUtils.showToast(Utils.getString(R.string.login_aty_timeout));
                     mView.setRefreshOver();
@@ -38,6 +43,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                         public void success(ACUserInfo acUserInfo) {
                             getDeviceList();
                         }
+
                         @Override
                         public void error(ACException e) {
                             mView.loginInvalid();

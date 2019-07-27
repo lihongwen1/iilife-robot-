@@ -181,18 +181,29 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     /**
      * x900 slam map
      * x800 history road
+     * 数据处理时间过久,大量数据处理
      */
     @Override
     public void getRealTimeMap() {
-        if (!isViewAttached()) {//page destroyed
+        if (!isViewAttached()) {//page destroyedm
             return;
         }
-        final ACMsg req = new ACMsg();
-        req.setName("searchCleanRealTime");
-        req.put("device_id", deviceId);
+        MyLogger.d(TAG, "getRealTimeMap-------------------------------");
+        ACMsg req;
+        if (robotType.equals("X900")) {
+            req = new ACMsg();
+            req.setName("searchCleanRealTime");
+            req.put("device_id", deviceId);
+        } else {
+            req = new ACMsg();
+            req.setName("searchCleanRealTimeMore");
+            req.put("device_id", deviceId);
+            req.put("pageNo", pageNo);
+        }
         AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
+                MyLogger.d(TAG, "getRealTimeMap-------------success------------------");
                 if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
                     return;
                 }
@@ -221,6 +232,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         ArrayList<ACObject> data = resp.get("data");
                         if (data == null || data.size() == 0) {
                             e.onError(new Throwable("data is null"));
+                        } else if (data.size() == 1000) {
+                            pageNo++;
+                            getRealTimeMap();//请求下一页数据
                         } else {
                             for (int i = 0; i < data.size(); i++) {
                                 parseRealTimeMapX8(data.get(i).getString("clean_data"));
@@ -255,6 +269,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             @Override
             public void error(ACException e) {
                 // TODO 需处理当历史地图请求失败时，需重新请求
+                getRealTimeMap();
                 MyLogger.e(TAG, "getRealTimeMap e = " + e.toString());
             }
         });
@@ -286,11 +301,18 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateSlam(minX, maxX, minY, maxY, 15);
     }
 
+    private int pageNo = 1;// 900 800等机器分页请求历史地图
+
+    /**
+     * x900获取历史地图
+     * 考虑多线程同步问题
+     */
     @Override
     public void getHistoryRoad() {
-        final ACMsg req = new ACMsg();
+        ACMsg req = new ACMsg();
         req.setName("searchCleanRoadDataMore");
         req.put("device_id", deviceId);
+        req.put("pageNo", pageNo);
         AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg acMsg) {
@@ -298,47 +320,60 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     return;
                 }
                 isGetHistory = true;
-                MyLogger.d(TAG, "getHistoryRoad()-----------");
                 ArrayList<ACObject> objects = acMsg.get("data");
-                if (objects != null && objects.size() > 0) {
-                    for (int i = 0; i < objects.size(); i++) {
-                        ACObject acObject = objects.get(i);
-                        String cleanData = acObject.getString("clean_data");
-                        byte[] history_bytes = Base64.decode(cleanData, Base64.DEFAULT);
-                        if (history_bytes.length > 0) {
-                            if (history_bytes.length == 6) {
-                                //清除路径
-                            } else {
-                                if ((history_bytes.length - 2) % 4 == 0) {
-                                    if (historyRoadList != null && historyRoadList.size() > 0) {
-                                        historyRoadList.add(400);
-                                        historyRoadList.add(400);
-                                    }
-                                    for (int j = 2; j < history_bytes.length; j += 4) {
-                                        int pointX = DataUtils.bytesToInt(new byte[]{history_bytes[j], history_bytes[j + 1]}, 0);
-                                        int pointY = DataUtils.bytesToInt(new byte[]{history_bytes[j + 2], history_bytes[j + 3]}, 0);
-                                        historyRoadList.add((pointX * 224) / 100 + 750);
-                                        historyRoadList.add((pointY * 224) / 100 + 750);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
-                    if (isDrawMap()) {
-                        mView.drawSlamMap(slamBytes);
-                        mView.drawRoadMap(realTimePoints, historyRoadList);
-                        mView.drawObstacle();
-                    }
+                if (objects == null || objects.size() == 0) {
+                    return;
                 }
+                MyLogger.d(TAG, "getHistoryRoad()-----------" + objects.size());
+                if (objects.size() == 1000) {
+                    pageNo++;
+                    getHistoryRoad();
+                }
+                parseHistoryX9(objects);
             }
 
             @Override
             public void error(ACException e) {
-
+                 getHistoryRoad();
             }
         });
     }
+
+
+    private void parseHistoryX9(ArrayList<ACObject> objects) {
+        if (objects != null && objects.size() > 0) {
+            for (int i = 0; i < objects.size(); i++) {
+                ACObject acObject = objects.get(i);
+                String cleanData = acObject.getString("clean_data");
+                byte[] history_bytes = Base64.decode(cleanData, Base64.DEFAULT);
+                if (history_bytes.length > 0) {
+                    if (history_bytes.length == 6) {
+                        //清除路径
+                    } else {
+                        if ((history_bytes.length - 2) % 4 == 0) {
+                            if (historyRoadList != null && historyRoadList.size() > 0) {
+                                historyRoadList.add(400);
+                                historyRoadList.add(400);
+                            }
+                            for (int j = 2; j < history_bytes.length; j += 4) {
+                                int pointX = DataUtils.bytesToInt(new byte[]{history_bytes[j], history_bytes[j + 1]}, 0);
+                                int pointY = DataUtils.bytesToInt(new byte[]{history_bytes[j + 2], history_bytes[j + 3]}, 0);
+                                historyRoadList.add((pointX * 224) / 100 + 750);
+                                historyRoadList.add((pointY * 224) / 100 + 750);
+                            }
+                        }
+                    }
+                }
+            }
+            //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+            if (isDrawMap()) {
+                mView.drawSlamMap(slamBytes);
+                mView.drawRoadMap(realTimePoints, historyRoadList);
+                mView.drawObstacle();
+            }
+        }
+    }
+
 
     /**
      * //TODO 电子墙实时更新

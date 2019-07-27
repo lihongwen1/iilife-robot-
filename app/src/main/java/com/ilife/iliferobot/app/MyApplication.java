@@ -1,9 +1,11 @@
 package com.ilife.iliferobot.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 
 import com.accloud.cloudservice.AC;
+import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.utils.LanguageUtils;
 import com.ilife.iliferobot.utils.MyLogger;
@@ -18,6 +20,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.multidex.MultiDexApplication;
@@ -30,17 +35,19 @@ import androidx.multidex.MultiDexApplication;
 public class MyApplication extends MultiDexApplication {
     private final String TAG = MyApplication.class.getSimpleName();
     private static MyApplication instance;
+    private List<ACUserDevice> mAcUserDevices;
     public String appInitLanguage;
     public Typeface tf_light;
     public Typeface tf_regular;
     public Typeface tf_robot_regular;
     public Typeface avantGard;
     public Typeface tf_medium;
+    private List<Activity> activities;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        activities = new ArrayList<>();
         configToast();
         instance = (MyApplication) getApplicationContext();
         if (BuildConfig.environment.equalsIgnoreCase("product")) {//生产环境
@@ -79,7 +86,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     public void initTypeface() {
-        appInitLanguage= LanguageUtils.getDefaultLanguage();
+        appInitLanguage = LanguageUtils.getDefaultLanguage();
         if (Utils.isChineseLanguage()) {
             tf_light = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNLight.ttf");
             tf_regular = Typeface.createFromAsset(getAssets(), "fonts/SourceHanSansCNRegular.ttf");
@@ -137,6 +144,79 @@ public class MyApplication extends MultiDexApplication {
             mHiddenApiWarningShown.setBoolean(activityThread, true);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<ACUserDevice> getmAcUserDevices() {
+        if (mAcUserDevices == null) {
+            mAcUserDevices = new ArrayList<>();
+        }
+        return mAcUserDevices;
+    }
+
+    public void setmAcUserDevices(List<ACUserDevice> devices) {
+        if (mAcUserDevices == null) {
+            mAcUserDevices = new ArrayList<>();
+        }
+        mAcUserDevices.clear();
+        mAcUserDevices.addAll(devices);
+    }
+
+    public void clernmAcUserDevices() {
+        if (mAcUserDevices != null) {
+            mAcUserDevices.clear();
+        }
+    }
+
+    /**
+     * 添加Activity
+     */
+    public void addActivity_(Activity activity) {
+        if (!activities.contains(activity)) {
+            activities.add(activity);//把当前Activity添加到集合中
+        }
+    }
+
+    /**
+     * 销毁单个Activity
+     */
+    public void removeActivity_(Activity activity) {
+        if (activities.contains(activity)) {
+            activities.remove(activity);//从集合中移除
+            MyLogger.d("销毁页面", "页面：  " + activity.getClass().getSimpleName());
+            activity.finish();//销毁当前Activity
+        }
+    }
+
+
+    /**
+     * 销毁所有的Activity
+     */
+    public void removeALLActivity_() {
+        Iterator<Activity> iterator = activities.iterator();
+        Activity activity;
+        while (iterator.hasNext()) {
+            activity = iterator.next();
+            MyLogger.d("销毁页面", "页面：  " + activity.getClass().getSimpleName());
+            iterator.remove();
+            activity.finish();
+        }
+    }
+
+    /**
+     * 销毁所有的Activity
+     */
+    public void removeALLActivityExclude(Activity excludeActivity) {
+        Iterator<Activity> iterator = activities.iterator();
+        Activity activity;
+        while (iterator.hasNext()) {
+            activity = iterator.next();
+            if (activity == excludeActivity) {
+                continue;
+            }
+            MyLogger.d("销毁页面", "页面：  " + activity.getClass().getSimpleName());
+            iterator.remove();
+            activity.finish();
         }
     }
 }

@@ -38,7 +38,7 @@ public class BindFailActivity extends BackBaseActivity {
             Constants.IS_FIRST_AP = false;
             Intent intent = new Intent(this, FirstApActivity.class);
             startActivity(intent);
-            finish();
+            removeActivity();
         }
     }
 }

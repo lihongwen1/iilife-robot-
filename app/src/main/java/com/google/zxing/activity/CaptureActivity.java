@@ -263,7 +263,7 @@ public class CaptureActivity extends BackBaseActivity implements Callback {
             resultIntent.putExtras(bundle);
             this.setResult(RESULT_CODE_QR_SCAN, resultIntent);
         }
-        CaptureActivity.this.finish();
+        removeActivity();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.UserUtils;
+import com.ilife.iliferobot.utils.Utils;
 
 
 public class UniversalDialog extends DialogFragment {
@@ -86,7 +87,7 @@ public class UniversalDialog extends DialogFragment {
             et_hint_tip.setHint(hintTip);
         }
         if (canEdit) {
-            UserUtils.setEmojiFilter(et_hint_tip);
+            UserUtils.setInputFilter(et_hint_tip, Utils.getInputMaxLength());
             et_hint_tip.setEnabled(true);
             et_hint_tip.setBackground(getResources().getDrawable(R.drawable.shape_edittext_bg));
         }

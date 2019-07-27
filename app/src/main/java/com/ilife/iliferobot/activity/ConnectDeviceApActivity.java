@@ -44,10 +44,10 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
                 if (TextUtils.isEmpty(ap_ssid) || !ap_ssid.startsWith("Robot")) {
                     ToastUtils.showToast(this, getString(R.string.third_ap_aty_port_));
                 } else {
-                    finish();
                     Intent intent=new Intent(this, ApWifiActivity.class);
                     intent.putExtra(ApWifiActivity.EXTAR_ROBOT_SSID,ap_ssid);
                     startActivity(intent);
+                    removeActivity();
                 }
                 break;
             case R.id.tv_set:

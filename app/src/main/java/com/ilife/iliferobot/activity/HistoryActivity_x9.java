@@ -56,8 +56,6 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
-        initData();
         getHistoryRecord();
     }
 
@@ -99,7 +97,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_back:
-                finish();
+                removeActivity();
                 break;
         }
     }

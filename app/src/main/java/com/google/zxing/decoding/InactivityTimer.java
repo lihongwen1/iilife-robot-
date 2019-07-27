@@ -18,6 +18,8 @@ package com.google.zxing.decoding;
 
 import android.app.Activity;
 
+import com.ilife.iliferobot.base.BaseActivity;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -33,10 +35,10 @@ public final class InactivityTimer {
 
     private final ScheduledExecutorService inactivityTimer =
             Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
-    private final Activity activity;
+    private final BaseActivity activity;
     private ScheduledFuture<?> inactivityFuture = null;
 
-    public InactivityTimer(Activity activity) {
+    public InactivityTimer(BaseActivity activity) {
         this.activity = activity;
         onActivity();
     }

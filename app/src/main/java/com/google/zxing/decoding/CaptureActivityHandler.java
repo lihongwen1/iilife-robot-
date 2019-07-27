@@ -100,7 +100,7 @@ public final class CaptureActivityHandler extends Handler {
             case R.id.return_scan_result:
                 MyLogger.d(TAG, "Got return scan result message");
                 activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
-                activity.finish();
+                activity.removeActivity();
                 break;
             case R.id.launch_product_query:
                 MyLogger.d(TAG, "Got product query message");

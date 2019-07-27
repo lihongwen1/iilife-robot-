@@ -3,6 +3,7 @@ package com.ilife.iliferobot.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.accloud.cloudservice.AC;
 import com.badoo.mobile.util.WeakHandler;
@@ -27,7 +28,7 @@ public class FirstActivity extends BaseActivity {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
             if (mainIntent.hasCategory(Intent.CATEGORY_LAUNCHER) && action.equals(Intent.ACTION_MAIN)) {
-                finish();
+                removeActivity();
             }
         }
     }
@@ -78,7 +79,7 @@ public class FirstActivity extends BaseActivity {
             i = new Intent(this, QuickLoginActivity.class);
         }
         startActivity(i);
-        finish();
+        removeActivity();
     }
 
 }

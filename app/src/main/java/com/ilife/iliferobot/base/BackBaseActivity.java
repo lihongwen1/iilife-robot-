@@ -11,7 +11,7 @@ public abstract  class BackBaseActivity  <T extends BasePresenter>extends BaseAc
     @OnClick(R.id.image_back)
     public void  clickBackBtn(){
         beforeFinish();
-        finish();
+        removeActivity();
     }
 
     @Override

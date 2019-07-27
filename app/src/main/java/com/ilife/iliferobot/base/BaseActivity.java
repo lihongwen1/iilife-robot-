@@ -1,5 +1,6 @@
 package com.ilife.iliferobot.base;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected long exitTime;
     private Unbinder mUnBinder;
     private Dialog loadingDialog;
+    private MyApplication application;
+    private BaseActivity oContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         initView();
         initData();
         setAndroidNativeLightStatusBar();
+        if (application == null) {
+            // 得到Application对象
+            application = (MyApplication) getApplication();
+        }
+        oContext = this;
+        addActivity();
     }
 
     /**
@@ -51,14 +60,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * SYSTEM_UI_FLAG_LIGHT_STATUS_BAR 黑色图标
      */
     private void setAndroidNativeLightStatusBar() {
-        View decor = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decor = getWindow().getDecorView();
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         } else {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-            StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.color_00));
         }
-        setNavigationBarColor(R.color.white);
     }
 
     protected void setNavigationBarColor(int colorId) {
@@ -83,6 +90,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void beforeFinish() {
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -160,5 +169,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public void initData() {
     }
 
-    ;
+
+    // 添加Activity方法
+    public void addActivity() {
+        application.addActivity_(oContext);// 调用myApplication的添加Activity方法
+    }
+
+    //销毁当个Activity方法
+    public void removeActivity() {
+        application.removeActivity_(oContext);// 调用myApplication的销毁单个Activity方法
+    }
+
+    //销毁所有Activity方法
+    public void removeALLActivity() {
+        application.removeALLActivity_();// 调用myApplication的销毁所有Activity方法
+    }
+
+    public void removeAllActivityExclude() {
+        application.removeALLActivityExclude(oContext);
+    }
 }

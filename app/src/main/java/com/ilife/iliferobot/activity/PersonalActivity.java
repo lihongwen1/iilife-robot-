@@ -37,6 +37,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
@@ -269,12 +270,9 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 setOnRightButtonClck(() -> {
                     if (AC.accountMgr().isLogin()) {
                         AC.accountMgr().logout();
-                        if (MainActivity.activity != null) {
-                            MainActivity.activity.finish();
-                        }
                         Intent i = new Intent(context, QuickLoginActivity.class);
                         startActivity(i);
-                        finish();
+                        removeALLActivity();
                     }
                 }).show(getSupportFragmentManager(), "logout");
     }
@@ -287,14 +285,9 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 ToastUtils.showToast(context, getString(R.string.setting_aty_devName_null));
                 return;
             }
-            int maxLength;
-            if (Utils.isChinaEnvironment()) {
-                maxLength = 12;
-            } else {
-                maxLength = 30;
-            }
-            if (name.length() > maxLength) {
-                ToastUtils.showToast(getResources().getString(R.string.name_max_length, maxLength + ""));
+
+            if (name.length() > Utils.getInputMaxLength()) {
+                ToastUtils.showToast(getResources().getString(R.string.name_max_length, Utils.getInputMaxLength() + ""));
                 return;
             }
             if (!name.equals(userName)) {
@@ -386,7 +379,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
 
     public void getOwnerList() {
         mDeviceList.clear();
-        List<ACUserDevice> mAcUserDevices = MainActivity.mAcUserDevices;
+        List<ACUserDevice> mAcUserDevices = MyApplication.getInstance().getmAcUserDevices();
         if (mAcUserDevices != null && mAcUserDevices.size() > 0) {
             for (int i = 0; i < mAcUserDevices.size(); i++) {
                 long ownerId = mAcUserDevices.get(i).getOwner();

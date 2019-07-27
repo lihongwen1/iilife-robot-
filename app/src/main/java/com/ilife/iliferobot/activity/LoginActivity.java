@@ -32,7 +32,6 @@ import butterknife.OnClick;
 public class LoginActivity extends BackBaseActivity<LoginPresenter> implements LoginContract.View {
     private final String TAG = LoginActivity.class.getSimpleName();
     public static final String KEY_EMAIL = "KEY_EMAIL";
-    public static Activity activity;
     Context context;
     @BindView(R.id.image_show)
     ImageView image_show;
@@ -65,7 +64,6 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
     @Override
     public void initView() {
         context = this;
-        activity = this;
         Utils.setTransformationMethod(et_pass,false);
         et_email.addOnInputEndListener(s -> {
               mPresenter.checkMobile(s);
@@ -110,7 +108,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
                 SpUtils.saveString(context,KEY_EMAIL,email);
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
-                finish();
+                removeActivity();
             }
 
             @Override

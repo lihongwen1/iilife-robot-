@@ -36,6 +36,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.ilife.iliferobot.activity.FirstActivity"
+            android:theme="@style/AppTheme.Full"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -68,6 +69,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name="com.ilife.iliferobot.activity.MainActivity"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

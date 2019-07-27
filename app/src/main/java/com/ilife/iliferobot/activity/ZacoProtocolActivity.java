@@ -34,7 +34,7 @@ public class ZacoProtocolActivity extends BackBaseActivity {
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                removeActivity();
             }
         });
         webView = new WebView(this);

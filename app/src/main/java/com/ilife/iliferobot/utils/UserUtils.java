@@ -9,6 +9,10 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.app.MyApplication;
+
+import java.security.PublicKey;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,13 +78,32 @@ public class UserUtils {
         return m.matches();
     }
 
-    public static void setEmojiFilter(EditText editText) {
-        InputFilter inputFilter = new InputFilter() {
-            Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+
+    public static void setInputFilter(EditText editText, int maxLength) {
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength) {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                CharSequence value = super.filter(source, start, end, dest, dstart, dend);
+                if (value == "") {
+                    ToastUtils.showToast(MyApplication.getInstance().getString(R.string.name_max_length,maxLength+""));
+                }
+                return value;
+            }
+        }, emojiFillter()});
+    }
+
+    /**
+     * emoji表情限制输入
+     * @return
+     */
+    public static InputFilter emojiFillter(){
+        InputFilter inputFilter= new InputFilter() {
+            Pattern emoji = Pattern.compile("[\ud83e\udc00-\ud83e\udfff]|[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                     Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
 
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                MyLogger.d("EMOJI",source.toString());
                 Matcher emojiMatcher = emoji.matcher(source);
                 if (emojiMatcher.find()) {
                     return "";
@@ -88,22 +111,11 @@ public class UserUtils {
                 return null;
             }
         };
-        editText.setFilters(new InputFilter[]{inputFilter});
-    }
-
-    public static void setInputFilter(EditText editText) {
-        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
-            if (!isMatch(source.toString())) {
-                return "";
-            }
-            return null;
-        };
-
-        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12), filter});
+        return inputFilter;
     }
 
     public static boolean isMatch(String str) {
-        String regex = "[\\u4E00-\\u9FA5a-z0-9A-Z`~!@#$%^&*()+=-|{\\\\}':;,[\\\\].<>/?¥…]+";
+        String regex = "[\\u4E00-\\u9FA5a-z0-9A-Z`~!@#$%^&*()+=-|{\\\\}':;,[\\\\].<>/?¥…\\s]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();

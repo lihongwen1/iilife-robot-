@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.adapter.RobotListAdapter;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.contract.MainContract;
@@ -46,14 +48,13 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View {
     private final String TAG = MainActivity.class.getSimpleName();
-    public static List<ACUserDevice> mAcUserDevices;
+    private List<ACUserDevice> mAcUserDevices;
     public static final String KEY_PHYCIALID = "KEY_PHYCIALID";
     public static final String KEY_SUBDOMAIN = "KEY_SUBDOMAIN";
     public static final String KEY_DEVICEID = "KEY_DEVICEID";
     public static final String KEY_DEVNAME = "KEY_DEVNAME";
     public static final String KEY_OWNER = "KEY_OWNER";
     final int TAG_REFRESH_OVER = 0x01;
-    public static Activity activity;
     Context context;
     @BindView(R.id.bt_add)
     Button bt_add;
@@ -109,11 +110,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
 
     @Override
     public void initView() {
-        activity = this;
         context = this;
+        mAcUserDevices=MyApplication.getInstance().getmAcUserDevices();
         rect = new Rect();
         loadingDialog = DialogUtils.createLoadingDialog_(context);
-        mAcUserDevices = new ArrayList<>();
         bt_add.setOnClickListener(this);
         initAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -197,12 +197,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @Override
     protected void onResume() {
         super.onResume();
-        if (QuickLoginActivity.activity != null) {
-            QuickLoginActivity.activity.finish();
-        }
-        if (LoginActivity.activity != null) {
-            LoginActivity.activity.finish();
-        }
+        removeAllActivityExclude();
         if (AC.accountMgr().isLogin()) {
             loadingDialog.show();
             mPresenter.getDeviceList();
@@ -222,17 +217,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void loginInvalid() {
         ToastUtils.showToast(Utils.getString(R.string.login_invalid));
         startActivity(new Intent(MainActivity.this, QuickLoginActivity.class));
-        finish();
+        removeActivity();
     }
 
     @Override
     public void updateDeviceList(List<ACUserDevice> acUserDevices) {
-        mAcUserDevices.clear();
         if (acUserDevices.size() == 0) {
             showButton();
         } else {
             MyLogger.e(TAG, "getDeviceList success " + acUserDevices.get(0).getPhysicalDeviceId());
-            mAcUserDevices.addAll(acUserDevices);
+            MyApplication.getInstance().setmAcUserDevices(acUserDevices);
             showList();
         }
     }

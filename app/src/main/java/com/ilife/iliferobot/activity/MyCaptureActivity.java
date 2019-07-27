@@ -29,7 +29,7 @@ public class MyCaptureActivity extends BaseActivity {
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                removeActivity();
             }
         });
     }

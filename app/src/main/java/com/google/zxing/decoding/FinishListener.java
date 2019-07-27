@@ -19,15 +19,17 @@ package com.google.zxing.decoding;
 import android.app.Activity;
 import android.content.DialogInterface;
 
+import com.ilife.iliferobot.base.BaseActivity;
+
 /**
  * Simple listener used to exit the app in a few cases.
  */
 public final class FinishListener
         implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener, Runnable {
 
-    private final Activity activityToFinish;
+    private final BaseActivity activityToFinish;
 
-    public FinishListener(Activity activityToFinish) {
+    public FinishListener(BaseActivity activityToFinish) {
         this.activityToFinish = activityToFinish;
     }
 
@@ -40,7 +42,7 @@ public final class FinishListener
     }
 
     public void run() {
-        activityToFinish.finish();
+        activityToFinish.removeActivity();
     }
 
 }

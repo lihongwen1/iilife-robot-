@@ -46,6 +46,15 @@ public class Utils {
         return lan.equals("zh");
     }
 
+    public static  int getInputMaxLength(){
+        int maxLength;
+        if (Utils.isChinaEnvironment()) {
+            maxLength = 12;
+        } else {
+            maxLength = 30;
+        }
+        return maxLength;
+    }
 
     /**
      *

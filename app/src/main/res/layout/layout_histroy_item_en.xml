@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingStart="@dimen/dp_30"
     android:paddingEnd="@dimen/dp_30">
@@ -36,14 +37,15 @@
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_width="@dimen/dp_48"
             android:layout_height="wrap_content">
 
             <com.ilife.iliferobot.view.MediumTextView
                 android:id="@+id/tv_area"
                 style="@style/Text_14sp_33"
                 android:layout_centerHorizontal="true"
-                android:text="68㎡" />
+                android:text="168㎡" />
 
             <com.ilife.iliferobot.view.LightTextView
                 style="@style/Text_12sp_33"
@@ -60,21 +62,20 @@
             android:background="#FFE2E2E2" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_60"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10">
+            >
 
             <com.ilife.iliferobot.view.MediumTextView
+                android:layout_centerHorizontal="true"
                 android:id="@+id/tv_duration"
                 style="@style/Text_14sp_33"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:text="60min" />
+                android:text="160min" />
 
             <com.ilife.iliferobot.view.LightTextView
+                android:layout_centerHorizontal="true"
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_duration"
-                android:layout_centerHorizontal="true"
                 android:text="@string/setting_aty_duration" />
         </RelativeLayout>
     </LinearLayout>

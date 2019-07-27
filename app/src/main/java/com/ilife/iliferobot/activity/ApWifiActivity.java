@@ -105,7 +105,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         CrashReport.postCatchedException(new Exception(message));
         MyLogger.d(TAG, "配网失败：    " + message);
         startActivity(new Intent(this, BindFailActivity.class));
-        finish();
+        removeActivity();
     }
 
     @Override
