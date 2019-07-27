@@ -25,7 +25,7 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
     TextView tv_title;
     @BindView(R.id.bt_connect)
     Button bt_connect;
-
+    private boolean isFirstOnresume =true;
     @Override
     public int getLayoutId() {
         return R.layout.activity_ap_third;
@@ -59,16 +59,18 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            String ssid = WifiUtils.getSsid(this);
-            if (ssid != null && !ssid.contains("unknown")) {
-                et_ssid.setText(ssid);
-                bt_connect.setClickable(true);
-                bt_connect.setSelected(true);
-
-            }
+    protected void onResume() {
+        super.onResume();
+        String ssid = WifiUtils.getSsid(this);
+        if (ssid != null && !ssid.contains("unknown")) {
+            et_ssid.setText(ssid);
+            bt_connect.setClickable(true);
+            bt_connect.setSelected(true);
+        }
+        if (!isFirstOnresume){
+              bt_connect.callOnClick();
+        }else {
+              isFirstOnresume =false;
         }
     }
 }

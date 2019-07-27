@@ -130,6 +130,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             if (recyclerView.closeMenu()){
                 return;
             }
+            if (!mAcUserDevices.contains(position)){
+                //数据异常，需刷新
+                return;
+            }
             if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
                 String subdomain = mAcUserDevices.get(position).getSubDomain();
                 SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
