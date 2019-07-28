@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             if (recyclerView.closeMenu()){
                 return;
             }
-            if (!mAcUserDevices.contains(position)){
+            if (mAcUserDevices.get(position)==null){
                 //数据异常，需刷新
                 return;
             }
