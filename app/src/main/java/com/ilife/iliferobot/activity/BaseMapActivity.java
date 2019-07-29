@@ -151,6 +151,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     protected void onResume() {
         super.onResume();
+        mPresenter.registerPropReceiver();
         mPresenter.getDevStatus();
         setDevName();
         updateMaxButton(mPresenter.isMaxMode());

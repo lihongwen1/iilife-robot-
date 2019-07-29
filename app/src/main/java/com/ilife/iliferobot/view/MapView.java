@@ -284,7 +284,7 @@ public class MapView extends View {
     }
 
     public void setPaddingBottom(int paddingBottom) {
-        if (paddingBottom == 0) {
+        if (this.paddingBottom == 0) {
             this.paddingBottom = paddingBottom;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }

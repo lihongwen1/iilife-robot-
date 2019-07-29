@@ -5,13 +5,14 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     signingConfigs {
         ilife {
-            storeFile file('D:\\flylin_github_respostories\\qianming\\ilife\\ilife.jks')
+            storeFile file('E:\\as_workspace\\ilife\\keystore_ilife\\ilife.jks')
+//            storeFile file('D:\\flylin_github_respostories\\qianming\\ilife.jks')
             storePassword '123456'
             keyAlias = 'ilife'
             keyPassword '123456'
         }
         zaco {
-            storeFile file('D:\\flylin_github_respostories\\qianming\\zaco\\ilifei.jks')
+            storeFile file('E:\\as_workspace\\ilife\\keystore-zaco\\ilifei.jks')
             storePassword 'ilife123456'
             keyAlias = 'ilife robot'
             keyPassword 'ilife123'
@@ -27,7 +28,7 @@ android {
         versionName '1.1.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        flavorDimensions  "default"
+        flavorDimensions "default"
         signingConfig signingConfigs.debug
     }
     buildTypes {
@@ -35,13 +36,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String","environment","\"product\"")
+            buildConfigField("String", "environment", "\"product\"")
 
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String","environment","\"product\"")
+            buildConfigField("String", "environment", "\"product\"")
         }
     }
     repositories {
@@ -52,11 +53,11 @@ android {
         abortOnError false
     }
     productFlavors {
-        zaco{
+        zaco {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 3
-            versionName = '1.1.6'
+            versionName = '1.1.3'
             signingConfig signingConfigs.zaco
             buildConfigField("int", "Area", "4")
             buildConfigField("String", "BRAND", "\"ZACO\"")
@@ -101,7 +102,7 @@ android {
         _China {
             dimension "default"
             versionCode = 33
-            versionName = '3.1.1'
+            versionName = '3.1.2'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             buildConfigField("int", "Area", "0")
@@ -122,7 +123,7 @@ android {
         }
         /*东南亚*/
         _SouthEast_Asia {
-            dimension  "default"
+            dimension "default"
             versionCode = 32
             versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_as"
@@ -259,5 +260,4 @@ dependencies {
     implementation 'com.github.zackratos.ultimatebar:ultimatebar3:3.1.1'
     implementation files('libs/bugly_crash_release.jar')
     implementation 'com.orhanobut:logger:2.2.0'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
 }

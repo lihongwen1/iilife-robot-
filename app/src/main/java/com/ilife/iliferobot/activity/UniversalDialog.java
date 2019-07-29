@@ -83,13 +83,17 @@ public class UniversalDialog extends DialogFragment {
         if (midTitle != null && !midTitle.isEmpty()) {
             tv_mid_title.setText(midTitle);
         }
-        if (hintTip != null && !hintTip.isEmpty()) {
-            et_hint_tip.setHint(hintTip);
-        }
         if (canEdit) {
+            if (hintTip != null && !hintTip.isEmpty()) {
+                et_hint_tip.setHint(hintTip);
+            }
             UserUtils.setInputFilter(et_hint_tip, Utils.getInputMaxLength());
             et_hint_tip.setEnabled(true);
             et_hint_tip.setBackground(getResources().getDrawable(R.drawable.shape_edittext_bg));
+        } else {
+            if (hintTip != null && !hintTip.isEmpty()) {
+                et_hint_tip.setText(hintTip);
+            }
         }
         if (hintGravity != -1) {
             et_hint_tip.setGravity(hintGravity);

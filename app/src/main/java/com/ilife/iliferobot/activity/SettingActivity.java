@@ -115,22 +115,19 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        propReceiver = new ACDeviceDataMgr.PropertyReceiver() {
-            @Override
-            public void onPropertyReceive(String s, long l, String s1) {
-                if (isDestroyed()) {
-                    return;
-                }
-                Gson gson = new Gson();
-                PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
-                if (info != null) {
-                    int cleanForce = info.getVacuum_cleaning();
-                    int voiceMode = info.getVoice_mode();
-                    isMaxMode = cleanForce == 0x01;
-                    voiceOpen = voiceMode == 0x01;
-                    mopForce = info.getCleaning_cleaning();
-                    setStatus(1, mopForce, isMaxMode, voiceOpen);
-                }
+        propReceiver = (s, l, s1) -> {
+            if (isDestroyed()) {
+                return;
+            }
+            Gson gson = new Gson();
+            PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
+            if (info != null) {
+                int cleanForce = info.getVacuum_cleaning();
+                int voiceMode = info.getVoice_mode();
+                isMaxMode = cleanForce == 0x01;
+                voiceOpen = voiceMode == 0x01;
+                mopForce = info.getCleaning_cleaning();
+                setStatus(1, mopForce, isMaxMode, voiceOpen);
             }
         };
         registerMsg();

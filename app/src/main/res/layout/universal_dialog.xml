@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.ilife.iliferobot.view.MediumTextView
+        <TextView
             android:id="@+id/tv_dialog_title"
             style="@style/Text_16sp_33"
             android:layout_centerHorizontal="true"
@@ -18,7 +18,7 @@
             android:text="@string/open_gps_location"
             android:textStyle="bold" />
 
-        <com.ilife.iliferobot.view.LightEditText
+        <com.ilife.iliferobot.view.MediumEditTextView
             android:enabled="false"
             android:id="@+id/et_dialog_hint_tip"
             style="@style/EditText_14sp_ac"

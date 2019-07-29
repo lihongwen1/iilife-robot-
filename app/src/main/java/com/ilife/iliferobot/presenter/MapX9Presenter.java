@@ -95,7 +95,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
-    private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory, isRegisterPropReceiver;
+    private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
     private boolean haveMap = true;//标记机型是否有地图
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
 
@@ -151,6 +151,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public String getRobotType() {
         return robotType;
     }
+
+
 
 
     /**
@@ -334,7 +336,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void error(ACException e) {
-                 getHistoryRoad();
+                getHistoryRoad();
             }
         });
     }
@@ -631,12 +633,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         mView.cleanMapView();
                     }
                     /**
-                     * 所有设备需调用
-                     */
-                    if (!isRegisterPropReceiver) {
-                        registerPropReceiver();
-                    }
-                    /**
                      * 请求设备相关数据
                      */
                     if (robotType.equals("X900")) {
@@ -664,9 +660,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             @Override
             public void onError(Throwable e) {
                 isGainDevStatus = false;
-                if (!isRegisterPropReceiver) {
-                    registerPropReceiver();
-                }
                 MyLogger.d(TAG, "gain the device status fail ,the reason is: " + e.getMessage());
             }
         });
@@ -722,7 +715,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         switch (curStatus) {
             case MsgCodeUtils.STATUE_RECHARGE://回充
                 mView.updateRecharge(true);
-                mView.setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
+//                mView.setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
                 break;
             case MsgCodeUtils.STATUE_VIRTUAL_EDIT://电子墙编辑模式
                 mView.showVirtualEdit();
@@ -842,13 +835,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             initPropReceiver();
                         }
                         AC.deviceDataMgr().registerPropertyReceiver(propertyReceiver);
-                        isRegisterPropReceiver = true;
                         MyLogger.d(TAG, "注册状态监听成功---------------------");
                     }
 
                     @Override
                     public void error(ACException e) {
-                        isRegisterPropReceiver = false;
                         MyLogger.d(TAG, "注册状态监听失败--------------------请重试");
                     }
                 }
