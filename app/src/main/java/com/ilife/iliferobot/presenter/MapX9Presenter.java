@@ -153,8 +153,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
 
-
-
     /**
      * 包含3s查询实时地图(slam map)
      */
@@ -1058,20 +1056,24 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (timer != null) {
             timer.cancel();
         }
-        if (isSubscribeRealMap) {
-            Map<String, Object> primaryKey = new HashMap<>();
-            primaryKey.put("device_id", deviceId);
-            AC.classDataMgr().unSubscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL, new VoidCallback() {
-                @Override
-                public void success() {
-                    MyLogger.d(TAG, "unsubscribe real time map success");
-                }
+        try {
+            if (isSubscribeRealMap) {
+                Map<String, Object> primaryKey = new HashMap<>();
+                primaryKey.put("device_id", deviceId);
+                AC.classDataMgr().unSubscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL, new VoidCallback() {
+                    @Override
+                    public void success() {
+                        MyLogger.d(TAG, "unsubscribe real time map success");
+                    }
 
-                @Override
-                public void error(ACException e) {
-                    MyLogger.d(TAG, "unsubscribe real time map fail");
-                }
-            });
+                    @Override
+                    public void error(ACException e) {
+                        MyLogger.d(TAG, "unsubscribe real time map fail");
+                    }
+                });
+            }
+        } catch (Exception e) {
+                   MyLogger.e(TAG,"unsubscribe real time map error");
         }
         super.detachView();
     }

@@ -72,7 +72,7 @@ public class MapView extends View {
     private RectF curVirtualWall = new RectF();
     private ArrayList<Integer> pointList = new ArrayList<>();
     private int endPositionRadius = 6;
-    private int paddingBottom;
+    private boolean isSetExtraPadding;
 
     public MapView(Context context) {
         super(context);
@@ -284,8 +284,10 @@ public class MapView extends View {
     }
 
     public void setPaddingBottom(int paddingBottom) {
-        if (this.paddingBottom == 0) {
-            this.paddingBottom = paddingBottom;
+        if (!isSetExtraPadding) {
+            isSetExtraPadding=true;
+            dragY-=paddingBottom/2f;
+            originalDragY=dragY;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
     }
@@ -304,7 +306,7 @@ public class MapView extends View {
             return;
         }
         double resultX = width * 0.80f / xLength;
-        double resultY = (height - paddingBottom) * 0.80f / yLength;
+        double resultY = (height) * 0.80f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = Math.round(bigDecimal.floatValue());
         if (baseScare >= maxScare) {
@@ -317,7 +319,7 @@ public class MapView extends View {
         }
         MyLogger.d(TAG, "updateSlam---" + xMin + "---" + xMax + "---" + yMin + "---" + yMax + "---width:---" + width + "---height:---" + height + "baseScare:---" + baseScare);
         deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
-        deviationY = (yMax + yMin) / 2f * baseScare - (height - paddingBottom) / 2f;
+        deviationY = (yMax + yMin) / 2f * baseScare - (height) / 2f;
         MyLogger.d(TAG, "deviationX" + deviationX + "---" + "deviationY" + deviationY);
     }
 
@@ -368,7 +370,7 @@ public class MapView extends View {
     protected void onDraw(Canvas canvas) {
         matrix.reset();
         matrix.postTranslate(dragX, dragY);
-        MyLogger.d("SelfPaint", "Scare" + scare + "---tansX:" + dragX + "---" + dragY + "--sx" + sCenter.x + "---sy" + sCenter.y);
+        MyLogger.d("SelfPaint", "Scare" + scare + "---dragX:" + dragX + "---" + dragY + "--sx" + sCenter.x + "---sy" + sCenter.y);
         matrix.postScale(scare, scare, sCenter.x, sCenter.y);
         canvas.drawBitmap(slagBitmap, matrix, slamPaint);
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
