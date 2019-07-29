@@ -130,11 +130,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
             if (recyclerView.closeMenu()){
                 return;
             }
-            if (mAcUserDevices.get(position)==null){
-                //数据异常，需刷新
-                return;
-            }
-            if (mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
+            if (mAcUserDevices!=null&&mAcUserDevices.size()>position&&mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
                 String subdomain = mAcUserDevices.get(position).getSubDomain();
                 SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
                 SpUtils.saveLong(context, KEY_DEVICEID, mAcUserDevices.get(position).getDeviceId());

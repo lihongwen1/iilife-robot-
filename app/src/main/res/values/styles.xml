@@ -179,6 +179,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/color_f08300</item>
         <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:paddingBottom">2dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
