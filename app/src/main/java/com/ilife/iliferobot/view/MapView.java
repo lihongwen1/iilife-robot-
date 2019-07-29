@@ -244,7 +244,7 @@ public class MapView extends View {
         }
         roadCanvas.drawPath(roadPath, roadPaint);
         if (startX != 0 && startY != 0) {
-            positionCirclePaint.setColor(getResources().getColor(R.color.white));
+            positionCirclePaint.setColor(getResources().getColor(R.color.start_point));
             roadCanvas.drawCircle(startX, startY, Utils.dip2px(MyApplication.getInstance(), 4), positionCirclePaint);
         }
         if (roadList != null && roadList.size() > 2) {
