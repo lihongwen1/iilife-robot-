@@ -713,7 +713,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         switch (curStatus) {
             case MsgCodeUtils.STATUE_RECHARGE://回充
                 mView.updateRecharge(true);
-//                mView.setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
                 break;
             case MsgCodeUtils.STATUE_VIRTUAL_EDIT://电子墙编辑模式
                 mView.showVirtualEdit();
@@ -1073,7 +1072,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 });
             }
         } catch (Exception e) {
-                   MyLogger.e(TAG,"unsubscribe real time map error");
+            MyLogger.e(TAG, "unsubscribe real time map error");
         }
         super.detachView();
     }

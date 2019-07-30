@@ -115,6 +115,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
 
     @Override
     public void updateRecharge(boolean isRecharge) {
+        setTvUseStatus(BaseMapActivity.TAG_RECHAGRGE);
         if (layout_recharge.getVisibility() == View.VISIBLE && isRecharge) {//避免重复刷新UI导致异常
             return;
         }
