@@ -281,6 +281,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (src == null || src.size() < 2) {
             return;
         }
+        if (minX == 0 && minY == 0 && maxX == 0 && maxY == 0) {
+            minX = src.get(0);
+            minY = src.get(1);
+            maxX = src.get(0);
+            maxY = src.get(1);
+            offset=0;
+            MyLogger.d(TAG,"data is  clear, so need to reset all params");
+        }
         int x, y;
         for (int i = offset + 1; i < src.size(); i += 2) {
             x = -src.get(i - 1);
@@ -500,6 +508,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     pointStrList.clear();
                     workTime = 0;
                     cleanArea = 0;
+                    minX=0;
+                    minY=0;
+                    maxX=0;
+                    maxY=0;
                 } else {
                     if ((j == bytes.length - 1) || !pointStrList.contains(x + "_" + y)) {
                         pointList.add(x);
