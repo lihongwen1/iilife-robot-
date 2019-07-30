@@ -2,9 +2,11 @@ package com.ilife.iliferobot.base;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import com.ilife.iliferobot.R;
@@ -90,7 +92,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void beforeFinish() {
 
     }
-
 
 
     @Override
@@ -188,4 +189,33 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public void removeAllActivityExclude() {
         application.removeALLActivityExclude(oContext);
     }
+
+    /**
+     * 1、获取main在窗体的可视区域
+     *2、获取main在窗体的不可视区域高度
+     *3、判断不可视区域高度，之前根据经验值，在有些手机上有点不大准，现改成屏幕整体高度的1/3
+     *  1、大于屏幕整体高度的1/3：键盘显示  获取Scroll的窗体坐标
+     * 算出main需要滚动的高度，使scroll显示   
+     * 小于屏幕整体高度的1/3：键盘隐藏
+     ** @param main 根布局 
+     ** @param scroll 需要显示的最下方View
+     */
+
+    public static void addLayoutListener(final View main, final View scroll) {
+        main.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect rect = new Rect();
+            main.getWindowVisibleDisplayFrame(rect);
+            int screenHeight = main.getRootView().getHeight();
+            int mainInvisibleHeight = main.getRootView().getHeight() - rect.bottom;
+            if (mainInvisibleHeight > screenHeight / 4) {
+                int[] location = new int[2];
+                scroll.getLocationInWindow(location);
+                int scrollHeight = (location[1] + scroll.getHeight()) - rect.bottom;
+                main.scrollTo(0, scrollHeight);
+            } else {
+                main.scrollTo(0, 0);
+            }
+        });
+    }
+
 }

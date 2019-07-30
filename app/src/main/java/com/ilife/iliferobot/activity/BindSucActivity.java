@@ -49,7 +49,7 @@ public class BindSucActivity extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+        addLayoutListener(findViewById(R.id.rootView),bt_done);
     }
 
     @Override
