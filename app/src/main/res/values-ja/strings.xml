@@ -305,4 +305,6 @@
     <string name="login_invalid">ログインが失敗しました。もう一度ログインしてください。</string>
     <string name="zaco_phone_server_time">（月曜日〜金曜日：09：00〜17：00）</string>
     <string name="start_random_cleaning">オートモード有効</string>
+    <string name="select_aty_a9">A9</string>
+    <string name="setting_aty_type_a9">ILIFE A9</string>
 </resources>

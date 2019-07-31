@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="device_name_ilife_us">
+        <item>@string/select_aty_a9</item>
+    </string-array>
     <string-array name="device_name_ilife">
         <item>@string/select_aty_x900</item>
         <item>@string/select_aty_x800</item>

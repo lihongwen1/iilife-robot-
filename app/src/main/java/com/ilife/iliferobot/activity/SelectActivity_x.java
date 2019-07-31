@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.adapter.XAdapter;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
@@ -66,10 +67,17 @@ public class SelectActivity_x extends BackBaseActivity {
 
     private void initAdapter() {
         if (Utils.isIlife()) {
-            robots.add(new CleanningRobot(R.drawable.n_x900, "ILIFE X900", Constants.subdomain_x900, Constants.subdomainId_x900));
-            robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE X800", Constants.subdomain_x800, Constants.subdomainId_x800));
-            robots.add(new CleanningRobot(R.drawable.n_x787, "ILIFE X787", Constants.subdomain_x787, Constants.subdomainId_x787));
-            robots.add(new CleanningRobot(R.drawable.n_x785, "ILIFE X785", Constants.subdomain_x785, Constants.subdomainId_x785));
+            switch (BuildConfig.Area) {
+                case 0:
+                    robots.add(new CleanningRobot(R.drawable.n_x900, "ILIFE X900", Constants.subdomain_x900, Constants.subdomainId_x900));
+                    robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE X800", Constants.subdomain_x800, Constants.subdomainId_x800));
+                    robots.add(new CleanningRobot(R.drawable.n_x787, "ILIFE X787", Constants.subdomain_x787, Constants.subdomainId_x787));
+                    robots.add(new CleanningRobot(R.drawable.n_x785, "ILIFE X785", Constants.subdomain_x785, Constants.subdomainId_x785));
+                    break;
+                case 3:
+                    robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE A9", Constants.subdomain_x800, Constants.subdomainId_x800));
+                    break;
+            }
         } else {
             robots.add(new CleanningRobot(R.drawable.n_a9s, "ZACO A9s", Constants.subdomain_a9s, Constants.subdomaiId_a9s));
             robots.add(new CleanningRobot(R.drawable.n_a8s, "ZACO A8s", Constants.subdomain_a8s, Constants.subdomaiId_a8s));
