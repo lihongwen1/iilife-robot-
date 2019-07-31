@@ -14,6 +14,7 @@ import com.accloud.service.ACMsg;
 import com.accloud.service.ACObject;
 import com.accloud.utils.LogUtil;
 import com.google.gson.Gson;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.able.Constants;
@@ -115,7 +116,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 robotType = "X900";
                 break;
             case Constants.subdomain_x800:
-                robotType = "X800";
+                if (BuildConfig.Area == 3) {
+                    robotType = "X800";
+                } else {
+                    robotType = "A9";
+                }
                 break;
             case Constants.subdomain_x787:
                 robotType = "X787";
@@ -1073,7 +1078,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 });
             }
         } catch (Exception e) {
-                   MyLogger.e(TAG,"unsubscribe real time map error");
+            MyLogger.e(TAG, "unsubscribe real time map error");
         }
         super.detachView();
     }

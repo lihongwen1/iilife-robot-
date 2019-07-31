@@ -29,6 +29,7 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
 import com.ilife.iliferobot.able.Constants;
@@ -258,6 +259,11 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         } else if (subdomain.equals(Constants.subdomain_v85)) {
             tv_type.setText(getString(R.string.setting_aty_type_v85));
             image_product.setImageResource(R.drawable.n_v85);
+        } else if (subdomain.equals(Constants.subdomain_x800) && BuildConfig.Area == 3) {//美國 A9
+            rl_water.setVisibility(View.GONE);
+            rl_mode.setVisibility(View.GONE);
+            tv_type.setText(getString(R.string.setting_aty_type_a9));
+            image_product.setImageResource(R.drawable.n_x800);
         } else {
             rl_mode.setVisibility(View.GONE);
             tv_type.setText(getString(R.string.setting_aty_type_x800));
@@ -266,7 +272,7 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_x900)) {
             rl_update.setVisibility(View.VISIBLE);
         }
-        if(subdomain.equals(Constants.subdomain_v85)){
+        if (subdomain.equals(Constants.subdomain_v85)) {
             rl_mode.setVisibility(View.VISIBLE);
             rl_record.setVisibility(View.GONE);
         }
@@ -276,7 +282,6 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         if (subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
             rl_voice.setVisibility(View.VISIBLE);
         }
-
 
         listener = new ReNameListener() {
             @Override

@@ -26,6 +26,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
         super.initView();
         int rechargeModel = -1;
         switch (mPresenter.getRobotType()) {
+            case "A9":
             case "a9s":
             case "X800":
                 rechargeModel = R.drawable.rechage_device_x800;

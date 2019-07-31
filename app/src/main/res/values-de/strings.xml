@@ -305,4 +305,6 @@
     <string name="login_invalid">Login fehlgeschlagen, erneut versuchen</string>
     <string name="zaco_phone_server_time">Mo. - Fr. 09.00 – 17.00 Uhr</string>
     <string name="start_random_cleaning">"Auto-Modus aktiviert "</string>
+    <string name="select_aty_a9">A9</string>
+    <string name="setting_aty_type_a9">ILIFE A9</string>
 </resources>
