@@ -40,6 +40,8 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
 import com.bumptech.glide.Glide;
+import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.adapter.HelpFeedImgAdapter;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
@@ -120,11 +122,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         activity = this;
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
-        if (Utils.isIlife()) {
-            types = getResources().getStringArray(R.array.device_name_ilife);
-        } else {
-            types = getResources().getStringArray(R.array.device_name_zaco);
-        }
+
+        types = DeviceUtils.getSupportDevices();
         et_email = (EditText) findViewById(R.id.et_email);
         if (Utils.isChinaEnvironment()) {
             et_email.setHint(R.string.login_aty_input_email);
@@ -142,7 +141,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
         }
         rv_feed_image.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rv_feed_image.setAdapter(rvAdapter = new HelpFeedImgAdapter(context,R.layout.item_feed_image,images));
+        rv_feed_image.setAdapter(rvAdapter = new HelpFeedImgAdapter(context, R.layout.item_feed_image, images));
         rv_feed_image.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6), true));
         rvAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {

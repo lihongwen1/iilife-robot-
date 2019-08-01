@@ -97,7 +97,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> pointList;// map集合
     private ArrayList<String> pointStrList;
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
-    private boolean haveMap = true;//标记机型是否有地图
+    private boolean haveMap = true;//标记机型是否有地图 V85机器没有地图
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
 
     @Override
@@ -111,34 +111,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         deviceId = SpUtils.getLong(MyApplication.getInstance(), MainActivity.KEY_DEVICEID);
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
-        switch (subdomain) {
-            case Constants.subdomain_x900:
-                robotType = "X900";
-                break;
-            case Constants.subdomain_x800:
-                if (BuildConfig.Area == 3) {
-                    robotType = "X800";
-                } else {
-                    robotType = "A9";
-                }
-                break;
-            case Constants.subdomain_x787:
-                robotType = "X787";
-                break;
-            case Constants.subdomain_a9s:
-                robotType = "a9s";
-                break;
-            case Constants.subdomain_a8s:
-                robotType = "a8s";
-                break;
-            case Constants.subdomain_v85:
-                haveMap = false;
-                robotType = "v85";
-                break;
-
-            default:
-                robotType = "X785";
-                break;
+        robotType=DeviceUtils.getRobotType(subdomain);
+        if (robotType.equals(Constants.V85)){
+            haveMap=false;
         }
     }
 
@@ -157,6 +132,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         return robotType;
     }
 
+
+    @Override
+    public boolean isX900Series() {
+        return robotType.equals(Constants.X900);
+    }
+
+    @Override
+    public boolean isLongPressControl() {
+        return getRobotType().equals(Constants.V85) ||getRobotType().equals(Constants.X785) ||getRobotType().equals(Constants.X787);
+    }
 
     /**
      * 包含3s查询实时地图(slam map)
@@ -195,7 +180,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         MyLogger.d(TAG, "getRealTimeMap-------------------------------");
         ACMsg req;
-        if (robotType.equals("X900")) {
+        if (isX900Series()) {
             req = new ACMsg();
             req.setName("searchCleanRealTime");
             req.put("device_id", deviceId);
@@ -650,7 +635,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     /**
                      * 请求设备相关数据
                      */
-                    if (robotType.equals("X900")) {
+                    if (isX900Series()) {
                         if (!isSubscribeRealMap) {
                             subscribeRealTimeMap();
                         }
@@ -716,7 +701,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         mView.updateStatue(DeviceUtils.getStatusStr(MyApplication.getInstance(), curStatus, errorCode));//待机，规划
         mView.updateStartStatue(isWork, isWork ? Utils.getString(R.string.map_aty_stop) : Utils.getString(R.string.map_aty_start));
         mView.updateOperationViewStatue(curStatus);
-        if (curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !robotType.equals("X900"))) {
+        if (curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !isX900Series())) {
             mView.setCurrentBottom(MapActivity_X9_.USE_MODE_NORMAL);
         }
         if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
@@ -762,7 +747,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public boolean isDrawMap() {
         return curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT ||
-                (curStatus == MsgCodeUtils.STATUE_RECHARGE && robotType.equals("X900"));
+                (curStatus == MsgCodeUtils.STATUE_RECHARGE && isX900Series());
     }
 
     @Override
@@ -804,7 +789,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 int lastStatus = curStatus;
                 curStatus = info.getWork_pattern();
                 if (curStatus == MsgCodeUtils.STATUE_PLANNING || (lastStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT && lastStatus != curStatus)) {//退出电子墙编辑模式时查询电子墙
-                    if (robotType.equals("X900")) {
+                    if (isX900Series()) {
                         queryVirtualWall();
                     }
                 }
@@ -904,7 +889,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         byte[] bytes = deviceMsg.getContent();
                         int lastStatus = curStatus;
 
-                        if (robotType.equals("X900")) {
+                        if (isX900Series()) {
                             if (lastStatus == MsgCodeUtils.STATUE_PLANNING && sendByte == MsgCodeUtils.STATUE_WAIT) {
                                 curStatus = MsgCodeUtils.STATUE_PAUSE;
                                 sendByte = MsgCodeUtils.STATUE_PAUSE;
@@ -1005,8 +990,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     @Override
+    public boolean pointToAlong() {
+        return robotType.equals(Constants.V85)||robotType.equals(Constants.X785)||robotType.equals(Constants.X787);
+    }
+
+    @Override
     public void enterAlongMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("v85")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_POINT && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_POINT && pointToAlong())|| curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -1022,7 +1012,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("v85")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X785")) || (curStatus == MsgCodeUtils.STATUE_ALONG && robotType.equals("X787")) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_ALONG &&pointToAlong())|| curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());

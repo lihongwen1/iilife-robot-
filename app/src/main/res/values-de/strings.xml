@@ -210,20 +210,6 @@
     <string name="consume_aty_resetFilter_over">Filterstatus wird nach dem Reset zurückgestellt</string>
     <string name="consume_aty_reset_suc">Zurücksetzen abgeschlossen</string>
     <string name="clock_aty_dev_offline">Gerät ist Offline</string>
-    <string name="setting_aty_type_x800">ILIFE X800</string>
-    <string name="setting_aty_type_x900">ILIFE X900</string>
-    <string name="setting_aty_type_x787">ILIFE X787</string>
-    <string name="setting_aty_type_x785">ILIFE X785</string>
-    <string name="setting_aty_type_a9s">ZACO A9s</string>
-    <string name="setting_aty_type_a8s">ZACO A8s</string>
-    <string name="setting_aty_type_v85">ZACO V85</string>
-    <string name="select_aty_x785">X785</string>
-    <string name="select_aty_x787">X787</string>
-    <string name="select_aty_x800">X800</string>
-    <string name="select_aty_x900">X900</string>
-    <string name="select_aty_a9s">A9s</string>
-    <string name="select_aty_a8s">A8s</string>
-    <string name="select_aty_v85">V85</string>
     <string name="setting_aty_hit_">Benutzername</string>
     <string name="consume_aty_text_2">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
     <string name="access_camera">Bitte Zugriff auf Ihre Kamera gewähren</string>
@@ -305,6 +291,5 @@
     <string name="login_invalid">Login fehlgeschlagen, erneut versuchen</string>
     <string name="zaco_phone_server_time">Mo. - Fr. 09.00 – 17.00 Uhr</string>
     <string name="start_random_cleaning">"Auto-Modus aktiviert "</string>
-    <string name="select_aty_a9">A9</string>
-    <string name="setting_aty_type_a9">ILIFE A9</string>
+    <string name="ap_guide_have_heard_didi_v85">„Piep“ ertönt</string>
 </resources>

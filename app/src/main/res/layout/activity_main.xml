@@ -61,7 +61,7 @@
             android:layout_above="@id/tv_notice"
             android:layout_centerHorizontal="true"
             android:text="@string/no_device_tip_hi"
-            android:textColor="#fff08300"
+            android:textColor="@color/color_f08300"
             android:textSize="24sp" />
 
         <com.ilife.iliferobot.view.LightTextView

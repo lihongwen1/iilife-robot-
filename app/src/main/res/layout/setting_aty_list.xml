@@ -171,7 +171,6 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rl_mode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60">
@@ -274,7 +273,7 @@
         android:id="@+id/rl_voice"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:visibility="gone">
+        >
 
         <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33_center"

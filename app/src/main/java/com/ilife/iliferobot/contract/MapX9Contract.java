@@ -101,6 +101,9 @@ public interface MapX9Contract {
          boolean isDrawMap();
 
          void updateSlamX8(ArrayList<Integer> src,int offset);
+         boolean isX900Series();
+         boolean pointToAlong();
+         boolean isLongPressControl();
     }
 
 }

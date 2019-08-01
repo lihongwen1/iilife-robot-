@@ -210,20 +210,6 @@
     <string name="consume_aty_resetFilter_over">フィルタステータスはリセット後に更新されます</string>
     <string name="consume_aty_reset_suc">リセット完了</string>
     <string name="clock_aty_dev_offline">デバイスはオフラインです</string>
-    <string name="setting_aty_type_x800">ILIFE X800</string>
-    <string name="setting_aty_type_x900">ILIFE X900</string>
-    <string name="setting_aty_type_x787">ILIFE X787</string>
-    <string name="setting_aty_type_x785">ILIFE X785</string>
-    <string name="setting_aty_type_a9s">ZACO A9s</string>
-    <string name="setting_aty_type_a8s">ZACO A8s</string>
-    <string name="setting_aty_type_v85">ZACO V85</string>
-    <string name="select_aty_x785">X785</string>
-    <string name="select_aty_x787">X787</string>
-    <string name="select_aty_x800">X800</string>
-    <string name="select_aty_x900">X900</string>
-    <string name="select_aty_a9s">A9s</string>
-    <string name="select_aty_a8s">A8s</string>
-    <string name="select_aty_v85">V85</string>
     <string name="setting_aty_hit_">ユーザー名</string>
     <string name="consume_aty_text_2">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
     <string name="access_camera">カメラへのアクセスを許可してください</string>
@@ -305,6 +291,5 @@
     <string name="login_invalid">ログインが失敗しました。もう一度ログインしてください。</string>
     <string name="zaco_phone_server_time">（月曜日〜金曜日：09：00〜17：00）</string>
     <string name="start_random_cleaning">オートモード有効</string>
-    <string name="select_aty_a9">A9</string>
-    <string name="setting_aty_type_a9">ILIFE A9</string>
+    <string name="ap_guide_have_heard_didi_v85">「ドリップ」音が聞こえました</string>
 </resources>

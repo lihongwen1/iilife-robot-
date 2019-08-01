@@ -77,20 +77,29 @@ public class BindSucActivity extends BackBaseActivity {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
-        if (subdomain.equals(Constants.subdomain_x785)) {
-            image_device = R.drawable.rechage_device_x785;
-        } else if (subdomain.equals(Constants.subdomain_x787)) {
-            image_device = R.drawable.rechage_device_x787;
-        } else if (subdomain.equals(Constants.subdomain_x900)) {
-            image_device = R.drawable.rechage_device_x900;
-        } else if (subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800)) {
-            image_device = R.drawable.rechage_device_x800;
-        } else if (subdomain.equals(Constants.subdomain_a8s)) {
-            image_device = R.drawable.rechage_device_a8s;
-        } else if (subdomain.equals(Constants.subdomain_v85)) {
-            image_device = R.drawable.rechage_device_v85;
-        } else {
-            image_device = R.drawable.rechage_device_x800;
+        switch (subdomain) {
+            case Constants.subdomain_x785:
+                image_device = R.drawable.rechage_device_x785;
+                break;
+            case Constants.subdomain_x787:
+                image_device = R.drawable.rechage_device_x787;
+                break;
+            case Constants.subdomain_a9s:
+            case Constants.subdomain_x800:
+                image_device = R.drawable.rechage_device_x800;
+                break;
+            case Constants.subdomain_x900:
+                image_device = R.drawable.rechage_device_x900;
+                break;
+            case Constants.subdomain_a8s:
+                image_device = R.drawable.rechage_device_a8s;
+                break;
+            case Constants.subdomain_v85:
+                image_device = R.drawable.rechage_device_v85;
+                break;
+            default:
+                image_device = R.drawable.rechage_device_x800;
+                break;
         }
         String devName = getString(R.string.bind_suc_sty_robot_name);
         iv_bind_device.setImageResource(image_device);

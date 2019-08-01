@@ -55,7 +55,6 @@ public class ApGuideActivityX900 extends BackBaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    // TODO 根据机型选择不同的布局文件
     @Override
     public int getLayoutId() {
         return R.layout.activity_ap_guide_x900;
@@ -65,45 +64,51 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     public void initView() {
         context = this;
         int open_key_id, click_wifi_id, tip1_id, tip2_id;
-
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
 
-        if (subdomain.equals(Constants.subdomain_x800)) {
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_x900;
-            tip3_id = R.string.ap_guide_already_open_wifi;
-            open_key_id = R.drawable.gif_open_key_800;
-            click_wifi_id = R.drawable.gif_click_wifi_800;
-        } else if (subdomain.equals(Constants.subdomain_x900)) {
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_x900;
-            tip3_id = R.string.ap_guide_already_open_wifi;
-            open_key_id = R.drawable.gif_open_key;
-            click_wifi_id = R.drawable.gif_click_wifi;
-        } else if (subdomain.equals(Constants.subdomain_a9s)) {
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_a9s;
-            tip3_id = R.string.ap_guide_already_open_wifi_a9s;
-            open_key_id = R.drawable.gif_open_key_800;
-            click_wifi_id = R.drawable.gif_click_wifi_800;
-        } else if (subdomain.equals(Constants.subdomain_a8s)) {
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_a9s;
-            tip3_id = R.string.ap_guide_already_open_wifi_a9s;
-            open_key_id = R.drawable.gif_open_key_a8s;
-            click_wifi_id = R.drawable.gif_click_wifi_a8s;
-        } else if (subdomain.equals(Constants.subdomain_v85)) {
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id =R.string.ap_guide_aty_tip2_v85;
-            tip3_id = R.string.ap_guide_have_heard_didi;
-            open_key_id = R.drawable.gif_open_key_v85;
-            click_wifi_id = R.drawable.gif_click_wifi_v85;
-        } else {//787 785 a7 v85
-            tip1_id = R.string.ap_guide_aty_tip1_x900;
-            tip2_id = R.string.ap_guide_aty_tip2_x7;
-            tip3_id = R.string.ap_guide_have_heard_didi;
-            open_key_id = R.drawable.gif_open_key_787;
-            click_wifi_id = R.drawable.gif_click_wifi_787;
+        switch (subdomain) {
+            case Constants.subdomain_x800://800 a9
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x900;
+                tip3_id = R.string.ap_guide_already_open_wifi;
+                open_key_id = R.drawable.gif_open_key_800;
+                click_wifi_id = R.drawable.gif_click_wifi_800;
+                break;
+            case Constants.subdomain_x900:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x900;
+                tip3_id = R.string.ap_guide_already_open_wifi;
+                open_key_id = R.drawable.gif_open_key;
+                click_wifi_id = R.drawable.gif_click_wifi;
+                break;
+            case Constants.subdomain_a9s:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_a9s;
+                tip3_id = R.string.ap_guide_already_open_wifi_a9s;
+                open_key_id = R.drawable.gif_open_key_800;
+                click_wifi_id = R.drawable.gif_click_wifi_800;
+                break;
+            case Constants.subdomain_a8s:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_a9s;
+                tip3_id = R.string.ap_guide_already_open_wifi_a9s;
+                open_key_id = R.drawable.gif_open_key_a8s;
+                click_wifi_id = R.drawable.gif_click_wifi_a8s;
+                break;
+            case Constants.subdomain_v85: //v85
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_v85;
+                tip3_id = R.string.ap_guide_have_heard_didi_v85;
+                open_key_id = R.drawable.gif_open_key_v85;
+                click_wifi_id = R.drawable.gif_click_wifi_v85;
+                break;
+            default: //787 785 a7
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x7;
+                tip3_id = R.string.ap_guide_have_heard_didi;
+                open_key_id = R.drawable.gif_open_key_787;
+                click_wifi_id = R.drawable.gif_click_wifi_787;
+                break;
         }
         text_tip1.setText(tip1_id);
         text_tip2.setText(tip2_id);

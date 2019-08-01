@@ -44,7 +44,7 @@
     <string name="ap_guide_already_open_device">Robot already switched on</string>
     <string name="ap_guide_already_open_wifi">\"Start WiFi pairing\" already announced</string>
     <string name="ap_guide_already_open_wifi_a9s">\"Start WiFi pairing\" already announced</string>
-    <string name="ap_guide_have_heard_didi">\"beep\"is heard.</string>
+    <string name="ap_guide_have_heard_didi">beep is heard.</string>
     <string name="ap_aty_setting">Settings</string>
     <string name="wifi_guide_aty_tip2">Note: Robot can\'t connect to 5G WiFi</string>
     <string name="add_aty_no_wifi">WiFi not connected</string>
@@ -210,20 +210,6 @@
     <string name="consume_aty_resetFilter_over">Filter status will be updated after reset</string>
     <string name="consume_aty_reset_suc">Reset completed</string>
     <string name="clock_aty_dev_offline">Device is offline</string>
-    <string name="setting_aty_type_x800">ILIFE X800</string>
-    <string name="setting_aty_type_x900">ILIFE X900</string>
-    <string name="setting_aty_type_x787">ILIFE X787</string>
-    <string name="setting_aty_type_x785">ILIFE X787</string>
-    <string name="setting_aty_type_a9s">ZACO A9s</string>
-    <string name="setting_aty_type_a8s">ZACO A8s</string>
-    <string name="setting_aty_type_v85">ZACO V85</string>
-    <string name="select_aty_x785">X785</string>
-    <string name="select_aty_x787">X787</string>
-    <string name="select_aty_x800">X800</string>
-    <string name="select_aty_x900">X900</string>
-    <string name="select_aty_a9s">A9s</string>
-    <string name="select_aty_a8s">A8s</string>
-    <string name="select_aty_v85">V85</string>
     <string name="setting_aty_hit_">User name</string>
     <string name="consume_aty_text_2">Reminder:Clean side brush, roller brush and high performance filter after each use. Replace side brushes every 3–6 months, roller brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="access_camera">Please allow camera access</string>
@@ -309,6 +295,5 @@
     <string name="login_invalid">Login failed. Retry.</string>
     <string name="zaco_phone_server_time">Mon - Fri 09:00 – 17:00</string>
     <string name="start_random_cleaning">Auto mode activated</string>
-    <string name="select_aty_a9">A9</string>
-    <string name="setting_aty_type_a9">ILIFE A9</string>
+    <string name="ap_guide_have_heard_didi_v85">beep is heard.</string>
 </resources>

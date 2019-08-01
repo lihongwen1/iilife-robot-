@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
@@ -26,22 +27,22 @@ public class MapActivity_X8_ extends BaseMapActivity {
         super.initView();
         int rechargeModel = -1;
         switch (mPresenter.getRobotType()) {
-            case "A9":
-            case "a9s":
-            case "X800":
+            case Constants.A9:
+            case Constants.A9s:
+            case Constants.X800:
                 rechargeModel = R.drawable.rechage_device_x800;
                 break;
-            case "X787":
+            case Constants.X787:
                 rechargeModel = R.drawable.rechage_device_x787;
                 break;
-            case "X785":
+            case Constants.X785:
                 rechargeModel = R.drawable.rechage_device_x785;
                 break;
-            case "a8s":
+            case Constants.A8s:
                 ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
                 rechargeModel = R.drawable.rechage_device_a8s;
                 break;
-            case "v85":
+            case Constants.V85:
                 rechargeModel = R.drawable.rechage_device_v85;
                 break;
 
@@ -102,7 +103,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
             fl_bottom_x9.setBackground(new ColorDrawable(getResources().getColor(R.color.bg_color_f5f7fa)));
         }
         if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
-            if (mPresenter.getRobotType().equals("a8s")) {
+            if (mPresenter.getRobotType().equals(Constants.A8s)) {
                 setNavigationBarColor(R.color.moka_color);
             } else {
                 setNavigationBarColor(R.color.color_ff1b92e2);

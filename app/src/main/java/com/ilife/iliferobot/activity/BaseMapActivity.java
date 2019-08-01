@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.app.MyApplication;
@@ -171,7 +172,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         if (devName != null && !devName.isEmpty()) {
             tv_title.setText(devName);
         } else {
-            tv_title.setText(getString(R.string.map_aty_title, mPresenter.getRobotType()));
+            tv_title.setText(mPresenter.getPhysicalId());
         }
     }
 
@@ -439,7 +440,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
-                    if ((mPresenter.getRobotType().equals("a9s") || mPresenter.getRobotType().equals("a8s") ||
+                    if ((mPresenter.getRobotType().equals(Constants.A9s) || mPresenter.getRobotType().equals(Constants.A8s) ||
                             mPresenter.getDevice_type() == 128) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
@@ -584,7 +585,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (v.getId() != R.id.image_control_back) {
                     v.setSelected(true);
                 }
-                if (mPresenter.getRobotType().equals("v85") ||mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")) {
+                if (mPresenter.isLongPressControl()) {
                     remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
                         MyLogger.d(TAG, "下发方向移动指令");
                         switch (v.getId()) {
@@ -609,7 +610,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (v.getId() != R.id.image_control_back) {
                     v.setSelected(false);
                 }
-                if (mPresenter.getRobotType().equals("X785") || mPresenter.getRobotType().equals("X787")||mPresenter.getRobotType().equals("v85")) {
+                if (mPresenter.isLongPressControl()) {
                     if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
                         remoteDisposable.dispose();
                     }

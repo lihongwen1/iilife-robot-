@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--美国-->
     <string-array name="device_name_ilife_us">
-        <item>@string/select_aty_a9</item>
+        <item>"A7"</item>
+        <item>"A9"</item>
     </string-array>
-    <string-array name="device_name_ilife">
-        <item>@string/select_aty_x900</item>
-        <item>@string/select_aty_x800</item>
-        <item>@string/select_aty_x787</item>
-        <item>@string/select_aty_x785</item>
+    <!--东南亚-->
+    <string-array name="device_name_ilife_sea">
+        <item>"A7"</item>
+        <item>"A9"</item>
     </string-array>
+    <!--国内-->
+    <string-array name="device_name_ilife_cn">
+        <item>"X900"</item>
+        <item>"X800"</item>
+        <item>"X787"</item>
+        <item>X785</item>
+    </string-array>
+    <!--ZACO-->
     <string-array name="device_name_zaco">
-        <item>@string/select_aty_a9s</item>
-        <item>@string/select_aty_a8s</item>
-        <item>@string/select_aty_v85</item>
+        <item>"A9s"</item>
+        <item>"A8s"</item>
+        <item>"V85"</item>
     </string-array>
     <string-array name="array_week">
         <item>@string/clock_aty_sun</item>

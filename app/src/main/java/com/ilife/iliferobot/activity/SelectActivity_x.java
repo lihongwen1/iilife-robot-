@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.adapter.XAdapter;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
@@ -39,6 +41,7 @@ public class SelectActivity_x extends BackBaseActivity {
     @BindView(R.id.tv_top_title)
     TextView tvTitle;
     private List<CleanningRobot> robots = new ArrayList<>();
+    private String[] supportRobots;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,22 +69,45 @@ public class SelectActivity_x extends BackBaseActivity {
     }
 
     private void initAdapter() {
-        if (Utils.isIlife()) {
-            switch (BuildConfig.Area) {
-                case 0:
-                    robots.add(new CleanningRobot(R.drawable.n_x900, "ILIFE X900", Constants.subdomain_x900, Constants.subdomainId_x900));
-                    robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE X800", Constants.subdomain_x800, Constants.subdomainId_x800));
-                    robots.add(new CleanningRobot(R.drawable.n_x787, "ILIFE X787", Constants.subdomain_x787, Constants.subdomainId_x787));
-                    robots.add(new CleanningRobot(R.drawable.n_x785, "ILIFE X785", Constants.subdomain_x785, Constants.subdomainId_x785));
-                    break;
-                case 3:
-                    robots.add(new CleanningRobot(R.drawable.n_x800, "ILIFE A9", Constants.subdomain_x800, Constants.subdomainId_x800));
-                    break;
+        supportRobots = DeviceUtils.getSupportDevices();
+        String robotName;
+
+        for (String deviceType : supportRobots) {
+            if (BuildConfig.Area == AC.REGIONAL_CHINA||BuildConfig.BRAND.equals("ZACO")) {
+                robotName = BuildConfig.BRAND + " " + deviceType;
+            } else {
+                robotName = deviceType;
             }
-        } else {
-            robots.add(new CleanningRobot(R.drawable.n_a9s, "ZACO A9s", Constants.subdomain_a9s, Constants.subdomaiId_a9s));
-            robots.add(new CleanningRobot(R.drawable.n_a8s, "ZACO A8s", Constants.subdomain_a8s, Constants.subdomaiId_a8s));
-            robots.add(new CleanningRobot(R.drawable.n_v85, "ZACO V85", Constants.subdomain_v85, Constants.subdomaiId_v85));
+            switch (deviceType) {
+                case Constants.X900:
+                    robots.add(new CleanningRobot(R.drawable.n_x900, robotName, Constants.subdomain_x900, Constants.subdomainId_x900));
+                    break;
+                case Constants.X800:
+                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    break;
+                case Constants.X787:
+                    robots.add(new CleanningRobot(R.drawable.n_x787, robotName, Constants.subdomain_x787, Constants.subdomainId_x787));
+                    break;
+                case Constants.X785:
+                    robots.add(new CleanningRobot(R.drawable.n_x785, robotName, Constants.subdomain_x785, Constants.subdomainId_x785));
+                    break;
+                case Constants.A8s:
+                    robots.add(new CleanningRobot(R.drawable.n_a8s, robotName, Constants.subdomain_a8s, Constants.subdomaiId_a8s));
+                    break;
+                case Constants.A9s:
+                    robots.add(new CleanningRobot(R.drawable.n_a9s, robotName, Constants.subdomain_a9s, Constants.subdomaiId_a9s));
+                    break;
+                case Constants.V85:
+                    robots.add(new CleanningRobot(R.drawable.n_v85, robotName, Constants.subdomain_v85, Constants.subdomaiId_v85));
+                    break;
+                case Constants.A9:
+                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    break;
+                case Constants.A7:
+                    robots.add(new CleanningRobot(R.drawable.n_x787, robotName, Constants.subdomain_a7, Constants.subdomainId_A7));
+                    break;
+
+            }
         }
         adapter = new XAdapter(R.layout.x_series_item, robots);
         adapter.setOnItemClickListener((adapter, view, position) -> {

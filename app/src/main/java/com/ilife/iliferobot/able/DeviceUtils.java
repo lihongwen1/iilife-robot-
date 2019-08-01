@@ -11,10 +11,11 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.BuildConfig;
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.listener.ReNameListener;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.Utils;
 
 /**
  * Created by chenjiaping on 2017/8/3.
@@ -59,6 +60,52 @@ public class DeviceUtils {
             serviceName = BuildConfig.SERVICE_NAME_X430;
         }
         return serviceName;
+    }
+
+    public static String getRobotType(String subdomain) {
+        String robotType = "";
+        switch (BuildConfig.BRAND) {
+            case Constants.BRAND_ILIFE:
+                switch (subdomain) {
+                    case Constants.subdomain_x785:
+                        robotType =Constants.X785;
+                        break;
+                    case Constants.subdomain_x787:
+                        robotType =Constants.X787;
+                        break;
+                    case Constants.subdomain_x800:
+                        if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA || BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//美规，日规
+                            robotType = Constants.A9;
+                        } else {
+                            robotType = Constants.X800;
+                        }
+                        break;
+                    case Constants.subdomain_x900:
+                        robotType = Constants.X900;
+                        break;
+
+                    case Constants.subdomain_a7:
+                        robotType=Constants.A7;
+                        break;
+                }
+
+                break;
+            case Constants.BRAND_ZACO:
+                switch (subdomain) {
+                    case Constants.subdomain_a9s:
+                        robotType = Constants.A9s;
+                        break;
+                    case Constants.subdomain_a8s:
+                        robotType = Constants.A8s;
+                        break;
+                    case Constants.subdomain_v85:
+                        robotType =Constants.V85;
+                        break;
+                }
+                break;
+        }
+        MyLogger.i("ROBOT_TYPE","-------"+robotType+"------------");
+        return robotType;
     }
 
     public static long getOwner(Activity activity) {
@@ -229,46 +276,8 @@ public class DeviceUtils {
         return strError;
     }
 
-    public static boolean canChange(String subdomain, int workPattern) {
-        boolean canChange = false;
-        if (subdomain.equals(Constants.subdomain_x430)) {
-            if (workPattern == 0 || workPattern == 1 || workPattern == 2
-                    || workPattern == 5 || workPattern == 8 || workPattern == 9
-                    || workPattern == 10 || workPattern == 11) {
-                canChange = false;
-            } else {
-                canChange = true;
-            }
-        } else {
-            if (workPattern == 0 || workPattern == 5 || workPattern == 8) {
-                canChange = false;
-            } else {
-                canChange = true;
-            }
-        }
-
-        return canChange;
-    }
 
 
-    public static boolean is430Or780or800or900(String subdomain) {
-        if (subdomain.equals(Constants.subdomain_x430) ||
-                subdomain.equals(Constants.subdomain_x780) ||
-                subdomain.equals(Constants.subdomain_x800) ||
-                subdomain.equals(Constants.subdomain_x900)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean is782oR785(String subdomain) {
-        if (subdomain.equals(Constants.subdomain_x782) ||
-                subdomain.equals(Constants.subdomain_x785) ||
-                subdomain.equals(Constants.subdomain_x787)) {
-            return true;
-        }
-        return false;
-    }
 
     public static String getStatusStr(Context context, int b, int errCode) {
         String str = "";
@@ -307,5 +316,30 @@ public class DeviceUtils {
             }
         }
         return str;
+    }
+
+    public static String[] getSupportDevices() {
+        String[] types = null;
+        if (Utils.isIlife()) {//BRAD ILIFE
+            switch (BuildConfig.Area) {
+                case AC.REGIONAL_CHINA://中国
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_cn);
+                    break;
+                case AC.REGIONAL_SOUTHEAST_ASIA://东南亚
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_sea);
+                    break;
+                case AC.REGIONAL_NORTH_AMERICA://美洲
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_us);
+                    break;
+                case AC.REGIONAL_CENTRAL_EUROPE://欧洲
+                    break;
+                default://默认中国
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_cn);
+                    break;
+            }
+        } else {// BRAND ZACO
+            types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_zaco);
+        }
+        return types;
     }
 }

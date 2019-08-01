@@ -46,6 +46,8 @@ public class Utils {
         return lan.equals("zh");
     }
 
+
+
     public static  int getInputMaxLength(){
         int maxLength;
         if (Utils.isChinaEnvironment()) {
@@ -90,4 +92,6 @@ public class Utils {
         System.arraycopy(b, offset, c, a.length, b.length - offset);
         return c;
     }
+
+
 }

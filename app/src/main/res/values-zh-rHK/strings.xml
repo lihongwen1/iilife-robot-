@@ -209,20 +209,6 @@
     <string name="consume_aty_resetFilter_over">重置後濾網會更新到最新狀態</string>
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">設備離線</string>
-    <string name="setting_aty_type_x800">ILIFE X800</string>
-    <string name="setting_aty_type_x900">ILIFE X900</string>
-    <string name="setting_aty_type_x787">ILIFE X787</string>
-    <string name="setting_aty_type_x785">ILIFE X785</string>
-    <string name="setting_aty_type_a9s">ZACO A9s</string>
-    <string name="setting_aty_type_a8s">ZACO A8s</string>
-    <string name="setting_aty_type_v85">ZACO V85</string>
-    <string name="select_aty_x785">X785</string>
-    <string name="select_aty_x787">X787</string>
-    <string name="select_aty_x800">X800</string>
-    <string name="select_aty_x900">X900</string>
-    <string name="select_aty_a9s">A9s</string>
-    <string name="select_aty_a8s">A8s</string>
-    <string name="select_aty_v85">V85</string>
     <string name="setting_aty_hit_">用戶名</string>
     <string name="consume_aty_text_2">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網並進行清潔。3&#8211;6個月可更換邊刷、5&#8211;12個月可更換滾刷、3&#8211;5個月可更換高效濾網。</string>
     <string name="access_camera">請授予訪問攝像頭的權限</string>
@@ -305,6 +291,5 @@
     <string name="zaco_phone_server_time">周一到周五 09:00 – 17:00</string>
     <string name="start_random_cleaning">已啟用隨機清掃</string>
     <string name="ap_guide_aty_tip2_v85">長按機器的啟動鍵，8秒後聽到\"嘀\"的一聲鬆開，WiFi指示燈閃爍。</string>
-    <string name="select_aty_a9">A9</string>
-    <string name="setting_aty_type_a9">ILIFE A9</string>
+    <string name="ap_guide_have_heard_didi_v85">已聽到嘀聲</string>
 </resources>

@@ -51,13 +51,14 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
  * Created by chengjiaping on 2018/8/16.
  */
 
-public class SettingActivity extends BackBaseActivity implements View.OnClickListener {
+public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
     public static final String KEY_MODE = "KEY_MODE";
@@ -67,46 +68,105 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     Intent intent;
     long deviceId, userId, ownerId;
     String devName, subdomain, physicalId, name;
-    ImageView image_soft, image_standard, image_strong, image_max, image_voice,
-            image_plan, image_random, image_product;
-    TextView tv_name, tv_type, tv_soft, tv_standard, tv_strong, tv_water, tv_plan,
-            tv_random, tv_mode, tv_top_title;
+    @BindView(R.id.image_soft)
+    ImageView image_soft;
+    @BindView(R.id.image_standard)
+    ImageView image_standard;
+    @BindView(R.id.image_strong)
+    ImageView image_strong;
+    @BindView(R.id.image_max)
+    ImageView image_max;
+    @BindView(R.id.image_voice)
+    ImageView image_voice;
+    @BindView(R.id.image_plan)
+    ImageView image_plan;
+    @BindView(R.id.image_random)
+    ImageView image_random;
+    @BindView(R.id.image_product)
+    ImageView image_product;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+    @BindView(R.id.tv_type)
+    TextView tv_type;
+    @BindView(R.id.tv_soft)
+    TextView tv_soft;
+    @BindView(R.id.tv_standard)
+    TextView tv_standard;
+    @BindView(R.id.tv_strong)
+    TextView tv_strong;
+    @BindView(R.id.tv_water)
+    TextView tv_water;
+    @BindView(R.id.tv_plan)
+    TextView tv_plan;
+    @BindView(R.id.tv_random)
+    TextView tv_random;
+    @BindView(R.id.tv_mode)
+    TextView tv_mode;
+    @BindView(R.id.tv_top_title)
+    TextView tv_top_title;
     @BindView(R.id.tv_ota_ver)
     TextView tv_ota_ver;
+    @BindView(R.id.image_down_1)
+    ImageView image_down_1;
+    @BindView(R.id.image_down_2)
+    ImageView image_down_2;
+    @BindView(R.id.rl_water)
+    RelativeLayout rl_water;
+    @BindView(R.id.rl_clock)
+    RelativeLayout rl_clock;
+    @BindView(R.id.rl_record)
+    RelativeLayout rl_record;
+    @BindView(R.id.rl_consume)
+    RelativeLayout rl_consume;
+    @BindView(R.id.rl_mode)
+    RelativeLayout rl_mode;
+    @BindView(R.id.rl_suction)
+    RelativeLayout rl_suction;
+    @BindView(R.id.rl_find)
+    RelativeLayout rl_find;
+    @BindView(R.id.rl_soft)
+    RelativeLayout rl_soft;
+    @BindView(R.id.rl_standard)
+    RelativeLayout rl_standard;
+    @BindView(R.id.rl_strong)
+    RelativeLayout rl_strong;
+    @BindView(R.id.rl_plan)
+    RelativeLayout rl_plan;
+    @BindView(R.id.rl_random)
+    RelativeLayout rl_random;
+    @BindView(R.id.rl_facReset)
+    RelativeLayout rl_facReset;
+    @BindView(R.id.rl_voice)
+    RelativeLayout rl_voice;
+    @BindView(R.id.rl_update)
+    RelativeLayout rl_update;
+    @BindView(R.id.ll_water)
+    LinearLayout ll_water;
+    @BindView(R.id.ll_mode)
+    LinearLayout ll_mode;
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.iv_find_robot)
+    ImageView iv_find_robot;
     LayoutInflater inflater;
     AlertDialog alterDialog;
     Dialog dialog;
     Animation animation;
-    private ImageView image_down_1, image_down_2;
-    RelativeLayout rl_water, rl_clock, rl_record, rl_consume,
-            rl_mode, rl_suction, rl_find, rl_soft, rl_standard, rl_strong,
-            rl_plan, rl_random, rl_facReset, rl_voice, rl_update;
-    LinearLayout ll_water, ll_mode;
     ACDeviceMsg acDeviceMsg;
-    ImageView imageView;
-    ImageView iv_find_robot;
-    ReNameListener listener;
     ACDeviceDataMgr.PropertyReceiver propReceiver;
     WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case TAG_FIND_DONE:
-                    rl_find.setClickable(true);
-                    imageView.setVisibility(View.GONE);
-                    imageView.clearAnimation();
-                    iv_find_robot.setVisibility(View.VISIBLE);
-                    break;
+            if (msg.what == TAG_FIND_DONE) {
+                rl_find.setClickable(true);
+                imageView.setVisibility(View.GONE);
+                imageView.clearAnimation();
+                iv_find_robot.setVisibility(View.VISIBLE);
             }
             return false;
         }
     });
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initData();
-    }
 
     @Override
     public int getLayoutId() {
@@ -158,61 +218,9 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
 
     public void initView() {
         context = this;
-        iv_find_robot = findViewById(R.id.iv_find_robot);
-        imageView = (ImageView) findViewById(R.id.imageView);
         dialog = DialogUtils.createLoadingDialog_(context);
         inflater = LayoutInflater.from(context);
-        tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_type = (TextView) findViewById(R.id.tv_type);
-        tv_water = (TextView) findViewById(R.id.tv_water);
-        tv_soft = (TextView) findViewById(R.id.tv_soft);
-        tv_standard = (TextView) findViewById(R.id.tv_standard);
-        tv_strong = (TextView) findViewById(R.id.tv_strong);
-        tv_random = (TextView) findViewById(R.id.tv_random);
-        tv_mode = (TextView) findViewById(R.id.tv_mode);
-        tv_plan = (TextView) findViewById(R.id.tv_plan);
-        tv_top_title = findViewById(R.id.tv_top_title);
         tv_top_title.setText(R.string.ap_aty_setting);
-        rl_plan = (RelativeLayout) findViewById(R.id.rl_plan);
-        rl_random = (RelativeLayout) findViewById(R.id.rl_random);
-        rl_voice = findViewById(R.id.rl_voice);
-        rl_update = findViewById(R.id.rl_update);
-        rl_facReset = (RelativeLayout) findViewById(R.id.rl_facReset);
-        rl_water = (RelativeLayout) findViewById(R.id.rl_water);
-        rl_clock = (RelativeLayout) findViewById(R.id.rl_clock);
-        rl_record = (RelativeLayout) findViewById(R.id.rl_record);
-        rl_consume = (RelativeLayout) findViewById(R.id.rl_consume);
-        rl_mode = (RelativeLayout) findViewById(R.id.rl_mode);
-        rl_suction = (RelativeLayout) findViewById(R.id.rl_suction);
-        rl_find = (RelativeLayout) findViewById(R.id.rl_find);
-        rl_soft = (RelativeLayout) findViewById(R.id.rl_soft);
-        rl_standard = (RelativeLayout) findViewById(R.id.rl_standard);
-        rl_strong = (RelativeLayout) findViewById(R.id.rl_strong);
-        ll_mode = (LinearLayout) findViewById(R.id.ll_mode);
-        ll_water = (LinearLayout) findViewById(R.id.ll_water);
-        image_down_1 = findViewById(R.id.image_down_1);
-        image_down_2 = findViewById(R.id.image_down_2);
-        image_plan = (ImageView) findViewById(R.id.image_plan);
-        image_random = (ImageView) findViewById(R.id.image_random);
-        image_soft = (ImageView) findViewById(R.id.image_soft);
-        image_standard = (ImageView) findViewById(R.id.image_standard);
-        image_strong = (ImageView) findViewById(R.id.image_strong);
-        image_product = (ImageView) findViewById(R.id.image_product);
-        image_max = (ImageView) findViewById(R.id.image_max);
-        image_voice = findViewById(R.id.image_voice);
-        tv_name.setOnClickListener(this);
-        rl_water.setOnClickListener(this);
-        rl_clock.setOnClickListener(this);
-        rl_record.setOnClickListener(this);
-        rl_consume.setOnClickListener(this);
-        rl_mode.setOnClickListener(this);
-        rl_plan.setOnClickListener(this);
-        rl_random.setOnClickListener(this);
-        rl_voice.setOnClickListener(this);
-        rl_update.setOnClickListener(this);
-        rl_facReset.setOnClickListener(this);
-        rl_find.setOnClickListener(this);
-        ll_water.setOnClickListener(this);
         rl_suction.setOnClickListener(new MyListener());
         rl_soft.setOnClickListener(new MyListener());
         rl_standard.setOnClickListener(new MyListener());
@@ -241,61 +249,58 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         } else {
             tv_name.setText(physicalId);
         }
-        if (subdomain.equals(Constants.subdomain_x785)) {
-            tv_type.setText(getString(R.string.setting_aty_type_x785));
-            image_product.setImageResource(R.drawable.n_x785);
-        } else if (subdomain.equals(Constants.subdomain_x787)) {
-            tv_type.setText(getString(R.string.setting_aty_type_x787));
-            image_product.setImageResource(R.drawable.n_x787);
-        } else if (subdomain.equals(Constants.subdomain_x900)) {
-            tv_type.setText(getString(R.string.setting_aty_type_x900));
-            image_product.setImageResource(R.drawable.n_x900);
-        } else if (subdomain.equals(Constants.subdomain_a9s)) {
-            tv_type.setText(getString(R.string.setting_aty_type_a9s));
-            image_product.setImageResource(R.drawable.n_a9s);
-        } else if (subdomain.equals(Constants.subdomain_a8s)) {
-            tv_type.setText(getString(R.string.setting_aty_type_a8s));
-            image_product.setImageResource(R.drawable.n_a8s);
-        } else if (subdomain.equals(Constants.subdomain_v85)) {
-            tv_type.setText(getString(R.string.setting_aty_type_v85));
-            image_product.setImageResource(R.drawable.n_v85);
-        } else if (subdomain.equals(Constants.subdomain_x800) && BuildConfig.Area == 3) {//美國 A9
-            rl_water.setVisibility(View.GONE);
-            rl_mode.setVisibility(View.GONE);
-            tv_type.setText(getString(R.string.setting_aty_type_a9));
-            image_product.setImageResource(R.drawable.n_x800);
-        } else {
-            rl_mode.setVisibility(View.GONE);
-            tv_type.setText(getString(R.string.setting_aty_type_x800));
-            image_product.setImageResource(R.drawable.n_x800);
+        String robotType = DeviceUtils.getRobotType(subdomain);
+        int product;
+        switch (robotType) {
+            case Constants.X785:
+                product = R.drawable.n_x785;
+                rl_voice.setVisibility(View.GONE);
+                break;
+            case Constants.X787:
+                product = R.drawable.n_x787;
+                rl_voice.setVisibility(View.GONE);
+                break;
+            case Constants.X800:
+                product = R.drawable.n_x800;
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.X900:
+                product = R.drawable.n_x900;
+                rl_update.setVisibility(View.VISIBLE);
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.A8s:
+                product = R.drawable.n_a8s;
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.A9s:
+                product = R.drawable.n_a9s;
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.V85:
+                product = R.drawable.n_v85;
+                rl_record.setVisibility(View.GONE);
+                rl_voice.setVisibility(View.GONE);
+                break;
+            case Constants.A7:
+                product = R.drawable.n_x787;
+                rl_voice.setVisibility(View.GONE);
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.A9:
+                product = R.drawable.n_x800;
+                rl_mode.setVisibility(View.GONE);
+                rl_water.setVisibility(View.GONE);
+                break;
+            default:
+                product = R.drawable.n_x800;
+                break;
         }
-        if (subdomain.equals(Constants.subdomain_x900)) {
-            rl_update.setVisibility(View.VISIBLE);
+        if (BuildConfig.Area == AC.REGIONAL_CHINA||BuildConfig.BRAND.equals("ZACO")) {
+            robotType = BuildConfig.BRAND + " " + robotType;
         }
-        if (subdomain.equals(Constants.subdomain_v85)) {
-            rl_mode.setVisibility(View.VISIBLE);
-            rl_record.setVisibility(View.GONE);
-        }
-        if (subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_x787)) {
-            rl_mode.setVisibility(View.VISIBLE);
-        }
-        if (subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900)) {
-            rl_voice.setVisibility(View.VISIBLE);
-        }
-
-        listener = new ReNameListener() {
-            @Override
-            public void onSuccess() {
-                ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_suc));
-                SpUtils.saveString(context, MainActivity.KEY_DEVNAME, name);
-                tv_name.setText(name);
-            }
-
-            @Override
-            public void onError(ACException e) {
-                ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_fail));
-            }
-        };
+        tv_type.setText(robotType);
+        image_product.setImageResource(product);
     }
 
     public void setMode(int mode) {
@@ -350,7 +355,8 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
         image_strong.setSelected(false);
     }
 
-    @Override
+    @OnClick({R.id.tv_name, R.id.rl_water, R.id.rl_clock, R.id.rl_record, R.id.rl_consume, R.id.rl_mode, R.id.rl_find,
+            R.id.rl_plan, R.id.rl_random, R.id.rl_facReset, R.id.rl_voice, R.id.rl_update})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_name:
@@ -375,11 +381,6 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_record:
                 intent = new Intent(context, HistoryActivity_x9.class);
-//                if (subdomain.equals(Constants.subdomain_x900)) {
-//                    intent = new Intent(context, HistoryActivity_x9.class);
-//                } else {
-//                    intent = new Intent(context, HistoryActivity.class);
-//                }
                 startActivity(intent);
                 break;
             case R.id.rl_consume:
@@ -487,7 +488,19 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
                         return;
                     }
                     universalDialog.dismiss();
-                    DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                    DeviceUtils.renameDevice(deviceId, name, subdomain, new ReNameListener() {
+                        @Override
+                        public void onSuccess() {
+                            ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_suc));
+                            SpUtils.saveString(context, MainActivity.KEY_DEVNAME, name);
+                            tv_name.setText(name);
+                        }
+
+                        @Override
+                        public void onError(ACException e) {
+                            ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_fail));
+                        }
+                    });
                 }).show(getSupportFragmentManager(), "rename");
     }
 
@@ -495,15 +508,12 @@ public class SettingActivity extends BackBaseActivity implements View.OnClickLis
     private void showResetDialog() {
         UniversalDialog universalDialog = new UniversalDialog();
         universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL).setTitle(Utils.getString(R.string.setting_aty_confirm_reset))
-                .setHintTip(Utils.getString(R.string.setting_aty_reset_hint)).setOnRightButtonClck(new UniversalDialog.OnRightButtonClck() {
-            @Override
-            public void onClick() {
-                AlertDialogUtils.hidden(alterDialog);
-                dialog.show();
-                acDeviceMsg.setCode(MsgCodeUtils.FactoryReset);
-                acDeviceMsg.setContent(new byte[]{0x01});
-                sendToDeviceFactoryReset(acDeviceMsg, physicalId);
-            }
+                .setHintTip(Utils.getString(R.string.setting_aty_reset_hint)).setOnRightButtonClck(() -> {
+            AlertDialogUtils.hidden(alterDialog);
+            dialog.show();
+            acDeviceMsg.setCode(MsgCodeUtils.FactoryReset);
+            acDeviceMsg.setContent(new byte[]{0x01});
+            sendToDeviceFactoryReset(acDeviceMsg, physicalId);
         }).show(getSupportFragmentManager(), "reset");
     }
 

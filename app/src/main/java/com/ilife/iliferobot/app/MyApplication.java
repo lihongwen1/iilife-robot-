@@ -55,20 +55,7 @@ public class MyApplication extends MultiDexApplication {
         } else { //测试环境
             AC.init(this, BuildConfig.MAJOR_DOMAIN, BuildConfig.MAJOR_DOMAIN_ID, AC.TEST_MODE);
         }
-        switch (BuildConfig.Area) {
-            case 0:
-                AC.setRegional(AC.REGIONAL_CHINA);
-                break;
-            case 1:
-                AC.setRegional(AC.REGIONAL_SOUTHEAST_ASIA);
-                break;
-            case 3:
-                AC.setRegional(AC.REGIONAL_NORTH_AMERICA);
-                break;
-            case 4:
-                AC.setRegional(AC.REGIONAL_CENTRAL_EUROPE);
-                break;
-        }
+        AC.setRegional(BuildConfig.Area);
         closeAndroidPDialog();
         initTypeface();
         /**
