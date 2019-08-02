@@ -141,7 +141,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLongPressControl() {
-        return getRobotType().equals(Constants.V85) ||getRobotType().equals(Constants.X785) ||getRobotType().equals(Constants.X787);
+        return getRobotType().equals(Constants.V85) ||getRobotType().equals(Constants.X785) ||getRobotType().equals(Constants.X787)||getRobotType().equals(Constants.A7);
     }
 
     /**

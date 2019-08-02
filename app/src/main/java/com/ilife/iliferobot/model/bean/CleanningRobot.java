@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.model;
+package com.ilife.iliferobot.model.bean;
 
 public class CleanningRobot {
     private int img;

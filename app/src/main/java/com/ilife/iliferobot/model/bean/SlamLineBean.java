@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.model;
+package com.ilife.iliferobot.model.bean;
 
 public class SlamLineBean {
     private int type;

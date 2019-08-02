@@ -13,7 +13,7 @@ import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
-import com.ilife.iliferobot.model.CleanningRobot;
+import com.ilife.iliferobot.model.bean.CleanningRobot;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.SpaceItemDecoration;

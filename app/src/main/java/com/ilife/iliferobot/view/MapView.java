@@ -16,8 +16,8 @@ import android.view.View;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
-import com.ilife.iliferobot.model.SlamLineBean;
-import com.ilife.iliferobot.model.VirtualWallBean;
+import com.ilife.iliferobot.model.bean.SlamLineBean;
+import com.ilife.iliferobot.model.bean.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
@@ -65,7 +65,7 @@ public class MapView extends View {
     private Bitmap deleteBitmap;//删除电子墙的bitmap
     private static final int deleteIconW = 36;
     private List<RectF> deleteIconRectFs = new ArrayList<>(10);
-
+    private List<SlamLineBean> lastLineBeans = new ArrayList<>();
     private Canvas boxCanvas;
     private Bitmap boxBitmap;
     private Paint boxPaint;
@@ -714,7 +714,7 @@ public class MapView extends View {
         invalidateUI(TYPE_DRAW_NOW);
     }
 
-    List<SlamLineBean> lastLineBeans = new ArrayList<>();
+
 
     /**
      * 从(0,1500)开始向上一行行绘制slam map

@@ -1,13 +1,11 @@
 package com.ilife.iliferobot.adapter;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.base.BaseViewHolder;
-import com.ilife.iliferobot.model.CleanningRobot;
+import com.ilife.iliferobot.model.bean.CleanningRobot;
 
 import java.util.List;
 
