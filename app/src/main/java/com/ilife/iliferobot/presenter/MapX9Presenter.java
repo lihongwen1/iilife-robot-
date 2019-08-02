@@ -58,8 +58,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-//TODO 处理X900的暂停事件的模拟事件更新UI问题
 // TODO APP后台CPU消耗问题
+//TODO 处理x800系列绘制地图不全部绘制，只绘制新增的点
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
     private final String TAG = "MapX9Presenter";
     private ACDeviceDataMgr.PropertyReceiver propertyReceiver;
@@ -96,7 +96,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * x800实时地图数据
      */
     private ArrayList<Integer> pointList;// map集合
-    private HashSet<String> pointStrList;
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
     private boolean haveMap = true;//标记机型是否有地图 A7 V85机器没有地图
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
@@ -108,13 +107,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         realTimePoints = new ArrayList<>();
         historyRoadList = new ArrayList<>();
         pointList = new ArrayList<>();
-        pointStrList = new HashSet<>();
         deviceId = SpUtils.getLong(MyApplication.getInstance(), MainActivity.KEY_DEVICEID);
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
-        robotType=DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.V85)||robotType.equals(Constants.A7)){
-            haveMap=false;
+        robotType = DeviceUtils.getRobotType(subdomain);
+        if (robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
+            haveMap = false;
         }
     }
 
@@ -141,7 +139,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLongPressControl() {
-        return getRobotType().equals(Constants.V85) ||getRobotType().equals(Constants.X785) ||getRobotType().equals(Constants.X787)||getRobotType().equals(Constants.A7);
+        return getRobotType().equals(Constants.V85) || getRobotType().equals(Constants.X785) || getRobotType().equals(Constants.X787) || getRobotType().equals(Constants.A7);
     }
 
     /**
@@ -277,8 +275,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             minY = src.get(1);
             maxX = src.get(0);
             maxY = src.get(1);
-            offset=0;
-            MyLogger.d(TAG,"data is  clear, so need to reset all params");
+            offset = 0;
+            MyLogger.d(TAG, "data is  clear, so need to reset all params");
         }
         int x, y;
         for (int i = offset + 1; i < src.size(); i += 2) {
@@ -496,19 +494,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if ((x == 0x7fff) & (y == 0x7fff)) {
                     MyLogger.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
                     pointList.clear();
-                    pointStrList.clear();
                     workTime = 0;
                     cleanArea = 0;
-                    minX=0;
-                    minY=0;
-                    maxX=0;
-                    maxY=0;
+                    minX = 0;
+                    minY = 0;
+                    maxX = 0;
+                    maxY = 0;
                 } else {
-                    if ((j == bytes.length - 1) || !pointStrList.contains(x + "_" + y)) {
-                        pointList.add(x);
-                        pointList.add(y);
-                        pointStrList.add(x + "_" + y);
-                    }
+                    pointList.add(x);
+                    pointList.add(y);
                 }
             }
         }
@@ -992,12 +986,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.V85)||robotType.equals(Constants.X785)||robotType.equals(Constants.X787);
+        return robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787);
     }
 
     @Override
     public void enterAlongMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_POINT && pointToAlong())|| curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_POINT && pointToAlong()) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_ALONG || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_ALONG) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -1013,7 +1007,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void enterPointMode() {
-        if ((curStatus == MsgCodeUtils.STATUE_ALONG &&pointToAlong())|| curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
+        if ((curStatus == MsgCodeUtils.STATUE_ALONG && pointToAlong()) || curStatus == MsgCodeUtils.STATUE_WAIT || curStatus == MsgCodeUtils.STATUE_POINT || curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL ||
                 curStatus == MsgCodeUtils.STATUE_PAUSE) {
             if (curStatus == MsgCodeUtils.STATUE_POINT) {
                 sendToDeviceWithOption(ACSkills.get().enterWaitMode());
