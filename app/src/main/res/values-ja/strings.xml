@@ -242,7 +242,7 @@
     <string name="set_password">パスワードを設定します</string>
     <string name="no_device_tip_hi">お久しぶりです</string>
     <string name="no_device_tip_cleaning">掃除を開始します~</string>
-    <string name="x_series_robot">ロボット掃除機 X シリーズ</string>
+    <string name="x_series_robot">ロボット掃除機 %1$s シリーズ</string>
     <string name="map_aty_temp_keypoint">スポットモード</string>
     <string name="robot_connected">接続済み</string>
     <string name="back_to_recharge">充電スタンドに戻る</string>

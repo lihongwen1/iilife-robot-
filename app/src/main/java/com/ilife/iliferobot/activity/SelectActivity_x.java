@@ -40,6 +40,8 @@ public class SelectActivity_x extends BackBaseActivity {
     BaseQuickAdapter adapter;
     @BindView(R.id.tv_top_title)
     TextView tvTitle;
+    @BindView(R.id.tv_x_series)
+    TextView tv_x_series;
     private List<CleanningRobot> robots = new ArrayList<>();
     private String[] supportRobots;
 
@@ -66,6 +68,23 @@ public class SelectActivity_x extends BackBaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         initAdapter();
         recyclerView.setAdapter(adapter);
+        if (BuildConfig.BRAND.equals(Constants.BRAND_ZACO)) {
+            tv_x_series.setText(R.string.x_series_robot);
+        } else {
+            String series;
+            switch (BuildConfig.Area) {
+                case AC.REGIONAL_CHINA:
+                    series = "X";
+                    break;
+                case AC.REGIONAL_NORTH_AMERICA:
+                    series = "A";
+                    break;
+                default:
+                    series = "X";
+                    break;
+            }
+            tv_x_series.setText(getResources().getString(R.string.x_series_robot, series));
+        }
     }
 
     private void initAdapter() {
@@ -73,7 +92,7 @@ public class SelectActivity_x extends BackBaseActivity {
         String robotName;
 
         for (String deviceType : supportRobots) {
-            if (BuildConfig.Area == AC.REGIONAL_CHINA||BuildConfig.BRAND.equals("ZACO")) {
+            if (BuildConfig.Area == AC.REGIONAL_CHINA || BuildConfig.BRAND.equals("ZACO")) {
                 robotName = BuildConfig.BRAND + " " + deviceType;
             } else {
                 robotName = deviceType;

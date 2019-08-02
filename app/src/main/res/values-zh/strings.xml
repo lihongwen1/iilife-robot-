@@ -243,7 +243,7 @@
     <string name="set_password">设置密码</string>
     <string name="no_device_tip_hi">Hi，别来无恙</string>
     <string name="no_device_tip_cleaning">开始您的清洁之旅吧~</string>
-    <string name="x_series_robot">X系列-智能扫地机器人</string>
+    <string name="x_series_robot">%1$s系列-智能扫地机器人</string>
     <string name="map_aty_temp_keypoint">临时重点</string>
     <string name="robot_connected">连接成功</string>
     <string name="back_to_recharge">返回充电座</string>

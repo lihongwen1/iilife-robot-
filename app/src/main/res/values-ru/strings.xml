@@ -243,7 +243,7 @@
     <string name="set_password">Установить пароль</string>
     <string name="no_device_tip_hi">Привет, рад снова видеть Вас</string>
     <string name="no_device_tip_cleaning">Начните свое очищающее путешествие~</string>
-    <string name="x_series_robot">Робот пылесос серии X</string>
+    <string name="x_series_robot">Робот пылесос серии %1$s</string>
     <string name="map_aty_temp_keypoint">Точечный режим</string>
     <string name="robot_connected">Подключен</string>
     <string name="back_to_recharge">Возврат на зарядную базу</string>

@@ -39,6 +39,7 @@ import com.ilife.iliferobot.utils.Utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -95,9 +96,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * x800实时地图数据
      */
     private ArrayList<Integer> pointList;// map集合
-    private ArrayList<String> pointStrList;
+    private HashSet<String> pointStrList;
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
-    private boolean haveMap = true;//标记机型是否有地图 V85机器没有地图
+    private boolean haveMap = true;//标记机型是否有地图 A7 V85机器没有地图
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
 
     @Override
@@ -107,12 +108,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         realTimePoints = new ArrayList<>();
         historyRoadList = new ArrayList<>();
         pointList = new ArrayList<>();
-        pointStrList = new ArrayList<>();
+        pointStrList = new HashSet<>();
         deviceId = SpUtils.getLong(MyApplication.getInstance(), MainActivity.KEY_DEVICEID);
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
         robotType=DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.V85)){
+        if (robotType.equals(Constants.V85)||robotType.equals(Constants.A7)){
             haveMap=false;
         }
     }

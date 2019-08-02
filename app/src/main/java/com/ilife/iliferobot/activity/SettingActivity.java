@@ -285,7 +285,8 @@ public class SettingActivity extends BackBaseActivity {
             case Constants.A7:
                 product = R.drawable.n_x787;
                 rl_voice.setVisibility(View.GONE);
-                rl_mode.setVisibility(View.GONE);
+                rl_record.setVisibility(View.GONE);
+                rl_water.setVisibility(View.GONE);
                 break;
             case Constants.A9:
                 product = R.drawable.n_x800;

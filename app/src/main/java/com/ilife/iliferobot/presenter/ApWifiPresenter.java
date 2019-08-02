@@ -292,10 +292,11 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     @Override
     public Single<ACUserDevice> bindDevice() {
         return Single.create(emitter -> {
-            LogUtil.d(TAG, "physicalId--" + physicalId);
-            mView.updateBindProgress("开始绑定设备", 90);
             String bindPhysicalId = physicalId;
-            AC.bindMgr().bindDevice(SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN), bindPhysicalId, "", new PayloadCallback<ACUserDevice>() {
+            String subdomain=SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN);
+            LogUtil.d(TAG, "physicalId--" + physicalId+"---subdomain---- "+subdomain);
+            mView.updateBindProgress("开始绑定设备", 90);
+            AC.bindMgr().bindDevice(subdomain, bindPhysicalId, "", new PayloadCallback<ACUserDevice>() {
                 @Override
                 public void success(ACUserDevice userDevice) {
                     MyLogger.e(TAG, "设备绑定成功！ " + userDevice.toString());

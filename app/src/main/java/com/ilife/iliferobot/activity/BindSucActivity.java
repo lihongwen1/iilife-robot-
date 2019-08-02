@@ -49,7 +49,7 @@ public class BindSucActivity extends BackBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addLayoutListener(findViewById(R.id.rootView),bt_done);
+        addLayoutListener(findViewById(R.id.rootView), bt_done);
     }
 
     @Override
@@ -81,6 +81,7 @@ public class BindSucActivity extends BackBaseActivity {
             case Constants.subdomain_x785:
                 image_device = R.drawable.rechage_device_x785;
                 break;
+            case Constants.subdomain_a7:
             case Constants.subdomain_x787:
                 image_device = R.drawable.rechage_device_x787;
                 break;
@@ -105,7 +106,7 @@ public class BindSucActivity extends BackBaseActivity {
         iv_bind_device.setImageResource(image_device);
         et_devName.setText(devName);
         et_devName.setSelection(et_devName.getText().toString().trim().length());
-        UserUtils.setInputFilter(et_devName,Utils.getInputMaxLength());
+        UserUtils.setInputFilter(et_devName, Utils.getInputMaxLength());
 
         listener = new ReNameListener() {
             @Override
@@ -133,7 +134,7 @@ public class BindSucActivity extends BackBaseActivity {
             case R.id.bt_done:
                 name = et_devName.getText().toString().trim();
                 if (name.length() > Utils.getInputMaxLength()) {
-                    ToastUtils.showToast(getResources().getString(R.string.name_max_length,Utils.getInputMaxLength()+""));
+                    ToastUtils.showToast(getResources().getString(R.string.name_max_length, Utils.getInputMaxLength() + ""));
                     return;
                 }
                 if (TextUtils.isEmpty(name)) {
