@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accloud.service.ACException;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.listener.ReNameListener;
 import com.ilife.iliferobot.able.Constants;
@@ -102,7 +103,12 @@ public class BindSucActivity extends BackBaseActivity {
                 image_device = R.drawable.rechage_device_x800;
                 break;
         }
-        String devName = getString(R.string.bind_suc_sty_robot_name);
+        String devName;
+        if (Utils.isIlife()) {
+            devName = getResources().getString(R.string.bind_suc_sty_robot_name, BuildConfig.BRAND);
+        }else {
+            devName = getResources().getString(R.string.bind_suc_sty_robot_name, DeviceUtils.getRobotType(subdomain));
+        }
         iv_bind_device.setImageResource(image_device);
         et_devName.setText(devName);
         et_devName.setSelection(et_devName.getText().toString().trim().length());

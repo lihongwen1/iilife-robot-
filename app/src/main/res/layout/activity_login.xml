@@ -21,7 +21,6 @@
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginEnd="@dimen/dp_30"
-            android:hint="@string/login_aty_email"
             android:inputType="textEmailAddress"
             app:ic_left_click="@drawable/n_icon_personal"
             app:ic_left_unclick="@drawable/n_icon_personal"

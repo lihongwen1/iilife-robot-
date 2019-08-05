@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * Created by chengjiaping on 2018/8/6.
  */
 //DONE
-public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View,View.OnClickListener{
+public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View, View.OnClickListener {
     private final String TAG = ForgetPwdActivity.class.getSimpleName();
     final int STATUS_GAIN_CODE = 0X01;
     final int STATUS_GAIN_DONE = 0X02;
@@ -49,29 +49,30 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     @BindView(R.id.image_show_2)
     ImageView image_show2;
     String str_email;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
     }
 
-    public void initData(){
+
+    public void initData() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle!=null){
+        if (bundle != null) {
             str_email = bundle.getString(LoginActivity.STR_EMAIL);
-            if (!TextUtils.isEmpty(str_email)){
+            if (!TextUtils.isEmpty(str_email)) {
                 et_email.setText(str_email);
             }
         }
-       unusableBtnConfirm();
+        unusableBtnConfirm();
     }
-
 
 
     @Override
     public void attachPresenter() {
         super.attachPresenter();
-        mPresenter=new ForgetPasswordPresenter();
+        mPresenter = new ForgetPasswordPresenter();
         mPresenter.attachView(this);
     }
 
@@ -84,8 +85,13 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     public void initView() {
         context = this;
         tv_title.setText(getString(R.string.register2_reset_pass));
-        Utils.setTransformationMethod(et_pw1,false);
-        Utils.setTransformationMethod(et_pw2,false);
+        if (Utils.isSupportPhone()) {
+            et_email.setHint(R.string.login_aty_email_phone);
+        } else {
+            et_email.setHint(R.string.login_aty_email);
+        }
+        Utils.setTransformationMethod(et_pw1, false);
+        Utils.setTransformationMethod(et_pw2, false);
         et_code.addOnInputEndListener(s -> mPresenter.checkVerificationCode(s));
         et_email.addOnInputEndListener(s -> mPresenter.checkAccount(s));
         et_pw1.addOnInputEndListener(s -> mPresenter.checkPwd1(s));
@@ -93,32 +99,31 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
 
     }
 
-      @OnClick({R.id.tv_gain, R.id.image_show_1, R.id.image_show_2, R.id.bt_confirm})
+    @OnClick({R.id.tv_gain, R.id.image_show_1, R.id.image_show_2, R.id.bt_confirm})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_gain:
                 mPresenter.sendVerificationCode();
                 break;
             case R.id.bt_confirm:
-                 mPresenter.confirm();
+                mPresenter.confirm();
                 break;
             case R.id.image_show_1:
                 boolean isSelected = !image_show1.isSelected();
                 int curIndex = et_pw1.getSelectionStart();
                 image_show1.setSelected(isSelected);
-                Utils.setTransformationMethod(et_pw1,isSelected);
+                Utils.setTransformationMethod(et_pw1, isSelected);
                 et_pw1.setSelection(curIndex);
                 break;
             case R.id.image_show_2:
                 boolean isSelected_ = !image_show2.isSelected();
                 int curIndex_ = et_pw2.getSelectionStart();
                 image_show2.setSelected(isSelected_);
-                Utils.setTransformationMethod(et_pw2,isSelected_);
+                Utils.setTransformationMethod(et_pw2, isSelected_);
                 et_pw2.setSelection(curIndex_);
                 break;
         }
     }
-
 
 
     @Override
@@ -134,6 +139,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
         startActivity(intent);
         removeActivity();
     }
+
     @Override
     public void unusableBtnConfirm() {
         bt_confirm.setSelected(false);
@@ -178,6 +184,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     public String getPwd1() {
         return et_pw1.getText().toString().trim();
     }
+
     @Override
     public String getPwd2() {
         return et_pw2.getText().toString().trim();

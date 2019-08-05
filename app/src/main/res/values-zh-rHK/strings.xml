@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">智意機械人</string>
     <string name="login_aty_login">登錄</string>
-    <string name="login_aty_email">手機號/郵箱</string>
+    <string name="login_aty_email_phone">手機號/郵箱</string>
     <string name="login_aty_pw">請輸入新密碼(6個字符以上)</string>
-    <string name="login_aty_input_email">請輸入手機號/郵箱</string>
+    <string name="login_aty_input_email_phone">請輸入手機號/郵箱</string>
     <string name="login_aty_input_pw">請輸入密碼</string>
     <string name="login_aty_pw_ensure">確認新密碼</string>
     <string name="login_aty_fw">忘記密碼？</string>
@@ -54,7 +53,7 @@
     <string name="third_ap_aty_port_">請先連接以\"Robot-\"開頭的熱點</string>
     <string name="bind_suc_aty_name">請為您的機械人命名</string>
     <string name="bind_suc_sty_robot_done">完成</string>
-    <string name="bind_suc_sty_robot_name">ILIFE掃地機</string>
+    <string name="bind_suc_sty_robot_name">%1$s掃地機</string>
     <string name="bind_aty_reName_suc">修改成功</string>
     <string name="bind_aty_reName_fail">修改失敗</string>
     <string name="open_gps_location">開啟GPS位置信息</string>
@@ -292,4 +291,6 @@
     <string name="start_random_cleaning">已啟用隨機清掃</string>
     <string name="ap_guide_aty_tip2_v85">長按機器的啟動鍵，8秒後聽到\"嘀\"的一聲鬆開，WiFi指示燈閃爍。</string>
     <string name="ap_guide_have_heard_didi_v85">已聽到嘀聲</string>
+    <string name="login_aty_email">郵箱</string>
+    <string name="login_aty_input_email">請輸入郵箱</string>
 </resources>

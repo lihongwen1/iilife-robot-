@@ -13,7 +13,6 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -88,12 +87,20 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     @Override
     public void isMobileUseful() {
         if (mView.getPhone().isEmpty()) {
-            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
+            if (Utils.isSupportPhone()) {
+                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email_phone));
+            } else {
+                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
+            }
             isPhoneUseful = false;
             return;
         }
         if (!UserUtils.isPhone(mView.getPhone()) && !UserUtils.isEmail(mView.getPhone())) {
-            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
+            if (Utils.isSupportPhone()) {
+                ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
+            } else {
+                ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
+            }
             isPhoneUseful = false;
         } else {
             isPhoneUseful = true;

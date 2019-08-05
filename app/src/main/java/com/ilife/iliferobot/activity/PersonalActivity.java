@@ -367,6 +367,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
             @Override
             public void success(ACUserDevice userDevice) {
                 ToastUtils.showToast(getString(R.string.personal_aty_bind_done));
+                removeActivity();
             }
 
             @Override

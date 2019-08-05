@@ -69,6 +69,11 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     @Override
     public void initView() {
         context = this;
+        if (Utils.isSupportPhone()) {
+            et_phone_number.setHint(R.string.login_aty_email_phone);
+        } else {
+            et_phone_number.setHint(R.string.login_aty_email);
+        }
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         if (!Utils.isIlife()) {
             tv_slogan.setVisibility(View.INVISIBLE);

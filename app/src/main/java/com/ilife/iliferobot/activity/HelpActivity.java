@@ -15,17 +15,14 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -39,13 +36,11 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
-import com.bumptech.glide.Glide;
-import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.adapter.HelpFeedImgAdapter;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.BitmapUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
@@ -55,21 +50,14 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.SpaceItemDecoration;
-import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 
 /**
@@ -125,8 +113,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
 
         types = DeviceUtils.getSupportDevices();
         et_email = (EditText) findViewById(R.id.et_email);
-        if (Utils.isChinaEnvironment()) {
-            et_email.setHint(R.string.login_aty_input_email);
+        if (Utils.isSupportPhone()) {
+            et_email.setHint(R.string.login_aty_input_email_phone);
         } else {
             et_email.setHint(R.string.personal_input_email);
         }
@@ -267,7 +255,11 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             case R.id.bt_confirm:
                 String email = et_email.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
-                    ToastUtils.showToast(context, getString(R.string.login_aty_input_email));
+                    if (Utils.isSupportPhone()) {
+                        ToastUtils.showToast(context, getString(R.string.login_aty_input_email_phone));
+                    } else {
+                        ToastUtils.showToast(context, getString(R.string.login_aty_input_email));
+                    }
                     return;
                 }
                 String type = et_type.getText().toString().trim();
@@ -282,7 +274,11 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 }
                 if (Utils.isChinaEnvironment()) {
                     if (!UserUtils.isEmail(email) && !UserUtils.isPhone(email)) {
-                        ToastUtils.showToast(context, getString(R.string.regist_wrong_account));
+                        if (Utils.isSupportPhone()){
+                            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
+                        }else {
+                            ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
+                        }
                         return;
                     }
                 } else {

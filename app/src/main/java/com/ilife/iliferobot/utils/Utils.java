@@ -7,7 +7,9 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.accloud.cloudservice.AC;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.app.MyApplication;
 
 import java.util.Locale;
@@ -37,8 +39,12 @@ public class Utils {
      * @return
      */
     public static  boolean isIlife() {
-        return BuildConfig.BRAND.equals("ILIFE");
+        return BuildConfig.BRAND.equals(Constants.BRAND_ILIFE);
     }
+
+     public static boolean isSupportPhone(){
+        return BuildConfig.Area== AC.REGIONAL_CHINA;
+     }
 
     public static  boolean isChineseLanguage(){
         String lan = LanguageUtils.getDefaultLanguage();

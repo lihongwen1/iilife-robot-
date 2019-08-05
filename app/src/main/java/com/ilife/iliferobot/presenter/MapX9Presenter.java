@@ -211,7 +211,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mView.drawSlamMap(slamBytes);
                             mView.drawRoadMap(realTimePoints, historyRoadList);
                             mView.drawObstacle();
-                            mView.drawVirtualWall(null);//只是刷新电子墙
+                            mView.drawVirtualWall(existPointList);//只是刷新电子墙
                         }
                     }
                 } else {//x800系列
@@ -411,7 +411,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     }
                     wallPointList.clear();
                     wallPointList.addAll(existPointList);
-                    mView.drawVirtualWall(existPointList);
+                    if (isDrawMap()) {
+                        mView.drawVirtualWall(existPointList);
+                    }
                 }
             }
 

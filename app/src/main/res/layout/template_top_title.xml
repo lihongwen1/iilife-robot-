@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_vertical"
-    style="@style/Aty_top_rl_bg">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Aty_top_rl_bg"
+    android:gravity="center_vertical">
 
-    <ImageView
-        android:id="@+id/image_back"
-        style="@style/Image_Back_Style"
-        android:layout_marginStart="@dimen/dp_14"
-        android:contentDescription="@null" />
+    <LinearLayout
+        style="@style/Aty_top_rl_bg"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/image_back"
+            style="@style/Image_Back_Style"
+            android:layout_marginStart="@dimen/dp_14"
+            android:contentDescription="@null" />
+         <View
+             android:layout_weight="1"
+             android:layout_width="0dp"
+             android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/fl_top_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/n_btn_menu" />
+        </FrameLayout>
+    </LinearLayout>
 
     <TextView
-        android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginStart="@dimen/dp_30"
         android:id="@+id/tv_top_title"
         style="@style/Text_16sp_33"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
         android:ellipsize="end"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_weight="1"
         android:maxLines="1"
         android:text="@string/login_aty_login"
         android:textStyle="bold" />
-
-    <FrameLayout
-        android:layout_marginEnd="@dimen/dp_30"
-        android:id="@+id/fl_top_menu"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/n_btn_menu"
-            />
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

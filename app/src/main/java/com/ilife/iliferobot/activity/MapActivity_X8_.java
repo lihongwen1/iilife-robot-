@@ -32,6 +32,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
             case Constants.X800:
                 rechargeModel = R.drawable.rechage_device_x800;
                 break;
+            case Constants.A7:
             case Constants.X787:
                 rechargeModel = R.drawable.rechage_device_x787;
                 break;

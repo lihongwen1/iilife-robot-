@@ -12,6 +12,7 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
@@ -43,6 +44,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
     Button bt_login;
     public static final String IS_REGISTER = "IS_REGISTER";
     public static final String STR_EMAIL = "STR_EMAIL";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +54,8 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
     @Override
     public void attachPresenter() {
         super.attachPresenter();
-       mPresenter=new LoginPresenter();
-       mPresenter.attachView(this);
+        mPresenter = new LoginPresenter();
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -64,9 +66,14 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
     @Override
     public void initView() {
         context = this;
-        Utils.setTransformationMethod(et_pass,false);
+        if (Utils.isSupportPhone()) {
+            et_email.setHint(R.string.login_aty_email_phone);
+        } else {
+            et_email.setHint(R.string.login_aty_email);
+        }
+        Utils.setTransformationMethod(et_pass, false);
         et_email.addOnInputEndListener(s -> {
-              mPresenter.checkMobile(s);
+            mPresenter.checkMobile(s);
         });
         et_pass.addOnInputEndListener(s -> mPresenter.chePassword(s));
         bt_login.setClickable(false);
@@ -75,37 +82,41 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
 
     @OnClick({R.id.image_show, R.id.tv_forget, R.id.bt_login})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.image_show:
                 boolean isSelected = !image_show.isSelected();
                 int curIndex = et_pass.getSelectionStart();
                 image_show.setSelected(isSelected);
-                Utils.setTransformationMethod(et_pass,isSelected);
+                Utils.setTransformationMethod(et_pass, isSelected);
                 et_pass.setSelection(curIndex);
                 break;
             case R.id.tv_forget:
                 Intent i = new Intent(LoginActivity.this, ForgetPwdActivity.class);
-                i.putExtra(IS_REGISTER,false);
+                i.putExtra(IS_REGISTER, false);
                 startActivity(i);
                 break;
             case R.id.bt_login:
                 String str_account = et_email.getText().toString().trim();
                 String str_pass = et_pass.getText().toString().trim();
-                if (!UserUtils.isEmail(str_account)&&!UserUtils.isPhone(str_account)){
-                    ToastUtils.showToast(context,getString(R.string.regist_wrong_account));
+                if (!UserUtils.isEmail(str_account) && !UserUtils.isPhone(str_account)) {
+                    if (Utils.isSupportPhone()){
+                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
+                    }else {
+                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
+                    }
                     return;
                 }
-                login(str_account,str_pass);
+                login(str_account, str_pass);
                 break;
         }
     }
 
-    public void login(String account,String str_pass){
+    public void login(String account, String str_pass) {
         AC.accountMgr().login(account, str_pass, new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo userInfo) {
                 String email = userInfo.getEmail();
-                SpUtils.saveString(context,KEY_EMAIL,email);
+                SpUtils.saveString(context, KEY_EMAIL, email);
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
                 removeActivity();
@@ -113,7 +124,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
 
             @Override
             public void error(ACException e) {
-                ToastUtils.showErrorToast(context,e.getErrorCode());
+                ToastUtils.showErrorToast(context, e.getErrorCode());
             }
         });
     }
@@ -126,7 +137,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
 
     @Override
     public void reuseBtnLogin() {
-       bt_login.setSelected(true);
-       bt_login.setClickable(true);
+        bt_login.setSelected(true);
+        bt_login.setClickable(true);
     }
 }

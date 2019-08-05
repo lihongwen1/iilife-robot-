@@ -1,8 +1,4 @@
 <resources>
-    <string name="app_name">ZACO</string>
-    <string name="login_aty_email">Email address</string>
-    <string name="login_aty_input_email">Enter email</string>
-    <string name="regist_wrong_account">Invalid email address</string>
-    <string name="bind_suc_sty_robot_name">ZACO robot vacuum</string>
+    <string name="bind_suc_sty_robot_name">ZACO %1$s</string>
     、  <string name="x_series_robot">Robot vacuum</string>
 </resources>

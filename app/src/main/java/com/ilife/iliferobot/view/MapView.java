@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -31,6 +32,7 @@ import java.util.List;
 
 //TODO 2.电子墙集合需要增加锁机制，避免数据错乱；
 //TODO 2.移动导致绘图卡顿的bug;3.800updateslam异常
+//TODO 用两张图片相交的模式绘制800地图
 public class MapView extends View {
     private static final int TYPE_DRAW_CONDITION = 1;
     private static final int TYPE_DRAW_NOW = 2;
@@ -137,9 +139,12 @@ public class MapView extends View {
         virtualPaint.setColor(getResources().getColor(R.color.color_f08300));
         virtualPaint.setStrokeWidth(3f);
 
-        boxPaint = new Paint();
         boxPath = new Path();
-
+        boxPaint = new Paint();
+        boxPaint.setDither(true);
+        boxPaint.setAntiAlias(true);
+        boxPaint.setStyle(Paint.Style.FILL);
+        boxPaint.setFilterBitmap(true);
         /**
          * 电子墙路径集合
          */
@@ -285,9 +290,9 @@ public class MapView extends View {
 
     public void setPaddingBottom(int paddingBottom) {
         if (!isSetExtraPadding) {
-            isSetExtraPadding=true;
-            dragY-=paddingBottom/2f;
-            originalDragY=dragY;
+            isSetExtraPadding = true;
+            dragY -= paddingBottom / 2f;
+            originalDragY = dragY;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
     }
@@ -713,7 +718,6 @@ public class MapView extends View {
         }
         invalidateUI(TYPE_DRAW_NOW);
     }
-
 
 
     /**

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name"> ILIFE робот-пылесос</string>
     <string name="login_aty_login">Вход</string>
-    <string name="login_aty_email">Телефон/эл. почта</string>
+    <string name="login_aty_email_phone">Телефон/эл. почта</string>
     <string name="login_aty_pw">Новый пароль (мин. 6 символов)</string>
-    <string name="login_aty_input_email">Введите телефон/эл. почту</string>
+    <string name="login_aty_input_email_phone">Введите телефон/эл. почту</string>
     <string name="login_aty_input_pw">Введите пароль</string>
     <string name="login_aty_pw_ensure">Повторите новый пароль</string>
     <string name="login_aty_fw">Забыли пароль?</string>
@@ -56,7 +55,7 @@
     <string name="third_ap_aty_port_">Пожалуйста, подключитесь к точке доступа, начиная с \"Robot-\"</string>
     <string name="bind_suc_aty_name">Назовите  робота</string>
     <string name="bind_suc_sty_robot_done">Завершено</string>
-    <string name="bind_suc_sty_robot_name">ILIFE робот-пылесос</string>
+    <string name="bind_suc_sty_robot_name">%1$s робот-пылесос</string>
     <string name="bind_aty_reName_suc">Наименование присвоено</string>
     <string name="bind_aty_reName_fail">Изменить наименование не удалось</string>
     <string name="open_gps_location">Включить GPS</string>
@@ -293,6 +292,8 @@
     <string name="zaco_phone_server_time">(Пн-пт: 09:00-17:00)</string>
     <string name="start_random_cleaning">Автоматический режим активирован</string>
     <string name="ap_guide_have_heard_didi_v85">слышен сигнал.</string>
+    <string name="login_aty_email">Телефон/эл. почта</string>
+    <string name="login_aty_input_email">Введите телефон/эл. почту</string>
 
 
 </resources>

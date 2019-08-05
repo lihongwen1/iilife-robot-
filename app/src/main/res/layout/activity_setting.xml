@@ -24,8 +24,7 @@
             style="@style/Text_18sp_f08300"
             android:layout_marginStart="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_37"
-            android:layout_toEndOf="@+id/image_product"
-            android:text="@string/bind_suc_sty_robot_name" />
+            android:layout_toEndOf="@+id/image_product"/>
 
         <com.ilife.iliferobot.view.LightTextView
             android:id="@+id/textView"

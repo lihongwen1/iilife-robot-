@@ -7,7 +7,6 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.activity.LoginActivity;
 import com.ilife.iliferobot.contract.ForgetPasswordContract;
@@ -109,7 +108,11 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 }
             });
         } else {
-            ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
+            if (Utils.isSupportPhone()) {
+                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email_phone));
+            } else {
+                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
+            }
         }
     }
 
@@ -132,7 +135,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
             @Override
             public void success(Boolean result) {
                 if (result) {
-                        resetPassword();
+                    resetPassword();
                 } else {
                     ToastUtils.showToast(Utils.getString(R.string.register2_aty_code_wrong));
                 }

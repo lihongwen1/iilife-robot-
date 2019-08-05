@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">ILIFE Robot</string>
     <string name="login_aty_login">Login</string>
-    <string name="login_aty_email">Mobile/email</string>
+    <string name="login_aty_email_phone">Mobile/Email</string>
     <string name="login_aty_pw">New password (min. 6 characters)</string>
-    <string name="login_aty_input_email">Enter mobile/email</string>
+    <string name="login_aty_input_email_phone">Enter mobile/email</string>
     <string name="login_aty_input_pw">Enter password</string>
     <string name="login_aty_pw_ensure">Reenter new password</string>
     <string name="login_aty_fw">Forgot password？</string>
@@ -55,7 +54,7 @@
     <string name="third_ap_aty_port_">Connect to WiFi starting with \"Robot-\"</string>
     <string name="bind_suc_aty_name">Name your robot</string>
     <string name="bind_suc_sty_robot_done">Completed</string>
-    <string name="bind_suc_sty_robot_name">ILIFE robot vacuum</string>
+    <string name="bind_suc_sty_robot_name">%1$s robot vacuum</string>
     <string name="bind_aty_reName_suc">Nickname change completed</string>
     <string name="bind_aty_reName_fail">Nickname change failed</string>
     <string name="open_gps_location">Enable GPS</string>
@@ -297,4 +296,6 @@
     <string name="zaco_phone_server_time">Monday - Friday 09:00 – 17:00</string>
     <string name="start_random_cleaning">Auto mode activated</string>
     <string name="ap_guide_have_heard_didi_v85">beep is heard.</string>
+    <string name="login_aty_email">Email address</string>
+    <string name="login_aty_input_email">Enter email</string>
 </resources>
