@@ -62,7 +62,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
     @Override
     public void sendVerificationCode() {
         String str_email = mView.getAccount();
-        if (UserUtils.isEmail(str_email) || UserUtils.isPhone(str_email)) {
+        if (Utils.checkAccountUseful(str_email)) {
             AC.accountMgr().checkExist(str_email, new PayloadCallback<Boolean>() {
                 @Override
                 public void success(Boolean isExist) {
@@ -107,12 +107,6 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                     ToastUtils.showErrorToast(e.getErrorCode());
                 }
             });
-        } else {
-            if (Utils.isSupportPhone()) {
-                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email_phone));
-            } else {
-                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
-            }
         }
     }
 
@@ -120,10 +114,12 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
     public void confirm() {
         if (!UserUtils.checkPassword(mView.getPwd1())) {
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
+            mView.resetPwdFail();
             return;
         }
         if (!mView.getPwd1().equals(mView.getPwd2())) {
             ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
+            mView.resetPwdFail();
             return;
         }
         checkVerificationCode();
@@ -131,25 +127,34 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void checkVerificationCode() {
+        if (!isViewAttached()) {
+            mView.resetPwdFail();
+            return;
+        }
         AC.accountMgr().checkVerifyCode(mView.getAccount(), mView.getVerificationCode(), new PayloadCallback<Boolean>() {
             @Override
             public void success(Boolean result) {
                 if (result) {
                     resetPassword();
                 } else {
+                    mView.resetPwdFail();
                     ToastUtils.showToast(Utils.getString(R.string.register2_aty_code_wrong));
                 }
             }
 
             @Override
             public void error(ACException e) {
-
+                mView.resetPwdFail();
             }
         });
     }
 
     @Override
     public void resetPassword() {
+        if (!isViewAttached()) {
+            mView.resetPwdFail();
+            return;
+        }
         AC.accountMgr().resetPassword(mView.getAccount(), mView.getPwd1(), mView.getVerificationCode(), new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo acUserInfo) {
@@ -157,11 +162,11 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                 String email = acUserInfo.getEmail();
                 SpUtils.saveString(MyApplication.getInstance(), LoginActivity.KEY_EMAIL, email);
                 mView.resetPwdSuccess();
-
             }
 
             @Override
             public void error(ACException e) {
+                mView.resetPwdFail();
                 ToastUtils.showErrorToast(e.getErrorCode());
             }
         });

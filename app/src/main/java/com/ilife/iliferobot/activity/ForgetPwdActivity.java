@@ -106,6 +106,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
                 mPresenter.sendVerificationCode();
                 break;
             case R.id.bt_confirm:
+                showLoadingDialog();
                 mPresenter.confirm();
                 break;
             case R.id.image_show_1:
@@ -126,6 +127,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     }
 
 
+
     @Override
     public void registerSuccess() {
         Intent intent = new Intent(ForgetPwdActivity.this, MainActivity.class);
@@ -134,7 +136,13 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
     }
 
     @Override
+    public void resetPwdFail() {
+       hideLoadingDialog();
+    }
+
+    @Override
     public void resetPwdSuccess() {
+        hideLoadingDialog();
         Intent intent = new Intent(ForgetPwdActivity.this, MainActivity.class);
         startActivity(intent);
         removeActivity();

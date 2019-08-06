@@ -73,7 +73,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                 MyLogger.d(TAG, "扫描目标wifi结束" + mApSsid);
                 if (mApSsid == null || mApSsid.isEmpty()) {
                     apMsg.append("未发现Robot-XXXX开头的热点");
-                    e.onError(new Exception(Utils.getString(R.string.ap_wifi_connet_no_wifi)));
+                    e.onError(new Exception("未发现Robot-XXXX开头的热点"));
                 } else {
                     e.onComplete();
                 }
@@ -87,10 +87,14 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
     @Override
     public void connectToDeviceWithSsid(String ssid) {
-        apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+        apProgressDsiposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
                 MyLogger.d(TAG, "update progress");
-                mView.updateBindProgress("", (int) (aLong * 5));
+                if (aLong==25){
+                    mView.updateBindProgress("",80);
+                }else {
+                    mView.updateBindProgress("", (int) (aLong * 3));
+                }
             }
         });
         mApSsid = ssid;
@@ -122,10 +126,14 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
     @Override
     public void connectToDevice() {
-        apProgressDsiposable = Observable.intervalRange(1, 16, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+        apProgressDsiposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
                 MyLogger.d(TAG, "update progress");
-                mView.updateBindProgress("", (int) (aLong * 5));
+                if (aLong==25){
+                    mView.updateBindProgress("",80);
+                }else {
+                mView.updateBindProgress("", (int) (aLong * 3));
+                }
             }
         });
         apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).

@@ -72,9 +72,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
             et_email.setHint(R.string.login_aty_email);
         }
         Utils.setTransformationMethod(et_pass, false);
-        et_email.addOnInputEndListener(s -> {
-            mPresenter.checkMobile(s);
-        });
+        et_email.addOnInputEndListener(s -> mPresenter.checkMobile(s));
         et_pass.addOnInputEndListener(s -> mPresenter.chePassword(s));
         bt_login.setClickable(false);
     }
@@ -98,15 +96,9 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
             case R.id.bt_login:
                 String str_account = et_email.getText().toString().trim();
                 String str_pass = et_pass.getText().toString().trim();
-                if (!UserUtils.isEmail(str_account) && !UserUtils.isPhone(str_account)) {
-                    if (Utils.isSupportPhone()){
-                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
-                    }else {
-                        ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
-                    }
-                    return;
+                if (Utils.checkAccountUseful(str_account)){
+                   login(str_account, str_pass);
                 }
-                login(str_account, str_pass);
                 break;
         }
     }

@@ -254,12 +254,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 break;
             case R.id.bt_confirm:
                 String email = et_email.getText().toString().trim();
-                if (TextUtils.isEmpty(email)) {
-                    if (Utils.isSupportPhone()) {
-                        ToastUtils.showToast(context, getString(R.string.login_aty_input_email_phone));
-                    } else {
-                        ToastUtils.showToast(context, getString(R.string.login_aty_input_email));
-                    }
+                if (!Utils.checkAccountUseful(email)){
                     return;
                 }
                 String type = et_type.getText().toString().trim();

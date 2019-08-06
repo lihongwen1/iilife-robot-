@@ -18,7 +18,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
     @Override
     public void chePassword(String password) {
-        isPasswordOk=password.length()>0;
+        isPasswordOk=password.length()>=6;
         if (isPhoneOk&&isPasswordOk){
             mView.reuseBtnLogin();
         }else {

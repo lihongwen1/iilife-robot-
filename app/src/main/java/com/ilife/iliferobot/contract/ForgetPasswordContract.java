@@ -18,6 +18,7 @@ public interface ForgetPasswordContract {
         String getPwd2();
         void registerSuccess();
         void resetPwdSuccess();
+        void resetPwdFail();
 
     }
 

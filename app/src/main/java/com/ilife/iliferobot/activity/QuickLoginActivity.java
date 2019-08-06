@@ -99,7 +99,6 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 mPresenter.checkVerificationCode();
                 break;
             case R.id.tv_send_code:
-                mPresenter.isMobileUseful();
                 mPresenter.sendVerification();
                 break;
         }

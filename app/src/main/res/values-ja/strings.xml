@@ -50,11 +50,10 @@
     <string name="ap_aty_robot_wifi">デバイスホットスポット：</string>
     <string name="third_ap_tip2">**注意：</string>
     <string name="third_ap_aty_tip1">\"Robot-XXX\"接続を選択してください。デフォルトのパスワードを入力してください：123456789。前のページに戻って" "今すぐ接続"を押してください。</string>
-    <string name="ap_wifi_connet_no_wifi"> "Robot-XXXX"で始まるホットスポットが見つかりません</string>
     <string name="third_ap_aty_port_">\"Robot-\"で始まるWiFiに接続します</string>
     <string name="bind_suc_aty_name">ロボットに名前を付けてください</string>
     <string name="bind_suc_sty_robot_done">完了しました</string>
-    <string name="bind_suc_sty_robot_name">%1$sロボット掃除機</string>
+    <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
     <string name="bind_aty_reName_suc">ニックネームの変更が完了しました</string>
     <string name="bind_aty_reName_fail">ニックネームの変更に失敗しました</string>
     <string name="open_gps_location">GPSを有効にする</string>

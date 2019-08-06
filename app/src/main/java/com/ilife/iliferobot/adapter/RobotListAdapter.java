@@ -52,6 +52,7 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                 case Constants.subdomain_x785:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x785);
                     break;
+                case Constants.subdomain_a7://A7
                 case Constants.subdomain_x787:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x787);
                     break;
@@ -71,7 +72,7 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v85);
                     break;
                 default:
-                    holder.setImageResource(context, R.id.image_product,R.drawable.n_x800);
+                    holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
                     break;
             }
             holder.setText(R.id.tv_name, TextUtils.isEmpty(data.get(position).getName()) ? data.get(position).physicalDeviceId :

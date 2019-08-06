@@ -37,6 +37,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void sendVerification() {
+        isMobileUseful();
         //send code by cloud
         if (!isPhoneUseful) {
             return;
@@ -86,25 +87,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void isMobileUseful() {
-        if (mView.getPhone().isEmpty()) {
-            if (Utils.isSupportPhone()) {
-                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email_phone));
-            } else {
-                ToastUtils.showToast(Utils.getString(R.string.login_aty_input_email));
-            }
-            isPhoneUseful = false;
-            return;
-        }
-        if (!UserUtils.isPhone(mView.getPhone()) && !UserUtils.isEmail(mView.getPhone())) {
-            if (Utils.isSupportPhone()) {
-                ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
-            } else {
-                ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
-            }
-            isPhoneUseful = false;
-        } else {
-            isPhoneUseful = true;
-        }
+           isPhoneUseful= Utils.checkAccountUseful(mView.getPhone());
     }
 
     @Override
