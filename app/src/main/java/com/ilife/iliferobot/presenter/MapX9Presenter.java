@@ -906,7 +906,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         if (lastStatus != MsgCodeUtils.STATUE_RECHARGE && curStatus != MsgCodeUtils.STATUE_PLANNING && curStatus == sendByte) {//900的暂停模式发的是待机命令，不准确
                             setStatus(curStatus, -1, mopForce, isMaxMode, voiceOpen);
                         }
-                        if (curStatus == 0x0B) {//寻找模式
+                        if (curStatus == MsgCodeUtils.STATUE_CHARGING_) {//寻找模式
                             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
                         }
                         break;

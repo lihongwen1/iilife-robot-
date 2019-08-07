@@ -265,4 +265,5 @@ dependencies {
     implementation 'com.github.zackratos.ultimatebar:ultimatebar3:3.1.1'
     implementation files('libs/bugly_crash_release.jar')
     implementation 'com.orhanobut:logger:2.2.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
 }

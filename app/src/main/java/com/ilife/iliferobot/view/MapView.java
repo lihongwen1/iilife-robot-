@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -159,12 +158,8 @@ public class MapView extends View {
     public void setMODE(int MODE) {
         this.MODE = MODE;
         this.originalMode = MODE;
-        if (MODE == MODE_ADD_VIRTUAL) {
+        if (MODE == MODE_ADD_VIRTUAL||MODE == MODE_DELETE_VIRTUAL) {
             drawVirtualWall();
-        }
-        if (MODE == MODE_DELETE_VIRTUAL) {
-            drawVirtualWall();
-            //draw delete sign
         }
     }
 
