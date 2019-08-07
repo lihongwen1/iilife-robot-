@@ -158,10 +158,13 @@ public class SettingActivity extends BackBaseActivity {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == TAG_FIND_DONE) {
-                rl_find.setClickable(true);
-                imageView.setVisibility(View.GONE);
-                imageView.clearAnimation();
-                iv_find_robot.setVisibility(View.VISIBLE);
+                if (rl_find != null) {
+                    rl_find.setClickable(true);
+                    imageView.setVisibility(View.GONE);
+                    imageView.clearAnimation();
+                    iv_find_robot.setVisibility(View.VISIBLE);
+                }
+
             }
             return false;
         }
@@ -297,7 +300,7 @@ public class SettingActivity extends BackBaseActivity {
                 product = R.drawable.n_x800;
                 break;
         }
-        if (BuildConfig.Area == AC.REGIONAL_CHINA||BuildConfig.BRAND.equals("ZACO")) {
+        if (BuildConfig.Area == AC.REGIONAL_CHINA || BuildConfig.BRAND.equals("ZACO")) {
             robotType = BuildConfig.BRAND + " " + robotType;
         }
         tv_type.setText(robotType);
