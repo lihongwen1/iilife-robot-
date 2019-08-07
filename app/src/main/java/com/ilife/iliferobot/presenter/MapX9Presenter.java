@@ -98,7 +98,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> pointList;// map集合
     private boolean isSubscribeRealMap, isInitSlamTimer, isGainDevStatus, isGetHistory;
     private boolean haveMap = true;//标记机型是否有地图 V85机器没有地图
-    private boolean havMapData=true;//A7 无地图数据
+    private boolean havMapData = true;//A7 无地图数据
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
 
     @Override
@@ -115,8 +115,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
-        if (robotType.equals(Constants.A7)){
-            havMapData=false;
+        if (robotType.equals(Constants.A7)) {
+            havMapData = false;
         }
     }
 
@@ -441,7 +441,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     public void success() {
                         isSubscribeRealMap = true;
                         AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
-                            MyLogger.d(TAG, "received map data------" + s1);
+                            MyLogger.d(TAG, "received map data------" + s1+"----"+"---"+i+"-----------"+s);
                             if (!isViewAttached()) {//
                                 return;
                             }
@@ -523,6 +523,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         synchronized (this) {
             Gson gson = new Gson();
             RealTimeMapInfo mapInfo = gson.fromJson(mapSrc, RealTimeMapInfo.class);
+            if (mapInfo.getDevice_id()!=deviceId){//服务器错乱，下发了不属于该设备的数据
+                return;
+            }
             workTime = mapInfo.getReal_clean_time();
             cleanArea = mapInfo.getReal_clean_area();
             mView.updateCleanTime(getTimeValue());
@@ -648,10 +651,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                         queryVirtualWall();
                     } else {//x800系列
-                        if (!isGetHistory&&havMapData) {
+                        if (!isGetHistory && havMapData) {
                             getRealTimeMap();
                         }
-                        if (!isSubscribeRealMap&&havMapData) {
+                        if (!isSubscribeRealMap && havMapData) {
                             subscribeRealTimeMap();
                         }
                     }
@@ -809,7 +812,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String getAreaValue() {
         BigDecimal bg = new BigDecimal(cleanArea / 100.0f);
         double area = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (!havMapData||(!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM)) {
+        if (curStatus == MsgCodeUtils.STATUE_RECHARGE || !havMapData || (!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM&&curStatus!=MsgCodeUtils.STATUE_TEMPORARY_POINT)) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return area + "㎡";
@@ -818,7 +821,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     private String getTimeValue() {
         int min = Math.round(workTime / 60f);
-        if (!havMapData||(!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM)) {
+        if (curStatus == MsgCodeUtils.STATUE_RECHARGE || !havMapData || (!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM&&curStatus!=MsgCodeUtils.STATUE_TEMPORARY_POINT)) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
             return min + "min";
@@ -992,7 +995,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787)||robotType.equals(Constants.A7);
+        return robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
     }
 
     @Override

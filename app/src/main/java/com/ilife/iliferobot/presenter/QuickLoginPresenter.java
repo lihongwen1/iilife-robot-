@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> implements QuickLoginContract.Presenter {
     private boolean isPhoneUseful;
     private boolean isVerificationUseful;
-    private Disposable verCodeDisposable, registerDisposable;
+    private Disposable verCodeDisposable;
     private ACAccountMgr acAccountMgr;
 
     @Override
@@ -37,9 +37,8 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void sendVerification() {
-        isMobileUseful();
         //send code by cloud
-        if (!isPhoneUseful) {
+        if (!Utils.checkAccountUseful(mView.getPhone())) {
             return;
         }
         int templateId;
@@ -86,11 +85,6 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     }
 
     @Override
-    public void isMobileUseful() {
-           isPhoneUseful= Utils.checkAccountUseful(mView.getPhone());
-    }
-
-    @Override
     public Completable checkPhone() {
         return Completable.create(completableEmitter -> acAccountMgr.checkExist(mView.getPhone(), new PayloadCallback<Boolean>() {
             @Override
@@ -112,6 +106,9 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void checkVerificationCode() {
+        if (!Utils.checkAccountUseful(mView.getPhone())){//账户格式错误
+            return;
+        }
         acAccountMgr.checkVerifyCode(mView.getPhone(), mView.getVerificationCode(), new PayloadCallback<Boolean>() {
             @Override
             public void success(Boolean result) {
@@ -132,6 +129,19 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     }
 
     @Override
+    public void isMobileEmpty() {
+        String phone = mView.getPhone();
+        if (phone != null && !phone.isEmpty()) {
+            isPhoneUseful = true;
+        }
+        if (isPhoneUseful && isVerificationUseful) {
+            mView.reUseQuickLogin();
+        } else {
+            mView.unUsableQuickLogin();
+        }
+    }
+
+    @Override
     public void isCodeEmpty() {
         //check code by cloud
         isVerificationUseful = mView.getVerificationCode().length() == 6;
@@ -147,9 +157,6 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         if (verCodeDisposable != null && !verCodeDisposable.isDisposed()) {
             verCodeDisposable.dispose();
         }
-        if (registerDisposable != null && !registerDisposable.isDisposed()) {
-            registerDisposable.dispose();
-        }
         mView.onCountDownFinish();
     }
 
@@ -158,9 +165,6 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
         super.detachView();
         if (verCodeDisposable != null && !verCodeDisposable.isDisposed()) {
             verCodeDisposable.dispose();
-        }
-        if (registerDisposable != null && !registerDisposable.isDisposed()) {
-            registerDisposable.dispose();
         }
     }
 }

@@ -21,8 +21,8 @@ public interface QuickLoginContract {
 
     interface Presenter {
         void sendVerification();
-        void isMobileUseful();
         void isCodeEmpty();
+        void isMobileEmpty();
         Completable checkPhone();
         void checkVerificationCode();
         Completable countDown();

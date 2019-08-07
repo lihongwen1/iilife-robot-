@@ -35,8 +35,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class
-OtaUpdateActivity extends BackBaseActivity {
+public class OtaUpdateActivity extends BackBaseActivity {
     private final String TAG = OtaUpdateActivity.class.getSimpleName();
     private static final int SET_PROGRESSBAR = 1;
     private static final int UPDATE_FAILED = 2;
@@ -165,68 +164,64 @@ OtaUpdateActivity extends BackBaseActivity {
                 hideLoadingDialog();
                 byte[] resp = deviceMsg.getContent();
                 MyLogger.e(TAG, "sendToDevice_CheckUptate success==:" + resp.length + "<--->" + "firmwareStatus:" + resp[0]);
-                if (resp != null && resp.length > 0) {
-                    byte firmwareStatus = resp[0];
-                    if (isFromSetting) {//从设置界面进来
-                        switch (firmwareStatus) {
-                            case 0x00://无更新
-                                String curVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
-                                fl_version.setVisibility(View.VISIBLE);
-                                tv_current.setText(getResources().getString(R.string.setting_ota_current_version, curVersion));
-                                tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, curVersion));
-                                btn_update.setText(getResources().getString(R.string.ota_aty_latest_ver));
-                                isUpdating = false;
-                                break;
-                            case 0x01://有更新
-                                String currVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
-                                String tarVersion = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
-                                fl_version.setVisibility(View.VISIBLE);
-                                tv_current.setText(getResources().getString(R.string.setting_ota_current_version, currVersion));
-                                tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, tarVersion));
-                                isUpdating = false;
-                                btn_update.setSelected(true);
-                                btn_update.setClickable(true);
-                                break;
-                        }
-                        isFromSetting = false;
-                    } else {//在更新中查询返回
-                        switch (firmwareStatus) {
-                            case 0x00://无更新
-                                handler.sendEmptyMessage(UPDATE_FAILED);
-                                isUpdating = false;
-                                break;
-                            case 0x01://有更新
-                                handler.sendEmptyMessage(UPDATE_FAILED);
-                                isUpdating = false;
-                                break;
-                            case 0x02://正在更新
-                                byte progress = resp[1];//更新进度
-                                MyLogger.e(TAG, "updating progress===:" + progress);
-                                if (isPBFinished) {
-                                    return;
-                                }
-                                sendProgressTimer(100);
-                                isUpdating = false;
-                                break;
-                            case 0x03://更新成功
-                                String newest_version = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
-                                byte suc_prg = resp[1];//更新进度
-                                MyLogger.e(TAG, "update success progress===:" + suc_prg);
-                                Message msg = new Message();
-                                msg.obj = newest_version;
-                                msg.what = UPDATE_SUCCESS;
-                                handler.sendMessage(msg);
-                                isUpdating = false;
-                                break;
-                            case 0x04://更新失败(退出当前界面到设备列表)
-                                handler.sendEmptyMessage(UPDATE_FAILED);
-                                isUpdating = false;
-                                break;
-                        }
+                byte firmwareStatus = resp[0];
+                if (isFromSetting) {//从设置界面进来
+                    switch (firmwareStatus) {
+                        case 0x00://无更新
+                            String curVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
+                            fl_version.setVisibility(View.VISIBLE);
+                            tv_current.setText(getResources().getString(R.string.setting_ota_current_version, curVersion));
+                            tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, curVersion));
+                            btn_update.setText(getResources().getString(R.string.ota_aty_latest_ver));
+                            isUpdating = false;
+                            break;
+                        case 0x01://有更新
+                            String currVersion = resp[2] + "." + resp[3] + "." + resp[4] + "." + resp[5];
+                            String tarVersion = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
+                            fl_version.setVisibility(View.VISIBLE);
+                            tv_current.setText(getResources().getString(R.string.setting_ota_current_version, currVersion));
+                            tv_target.setText(getResources().getString(R.string.setting_ota_targat_version, tarVersion));
+                            btn_update.setText(getResources().getString(R.string.update_button));
+                            isUpdating = false;
+                            btn_update.setSelected(true);
+                            btn_update.setClickable(true);
+                            break;
                     }
-                } else {
-                    hideLoadingDialog();
-                    MyLogger.e(TAG, "resp is null");
+                    isFromSetting = false;
+                } else {//在更新中查询返回
+                    switch (firmwareStatus) {
+                        case 0x00://无更新
+                            handler.sendEmptyMessage(UPDATE_FAILED);
+                            isUpdating = false;
+                            break;
+                        case 0x01://有更新
+                            handler.sendEmptyMessage(UPDATE_FAILED);
+                            isUpdating = false;
+                            break;
+                        case 0x02://正在更新
+                            byte progress = resp[1];//更新进度
+                            MyLogger.e(TAG, "updating progress===:" + progress);
+                            if (isPBFinished) {
+                                return;
+                            }
+                            sendProgressTimer(100);
+                            isUpdating = false;
+                            break;
+                        case 0x03://更新成功
+                            String newest_version = resp[6] + "." + resp[7] + "." + resp[8] + "." + resp[9];
+                            byte suc_prg = resp[1];//更新进度
+                            MyLogger.e(TAG, "update success progress===:" + suc_prg);
+                            Message msg = new Message();
+                            msg.obj = newest_version;
+                            msg.what = UPDATE_SUCCESS;
+                            handler.sendMessage(msg);
+                            isUpdating = false;
+                            break;
+                        case 0x04://更新失败(退出当前界面到设备列表)
+                            handler.sendEmptyMessage(UPDATE_FAILED);
+                            isUpdating = false;
+                            break;
+                    }
                 }
             }
 
@@ -320,7 +315,7 @@ OtaUpdateActivity extends BackBaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (isSuccess && otatimer != null) {
+        if (otatimer != null) {
             otatimer.cancel();
         }
         super.onBackPressed();

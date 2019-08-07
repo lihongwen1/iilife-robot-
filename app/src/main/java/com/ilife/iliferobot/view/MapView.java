@@ -435,6 +435,9 @@ public class MapView extends View {
                 downPoint.set(event.getX(), event.getY());
                 if (MODE == MODE_ADD_VIRTUAL) {
                     // 添加电子墙
+                    if (getUsefulWallNum() >= 10) {
+                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
+                    }
                 } else if (MODE == MODE_DELETE_VIRTUAL) {
                     //  删除电子墙
                 } else {
@@ -451,9 +454,11 @@ public class MapView extends View {
                     dragX = (event.getX() - downPoint.x) / scare + originalDragX;
                     dragY = (event.getY() - downPoint.y) / scare + originalDragY;
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    float distance = distance(downX, downY, x, y);
-                    if (distance > MIN_WALL_LENGTH) {
-                        curVirtualWall.set(downX, downY, x, y);
+                    if (getUsefulWallNum() < 10) {
+                        float distance = distance(downX, downY, x, y);
+                        if (distance > MIN_WALL_LENGTH) {
+                            curVirtualWall.set(downX, downY, x, y);
+                        }
                     }
                 }
                 invalidateUI(TYPE_DRAW_NOW);
@@ -466,13 +471,7 @@ public class MapView extends View {
 //                    roadCanvas.drawPath(roadPath, slamPaint);
 //                    invalidate();
                 } else if (MODE == MODE_ADD_VIRTUAL) {
-                    if (getUsefulWallNum() >= 10) {
-                        // TODO 提示电子墙数量达到最大值
-                        ToastUtils.showToast(Utils.getString(R.string.map_aty_max_count));
-//                        virtualCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//                        virtualCanvas.save();
-//                        virtualCanvas.drawPath(existVirtualPath, virtualPaint);
-                    } else {
+                    if (getUsefulWallNum() < 10) {
                         float distance = distance(downX, downY, x, y);
                         if (distance < MIN_WALL_LENGTH) {
                         } else {

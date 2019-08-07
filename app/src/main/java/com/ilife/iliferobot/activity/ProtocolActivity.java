@@ -1,11 +1,19 @@
 package com.ilife.iliferobot.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.view.MyPDF;
 
 import java.util.Locale;
 
@@ -16,9 +24,11 @@ import butterknife.BindView;
  */
 
 public class ProtocolActivity extends BackBaseActivity {
-    PDFView pdfView;
+    MyPDF pdfView;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
+    @BindView(R.id.tv_page_indicator)
+    TextView tv_page_indicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,7 @@ public class ProtocolActivity extends BackBaseActivity {
         return R.layout.activity_protocol;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void initView() {
         String lan = Locale.getDefault().getLanguage();
         String fileName;
@@ -38,15 +49,14 @@ public class ProtocolActivity extends BackBaseActivity {
         } else if (lan.equals("de")) {
             fileName = "ilife_de.pdf";
         } else if (lan.equals("ja")) {
-            fileName="ilife_jp.pdf";
+            fileName = "ilife_jp.pdf";
         } else {
             fileName = "ilife_en.pdf";
         }
 //        String fileName = lan.equals("zh")?"ilife_zh.pdf":"ilife_en.pdf";
-        pdfView = (PDFView) findViewById(R.id.pdfView);
+        pdfView = (MyPDF) findViewById(R.id.pdfView);
         tv_title.setText(R.string.personal_aty_protocol);
-        pdfView.fromAsset(fileName)
-                .pages(0,1,2,3,4,5,6) // all pages are displayed by default
+        pdfView.fromAsset(fileName)// all pages are displayed by default
                 .enableSwipe(true) // allows to block changing pages using swipe
                 .swipeHorizontal(false)
                 .enableDoubletap(true)
@@ -57,6 +67,20 @@ public class ProtocolActivity extends BackBaseActivity {
                 .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                 // spacing between pages in dp. To define spacing color, set view background
                 .spacing(4)
+                .onPageChange((page, pageCount) -> tv_page_indicator.setText(page + 1 + "/" + pageCount)
+                )
                 .load();
+        pdfView.setOnActionUpLister(new MyPDF.OnActionUp() {
+            @Override
+            public void actionUp() {
+                tv_page_indicator.startAnimation(
+                        AnimationUtils.loadAnimation(ProtocolActivity.this, R.anim.alpha_text));
+            }
+            @Override
+            public void actionDown() {
+                tv_page_indicator.clearAnimation();
+            }
+        });
     }
+
 }

@@ -6,23 +6,25 @@
 
     <include layout="@layout/template_top_title" />
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
-        <com.ilife.iliferobot.view.LightTextView
-            style="@style/Text_16sp_33"
+        <com.ilife.iliferobot.view.MyPDF
+            android:id="@+id/pdfView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:background="@color/bg_color_f5f7fa" />
 
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfView"
-        android:background="@color/bg_color_f5f7fa"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <TextView
+            android:text="123"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_24"
+            style="@style/Text_14sp_ac"
+            android:id="@+id/tv_page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+
 </LinearLayout>

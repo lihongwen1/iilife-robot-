@@ -34,14 +34,14 @@
                 android:id="@+id/tv_status1"
                 style="@style/Text_12sp_33"
                 android:layout_below="@+id/tv_name"
-                android:layout_marginTop="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_12"
                 android:text="@string/device_adapter_device_status" />
 
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_status2"
                 style="@style/Text_12sp_33"
-                android:layout_alignBottom="@+id/tv_status1"
-                android:layout_toEndOf="@+id/tv_status1" />
+                android:layout_alignBottom="@id/tv_status1"
+                android:layout_toEndOf="@id/tv_status1" />
 
 
         </RelativeLayout>
