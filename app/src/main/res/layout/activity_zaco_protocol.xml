@@ -4,18 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/Aty_top_rl_bg">
-
-        <ImageView
-            android:id="@+id/image_back"
-            style="@style/Image_Back_Style" />
-
-        <com.ilife.iliferobot.view.RegularTextView
-            style="@style/Text_14sp_33"
-            android:layout_centerInParent="true"
-            android:text="@string/personal_aty_protocol"
-            android:textSize="@dimen/sp_12" />
-    </RelativeLayout>
+    <include layout="@layout/template_top_title" />
 
     <View style="@style/View_Line_Style" />
 

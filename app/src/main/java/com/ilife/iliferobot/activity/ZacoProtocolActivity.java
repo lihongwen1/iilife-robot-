@@ -9,15 +9,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.base.BackBaseActivity;
+
+import butterknife.BindView;
 
 public class ZacoProtocolActivity extends BackBaseActivity {
     private ImageView image_back;
     private WebView webView;
     private FrameLayout frameLayout;
-
+    @BindView(R.id.tv_top_title)
+    TextView tv_title;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,18 +33,15 @@ public class ZacoProtocolActivity extends BackBaseActivity {
     }
 
     public void initView() {
+        tv_title.setText(R.string.personal_aty_protocol);
         frameLayout = findViewById(R.id.web_frame);
         image_back = (ImageView) findViewById(R.id.image_back);
-        image_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeActivity();
-            }
-        });
+        image_back.setOnClickListener(v -> removeActivity());
         webView = new WebView(this);
         WebSettings settings = webView.getSettings();
         settings.setDomStorageEnabled(true);
         settings.setBlockNetworkImage(false);
+        settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -49,7 +50,8 @@ public class ZacoProtocolActivity extends BackBaseActivity {
             }
         });
         frameLayout.addView(webView);
-        webView.loadUrl("https://www.zacorobot.eu/privacy.html");
+        webView.loadUrl("https://www.zacorobot.eu/privacy/");
+
     }
 
     //监听BACK按键，有可以返回的页面时返回页面
