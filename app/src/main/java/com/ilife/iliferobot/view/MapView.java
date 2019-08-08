@@ -116,7 +116,6 @@ public class MapView extends View {
         positionCirclePaint.setStyle(Paint.Style.FILL);
         positionCirclePaint.setFilterBitmap(true);
         positionCirclePaint.setStrokeJoin(Paint.Join.ROUND);
-        positionCirclePaint.setStrokeCap(Paint.Cap.ROUND);
         positionCirclePaint.setColor(getResources().getColor(R.color.color_ef8200));
         positionCirclePaint.setStrokeWidth(1f);
 
@@ -373,7 +372,7 @@ public class MapView extends View {
         canvas.drawBitmap(roadBitmap, matrix, roadPaint);
         canvas.drawBitmap(boxBitmap, matrix, boxPaint);
         //绘制电子墙
-        canvas.setMatrix(matrix);
+        canvas.concat(matrix);
         canvas.drawPath(existVirtualPath, virtualPaint);
         if (MODE == MODE_DELETE_VIRTUAL) {
             for (RectF rf : deleteIconRectFs) {
