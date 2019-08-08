@@ -110,7 +110,6 @@ public class MapView extends View {
         slamPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         slamPaint.setFilterBitmap(true);
         slamPaint.setStrokeJoin(Paint.Join.ROUND);
-        slamPaint.setStrokeCap(Paint.Cap.ROUND);
         slamPaint.setColor(colors[1]);
         slamPaint.setStrokeWidth(1f);
         positionCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -126,7 +125,6 @@ public class MapView extends View {
         roadPaint.setStyle(Paint.Style.STROKE);
         roadPaint.setFilterBitmap(true);
         roadPaint.setStrokeJoin(Paint.Join.ROUND);
-        roadPaint.setStrokeCap(Paint.Cap.ROUND);
         roadPaint.setColor(getResources().getColor(R.color.white));
         roadPaint.setStrokeWidth(4f);
 
@@ -134,7 +132,6 @@ public class MapView extends View {
         virtualPaint.setStyle(Paint.Style.STROKE);
         virtualPaint.setFilterBitmap(true);
         virtualPaint.setStrokeJoin(Paint.Join.ROUND);
-        virtualPaint.setStrokeCap(Paint.Cap.ROUND);
         virtualPaint.setColor(getResources().getColor(R.color.color_f08300));
         virtualPaint.setStrokeWidth(3f);
 
