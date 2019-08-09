@@ -154,7 +154,7 @@ public class MapView extends View {
     public void setMODE(int MODE) {
         this.MODE = MODE;
         this.originalMode = MODE;
-        if (MODE == MODE_ADD_VIRTUAL||MODE == MODE_DELETE_VIRTUAL) {
+        if (MODE == MODE_ADD_VIRTUAL || MODE == MODE_DELETE_VIRTUAL) {
             drawVirtualWall();
         }
     }
@@ -273,6 +273,9 @@ public class MapView extends View {
     public void clean() {
         deleteIconRectFs.clear();
         existVirtualPath.reset();
+        roadPath.reset();
+        slamPath.reset();
+        boxPath.reset();
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         roadCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -410,8 +413,7 @@ public class MapView extends View {
 
 
     // TODO 重绘事件不要太频繁，真正有需求的时候才能调用
-    // TODO 屏幕坐标转设备坐标
-    ////删除电子墙的时候支持拖动,添加电子墙的时候支持缩放，NONE时支持缩放和拖动
+    //TODO 优化：删除电子墙的时候支持拖动,添加电子墙的时候支持缩放，NONE时支持缩放和拖动
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int me = event.getAction() & MotionEvent.ACTION_MASK;

@@ -34,19 +34,19 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void checkVerificationCode(String s) {
-        isCodeOk = s.length() > 0;
+        isCodeOk = s.length()==6;
         updateBtnConfirm();
     }
 
     @Override
     public void checkPwd1(String s) {
-        isPw1Ok = s.length() > 0;
+        isPw1Ok = s.length() >=6;
         updateBtnConfirm();
     }
 
     @Override
     public void checkPwd2(String s) {
-        isPw2Ok = s.length() > 0;
+        isPw2Ok = s.length() >=6;
         updateBtnConfirm();
     }
 

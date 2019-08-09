@@ -46,6 +46,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
+    private long appPauseTime;//应用后台休眠时间
     final String TAG = BaseMapActivity.class.getSimpleName();
     public static final String NOT_FIRST_VIRTUAL_WALL = "virtual_wall";
     public static final int TAG_CONTROL = 0x01;
@@ -152,10 +153,22 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.registerPropReceiver();
+        int sleepTime = (int) ((System.currentTimeMillis() - appPauseTime) / 1000f / 60f);
+        appPauseTime = 0;
+        if (sleepTime > 3) {
+            MyLogger.d(TAG,"prepare for first or reload history map data");
+            mPresenter.prepareToReloadData();//重新获取历史map
+            mPresenter.registerPropReceiver();
+        }
         mPresenter.getDevStatus();
         setDevName();
         updateMaxButton(mPresenter.isMaxMode());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        appPauseTime = System.currentTimeMillis();
     }
 
     @Override
@@ -313,11 +326,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case USE_MODE_REMOTE_CONTROL:
                 fl_virtual_wall.setVisibility(View.GONE);
                 fl_bottom_x9.setVisibility(View.GONE);
-                setMapViewVisible(false);
                 fl_control_x9.setVisibility(View.VISIBLE);
                 layout_remote_control.setVisibility(View.VISIBLE);
                 image_max.setSelected(mPresenter.isMaxMode());
                 updateOperationViewStatue(mPresenter.getCurStatus());
+                setMapViewVisible(false);
                 break;
         }
     }
@@ -374,7 +387,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
 
     /**
-     * 清空不常显示的布局,电子墙编辑模式，回冲动画，沿边动画，重点动画
+     * 清空不常显示的布局,电子墙编辑模式，回冲动画，沿边动画，重点动画,操作提示文本（etc:重点清扫）
      *
      * @param curStatus
      */
@@ -397,7 +410,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             setTvUseStatus(TAG_NORMAL);
         }
     }
-
 
 
     @Override
@@ -505,7 +517,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 startActivity(intent);
                 break;
             case R.id.tv_virtual_wall_x9://电子墙编辑模式
-                if (mPresenter.canEdit(mPresenter.getCurStatus()) && mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING) {
+                if (mPresenter.isVirtualWallOpen()&&(mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING ||
+                        mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE)) {
                     showSetWallDialog();
                 } else {
                     if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {
@@ -572,7 +585,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private Disposable remoteDisposable;
 
     /**
-     * x785 x787支持长按持续前进旋转
+     * x785 x787支持长按持续前进旋转cleanMapView
      * x800，x900只支持点击前进旋转（用touch事件的up事件模拟）
      *
      * @param v

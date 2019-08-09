@@ -20,7 +20,7 @@ public class SetPasswordPresenter extends BasePresenter<SetPasswrodContract.View
 
     @Override
     public void checkPwd(String mobile) {
-        isPwdOk = mobile.length() > 0;
+        isPwdOk = mobile.length() >=6;
         if (isPwdOk && isPwdAgainOk) {
             mView.reuseBtnLogin();
         } else {
@@ -30,7 +30,7 @@ public class SetPasswordPresenter extends BasePresenter<SetPasswrodContract.View
 
     @Override
     public void checkPwdAgain(String password) {
-        isPwdAgainOk = password.length() > 0;
+        isPwdAgainOk = password.length() >=6;
         if (isPwdOk && isPwdAgainOk) {
             mView.reuseBtnLogin();
         } else {

@@ -55,5 +55,10 @@ public class MsgCodeUtils {
     public static final int CLEANNING_CLEANING_NORMAL = 0x00;
     public static final int CLEANNING_CLEANING_MAX = 0x01;
 
+    //VIRTUAL_WALL
+    public static final int VIRTUAL_WALL_OPEN=0x01;
+    public static final int VIRTUAL_WALL_CLOSE=0x00;
+
+
 
 }
