@@ -119,6 +119,9 @@ public class SelectActivity_x extends BackBaseActivity {
                 case Constants.V85:
                     robots.add(new CleanningRobot(R.drawable.n_v85, robotName, Constants.subdomain_v85, Constants.subdomaiId_v85));
                     break;
+                case Constants.X910:
+                    robots.add(new CleanningRobot(R.drawable.n_x900, robotName, Constants.subdomain_x900, Constants.subdomainId_x900));
+                    break;
                 case Constants.A9:
                     robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
                     break;

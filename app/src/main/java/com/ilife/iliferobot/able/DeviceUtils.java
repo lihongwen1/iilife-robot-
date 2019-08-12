@@ -92,6 +92,9 @@ public class DeviceUtils {
                 break;
             case Constants.BRAND_ZACO:
                 switch (subdomain) {
+                    case Constants.subdomain_x900:
+                        robotType = Constants.X910;
+                        break;
                     case Constants.subdomain_a9s:
                         robotType = Constants.A9s;
                         break;

@@ -54,6 +54,7 @@ public class Constants {
     public static final String A9s = "A9s";
     public static final String A8s = "A8s";
     public static final String V85 = "V85";
+    public static final String X910 = "X910";
     //美洲
     public static final String A9 = "A9";
     public static final String A7 = "A7";
