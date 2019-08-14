@@ -177,8 +177,8 @@ public class SettingActivity extends BackBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         propReceiver = (s, l, s1) -> {
             if (isDestroyed()) {
                 return;
@@ -197,13 +197,17 @@ public class SettingActivity extends BackBaseActivity {
         registerMsg();
     }
 
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (propReceiver != null) {
-            propReceiver = null;
+            AC.deviceDataMgr().unregisterPropertyReceiver(propReceiver);
+            AC.deviceDataMgr().unSubscribeAllProperty();
         }
+
     }
+
 
     public void registerMsg() {
         AC.deviceDataMgr().subscribeProperty(subdomain, deviceId,

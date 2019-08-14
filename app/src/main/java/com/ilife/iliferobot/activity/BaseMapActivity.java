@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -155,7 +156,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         super.onResume();
         int sleepTime = (int) ((System.currentTimeMillis() - appPauseTime) / 1000f / 60f);
         appPauseTime = 0;
-        if (sleepTime > 3) {
+        if (sleepTime >=3) {
             MyLogger.d(TAG,"prepare for first or reload history map data");
             mPresenter.prepareToReloadData();//重新获取历史map
             mPresenter.registerPropReceiver();
@@ -723,15 +724,13 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
-
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
     }
 }

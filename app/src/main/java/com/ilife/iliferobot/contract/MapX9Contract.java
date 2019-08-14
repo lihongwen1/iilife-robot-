@@ -147,6 +147,11 @@ public interface MapX9Contract {
         void prepareToReloadData();
 
         boolean isVirtualWallOpen();
+
+        void getDeviceProperty();
+
+        void handlePropertyData(String sData,boolean isFromFetch);
+
     }
 
 }
