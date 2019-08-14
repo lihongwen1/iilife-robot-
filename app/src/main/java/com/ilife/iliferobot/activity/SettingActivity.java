@@ -563,7 +563,7 @@ public class SettingActivity extends BackBaseActivity {
             @Override
             public void error(ACException e) {
                 MyLogger.e(TAG, "sendToDeviceWithOption error " + e.toString());
-                if (imageView.getVisibility() == View.VISIBLE) {
+                if (imageView!=null&&imageView.getVisibility() == View.VISIBLE) {
                     handler.sendEmptyMessage(TAG_FIND_DONE);
                 }
                 DialogUtils.closeDialog(dialog);
