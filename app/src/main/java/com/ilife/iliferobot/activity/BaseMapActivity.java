@@ -298,7 +298,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private void initErrorPopup(int code, View contentView) {
         ImageView image_delete = contentView.findViewById(R.id.image_delete);
         TextView tv_error = contentView.findViewById(R.id.tv_error);
-        tv_error.setText(DeviceUtils.getErrorText(this, code));
+        tv_error.setText(DeviceUtils.getErrorText(this, code,mPresenter.getRobotType()));
         image_delete.setOnClickListener(v -> {
             if (errorPopup != null) {
                 errorPopup.dismiss();

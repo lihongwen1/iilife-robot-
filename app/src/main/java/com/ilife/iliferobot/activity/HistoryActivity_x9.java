@@ -112,7 +112,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         AC.sendToService("", serviceName, Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                if (subdomain.equals(Constants.subdomain_x900)) {
+                if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
                     if (resp.get("data") != null) {
                         ArrayList<ACObject> data = resp.get("data");
                         ACObject acObject = data.get(0);

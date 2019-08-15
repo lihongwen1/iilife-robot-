@@ -292,4 +292,12 @@
     <string name="ap_guide_have_heard_didi_v85">„Piep“ ertönt</string>
     <string name="login_aty_email">E-Mail-Adresse</string>
     <string name="login_aty_input_email">E-Mail eingeben</string>
+    <string name="adapter_error_ybl_a9">Rechter Seitenradfehler</string>
+    <string name="adapter_error_zbl_a9">Linker Seitenradfehler</string>
+    <string name="adapter_error_gs_a9">Rollbürstenfehler</string>
+    <string name="adapter_error_td_a9">Detektorfehler</string>
+    <string name="consume_aty_resetRoll_a9">Jetzt Rollbürste zurücksetzen</string>
+    <string name="consume_aty_resetRoll_over_a9">Rollbürstenstatus wird nach dem Reset zurückgestellt</string>
+    <string name="consume_aty_roll_time_a9">Rollbürstenlebensdauer</string>
+    <string name="consume_aty_text_2_a9">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
 </resources>

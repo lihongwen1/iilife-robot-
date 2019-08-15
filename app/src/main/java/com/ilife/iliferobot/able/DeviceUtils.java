@@ -17,6 +17,9 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.Utils;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+
 /**
  * Created by chenjiaping on 2017/8/3.
  */
@@ -36,28 +39,46 @@ public class DeviceUtils {
 
     public static String getServiceName(String subdomain) {
         String serviceName = "";
-        if (subdomain.equals(Constants.subdomain_x430)) {
-            serviceName = BuildConfig.SERVICE_NAME_X430;
-        } else if (subdomain.equals(Constants.subdomain_x780)) {
-            serviceName = BuildConfig.SERVICE_NAME_X780;
-        } else if (subdomain.equals(Constants.subdomain_x782)) {
-            serviceName = BuildConfig.SERVICE_NAME_X782;
-        } else if (subdomain.equals(Constants.subdomain_x785)) {
-            serviceName = BuildConfig.SERVICE_NAME_X785;
-        } else if (subdomain.equals(Constants.subdomain_x800)) {
-            serviceName = BuildConfig.SERVICE_NAME_X800;
-        } else if (subdomain.equals(Constants.subdomain_x900)) {
-            serviceName = BuildConfig.SERVICE_NAME_X900;
-        } else if (subdomain.equals(Constants.subdomain_x787)) {
-            serviceName = BuildConfig.SERVICE_NAME_X787;
-        } else if (subdomain.equals(Constants.subdomain_a9s)) {
-            serviceName = BuildConfig.SERVICE_NAME_A9s;
-        } else if (subdomain.equals(Constants.subdomain_a8s)) {
-            serviceName = BuildConfig.SERVICE_NAME_A8s;
-        } else if (subdomain.equals(Constants.subdomain_v85)) {
-            serviceName = BuildConfig.SERVICE_NAME_A8s;
-        } else {
-            serviceName = BuildConfig.SERVICE_NAME_X430;
+        switch (subdomain) {
+            case Constants.subdomain_x430:
+                serviceName = BuildConfig.SERVICE_NAME_X430;
+                break;
+            case Constants.subdomain_x780:
+                serviceName = BuildConfig.SERVICE_NAME_X780;
+                break;
+            case Constants.subdomain_x782:
+                serviceName = BuildConfig.SERVICE_NAME_X782;
+                break;
+            case Constants.subdomain_x785:
+                serviceName = BuildConfig.SERVICE_NAME_X785;
+                break;
+            case Constants.subdomain_x800:
+                serviceName = BuildConfig.SERVICE_NAME_X800;
+                break;
+            case Constants.subdomain_x900:
+                serviceName = BuildConfig.SERVICE_NAME_X900;
+                break;
+            case Constants.subdomain_x787:
+                serviceName = BuildConfig.SERVICE_NAME_X787;
+                break;
+            case Constants.subdomain_a9s:
+                serviceName = BuildConfig.SERVICE_NAME_A9s;
+                break;
+            case Constants.subdomain_a8s:
+                serviceName = BuildConfig.SERVICE_NAME_A8s;
+                break;
+            case Constants.subdomain_v85:
+                serviceName = BuildConfig.SERVICE_NAME_V85;
+                break;
+            case Constants.subdomain_x910:
+                serviceName = BuildConfig.SERVICE_NAME_X910;
+                break;
+            case Constants.subdomain_v5x:
+                serviceName = BuildConfig.SERVICE_NAME_V5x;
+                break;
+            default:
+                serviceName = BuildConfig.SERVICE_NAME_X430;
+                break;
         }
         return serviceName;
     }
@@ -68,10 +89,10 @@ public class DeviceUtils {
             case Constants.BRAND_ILIFE:
                 switch (subdomain) {
                     case Constants.subdomain_x785:
-                        robotType =Constants.X785;
+                        robotType = Constants.X785;
                         break;
                     case Constants.subdomain_x787:
-                        robotType =Constants.X787;
+                        robotType = Constants.X787;
                         break;
                     case Constants.subdomain_x800:
                         if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA || BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//美规，日规
@@ -85,16 +106,13 @@ public class DeviceUtils {
                         break;
 
                     case Constants.subdomain_a7:
-                        robotType=Constants.A7;
+                        robotType = Constants.A7;
                         break;
                 }
 
                 break;
             case Constants.BRAND_ZACO:
                 switch (subdomain) {
-                    case Constants.subdomain_x900:
-                        robotType = Constants.X910;
-                        break;
                     case Constants.subdomain_a9s:
                         robotType = Constants.A9s;
                         break;
@@ -102,12 +120,18 @@ public class DeviceUtils {
                         robotType = Constants.A8s;
                         break;
                     case Constants.subdomain_v85:
-                        robotType =Constants.V85;
+                        robotType = Constants.V85;
+                        break;
+                    case Constants.subdomain_x910:
+                        robotType = Constants.X910;
+                        break;
+                    case Constants.subdomain_v5x:
+                        robotType = Constants.V5x;
                         break;
                 }
                 break;
         }
-        MyLogger.i("ROBOT_TYPE","-------"+robotType+"------------");
+        MyLogger.i("ROBOT_TYPE", "-------" + robotType + "------------");
         return robotType;
     }
 
@@ -197,7 +221,42 @@ public class DeviceUtils {
         }
     }
 
-    public static String getErrorText(Context context, int code) {
+    /**
+     * get the image resource id of recharging
+     * @param robotType
+     * @return
+     */
+    public static int getRechargeImageSrc(String robotType) {
+        int src;
+        switch (robotType) {
+            case Constants.A9:
+            case Constants.A9s:
+            case Constants.X800:
+                src = R.drawable.rechage_device_x800;
+                break;
+            case Constants.A7:
+            case Constants.X787:
+                src = R.drawable.rechage_device_x787;
+                break;
+            case Constants.X785:
+                src = R.drawable.rechage_device_x785;
+                break;
+            case Constants.A8s:
+                src = R.drawable.rechage_device_a8s;
+                break;
+            case Constants.V85:
+                src = R.drawable.rechage_device_v85;
+                break;
+            default:
+                src = R.drawable.rechage_device_x800;
+                break;
+
+        }
+        return src;
+    }
+
+
+    public static String getErrorText(Context context, int code, String robotType) {
         String strError = "";
         switch (code) {
             case 0x00:
@@ -213,7 +272,11 @@ public class DeviceUtils {
                 strError = context.getString(R.string.adapter_error_yq);
                 break;
             case 0x21:
-                strError = context.getString(R.string.adapter_error_td);
+                if (robotType.equals(Constants.A9)) {
+                    strError = context.getString(R.string.adapter_error_td_a9);
+                } else {
+                    strError = context.getString(R.string.adapter_error_td);
+                }
                 break;
             case 0x22:
                 strError = context.getString(R.string.dev_error_xuankong);
@@ -228,13 +291,25 @@ public class DeviceUtils {
                 strError = context.getString(R.string.adapter_error_ybs);
                 break;
             case 0x51:
-                strError = context.getString(R.string.adapter_error_zbl);
+                if (robotType.equals(Constants.A9)) {
+                    strError = context.getString(R.string.adapter_error_zbl_a9);
+                } else {
+                    strError = context.getString(R.string.adapter_error_zbl);
+                }
                 break;
             case 0x52:
-                strError = context.getString(R.string.adapter_error_ybl);
+                if (robotType.equals(Constants.A9)) {
+                    strError = context.getString(R.string.adapter_error_ybl_a9);
+                } else {
+                    strError = context.getString(R.string.adapter_error_ybl);
+                }
                 break;
             case 0x61:
-                strError = context.getString(R.string.adapter_error_gs);
+                if (robotType.equals(Constants.A9)) {
+                    strError = context.getString(R.string.adapter_error_gs_a9);
+                } else {
+                    strError = context.getString(R.string.adapter_error_gs);
+                }
                 break;
             case 0x71:
                 strError = context.getString(R.string.adapter_error_fs);
@@ -278,8 +353,6 @@ public class DeviceUtils {
         }
         return strError;
     }
-
-
 
 
     public static String getStatusStr(Context context, int b, int errCode) {
@@ -345,4 +418,6 @@ public class DeviceUtils {
         }
         return types;
     }
+
+
 }

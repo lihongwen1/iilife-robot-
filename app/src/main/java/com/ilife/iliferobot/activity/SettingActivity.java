@@ -271,7 +271,6 @@ public class SettingActivity extends BackBaseActivity {
                 product = R.drawable.n_x800;
                 rl_mode.setVisibility(View.GONE);
                 break;
-            case Constants.X910:
             case Constants.X900:
                 product = R.drawable.n_x900;
                 rl_update.setVisibility(View.VISIBLE);
@@ -289,6 +288,17 @@ public class SettingActivity extends BackBaseActivity {
                 product = R.drawable.n_v85;
                 rl_record.setVisibility(View.GONE);
                 rl_voice.setVisibility(View.GONE);
+                break;
+            case Constants.X910:
+                product = R.drawable.n_x900;
+                rl_update.setVisibility(View.VISIBLE);
+                rl_mode.setVisibility(View.GONE);
+                break;
+            case Constants.V5x:
+                product = R.drawable.n_v85;
+                rl_record.setVisibility(View.GONE);
+                rl_voice.setVisibility(View.GONE);
+                rl_mode.setVisibility(View.GONE);
                 break;
             case Constants.A7:
                 product = R.drawable.n_x787;
@@ -563,7 +573,7 @@ public class SettingActivity extends BackBaseActivity {
             @Override
             public void error(ACException e) {
                 MyLogger.e(TAG, "sendToDeviceWithOption error " + e.toString());
-                if (imageView!=null&&imageView.getVisibility() == View.VISIBLE) {
+                if (imageView != null && imageView.getVisibility() == View.VISIBLE) {
                     handler.sendEmptyMessage(TAG_FIND_DONE);
                 }
                 DialogUtils.closeDialog(dialog);

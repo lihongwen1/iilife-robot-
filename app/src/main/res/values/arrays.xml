@@ -23,7 +23,8 @@
         <item>"A9s"</item>
         <item>"A8s"</item>
         <item>"V85"</item>
-        <!--<item>"X910"</item>-->
+        <item>"X910"</item>
+        <item>"V5x"</item>
     </string-array>
     <string-array name="array_week">
         <item>@string/clock_aty_sun</item>

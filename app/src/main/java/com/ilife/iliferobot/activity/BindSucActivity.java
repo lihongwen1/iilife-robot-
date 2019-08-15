@@ -90,6 +90,7 @@ public class BindSucActivity extends BackBaseActivity {
             case Constants.subdomain_x800:
                 image_device = R.drawable.rechage_device_x800;
                 break;
+            case Constants.subdomain_x910:
             case Constants.subdomain_x900:
                 image_device = R.drawable.rechage_device_x900;
                 break;

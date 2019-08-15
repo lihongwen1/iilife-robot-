@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
                 SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
                 SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-                if (subdomain.equals(Constants.subdomain_x900)) {
+                if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
                     Intent i = new Intent(context, MapActivity_X9_.class);
                     startActivity(i);
                 } else {

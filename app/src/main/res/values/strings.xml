@@ -146,13 +146,17 @@
     <string name="adapter_error_obs">OBS parts error</string>
     <string name="adapter_error_yq">Edge cleaning parts error</string>
     <string name="adapter_error_td">Detectors error</string>
+    <string name="adapter_error_td_a9">Cliff sensors error</string>
     <string name="dev_error_xuankong">Robot isn\'t on a flat surface</string>
-    <string name="adapter_error_wxl">Nosewheel error</string>
+    <string name="adapter_error_wxl">Nose wheel error</string>
     <string name="adapter_error_zbs">Left brush error</string>
     <string name="adapter_error_ybs">Right brush error</string>
     <string name="adapter_error_zbl">Left side wheel error</string>
+    <string name="adapter_error_zbl_a9">Left wheel error</string>
     <string name="adapter_error_ybl">Right side wheel error</string>
+    <string name="adapter_error_ybl_a9">Right wheel error</string>
     <string name="adapter_error_gs">Roller brush error</string>
+    <string name="adapter_error_gs_a9">Main brush error</string>
     <string name="adapter_error_fs">Fan error</string>
     <string name="adapter_error_sb">Water pump error</string>
     <string name="adapter_error_qb">Air pump error</string>
@@ -199,11 +203,14 @@
     <string name="consume_aty_tips">Tips: Long press to reset material service life</string>
     <string name="consume_aty_side_time">Brush life</string>
     <string name="consume_aty_roll_time">Roller brush life</string>
+    <string name="consume_aty_roll_time_a9">Main brush life</string>
     <string name="consume_aty_filter_time">Filter life</string>
     <string name="consume_aty_resetSide">Reset side brush life now</string>
     <string name="consume_aty_resetSide_over">Side brush status will be updated after reset</string>
     <string name="consume_aty_resetRoll">Reset roller brush life now</string>
+    <string name="consume_aty_resetRoll_a9">Reset Main brush life now</string>
     <string name="consume_aty_resetRoll_over">Roller brush status will be updated after reset</string>
+    <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
     <string name="consume_aty_resetFilter">Reset high performance filter life now</string>
     <string name="consume_aty_resetFilter_over">Filter status will be updated after reset</string>
     <string name="consume_aty_reset_suc">Reset completed</string>
@@ -211,6 +218,7 @@
 
     <string name="setting_aty_hit_">User name</string>
     <string name="consume_aty_text_2">Reminder:Clean side brush, roller brush and high performance filter after each use. Replace side brushes every 3–6 months, roller brush 5–12 months, and high performance filter 3–5 months.</string>
+    <string name="consume_aty_text_2_a9">Reminder:Clean side brush, Main brush and high performance filter after each use. Replace side brushes every 3–6 months, Main brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="access_camera">Please allow camera access</string>
     <string name="access_location">Please allow location access</string>
     <string name="access_storage">Please allow internal storage write access</string>

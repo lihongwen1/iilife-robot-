@@ -292,4 +292,12 @@
     <string name="ap_guide_have_heard_didi_v85">「ドリップ」音が聞こえました</string>
     <string name="login_aty_email">携帯番号／メールアドレス</string>
     <string name="login_aty_input_email">携帯/メールアドレスを入力してください</string>
+    <string name="adapter_error_ybl_a9">右輪エラー</string>
+    <string name="adapter_error_zbl_a9">左輪エラー</string>
+    <string name="adapter_error_gs_a9">ロールブラシエラー</string>
+    <string name="adapter_error_td_a9">検出器エラー</string>
+    <string name="consume_aty_resetRoll_a9">ローラーブラシの寿命を今すぐリセットしますか？</string>
+    <string name="consume_aty_resetRoll_over_a9">ローラーブラシの状態はリセット後に更新されます</string>
+    <string name="consume_aty_roll_time_a9">ローラーブラシの寿命</string>
+    <string name="consume_aty_text_2_a9">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
 </resources>

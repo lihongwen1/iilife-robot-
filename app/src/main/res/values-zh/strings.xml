@@ -292,4 +292,6 @@
     <string name="start_random_cleaning">已启用随机清扫</string>
     <string name="login_aty_email">邮箱</string>
     <string name="login_aty_input_email">请输入邮箱</string>
+    <string name="adapter_error_ybl_a9">右边轮异常</string>
+    <string name="adapter_error_zbl_a9">左边轮异常</string>
 </resources>

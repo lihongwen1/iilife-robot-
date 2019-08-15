@@ -33,23 +33,29 @@ import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 // TODO APP后台CPU消耗问题
@@ -107,7 +113,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
         robotType = DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
+        if (robotType.equals(Constants.V5x)||robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
         if (robotType.equals(Constants.A7)) {
@@ -133,19 +139,19 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isX900Series() {
-        return robotType.equals(Constants.X900);
+        return robotType.equals(Constants.X900)||robotType.equals(Constants.X910);
     }
 
     @Override
     public boolean isLongPressControl() {
-        return getRobotType().equals(Constants.V85) || getRobotType().equals(Constants.X785) || getRobotType().equals(Constants.X787) || getRobotType().equals(Constants.A7);
+        return getRobotType().equals(Constants.V5x)||getRobotType().equals(Constants.V85) || getRobotType().equals(Constants.X785) || getRobotType().equals(Constants.X787) || getRobotType().equals(Constants.A7);
     }
 
     /**
      * 包含3s查询实时地图(slam map)
      */
     public void initTimer() {
-        if (!subdomain.equals(Constants.subdomain_x900)) {//只有x900需要每3s获取实时地图
+        if (!isX900Series()) {//只有x900需要每3s获取实时地图
             return;
         }
         isInitSlamTimer = true;
@@ -195,7 +201,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
                     return;
                 }
-                if (subdomain.equals(Constants.subdomain_x900)) {
+                if (isX900Series()) {
                     String strMap = resp.getString("slam_map");
                     int xMax = resp.getInt("slam_x_max");
                     int xMin = resp.getInt("slam_x_min");
@@ -428,7 +434,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             if (!isViewAttached()) {//
                                 return;
                             }
-                            if (subdomain.equals(Constants.subdomain_x900)) {
+                            if (isX900Series()) {
                                 parseRealTimeMapX9(s1);
                                 if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
                                     //slam地图
@@ -1093,7 +1099,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
+        return robotType.equals(Constants.V5x) ||robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
     }
 
     @Override

@@ -292,4 +292,12 @@
     <string name="ap_guide_have_heard_didi_v85">已聽到嘀聲</string>
     <string name="login_aty_email">郵箱</string>
     <string name="login_aty_input_email">請輸入郵箱</string>
+    <string name="adapter_error_ybl_a9">右邊輪異常</string>
+    <string name="adapter_error_zbl_a9">左邊輪異常</string>
+    <string name="adapter_error_gs_a9">滾刷異常</string>
+    <string name="adapter_error_td_a9">探地組件異常</string>
+    <string name="consume_aty_resetRoll_a9">是否重置滾刷壽命</string>
+    <string name="consume_aty_resetRoll_over_a9">重置後滾刷會更新到最新狀態</string>
+    <string name="consume_aty_roll_time_a9">滾刷壽命</string>
+    <string name="consume_aty_text_2_a9">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網並進行清潔。3&#8211;6個月可更換邊刷、5&#8211;12個月可更換滾刷、3&#8211;5個月可更換高效濾網。</string>
 </resources>

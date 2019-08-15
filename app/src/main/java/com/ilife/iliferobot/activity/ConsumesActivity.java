@@ -12,6 +12,7 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
@@ -45,11 +46,13 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     int index;
     @BindView(R.id.tv_top_title)
     TextView tv_top_title;
-
+    @BindView(R.id.tv_roll)
+    TextView tv_roll;
+    @BindView(R.id.tv_1)
+    TextView tv_tips;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     @Override
@@ -71,7 +74,6 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         tv_percent_side = (TextView) findViewById(R.id.tv_percent_side);
         tv_percent_roll = (TextView) findViewById(R.id.tv_percent_roll);
         tv_percent_filter = (TextView) findViewById(R.id.tv_percent_filter);
-        tv_top_title.setText(R.string.setting_aty_consume_detail);
         rl_side.setOnLongClickListener(this);
         rl_roll.setOnLongClickListener(this);
         rl_filter.setOnLongClickListener(this);
@@ -88,6 +90,9 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         acDeviceMsg.setCode(MsgCodeUtils.MatConditions);
         acDeviceMsg.setContent(new byte[]{0x00});
         sendToDeviceWithOption(acDeviceMsg, physicalId);
+        tv_top_title.setText(R.string.setting_aty_consume_detail);
+        tv_roll.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9)?R.string.consume_aty_roll_time_a9:R.string.consume_aty_roll_time);
+        tv_tips.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9)?R.string.consume_aty_text_2_a9:R.string.consume_aty_text_2);
     }
 
     public void showResetDialog(int tag) {
@@ -99,8 +104,13 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                 hint = Utils.getString(R.string.consume_aty_resetSide_over);
                 break;
             case R.id.rl_roll:
-                title = Utils.getString(R.string.consume_aty_resetRoll);
-                hint = Utils.getString(R.string.consume_aty_resetRoll_over);
+                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9)) {
+                    title = Utils.getString(R.string.consume_aty_resetRoll_a9);
+                    hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
+                } else {
+                    title = Utils.getString(R.string.consume_aty_resetRoll);
+                    hint = Utils.getString(R.string.consume_aty_resetRoll_over);
+                }
                 break;
             case R.id.rl_filter:
                 title = Utils.getString(R.string.consume_aty_resetFilter);

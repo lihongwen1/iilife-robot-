@@ -293,6 +293,14 @@
     <string name="ap_guide_have_heard_didi_v85">слышен сигнал.</string>
     <string name="login_aty_email">Телефон/эл. почта</string>
     <string name="login_aty_input_email">Введите телефон/эл. почту</string>
+    <string name="adapter_error_ybl_a9">Ошибка правого колеса</string>
+    <string name="adapter_error_zbl_a9">Ошибка левого колеса</string>
+    <string name="adapter_error_gs_a9">Ошибка роликовой щетки</string>
+    <string name="adapter_error_td_a9">Ошибка датчиков</string>
+    <string name="consume_aty_resetRoll_a9">Сбросить ресурс роликовой щетки?</string>
+    <string name="consume_aty_resetRoll_over_a9">Состояние основной щетки будет обновлено после сброса</string>
+    <string name="consume_aty_roll_time_a9">Ресурс роликовой щетки</string>
+    <string name="consume_aty_text_2_a9">Напоминание:Чистите боковые щетки, роликовую щетку и HEPA-фильтр  после каждого использования. Производите замену боковых щеток каждые 3–6 месяцев, роликовую щетку каждые  5–12 месяцев и HEPA-фильтр каждые 3-5 месяцев.</string>
 
 
 </resources>

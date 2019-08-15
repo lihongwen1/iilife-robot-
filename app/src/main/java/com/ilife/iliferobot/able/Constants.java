@@ -32,6 +32,8 @@ public class Constants {
     public static final String subdomain_a9s = "zacoa9s";
     public static final String subdomain_a8s = "zacoa8";
     public static final String subdomain_v85 = "zacov85";
+    public static final String subdomain_x910 = "zacox910";
+    public static final String subdomain_v5x = "zacov5x";
 
 
     public static final long subdomainId_x785 = 6231;
@@ -44,6 +46,8 @@ public class Constants {
     public static final long subdomaiId_a9s = 6746;
     public static final long subdomaiId_a8s = 6795;
     public static final long subdomaiId_v85 = 6809;
+    public static final long subdomaiId_x910 = 6830;
+    public static final long subdomaiId_v5x = 6829;
 
     //国内
     public static final String X900 = "X900";
@@ -55,6 +59,7 @@ public class Constants {
     public static final String A8s = "A8s";
     public static final String V85 = "V85";
     public static final String X910 = "X910";
+    public static final String V5x = "V5x";
     //美洲
     public static final String A9 = "A9";
     public static final String A7 = "A7";

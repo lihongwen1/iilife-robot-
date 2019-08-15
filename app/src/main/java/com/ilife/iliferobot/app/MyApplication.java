@@ -149,11 +149,6 @@ public class MyApplication extends MultiDexApplication {
         mAcUserDevices.addAll(devices);
     }
 
-    public void clernmAcUserDevices() {
-        if (mAcUserDevices != null) {
-            mAcUserDevices.clear();
-        }
-    }
 
     /**
      * 添加Activity

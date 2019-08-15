@@ -9,6 +9,7 @@ import android.view.View;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
@@ -25,32 +26,10 @@ public class MapActivity_X8_ extends BaseMapActivity {
     @Override
     public void initView() {
         super.initView();
-        int rechargeModel = -1;
-        switch (mPresenter.getRobotType()) {
-            case Constants.A9:
-            case Constants.A9s:
-            case Constants.X800:
-                rechargeModel = R.drawable.rechage_device_x800;
-                break;
-            case Constants.A7:
-            case Constants.X787:
-                rechargeModel = R.drawable.rechage_device_x787;
-                break;
-            case Constants.X785:
-                rechargeModel = R.drawable.rechage_device_x785;
-                break;
-            case Constants.A8s:
-                ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
-                rechargeModel = R.drawable.rechage_device_a8s;
-                break;
-            case Constants.V85:
-                rechargeModel = R.drawable.rechage_device_v85;
-                break;
-
+        if (mPresenter.getRobotType().equals( Constants.A8s)){
+            ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
-        if (rechargeModel != -1) {
-            iv_recharge_model.setImageResource(rechargeModel);
-        }
+        iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType()));
         tv_bottom_recharge_x8.setVisibility(View.VISIBLE);
         tv_wall.setVisibility(View.GONE);
         tv_appointment_x9.setVisibility(View.VISIBLE);
