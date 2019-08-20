@@ -177,7 +177,7 @@
     <string name="setting_aty_clean_mode1">Cleaning modes</string>
     <string name="setting_aty_max_suction">Max mode</string>
     <string name="setting_aty_find_robot">Locate robot</string>
-    <string name="setting_aty_factory_reset">Reset to factory default now</string>
+    <string name="setting_aty_factory_reset">Reset to factory default</string>
     <string name="setting_aty_standard">Standard</string>
     <string name="setting_aty_soft">Gentle</string>
     <string name="setting_aty_strong">Strong</string>

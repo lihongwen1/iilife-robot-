@@ -243,10 +243,10 @@ public final class CameraManager {
 //        width = height;
 //      }
 
-//      int leftOffset = (screenResolution.x - width) / 2;
-//      int topOffset = (screenResolution.y - height) / 2;
-            int leftOffset = (int) getContext().getResources().getDimension(R.dimen.dp_50);
-            int topOffset = (int) getContext().getResources().getDimension(R.dimen.dp_134);
+            int leftOffset = (screenResolution.x - width) / 2;
+//      int topOffset = (screenResolution.y - (height+(int) getContext().getResources().getDimension(R.dimen.dp_40))) / 2;
+//            int leftOffset = (int) getContext().getResources().getDimension(R.dimen.dp_50);
+            int topOffset = (int) getContext().getResources().getDimension(R.dimen.dp_165);
             framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
 
         }
