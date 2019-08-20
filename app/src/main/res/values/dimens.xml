@@ -85,13 +85,13 @@
     <dimen name="dp_315">315dp</dimen>
 
     <!-- font size,you can add if there is no one -->
-    <dimen name="sp_10">10sp</dimen>
-    <dimen name="sp_12">12sp</dimen>
-    <dimen name="sp_14">14sp</dimen>
-    <dimen name="sp_16">16sp</dimen>
-    <dimen name="sp_18">18sp</dimen>
-    <dimen name="sp_20">20sp</dimen>
-    <dimen name="sp_22">22sp</dimen>
-    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_10">10dp</dimen>
+    <dimen name="sp_12">12dp</dimen>
+    <dimen name="sp_14">14dp</dimen>
+    <dimen name="sp_16">16dp</dimen>
+    <dimen name="sp_18">18dp</dimen>
+    <dimen name="sp_20">20dp</dimen>
+    <dimen name="sp_22">22dp</dimen>
+    <dimen name="sp_24">24dp</dimen>
 
 </resources>

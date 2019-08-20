@@ -774,10 +774,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (curStatus == MsgCodeUtils.STATUE_RANDOM || curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_CHARGING_ || curStatus == MsgCodeUtils.STATUE_CHARGING || (curStatus == MsgCodeUtils.STATUE_RECHARGE && !isX900Series())) {
             mView.setCurrentBottom(BaseMapActivity.USE_MODE_NORMAL);
         }
-        if (/*curStatus == MsgCodeUtils.STATUE_RECHARGE ||*/ curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
+        if (curStatus == MsgCodeUtils.STATUE_REMOTE_CONTROL || curStatus == MsgCodeUtils.STATUE_POINT
                 || curStatus == MsgCodeUtils.STATUE_ALONG) {
             mView.setCurrentBottom(BaseMapActivity.USE_MODE_REMOTE_CONTROL);
         }
+
         mView.showBottomView();
         if (haveMap && isViewAttached() && isDrawMap()) {
 //            mView.setMapViewVisible(true);
@@ -902,7 +903,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
     private String getTimeValue() {
-        int min = Math.round(workTime / 60f);
+        int min = (int) (workTime / 60f);
         if (curStatus == MsgCodeUtils.STATUE_RECHARGE || !havMapData || (!isDrawMap() && curStatus != MsgCodeUtils.STATUE_RANDOM && curStatus != MsgCodeUtils.STATUE_TEMPORARY_POINT)) {
             return Utils.getString(R.string.map_aty_gang);
         } else {
@@ -949,8 +950,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void sendToDeviceWithOption(ACDeviceMsg msg) {
-        if (statusFlag != STATUS_FLAG_COMPLETION) {
-            MyLogger.d(TAG, "注册属性监听失效,需要重新注册！");
+        if (propertyReceiver==null||statusFlag != STATUS_FLAG_COMPLETION) {
+            MyLogger.d(TAG, "注册属性监听失效或者未注册,需要重新注册！");
             registerPropReceiver();
             statusFlag = STATUS_FLAG_COMPLETION;
         }

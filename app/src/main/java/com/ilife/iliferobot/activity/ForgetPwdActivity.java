@@ -107,6 +107,7 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
                 break;
             case R.id.bt_confirm:
                 showLoadingDialog();
+                bt_confirm.setClickable(false);
                 mPresenter.confirm();
                 break;
             case R.id.image_show_1:
@@ -137,7 +138,8 @@ public class ForgetPwdActivity extends BackBaseActivity<ForgetPasswordPresenter>
 
     @Override
     public void resetPwdFail() {
-       hideLoadingDialog();
+        hideLoadingDialog();
+        bt_confirm.setClickable(true);
     }
 
     @Override

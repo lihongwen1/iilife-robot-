@@ -305,4 +305,6 @@
     <string name="ap_guide_have_heard_didi_v85">\"beep\" is heard.</string>
     <string name="login_aty_email">Email address</string>
     <string name="login_aty_input_email">Enter email</string>
+    <string name="agree_privacy_policy">Agree</string>
+    <string name="please_agree_policy">Please agree%1$s</string>
 </resources>

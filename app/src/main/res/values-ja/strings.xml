@@ -300,4 +300,6 @@
     <string name="consume_aty_resetRoll_over_a9">ローラーブラシの状態はリセット後に更新されます</string>
     <string name="consume_aty_roll_time_a9">ローラーブラシの寿命</string>
     <string name="consume_aty_text_2_a9">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
+    <string name="please_agree_policy">同意%1$s</string>
+    <string name="agree_privacy_policy">同意する</string>
 </resources>

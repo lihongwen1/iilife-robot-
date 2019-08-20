@@ -140,6 +140,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
                         ArrayList<ACObject> data = resp.get("data");
                         ACObject obj = data.get(0);
                         String clean_data0 = obj.getString("clean_data");
+                        MyLogger.d(TAG,"history road list:          "+clean_data0);
                         HistoryRecord_x9 record = new HistoryRecord_x9();
                         record.setLineSpace(String.valueOf(clean_data0.charAt(0)));
                         record.setWork_time(obj.getInt("work_time"));

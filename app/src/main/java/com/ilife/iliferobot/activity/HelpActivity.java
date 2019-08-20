@@ -36,6 +36,7 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.adapter.HelpFeedImgAdapter;
 import com.ilife.iliferobot.app.MyApplication;
@@ -124,7 +125,16 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         view = findViewById(R.id.view);
         tv_title.setText(R.string.personal_aty_help);
         et_content.addTextChangedListener(new MyTextWatcher());
-        if (!Utils.isIlife()) {
+        if (Utils.isIlife()) {
+            findViewById(R.id.ll_tel_zaco).setVisibility(View.GONE);
+            findViewById(R.id.ll_tel_ilife).setVisibility(View.VISIBLE);
+            switch (BuildConfig.Area) {
+                case 3://US
+                    ((TextView) findViewById(R.id.tv_telNum1)).setText("1-800-631-9676");
+                    ((TextView) findViewById(R.id.tv_phone_time)).setText("（Mon-Fri 09:00-17:00,CST）");
+                    break;
+            }
+        } else {//ZACO
             findViewById(R.id.ll_tel_zaco).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
         }
@@ -254,7 +264,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 break;
             case R.id.bt_confirm:
                 String email = et_email.getText().toString().trim();
-                if (!Utils.checkAccountUseful(email)){
+                if (!Utils.checkAccountUseful(email)) {
                     return;
                 }
                 String type = et_type.getText().toString().trim();
@@ -269,9 +279,9 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 }
                 if (Utils.isChinaEnvironment()) {
                     if (!UserUtils.isEmail(email) && !UserUtils.isPhone(email)) {
-                        if (Utils.isSupportPhone()){
+                        if (Utils.isSupportPhone()) {
                             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_account));
-                        }else {
+                        } else {
                             ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.regist_wrong_email));
                         }
                         return;

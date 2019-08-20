@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.GifView;
 import com.ilife.iliferobot.view.ToggleRadioButton;
 import com.ilife.iliferobot.R;
@@ -139,14 +140,14 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                     ll_ap_step1.setVisibility(View.GONE);
                     ll_ap_step2.setVisibility(View.VISIBLE);
                     rb_next_tip.setText(tip3_id);
-                    if (Constants.IS_FIRST_AP) {
+                    if (Utils.isIlife()&&Utils.isChinaEnvironment()&&Constants.IS_FIRST_AP) {
                         bt_next.setText(R.string.add_aty_start_connect);
                     }
                     tv_guide_tip4.setVisibility(View.VISIBLE);
                     rb_next_tip.setChecked(false);
                     curStep = 2;
                 } else {
-                    if (Constants.IS_FIRST_AP) {
+                    if (Utils.isIlife()&&Utils.isChinaEnvironment()&&Constants.IS_FIRST_AP) {
                         Intent i = new Intent(context, ApWifiActivity.class);
                         startActivity(i);
                     } else {

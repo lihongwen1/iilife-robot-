@@ -151,6 +151,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.item_delete:
+                    if (mAcUserDevices.size()<=position){
+                        return;
+                    }
                     recyclerView.closeMenu();
                     if (unbindDialog == null) {
                         unbindDialog = new UniversalDialog();

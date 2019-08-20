@@ -20,7 +20,7 @@ import com.ilife.iliferobot.utils.Utils;
 
 
 public class UniversalDialog extends DialogFragment {
-    private TextView tv_left, tv_mid, tv_right, tv_dialog_title, tv_mid_title;
+    private TextView tv_left, tv_mid, tv_right, tv_dialog_title;
     private EditText et_hint_tip;
     private LinearLayout ll_normal;
     private OnLeftButtonClck onLeftButtonClck;
@@ -29,8 +29,8 @@ public class UniversalDialog extends DialogFragment {
     private OnRightButtonClckWithValue onRightButtonClckWithValue;
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_NORMAL_MID_BUTTON = 2;
-    public static final int TYPE_NORMAL_MID_TITLE = 3;
-    private String title, hintTip, midTitle, leftText, midText, rightText;
+    public static final int TYPE_NORMAL_MID_BUTTON_NO_TITLE = 3;
+    private String title, hintTip, leftText, midText, rightText;
     private int hintColor = -1, hintGravity = -1;
     private int type;
     private int titleColor = -1;
@@ -64,7 +64,6 @@ public class UniversalDialog extends DialogFragment {
 
     private void initView(View v) {
         ll_normal = v.findViewById(R.id.ll_normal);
-        tv_mid_title = v.findViewById(R.id.tv_mid_title);
         tv_dialog_title = v.findViewById(R.id.tv_dialog_title);
         et_hint_tip = v.findViewById(R.id.et_dialog_hint_tip);
         tv_left = v.findViewById(R.id.tv_dialog_left);
@@ -80,9 +79,7 @@ public class UniversalDialog extends DialogFragment {
         if (title != null && !title.isEmpty()) {
             tv_dialog_title.setText(title);
         }
-        if (midTitle != null && !midTitle.isEmpty()) {
-            tv_mid_title.setText(midTitle);
-        }
+
         if (canEdit) {
             if (hintTip != null && !hintTip.isEmpty()) {
                 et_hint_tip.setHint(hintTip);
@@ -114,10 +111,10 @@ public class UniversalDialog extends DialogFragment {
             ll_normal.setVisibility(View.GONE);
             tv_mid.setVisibility(View.VISIBLE);
         }
-        if (type == TYPE_NORMAL_MID_TITLE) {
+        if (type ==TYPE_NORMAL_MID_BUTTON_NO_TITLE) {
             tv_dialog_title.setVisibility(View.GONE);
-            et_hint_tip.setVisibility(View.GONE);
-            tv_mid_title.setVisibility(View.VISIBLE);
+            ll_normal.setVisibility(View.GONE);
+            tv_mid.setVisibility(View.VISIBLE);
         }
 
         tv_left.setOnClickListener(v1 -> {
@@ -202,10 +199,6 @@ public class UniversalDialog extends DialogFragment {
         return this;
     }
 
-    public UniversalDialog setMidTitle(String midTitle) {
-        this.midTitle = midTitle;
-        return this;
-    }
 
     public UniversalDialog setLeftText(String leftText) {
         this.leftText = leftText;

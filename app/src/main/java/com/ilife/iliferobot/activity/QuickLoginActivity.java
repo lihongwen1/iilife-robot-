@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.core.util.Consumer;
@@ -25,6 +26,7 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.contract.QuickLoginContract;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.ToggleRadioButton;
 
 import java.util.Locale;
 
@@ -55,10 +57,24 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     TextView tv_login;
     @BindView(R.id.tv_slogan)
     TextView tv_slogan;
+    @BindView(R.id.tv_privacy_policy)
+    TextView tv_privacy_policy;
+    @BindView(R.id.rb_privacy_policy)
+    ToggleRadioButton rb_privacy_policy;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!Utils.isIlife()) {//Only ZACO Brand
+            showQRCodeTip();
+        }
+    }
+
+    private void showQRCodeTip() {
+        UniversalDialog universalDialog = new UniversalDialog();
+        universalDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON_NO_TITLE).setHintTip("Please enter the email address here and then click on confirmation code. The code will then be sent automatically by email. Then enter the code and click on Quick Registration.")
+                .setCanEdit(false).setMidText(Utils.getString(R.string.dialog_del_confirm));
+        universalDialog.show(getSupportFragmentManager(), "qrcode");
     }
 
     @Override
@@ -74,11 +90,12 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         } else {
             et_phone_number.setHint(R.string.login_aty_email);
         }
-        et_phone_number.addOnInputEndListener(s->mPresenter.isMobileEmpty());
+        et_phone_number.addOnInputEndListener(s -> mPresenter.isMobileEmpty());
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         if (!Utils.isIlife()) {
             tv_slogan.setVisibility(View.INVISIBLE);
         }
+        unUsableQuickLogin();
     }
 
     @Override
@@ -88,7 +105,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         mPresenter.attachView(this);
     }
 
-    @OnClick({R.id.tv_login, R.id.bt_quick_login, R.id.tv_send_code})
+    @OnClick({R.id.tv_login, R.id.bt_quick_login, R.id.tv_send_code, R.id.tv_privacy_policy})
     public void onClick(View v) {
         Intent i;
         switch (v.getId()) {
@@ -97,11 +114,19 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 startActivity(i);
                 break;
             case R.id.bt_quick_login:
-                mPresenter.checkVerificationCode();
+                if (!rb_privacy_policy.isChecked()) {
+                    ToastUtils.showToast(getResources().getString(R.string.please_agree_policy," "+Utils.getString(R.string.personal_aty_protocol)));
+                } else {
+                    mPresenter.checkVerificationCode();
+                }
                 break;
             case R.id.tv_send_code:
                 mPresenter.sendVerification();
                 break;
+            case R.id.tv_privacy_policy:
+                startActivity(new Intent(QuickLoginActivity.this, Utils.isIlife() ? ProtocolActivity.class : ZacoProtocolActivity.class));
+                break;
+
         }
     }
 
