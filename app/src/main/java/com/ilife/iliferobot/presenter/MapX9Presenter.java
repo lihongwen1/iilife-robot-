@@ -33,9 +33,6 @@ import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,15 +44,11 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 // TODO APP后台CPU消耗问题
@@ -71,7 +64,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private String physicalId, subdomain, robotType;
     private Gson gson;
     private byte[] slamBytes;
-    private int curStatus, errorCode, batteryNo, workTime, cleanArea, virtualStatus;
+    private int curStatus, errorCode, batteryNo = -1, workTime, cleanArea, virtualStatus;
     private Timer timer;
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
@@ -113,11 +106,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
         robotType = DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.V5x)||robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
+        if (robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
-        if (robotType.equals(Constants.A7)) {
+        if (robotType.equals(Constants.A7)||robotType.equals(Constants.V5x)) {
             havMapData = false;
+        }
+        if (robotType.equals(Constants.V5x)) {//V5x只有随机模式
+            SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
         }
     }
 
@@ -139,12 +135,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isX900Series() {
-        return robotType.equals(Constants.X900)||robotType.equals(Constants.X910);
+        return robotType.equals(Constants.X900) || robotType.equals(Constants.X910);
     }
 
     @Override
     public boolean isLongPressControl() {
-        return getRobotType().equals(Constants.V5x)||getRobotType().equals(Constants.V85) || getRobotType().equals(Constants.X785) || getRobotType().equals(Constants.X787) || getRobotType().equals(Constants.A7);
+        return getRobotType().equals(Constants.V85) || getRobotType().equals(Constants.X785) || getRobotType().equals(Constants.X787) || getRobotType().equals(Constants.A7);
     }
 
     /**
@@ -598,19 +594,19 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void onComplete() {
-               if (statusFlag!=STATUS_FLAG_COMPLETION){
-                   AC.deviceDataMgr().fetchCurrentProperty(subdomain, deviceId, new PayloadCallback<String>() {
-                       @Override
-                       public void success(String s) {
-                           handlePropertyData(s, true);
-                       }
+                if (statusFlag != STATUS_FLAG_COMPLETION) {
+                    AC.deviceDataMgr().fetchCurrentProperty(subdomain, deviceId, new PayloadCallback<String>() {
+                        @Override
+                        public void success(String s) {
+                            handlePropertyData(s, true);
+                        }
 
-                       @Override
-                       public void error(ACException e) {
-                           MyLogger.d(TAG, "getDeviceProperty:       " + e.getMessage());
-                       }
-                   });
-               }
+                        @Override
+                        public void error(ACException e) {
+                            MyLogger.d(TAG, "getDeviceProperty:       " + e.getMessage());
+                        }
+                    });
+                }
             }
 
             @Override
@@ -708,6 +704,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
             @Override
             public void onError(Throwable e) {
+                if (!isViewAttached()) {
+                    return;
+                }
                 if (haveMap) {
                     sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
                 }
@@ -750,6 +749,11 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 mView.drawBoxMapX8(pointList);
             }
         }
+    }
+
+    @Override
+    public void refreshStatus() {
+        setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
     }
 
     public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
@@ -817,7 +821,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean isLowPowerWorker() {
-        return batteryNo != 0 && batteryNo <= 6 && (curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT);
+        return batteryNo != -1 && batteryNo <= 6 && (curStatus == MsgCodeUtils.STATUE_SLEEPING || curStatus == MsgCodeUtils.STATUE_WAIT);
     }
 
     /**
@@ -950,7 +954,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void sendToDeviceWithOption(ACDeviceMsg msg) {
-        if (propertyReceiver==null||statusFlag != STATUS_FLAG_COMPLETION) {
+        if (propertyReceiver == null || statusFlag != STATUS_FLAG_COMPLETION) {
             MyLogger.d(TAG, "注册属性监听失效或者未注册,需要重新注册！");
             registerPropReceiver();
             statusFlag = STATUS_FLAG_COMPLETION;
@@ -1100,7 +1104,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.V5x) ||robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
+        return robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
     }
 
     @Override

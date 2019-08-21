@@ -1,13 +1,13 @@
 package com.ilife.iliferobot.base;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
@@ -15,8 +15,6 @@ import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.StatusBarUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 

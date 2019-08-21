@@ -151,6 +151,7 @@ public interface MapX9Contract {
         void getDeviceProperty();
 
         void handlePropertyData(String sData,boolean isFromFetch);
+        void refreshStatus();
 
     }
 

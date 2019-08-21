@@ -459,7 +459,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
 
         @Override
         public void onClick(View v) {
-            AC.bindMgr().fetchShareCode(devId, 60 * 60 * 1000, new PayloadCallback<String>() {
+            AC.bindMgr().refreshShareCode(devId, 3 * 60 * 1000, new PayloadCallback<String>() {
                 @Override
                 public void success(String shareCode) {
                     showQrDialog(shareCode);

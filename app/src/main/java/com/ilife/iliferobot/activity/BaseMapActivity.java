@@ -156,8 +156,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         super.onResume();
         int sleepTime = (int) ((System.currentTimeMillis() - appPauseTime) / 1000f / 60f);
         appPauseTime = 0;
-        if (sleepTime >=3) {
-            MyLogger.d(TAG,"prepare for first or reload history map data");
+        if (sleepTime >= 3) {
+            MyLogger.d(TAG, "prepare for first or reload history map data");
             mPresenter.prepareToReloadData();//重新获取历史map
             mPresenter.registerPropReceiver();
         }
@@ -298,7 +298,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     private void initErrorPopup(int code, View contentView) {
         ImageView image_delete = contentView.findViewById(R.id.image_delete);
         TextView tv_error = contentView.findViewById(R.id.tv_error);
-        tv_error.setText(DeviceUtils.getErrorText(this, code,mPresenter.getRobotType()));
+        tv_error.setText(DeviceUtils.getErrorText(this, code, mPresenter.getRobotType()));
         image_delete.setOnClickListener(v -> {
             if (errorPopup != null) {
                 errorPopup.dismiss();
@@ -466,12 +466,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     }
                 } else if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_CHARGING_) {//适配器充电模式不允许启动机器
                     ToastUtils.showToast(MyApplication.getInstance(), Utils.getString(R.string.map_aty_charge));
-                } else if (mPresenter.isLowPowerWorker()) {
-                    ToastUtils.showToast(getString(R.string.low_power));
-                } else if (mPresenter.isRandomMode()) {
-                    mPresenter.sendToDeviceWithOption(ACSkills.get().enterRandomMode());
                 } else {
-                    mPresenter.sendToDeviceWithOption(ACSkills.get().enterPlanningMode());
+                    if (mPresenter.isLowPowerWorker()) {
+                        ToastUtils.showToast(getString(R.string.low_power));
+                    }
+                    mPresenter.sendToDeviceWithOption(mPresenter.isRandomMode() ? ACSkills.get().enterRandomMode() : ACSkills.get().enterPlanningMode());
                 }
                 break;
             case R.id.tv_bottom_recharge_x8:
@@ -490,7 +489,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
-                mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT) {
+                    mPresenter.refreshStatus();
+                } else {
+                    mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+                }
                 break;
             case R.id.fl_top_menu:
                 Intent i = new Intent(this, SettingActivity.class);
@@ -518,7 +521,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 startActivity(intent);
                 break;
             case R.id.tv_virtual_wall_x9://电子墙编辑模式
-                if (mPresenter.isVirtualWallOpen()&&(mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING ||
+                if (mPresenter.isVirtualWallOpen() && (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PLANNING ||
                         mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE)) {
                     showSetWallDialog();
                 } else {

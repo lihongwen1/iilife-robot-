@@ -26,7 +26,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
     @Override
     public void initView() {
         super.initView();
-        if (mPresenter.getRobotType().equals( Constants.A8s)){
+        if (mPresenter.getRobotType().equals(Constants.A8s)) {
             ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
         iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType()));
@@ -44,8 +44,12 @@ public class MapActivity_X8_ extends BaseMapActivity {
             ToastUtils.showToast(this, getString(R.string.map_aty_charge));
         } else {
             USE_MODE = USE_MODE_REMOTE_CONTROL;
-            mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
-            showBottomView();
+            if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT) {
+                mPresenter.refreshStatus();
+            } else {
+                mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
+            }
+//            showBottomView();
         }
     }
 
