@@ -18,7 +18,6 @@ public interface MapX9Contract {
 
         void updateSlam(int xMin, int xMax, int yMin, int yMaxm, int maxscare);
 
-        void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList);
 
         void updateCleanTime(String value);
 
@@ -30,9 +29,7 @@ public interface MapX9Contract {
 
         void cleanMapView();
 
-        void drawSlamMap(byte[] slamBytes);
 
-        void drawObstacle();
 
         void setBatteryImage(int curStatus, int batteryNo);
 
@@ -64,9 +61,9 @@ public interface MapX9Contract {
 
         void setCurrentBottom(int bottom);
 
-        void drawBoxMapX8(ArrayList<Integer> pointList);
-
         void showVirtualWallTip();
+        void drawMapX9(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList, byte[] slamBytes);
+        void drawMapX8(ArrayList<Integer> dataList);
     }
 
     interface Presenter {

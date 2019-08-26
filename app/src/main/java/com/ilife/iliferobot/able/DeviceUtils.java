@@ -229,6 +229,10 @@ public class DeviceUtils {
     public static int getRechargeImageSrc(String robotType) {
         int src;
         switch (robotType) {
+            case Constants.X900:
+            case Constants.X910:
+                src=R.drawable.rechage_device_x900;
+                break;
             case Constants.A9:
             case Constants.A9s:
             case Constants.X800:
@@ -246,6 +250,9 @@ public class DeviceUtils {
                 break;
             case Constants.V85:
                 src = R.drawable.rechage_device_v85;
+                break;
+            case Constants.V5x:
+                src=R.drawable.rechage_device_v5x;
                 break;
             default:
                 src = R.drawable.rechage_device_x800;

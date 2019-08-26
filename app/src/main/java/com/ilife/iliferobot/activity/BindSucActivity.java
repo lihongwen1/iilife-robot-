@@ -78,34 +78,8 @@ public class BindSucActivity extends BackBaseActivity {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
-        switch (subdomain) {
-            case Constants.subdomain_x785:
-                image_device = R.drawable.rechage_device_x785;
-                break;
-            case Constants.subdomain_a7:
-            case Constants.subdomain_x787:
-                image_device = R.drawable.rechage_device_x787;
-                break;
-            case Constants.subdomain_a9s:
-            case Constants.subdomain_x800:
-                image_device = R.drawable.rechage_device_x800;
-                break;
-            case Constants.subdomain_x910:
-            case Constants.subdomain_x900:
-                image_device = R.drawable.rechage_device_x900;
-                break;
-            case Constants.subdomain_a8s:
-                image_device = R.drawable.rechage_device_a8s;
-                break;
-            case Constants.subdomain_v85:
-                image_device = R.drawable.rechage_device_v85;
-                break;
-            default:
-                image_device = R.drawable.rechage_device_x800;
-                break;
-        }
         String devName = getResources().getString(R.string.bind_suc_sty_robot_name, DeviceUtils.getRobotType(subdomain));
-        iv_bind_device.setImageResource(image_device);
+        iv_bind_device.setImageResource(DeviceUtils.getRechargeImageSrc(DeviceUtils.getRobotType(subdomain)));
         et_devName.setText(devName);
         et_devName.setSelection(et_devName.getText().toString().trim().length());
         UserUtils.setInputFilter(et_devName, Utils.getInputMaxLength());

@@ -5,15 +5,15 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     signingConfigs {
         ilife {
-//            storeFile file('E:\\as_workspace?\\ilife\\keystore_ilife\\ilife.jks')
-            storeFile file('D:\\flylin_github_respostories\\qianming\\ilife\\ilife.jks')
+            storeFile file('E:\\as_workspace\\ilife\\keystore_ilife\\ilife.jks')
+//            storeFile file('D:\\flylin_github_respostories\\qianming\\ilife\\ilife.jks')
             storePassword '123456'
             keyAlias = 'ilife'
             keyPassword '123456'
         }
         zaco {
-//            storeFile file('E:\\as_workspace\\ilife\\keystore-zaco\\ilifei.jks')
-            storeFile file('D:\\flylin_github_respostories\\qianming\\zaco\\ilifei.jks')
+            storeFile file('E:\\as_workspace\\ilife\\keystore-zaco\\ilifei.jks')
+//            storeFile file('D:\\flylin_github_respostories\\qianming\\zaco\\ilifei.jks')
             storePassword 'ilife123456'
             keyAlias = 'ilife robot'
             keyPassword 'ilife123'
@@ -58,7 +58,7 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 4
-            versionName = '1.2.0'
+            versionName = '1.2.5'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO"
             buildConfigField("int", "Area", "4")
@@ -109,7 +109,7 @@ android {
         china {
             dimension "default"
             versionCode = 34
-            versionName = '3.2.2'
+            versionName = '3.2.5'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -161,7 +161,7 @@ android {
         _America {
             dimension "default"
             versionCode = 1
-            versionName = '1.0.1'
+            versionName = '1.0.2'
             applicationId "com.ilife.iliferobot_us"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE US"
@@ -234,13 +234,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0-beta01', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
     testImplementation 'junit:junit:4.13-beta-3'
     implementation project(':PushSDK')
     implementation files('libs/android-async-http-1.4.9.jar')
@@ -252,7 +253,7 @@ dependencies {
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
     implementation 'com.android.support:multidex:'
     implementation 'com.airbnb.android:lottie:3.0.3'
     implementation 'io.reactivex.rxjava2:rxjava:2.0.7'

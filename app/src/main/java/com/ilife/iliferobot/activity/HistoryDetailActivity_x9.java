@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.utils.MyLogger;
@@ -65,17 +66,16 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             String slamData = mapList.get(0);
             if (!TextUtils.isEmpty(slamData)) {
                 slamBytes = Base64.decode(slamData, Base64.DEFAULT);
-                MyLogger.e(TAG, "slamBytes:" + slamBytes.length);
-                drawSlamMap(slamBytes);
             }
             //历史路径
             String roadData = mapList.get(1);
             if (!TextUtils.isEmpty(roadData)) {
                 roadBytes = Base64.decode(roadData, Base64.DEFAULT);
                 drawRoad(roadBytes);
-                MyLogger.e(TAG, "roadBytes:" + roadBytes.length + "<--->");
             }
         }
+        mapView.updateSlam(xMin, xMax, yMin, yMax, 8, 4);
+        mapView.drawMapX9(null, historyPointsList, slamBytes);
     }
 
     private void drawRoad(byte[] roadBytes) {
@@ -95,18 +95,8 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 MyLogger.e(TAG, "bytes is not null222：" + roadBytes.length);
             }
         }
-        drawHistoryRoad();
     }
 
-    private void drawHistoryRoad() {
-        mapView.drawRoadMap(historyPointsList, null);
-    }
-
-    private void drawSlamMap(byte[] slamBytes) {
-        mapView.updateSlam(xMin, xMax, yMin, yMax, 6);
-        mapView.drawSlamMap(slamBytes);
-        mapView.drawObstacle();
-    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -152,7 +142,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                     x = (i - byteList.size() / length / 2);
                     float y = (j * 8 + k - length * 4);
                     if ((mapdata & tempdata) == tempdata) {
-                        if (subdomain.equals(Constants.subdomain_x800) ||  subdomain.equals(Constants.subdomain_v5x)|| subdomain.equals(Constants.subdomain_v85)|| subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
+                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
                             pointList.add((int) y);
                             pointList.add((int) x);
                         } else {
@@ -164,9 +154,9 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 }
             }
         }
-       if (pointList.size()<2){
-           return;
-       }
+        if (pointList.size() < 2) {
+            return;
+        }
         int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
         int x, y;
         for (int i = 1; i < pointList.size(); i += 2) {
@@ -185,8 +175,8 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 maxY = y;
             }
         }
-        mapView.updateSlam(minX, maxX, minY, maxY, 15);
-        mapView.drawBoxMapX8(pointList);
+        mapView.updateSlam(minX, maxX, minY, maxY, 15, 2);
+        mapView.drawMapX8(pointList);
 
     }
 
@@ -196,6 +186,8 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         if (subdomain.equals(Constants.subdomain_a8s)) {
             mapView.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
+        String robotType= DeviceUtils.getRobotType(subdomain);
+        mapView.setRobotSeriesX9(robotType.equals(Constants.X900) || robotType.equals(Constants.X910));
         Intent intent = getIntent();
         if (intent != null) {
             HistoryRecord_x9 record = (HistoryRecord_x9) intent.getSerializableExtra("Record");
@@ -212,6 +204,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             tv_clean_time.setText(record.getWork_time() / 60 + "min");
             tv_lean_area.setText(record.getClean_area() + "㎡");
         }
+
     }
 
     public String generateTime(long time, String strFormat) {

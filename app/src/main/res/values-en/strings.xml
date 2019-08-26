@@ -36,7 +36,8 @@
     <string name="add_aty_wrong_wifi_pass">Password contains illegal characters</string>
     <string name="ap_guide_aty_tip1_x900">Turn on power switch on the side of the main body. (Note: Don\'t place main body on charging dock)</string>
     <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi pairing\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi paring\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9s"> Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi paring\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
@@ -300,10 +301,11 @@
     <string name="adapter_error_zbl_a9">Left wheel error</string>
     <string name="adapter_error_gs_a9">Main brush error</string>
     <string name="adapter_error_td_a9">Cliff sensors error</string>
-    <string name="consume_aty_resetRoll_a9">Reset Main brush life now</string>
+    <string name="consume_aty_resetRoll_a9">Reset main brush life now</string>
     <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
     <string name="consume_aty_roll_time_a9">Main brush life</string>
     <string name="consume_aty_text_2_a9">Reminder:Clean side brush, Main brush and high performance filter after each use. Replace side brushes every 3–6 months, Main brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="please_agree_policy">Please agree%1$s</string>
     <string name="agree_privacy_policy">Agree</string>
+    <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
 </resources>

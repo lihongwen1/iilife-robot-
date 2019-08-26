@@ -133,6 +133,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     TextView tv_bottom_recharge_x8;
     @BindView(R.id.iv_recharge_model)
     ImageView iv_recharge_model;
+    @BindView(R.id.iv_recharge_stand)
+    ImageView iv_recharge_stand;
     public static final int USE_MODE_NORMAL = 1;
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
@@ -195,6 +197,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         electricityDrawable = (AnimationDrawable) image_animation.getBackground();
         setDevName();
         fl_setting.setVisibility(View.VISIBLE);
+        mMapView.setRobotSeriesX9(mPresenter.isX900Series());
+
     }
 
     @Override
@@ -225,7 +229,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxscare) {
         mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare);
+        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare,4);
     }
 
     @Override
@@ -233,20 +237,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         mMapView.drawVirtualWall(existPointList);
     }
 
-    @Override
-    public void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
-        mMapView.drawRoadMap(roadList, historyRoadList);
-    }
 
-    @Override
-    public void drawObstacle() {
-        mMapView.drawObstacle();
-    }
 
-    @Override
-    public void drawSlamMap(byte[] slamBytes) {
-        mMapView.drawSlamMap(slamBytes);
-    }
+
 
     /**
      * 显示组件异常
@@ -722,8 +715,13 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void drawBoxMapX8(ArrayList<Integer> pointList) {
-        mMapView.drawBoxMapX8(pointList);
+    public void drawMapX9(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList, byte[] slamBytes) {
+        mMapView.drawMapX9(roadList,historyRoadList,slamBytes);
+    }
+
+    @Override
+    public void drawMapX8(ArrayList<Integer> dataList) {
+        mMapView.drawMapX8(dataList);
     }
 
     @Override

@@ -71,7 +71,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_18"
                 android:layout_toEndOf="@+id/image_email"
-                android:text="Support@iliferobot.com" />
+                android:text="support@iliferobot.com" />
         </RelativeLayout>
     </LinearLayout>
 

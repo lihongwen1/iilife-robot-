@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.GifView;
@@ -66,45 +67,68 @@ public class ApGuideActivityX900 extends BackBaseActivity {
         context = this;
         int open_key_id, click_wifi_id, tip1_id, tip2_id;
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
-
-        switch (subdomain) {
-            case Constants.subdomain_x800://800 a9
+        String robotType = DeviceUtils.getRobotType(subdomain);
+        switch (robotType) {
+            case Constants.A9:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_a9;
+                tip3_id = R.string.ap_guide_already_open_wifi_a9;
+                open_key_id = R.drawable.gif_open_key_800;
+                click_wifi_id = R.drawable.gif_click_wifi_800;
+                break;
+            case Constants.X800://800 a9
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x900;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
-            case Constants.subdomain_x910:
-            case Constants.subdomain_x900:
+            case Constants.X910:
+            case Constants.X900:
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x900;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key;
                 click_wifi_id = R.drawable.gif_click_wifi;
                 break;
-            case Constants.subdomain_a9s:
+            case Constants.A9s:
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9s;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
-            case Constants.subdomain_a8s:
+            case Constants.A8s:
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9s;
                 open_key_id = R.drawable.gif_open_key_a8s;
                 click_wifi_id = R.drawable.gif_click_wifi_a8s;
                 break;
-            case Constants.subdomain_v85: //v85
+            case Constants.V85: //v85
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_v85;
                 tip3_id = R.string.ap_guide_have_heard_didi_v85;
                 open_key_id = R.drawable.gif_open_key_v85;
                 click_wifi_id = R.drawable.gif_click_wifi_v85;
                 break;
-            default: //787 785 a7
+            case Constants.V5x:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x7;
+                tip3_id = R.string.ap_guide_have_heard_didi;
+                open_key_id = R.drawable.gif_open_key_787;
+                click_wifi_id = R.drawable.gif_click_wifi_v5x;
+                break;
+            case Constants.X785:
+            case Constants.X787:
+            case Constants.A7:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x7;
+                tip3_id = R.string.ap_guide_have_heard_didi;
+                open_key_id = R.drawable.gif_open_key_787;
+                click_wifi_id = R.drawable.gif_click_wifi_787;
+                break;
+            default:
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;
                 tip3_id = R.string.ap_guide_have_heard_didi;
@@ -140,14 +164,14 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                     ll_ap_step1.setVisibility(View.GONE);
                     ll_ap_step2.setVisibility(View.VISIBLE);
                     rb_next_tip.setText(tip3_id);
-                    if (Utils.isIlife()&&Utils.isChinaEnvironment()&&Constants.IS_FIRST_AP) {
+                    if (Utils.isIlife() && Utils.isChinaEnvironment() && Constants.IS_FIRST_AP) {
                         bt_next.setText(R.string.add_aty_start_connect);
                     }
                     tv_guide_tip4.setVisibility(View.VISIBLE);
                     rb_next_tip.setChecked(false);
                     curStep = 2;
                 } else {
-                    if (Utils.isIlife()&&Utils.isChinaEnvironment()&&Constants.IS_FIRST_AP) {
+                    if (Utils.isIlife() && Utils.isChinaEnvironment() && Constants.IS_FIRST_AP) {
                         Intent i = new Intent(context, ApWifiActivity.class);
                         startActivity(i);
                     } else {

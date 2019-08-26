@@ -42,6 +42,7 @@
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
     <string name="ap_guide_already_open_device">Robot already switched on</string>
     <string name="ap_guide_already_open_wifi">\"Start WiFi pairing\" already announced</string>
+    <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
     <string name="ap_guide_already_open_wifi_a9s">\"Start WiFi pairing\" already announced</string>
     <string name="ap_guide_have_heard_didi">\"beep\" is heard.</string>
     <string name="ap_aty_setting">Settings</string>
@@ -208,7 +209,7 @@
     <string name="consume_aty_resetSide">Reset side brush life now</string>
     <string name="consume_aty_resetSide_over">Side brush status will be updated after reset</string>
     <string name="consume_aty_resetRoll">Reset roller brush life now</string>
-    <string name="consume_aty_resetRoll_a9">Reset Main brush life now</string>
+    <string name="consume_aty_resetRoll_a9">Reset main brush life now</string>
     <string name="consume_aty_resetRoll_over">Roller brush status will be updated after reset</string>
     <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
     <string name="consume_aty_resetFilter">Reset high performance filter life now</string>
@@ -307,4 +308,5 @@
     <string name="login_aty_input_email">Enter email</string>
     <string name="agree_privacy_policy">Agree</string>
     <string name="please_agree_policy">Please agree%1$s</string>
+    <string name="ap_guide_aty_tip2_a9">"Press and hold for 3 seconds and you will hear a buzz. Don't release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  "</string>
 </resources>

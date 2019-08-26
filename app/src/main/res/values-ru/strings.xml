@@ -303,6 +303,8 @@
     <string name="consume_aty_text_2_a9">Напоминание:Чистите боковые щетки, роликовую щетку и HEPA-фильтр  после каждого использования. Производите замену боковых щеток каждые 3–6 месяцев, роликовую щетку каждые  5–12 месяцев и HEPA-фильтр каждые 3-5 месяцев.</string>
     <string name="please_agree_policy">пожалуйста, согласитесь%1$s</string>
     <string name="agree_privacy_policy">принимать</string>
+    <string name="ap_guide_aty_tip2_a9">Нажмите и удерживайте в течение 3 секунд, и вы услышите гудение. Не выпускайте, пока голосовое объявление не скажет «Start WiFi pairing» Индикатор WiFi начнет мигать, как только робот войдет в режим AP.</string>
+    <string name="ap_guide_already_open_wifi_a9">«Подключение к WiFi» уже объявлено</string>
 
 
 </resources>

@@ -30,6 +30,9 @@ public class MapActivity_X8_ extends BaseMapActivity {
             ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
         iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType()));
+        if (mPresenter.getRobotType().equals(Constants.V5x)) {//V5X的充电底座单独不一样
+            iv_recharge_stand.setImageResource(R.drawable.recharge_stand_v5x);
+        }
         tv_bottom_recharge_x8.setVisibility(View.VISIBLE);
         tv_wall.setVisibility(View.GONE);
         tv_appointment_x9.setVisibility(View.VISIBLE);
@@ -96,7 +99,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
             setNavigationBarColor(R.color.white);
         }
         tv_start.setSelected(isSelect);
-        image_center.setSelected(isSelect);//remote control start button
+        image_center.setSelected(isSelect);//the  start button of remote control
     }
 
     @Override

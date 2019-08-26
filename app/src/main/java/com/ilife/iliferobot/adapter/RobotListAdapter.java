@@ -75,6 +75,9 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                 case Constants.subdomain_v85:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v85);
                     break;
+                case Constants.subdomain_v5x:
+                    holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
+                    break;
                 default:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
                     break;

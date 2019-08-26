@@ -109,7 +109,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
-        if (robotType.equals(Constants.A7)||robotType.equals(Constants.V5x)) {
+        if (robotType.equals(Constants.A7) || robotType.equals(Constants.V5x)) {
             havMapData = false;
         }
         if (robotType.equals(Constants.V5x)) {//V5x只有随机模式
@@ -208,10 +208,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
                         if (isViewAttached() && isDrawMap()) {
                             mView.updateSlam(xMin, xMax, yMin, yMax, 6);
-                            mView.drawSlamMap(slamBytes);
-                            mView.drawRoadMap(realTimePoints, historyRoadList);
-                            mView.drawObstacle();
-                            mView.drawVirtualWall(existPointList);//只是刷新电子墙
+                            mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
                         }
                     }
                 } else {//x800系列
@@ -240,7 +237,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             mView.updateCleanTime(getTimeValue());
                             mView.updateCleanArea(getAreaValue());
                             if (haveMap && isViewAttached() && isDrawMap()) {
-                                mView.drawBoxMapX8(pointList);
+                                mView.drawMapX8(pointList);
                             }
                         }
 
@@ -271,7 +268,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             maxX = src.get(0);
             maxY = src.get(1);
             offset = 0;
-            MyLogger.d(TAG, "data is  clear, so need to reset all params");
+            MyLogger.d(TAG, "data is  clear, and  need to reset all params");
         }
         int x, y;
         for (int i = offset + 1; i < src.size(); i += 2) {
@@ -359,9 +356,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             }
             //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
             if (isDrawMap()) {
-                mView.drawSlamMap(slamBytes);
-                mView.drawRoadMap(realTimePoints, historyRoadList);
-                mView.drawObstacle();
+                mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
             }
         }
     }
@@ -433,12 +428,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             if (isX900Series()) {
                                 parseRealTimeMapX9(s1);
                                 if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
-                                    //slam地图
-                                    mView.drawSlamMap(slamBytes);
-                                    //历史路径
-                                    mView.drawRoadMap(realTimePoints, historyRoadList);
-                                    //重绘障碍物
-                                    mView.drawObstacle();
+                                    mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
                                 }
                             } else {//x800 x785 x787  a9s a8s  v85 series
                                 Gson gson = new Gson();
@@ -450,7 +440,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                                 mView.updateCleanTime(getTimeValue());
                                 mView.updateCleanArea(getAreaValue());
                                 if (haveMap && pointList != null && isDrawMap()) {
-                                    mView.drawBoxMapX8(pointList);
+                                    mView.drawMapX8(pointList);
                                 }
                             }
                         });
@@ -661,7 +651,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
                 byte[] bytes = deviceMsg.getContent();
                 if (bytes != null) {
-                    errorCode = bytes[8];
+                    errorCode = bytes[8] & 0xff;
                     batteryNo = bytes[5];
                     mopForce = bytes[4];
                     isMaxMode = bytes[3] == 0x01;
@@ -741,12 +731,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private void refreshMap() {
         if (slamBytes != null && realTimePoints != null && historyRoadList != null && existPointList != null) {
             if (isX900Series()) {
-                mView.drawSlamMap(slamBytes);
-                mView.drawRoadMap(realTimePoints, historyRoadList);
-                mView.drawObstacle();
-                mView.drawVirtualWall(existPointList);//只是刷新电子墙
+                mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
             } else {
-                mView.drawBoxMapX8(pointList);
+                mView.drawMapX8(pointList);
             }
         }
     }
@@ -852,11 +839,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     @Override
     public void handlePropertyData(String s1, boolean isFromFetch) {
         MyLogger.d(TAG, "handlePropertyData ==== " + s1 + "---------------isFromFetch--------" + isFromFetch);
-        if (isFromFetch && statusFlag == STATUS_FLAG_COMPLETION) {
-            return;
-        } else {
+        if (!isFromFetch) {
             statusFlag = STATUS_FLAG_COMPLETION;
+        } else if (statusFlag == STATUS_FLAG_COMPLETION) {
+            return;
         }
+
         if (isViewAttached()) {
             PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
             errorCode = info.getError_info();

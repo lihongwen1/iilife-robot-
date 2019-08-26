@@ -302,4 +302,6 @@
     <string name="consume_aty_text_2_a9">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
     <string name="please_agree_policy">同意%1$s</string>
     <string name="agree_privacy_policy">同意する</string>
+    <string name="ap_guide_aty_tip2_a9">3秒後、「ドリップ」音が鳴らず、長押しして音声「WiFi接続中」を聞いてから放すと、AP配信モードに入り、WiFiインジケーターが点滅し始めます。</string>
+    <string name="ap_guide_already_open_wifi_a9">「WiFiに接続する」はすでに発表しました</string>
 </resources>

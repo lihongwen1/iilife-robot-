@@ -302,4 +302,6 @@
     <string name="consume_aty_text_2_a9">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
     <string name="agree_privacy_policy">注册登录表示同意</string>
     <string name="please_agree_policy">请同意%1$s</string>
+    <string name="ap_guide_aty_tip2_a9">长按机器的启动键，3秒后听到嘀的一声，继续长按听到WiFi连接中后松开，WiFi指示灯闪烁。</string>
+    <string name="ap_guide_already_open_wifi_a9">已听到\"WiFi连接中\"</string>
 </resources>
