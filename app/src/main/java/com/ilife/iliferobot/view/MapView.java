@@ -70,6 +70,7 @@ public class MapView extends View {
     private Bitmap boxBitmap, slamBitmap;
     private RectF slamRect = new RectF();
     private boolean robotSeriesX9;
+    private boolean unconditionalRecreate;
 
     public MapView(Context context) {
         super(context);
@@ -145,6 +146,16 @@ public class MapView extends View {
         virtualWallBeans = new ArrayList<>();
         boxPath = new Path();
     }
+
+    /**
+     * 无条件刷新创建bitmap
+     *
+     * @param unconditionalRecreate
+     */
+    public void setUnconditionalRecreate(boolean unconditionalRecreate) {
+        this.unconditionalRecreate = unconditionalRecreate;
+    }
+
 
     /**
      * 设置地图模式
@@ -225,8 +236,9 @@ public class MapView extends View {
         //drawing white road line
         drawRoadMap(roadList, historyRoadList);
         //drawing slam map
-        drawSlamMap(slamBytes);
-
+        if (slamBytes != null) {//900系列绘制路径时不绘制slam
+            drawSlamMap(slamBytes);
+        }
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.save();
 
@@ -245,6 +257,7 @@ public class MapView extends View {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
             slamCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
         }
+        invalidateUI();
     }
 
     public void drawMapX8(ArrayList<Integer> dataList) {
@@ -308,36 +321,38 @@ public class MapView extends View {
         double resultY = (height) * 0.80f / yLength;
         BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
         baseScare = Math.round(bigDecimal.floatValue());
-        MyLogger.d(TAG, "baseScare---------" + baseScare + "-------MAXSCALE         " + maxScare + "-------------minscale        " + minScare);
         if (baseScare > maxScare) {
             baseScare = maxScare;
         }
         if (baseScare < minScare) {
+            MyLogger.d(TAG,"SYSTEM SCALE MAP -------------");
             baseScare = minScare;
             systemScale = 1 / (xLength * baseScare / (width * 0.8f));
         }
+        MyLogger.d(TAG, "baseScare---------" + baseScare + "-------MAXSCALE         " + maxScare + "-------------minscale        " + minScare);
         int needWidth = (int) (matrixCoordinateX(xMax) - (int) matrixCoordinateX(xMin));
         int needHeight = (int) matrixCoordinateY(yMax) - (int) matrixCoordinateY(yMin);
-        slamRect.set(xMin, yMin, xMax, yMax);
         if (robotSeriesX9) {
+            slamRect.set(xMin, yMin, xMax, yMax);
             if (slamCanvas == null && slamBitmap == null) {
                 slamBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
                 slamCanvas = new Canvas(slamBitmap);
-            } else if (slamBitmap != null && needWidth > slamBitmap.getWidth() && needHeight > slamBitmap.getHeight()) {
+            } else if (slamBitmap != null && ((needWidth > slamBitmap.getWidth() || needHeight > slamBitmap.getHeight()) || unconditionalRecreate)) {
                 MyLogger.d(TAG, "reCreate the bitmap................");
                 slamBitmap.recycle();
                 slamBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
                 slamCanvas.setBitmap(slamBitmap);
+                unconditionalRecreate = false;
             }
             drawVirtualWall();//刷新虚拟墙
-        }else {
-            if (boxCanvas == null&&boxBitmap==null) {
-                boxCanvas = new Canvas();
+        } else {
+            if (boxBitmap == null && boxCanvas == null) {
                 boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                boxCanvas = new Canvas();
                 boxCanvas.setBitmap(boxBitmap);
             }
-            deviationX = (xMin + xMax) / 2f * baseScare - boxBitmap.getWidth() / 2f;
-            deviationY = (yMax + yMin) / 2f * baseScare - boxBitmap.getHeight() / 2f;
+            deviationX = (xMin + xMax) / 2f * baseScare - width / 2f;
+            deviationY = (yMax + yMin) / 2f * baseScare - height / 2f;
         }
     }
 
@@ -434,7 +449,7 @@ public class MapView extends View {
 
     private float getOffsetX() {
         if (robotSeriesX9) {
-            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - (dragX + (width - slamBitmap.getWidth()) / 2f);
+            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - (dragX + (width - (slamBitmap==null?0:slamBitmap.getWidth())) / 2f);
         } else {
             return (sCenter.x * (getRealScare() - 1) / getRealScare()) - dragX;
         }
@@ -442,7 +457,7 @@ public class MapView extends View {
 
     private float getOffsetY() {
         if (robotSeriesX9) {
-            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - (dragY + (height - slamBitmap.getHeight()) / 2f);
+            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - (dragY + (height - (slamBitmap==null?0:slamBitmap.getHeight())) / 2f);
         } else {
             return (sCenter.y * (getRealScare() - 1) / getRealScare()) - dragY;
         }
@@ -839,18 +854,17 @@ public class MapView extends View {
      * @param dataList
      */
     private void drawBoxMapX8(ArrayList<Integer> dataList) {
+        if (boxCanvas == null && boxBitmap == null) {
+            boxCanvas = new Canvas();
+            boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            boxCanvas.setBitmap(boxBitmap);
+        }
         if (dataList == null || dataList.size() == 0) {
             boxPath.reset();
             boxCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidateUI();
             return;
         }
-        if (boxCanvas == null) {
-            boxCanvas = new Canvas();
-            boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            boxCanvas.setBitmap(boxBitmap);
-        }
-
         pointList.clear();
         pointList.addAll(dataList);
         boxPath.reset();

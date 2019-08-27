@@ -105,7 +105,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             return;
         }
         isDrawMap = true;
-        if (subdomain.equals(Constants.subdomain_x900)) {
+        if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
             drawHistoryMap();
         } else {
             drawHistoryMapX8();
@@ -132,24 +132,26 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         byte tempdata = 0;
         byte mapdata = 0;
         //decode x, y
-        for (int i = 0; i < byteList.size() / length; i++) {
-            for (int j = 0; j < length; j++) {
-                mapdata = byteList.get(i * length + j);
-                for (int k = 0; k < 8; k++) {
-                    tempdata = (byte) (0x80 >> k);
-                    float x;
+        if (byteList.size() > 0 && length > 0) {
+            for (int i = 0; i < byteList.size() / length; i++) {
+                for (int j = 0; j < length; j++) {
+                    mapdata = byteList.get(i * length + j);
+                    for (int k = 0; k < 8; k++) {
+                        tempdata = (byte) (0x80 >> k);
+                        float x;
 
-                    x = (i - byteList.size() / length / 2);
-                    float y = (j * 8 + k - length * 4);
-                    if ((mapdata & tempdata) == tempdata) {
-                        if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
-                            pointList.add((int) y);
-                            pointList.add((int) x);
-                        } else {
-                            pointList.add((int) x);
-                            pointList.add((int) y);
+                        x = (i - byteList.size() / length / 2);
+                        float y = (j * 8 + k - length * 4);
+                        if ((mapdata & tempdata) == tempdata) {
+                            if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
+                                pointList.add((int) y);
+                                pointList.add((int) x);
+                            } else {
+                                pointList.add((int) x);
+                                pointList.add((int) y);
+                            }
+
                         }
-
                     }
                 }
             }
@@ -186,7 +188,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         if (subdomain.equals(Constants.subdomain_a8s)) {
             mapView.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
-        String robotType= DeviceUtils.getRobotType(subdomain);
+        String robotType = DeviceUtils.getRobotType(subdomain);
         mapView.setRobotSeriesX9(robotType.equals(Constants.X900) || robotType.equals(Constants.X910));
         Intent intent = getIntent();
         if (intent != null) {

@@ -299,7 +299,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
      */
     @Override
     public Single<ACUserDevice> bindDevice() {
-        return Single.create(emitter -> {
+        return Single .create(emitter -> {
             String bindPhysicalId = physicalId;
             String subdomain=SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN);
             LogUtil.d(TAG, "physicalId--" + physicalId+"---subdomain---- "+subdomain);

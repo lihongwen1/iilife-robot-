@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
@@ -22,7 +23,7 @@ public class MapActivity_X9_ extends BaseMapActivity {
     @Override
     public void initView() {
         super.initView();
-        iv_recharge_model.setImageResource(R.drawable.rechage_device_x900);
+        iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType()));
     }
 
     @Override
