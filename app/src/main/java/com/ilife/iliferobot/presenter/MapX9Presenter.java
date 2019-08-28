@@ -334,6 +334,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             for (int i = 0; i < objects.size(); i++) {
                 ACObject acObject = objects.get(i);
                 String cleanData = acObject.getString("clean_data");
+                workTime= Integer.parseInt(acObject.getString("real_clean_time"));
+                cleanArea= Integer.parseInt(acObject.getString("real_clean_area"));
                 byte[] history_bytes = Base64.decode(cleanData, Base64.DEFAULT);
                 if (history_bytes.length > 0) {
                     if (history_bytes.length == 6) {
@@ -354,6 +356,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     }
                 }
             }
+            mView.updateCleanArea(getAreaValue());
+            mView.updateCleanTime(getTimeValue());
             //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
             if (isDrawMap()) {
                 mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
