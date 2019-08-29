@@ -76,7 +76,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * 实时地图相关
      */
     private byte[] bytes_subscribe;
-    private int packageId = 0;
     private int package_index = 1;
     private long lastStartTime;
 
@@ -822,9 +821,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     @Override
     public boolean isDrawMap() {
-        return curStatus == MsgCodeUtils.STATUE_TEMPORARY_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING
+        return (curStatus == MsgCodeUtils.STATUE_TEMPORARY_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING
                 || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT
-                || (curStatus == MsgCodeUtils.STATUE_RECHARGE && isX900Series());
+                || (curStatus == MsgCodeUtils.STATUE_RECHARGE && isX900Series()))&&mView.isActivityInteraction();
     }
 
 

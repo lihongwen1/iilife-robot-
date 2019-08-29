@@ -32,6 +32,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private Dialog loadingDialog;
     private MyApplication application;
     private BaseActivity oContext;
+    protected boolean isActivityInteraction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,10 +107,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
@@ -215,6 +212,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 main.scrollTo(0, 0);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isActivityInteraction = true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isActivityInteraction=false;
     }
 
 }

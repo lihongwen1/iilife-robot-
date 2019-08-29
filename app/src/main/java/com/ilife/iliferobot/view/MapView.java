@@ -112,7 +112,7 @@ public class MapView extends View {
         slamPaint.setFilterBitmap(true);
         slamPaint.setStrokeJoin(Paint.Join.ROUND);
         slamPaint.setColor(colors[1]);
-        slamPaint.setStrokeWidth(1f);
+        slamPaint.setStrokeWidth(4f);
         positionCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         positionCirclePaint.setStyle(Paint.Style.FILL);
         positionCirclePaint.setFilterBitmap(true);
@@ -241,7 +241,7 @@ public class MapView extends View {
         }
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.save();
-
+        slamCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
         slamPaint.setColor(colors[1]);
         slamCanvas.drawPath(slamPath, slamPaint);
         slamPaint.setColor(colors[0]);
@@ -325,19 +325,19 @@ public class MapView extends View {
             baseScare = maxScare;
         }
         if (baseScare < minScare) {
-            MyLogger.d(TAG,"SYSTEM SCALE MAP -------------");
+            MyLogger.d(TAG, "SYSTEM SCALE MAP -------------");
             baseScare = minScare;
             systemScale = 1 / (xLength * baseScare / (width * 0.8f));
         }
-        MyLogger.d(TAG, "baseScare---------" + baseScare + "-------MAXSCALE         " + maxScare + "-------------minscale        " + minScare);
-        int needWidth = (int) (matrixCoordinateX(xMax) - (int) matrixCoordinateX(xMin));
-        int needHeight = (int) matrixCoordinateY(yMax) - (int) matrixCoordinateY(yMin);
+        int needWidth = (int) ((xMax - xMin) * baseScare);
+        int needHeight = (int) ((yMax - yMin) * baseScare);
+        MyLogger.d(TAG, "needWidth-----:" + needWidth + "--needHeight----:" + needHeight + "--systemScale--:" + systemScale);
         if (robotSeriesX9) {
             slamRect.set(xMin, yMin, xMax, yMax);
             if (slamCanvas == null && slamBitmap == null) {
                 slamBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
                 slamCanvas = new Canvas(slamBitmap);
-            } else if (slamBitmap != null && ((needWidth > slamBitmap.getWidth() || needHeight > slamBitmap.getHeight()) || unconditionalRecreate)) {
+            } else if (slamBitmap != null && ((needWidth != slamBitmap.getWidth() || needHeight != slamBitmap.getHeight()) || unconditionalRecreate)) {
                 MyLogger.d(TAG, "reCreate the bitmap................");
                 slamBitmap.recycle();
                 slamBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
@@ -449,7 +449,7 @@ public class MapView extends View {
 
     private float getOffsetX() {
         if (robotSeriesX9) {
-            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - (dragX + (width - (slamBitmap==null?0:slamBitmap.getWidth())) / 2f);
+            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - (dragX + (width - (slamBitmap == null ? 0 : slamBitmap.getWidth())) / 2f);
         } else {
             return (sCenter.x * (getRealScare() - 1) / getRealScare()) - dragX;
         }
@@ -457,7 +457,7 @@ public class MapView extends View {
 
     private float getOffsetY() {
         if (robotSeriesX9) {
-            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - (dragY + (height - (slamBitmap==null?0:slamBitmap.getHeight())) / 2f);
+            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - (dragY + (height - (slamBitmap == null ? 0 : slamBitmap.getHeight())) / 2f);
         } else {
             return (sCenter.y * (getRealScare() - 1) / getRealScare()) - dragY;
         }
@@ -837,7 +837,7 @@ public class MapView extends View {
             return;
         }
         //切换到下一行绘制
-        for (int j = 0; j < baseScare; j++) {
+        for (int j = 0; j < baseScare; j += 4) {
             for (SlamLineBean slb : lastLineBeans) {
                 Path realPath = slb.getType() == 0x01 ? obstaclePath : slamPath;
                 realPath.moveTo(matrixCoordinateX(slb.getStartX()), matrixCoordinateY(1500 - startY) + j);
@@ -886,5 +886,19 @@ public class MapView extends View {
 
     private void invalidateUI() {
         invalidate();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (slamBitmap != null) {
+            slamBitmap.recycle();
+            slamBitmap = null;
+        }
+        if (boxBitmap != null) {
+            boxBitmap.recycle();
+            boxBitmap = null;
+        }
+
     }
 }

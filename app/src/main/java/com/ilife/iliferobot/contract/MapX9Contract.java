@@ -64,6 +64,7 @@ public interface MapX9Contract {
         void showVirtualWallTip();
         void drawMapX9(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList, byte[] slamBytes);
         void drawMapX8(ArrayList<Integer> dataList);
+        boolean isActivityInteraction();
     }
 
     interface Presenter {

@@ -154,6 +154,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
 
     @Override
+    public boolean isActivityInteraction() {
+        return isActivityInteraction;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         int sleepTime = (int) ((System.currentTimeMillis() - appPauseTime) / 1000f / 60f);

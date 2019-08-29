@@ -50,6 +50,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
     TextView tv_roll;
     @BindView(R.id.tv_1)
     TextView tv_tips;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +92,10 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         acDeviceMsg.setContent(new byte[]{0x00});
         sendToDeviceWithOption(acDeviceMsg, physicalId);
         tv_top_title.setText(R.string.setting_aty_consume_detail);
-        tv_roll.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9)?R.string.consume_aty_roll_time_a9:R.string.consume_aty_roll_time);
-        tv_tips.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9)?R.string.consume_aty_text_2_a9:R.string.consume_aty_text_2);
+        tv_roll.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
+                R.string.consume_aty_roll_time_a9 : R.string.consume_aty_roll_time);
+        tv_tips.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
+                R.string.consume_aty_text_2_a9 : R.string.consume_aty_text_2);
     }
 
     public void showResetDialog(int tag) {
@@ -104,7 +107,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                 hint = Utils.getString(R.string.consume_aty_resetSide_over);
                 break;
             case R.id.rl_roll:
-                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9)) {
+                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7)) {
                     title = Utils.getString(R.string.consume_aty_resetRoll_a9);
                     hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
                 } else {
