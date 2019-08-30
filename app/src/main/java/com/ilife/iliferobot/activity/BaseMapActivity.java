@@ -232,9 +232,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxscare) {
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale,int minScale) {
         mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare, 4);
+        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxScale, minScale);
     }
 
     @Override

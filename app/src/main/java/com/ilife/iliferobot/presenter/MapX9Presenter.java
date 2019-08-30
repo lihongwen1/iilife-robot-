@@ -206,7 +206,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                         //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
                         if (isViewAttached() && isDrawMap()) {
-                            mView.updateSlam(xMin, xMax, yMin, yMax, 6);
+                            mView.updateSlam(xMin, xMax, yMin, yMax, 6,4);
                             mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
                         }
                     }
@@ -262,10 +262,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             return;
         }
         if (minX == 0 && minY == 0 && maxX == 0 && maxY == 0) {
-            minX = src.get(0);
-            minY = src.get(1);
-            maxX = src.get(0);
-            maxY = src.get(1);
+            minX = -src.get(0);
+            minY = -src.get(1);
+            maxX = -src.get(0);
+            maxY = -src.get(1);
             offset = 0;
             MyLogger.d(TAG, "data is  clear, and  need to reset all params");
         }
@@ -286,7 +286,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 maxY = y;
             }
         }
-        mView.updateSlam(minX, maxX, minY, maxY, 15);
+        mView.updateSlam(minX, maxX, minY, maxY, 15,9);
     }
 
     private int pageNo = 1;// 900 800等机器分页请求历史地图
@@ -486,7 +486,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     maxY = 0;
                 } else {
                     pointList.add(x);
-                    pointList.add(y);
+                    pointList.add(1500-y);
                 }
             }
         }
@@ -868,9 +868,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.updateCleanArea(getAreaValue());
             mView.updateCleanTime(getTimeValue());
             mView.showErrorPopup(errorCode);
-            if (errorCode != 0) {
-                mView.cleanMapView();
-            }
+//            if (errorCode != 0) {
+//                mView.cleanMapView();
+//            }
         }
     }
 
