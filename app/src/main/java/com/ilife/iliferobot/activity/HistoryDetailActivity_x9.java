@@ -79,21 +79,23 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     }
 
     private void drawRoad(byte[] roadBytes) {
-        if (roadBytes == null || roadBytes.length == 0) {
-            MyLogger.e(TAG, "bytes is null");
-            return;
-        } else {
-            MyLogger.e(TAG, "bytes is not null：" + roadBytes.length);
-            if (roadBytes.length >= 4 && roadBytes.length % 4 == 0) {
-                for (int j = 0; j < roadBytes.length; j += 4) {
-                    int pointx = DataUtils.bytesToInt(new byte[]{roadBytes[j], roadBytes[j + 1]}, 0);//2,3
-                    int pointy = DataUtils.bytesToInt(new byte[]{roadBytes[j + 2], roadBytes[j + 3]}, 0);//4,5
-                    historyPointsList.add((pointx * 224) / 100 + 750);
-                    historyPointsList.add((pointy * 224) / 100 + 750);
-                }
-            } else {
-                MyLogger.e(TAG, "bytes is not null222：" + roadBytes.length);
+        if (roadBytes != null && roadBytes.length >= 4 && roadBytes.length % 4 == 0) {
+            for (int j = 0; j < roadBytes.length; j += 4) {
+                int pointx = DataUtils.bytesToInt(new byte[]{roadBytes[j], roadBytes[j + 1]}, 0);//2,3
+                int pointy = DataUtils.bytesToInt(new byte[]{roadBytes[j + 2], roadBytes[j + 3]}, 0);//4,5
+                historyPointsList.add((pointx * 224) / 100 + 750);
+                historyPointsList.add((pointy * 224) / 100 + 750);
             }
+        }
+        boolean isAllData750 = true;
+        for (int value : historyPointsList) {
+            if (value != 750) {
+                isAllData750 = false;
+                break;
+            }
+        }
+        if (isAllData750) {
+            historyPointsList.clear();
         }
     }
 
@@ -105,7 +107,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             return;
         }
         isDrawMap = true;
-        if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
+        if (subdomain.equals(Constants.subdomain_x900) || subdomain.equals(Constants.subdomain_x910)) {
             drawHistoryMap();
         } else {
             drawHistoryMapX8();
@@ -143,10 +145,10 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                         if ((mapdata & tempdata) == tempdata) {
                             if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
                                 pointList.add((int) y);
-                                pointList.add((int) (1500-x));
+                                pointList.add((int) (1500 - x));
                             } else {
                                 pointList.add((int) x);
-                                pointList.add((int) (1500-y));
+                                pointList.add((int) (1500 - y));
                             }
 
                         }
