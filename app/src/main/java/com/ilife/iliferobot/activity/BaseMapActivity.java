@@ -465,9 +465,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     if (mPresenter.isLowPowerWorker()) {
                         ToastUtils.showToast(getString(R.string.low_power));
                     }
-                    if (mPresenter.getCurStatus() != MsgCodeUtils.STATUE_PAUSE) {//新的一次清扫
-                        mMapView.setUnconditionalRecreate(true);
-                    }
                     mPresenter.sendToDeviceWithOption(mPresenter.isRandomMode() ? ACSkills.get().enterRandomMode() : ACSkills.get().enterPlanningMode());
                 }
                 break;
@@ -732,6 +729,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void setUnconditionalRecreate(boolean recreate) {
+        mMapView.setUnconditionalRecreate(recreate);
     }
 
     @Override

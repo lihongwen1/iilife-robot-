@@ -38,7 +38,7 @@
 
         <RelativeLayout
             android:gravity="center_horizontal"
-            android:layout_width="@dimen/dp_48"
+            android:layout_width="@dimen/dp_60"
             android:layout_height="wrap_content">
 
             <com.ilife.iliferobot.view.MediumTextView

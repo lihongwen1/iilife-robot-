@@ -206,7 +206,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                         //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
                         if (isViewAttached() && isDrawMap()) {
-                            mView.updateSlam(xMin, xMax, yMin, yMax, 6,4);
+                            mView.updateSlam(xMin, xMax, yMin, yMax, 6, 4);
                             mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
                         }
                     }
@@ -286,7 +286,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 maxY = y;
             }
         }
-        mView.updateSlam(minX, maxX, minY, maxY, 15,9);
+        mView.updateSlam(minX, maxX, minY, maxY, 15, 9);
     }
 
     private int pageNo = 1;// 900 800等机器分页请求历史地图
@@ -333,8 +333,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             for (int i = 0; i < objects.size(); i++) {
                 ACObject acObject = objects.get(i);
                 String cleanData = acObject.getString("clean_data");
-                workTime= Integer.parseInt(acObject.getString("real_clean_time"));
-                cleanArea= Integer.parseInt(acObject.getString("real_clean_area"));
+                workTime = Integer.parseInt(acObject.getString("real_clean_time"));
+                cleanArea = Integer.parseInt(acObject.getString("real_clean_area"));
                 byte[] history_bytes = Base64.decode(cleanData, Base64.DEFAULT);
                 if (history_bytes.length > 0) {
                     if (history_bytes.length == 6) {
@@ -486,7 +486,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     maxY = 0;
                 } else {
                     pointList.add(x);
-                    pointList.add(1500-y);
+                    pointList.add(1500 - y);
                 }
             }
         }
@@ -799,6 +799,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             case MsgCodeUtils.STATUE_RANDOM:
                 mView.setTvUseStatus(BaseMapActivity.TAG_RANDOM);
                 break;
+            case MsgCodeUtils.STATUE_WAIT:
+                mView.setUnconditionalRecreate(true);
+                break;
         }
 
     }
@@ -823,7 +826,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public boolean isDrawMap() {
         return (curStatus == MsgCodeUtils.STATUE_TEMPORARY_POINT || curStatus == MsgCodeUtils.STATUE_PLANNING
                 || curStatus == MsgCodeUtils.STATUE_PAUSE || curStatus == MsgCodeUtils.STATUE_VIRTUAL_EDIT
-                || (curStatus == MsgCodeUtils.STATUE_RECHARGE && isX900Series()))&&mView.isActivityInteraction();
+                || (curStatus == MsgCodeUtils.STATUE_RECHARGE && isX900Series())) && mView.isActivityInteraction();
     }
 
 

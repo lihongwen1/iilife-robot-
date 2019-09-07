@@ -109,7 +109,7 @@ android {
         china {
             dimension "default"
             versionCode = 34
-            versionName = '3.2.5'
+            versionName = '3.2.7'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -234,10 +234,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0-beta01', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'

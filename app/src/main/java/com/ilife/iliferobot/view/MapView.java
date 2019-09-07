@@ -60,13 +60,14 @@ public class MapView extends View {
     private Paint boxPaint;
     private RectF curVirtualWall = new RectF();
     private ArrayList<Integer> pointList = new ArrayList<>();
-    private boolean isSetExtraPadding;
+    private boolean isSetExtraDrag;
     private float startX = 0, startY = 0, endX = 0, endY = 0;
     private Canvas boxCanvas, slamCanvas;
     private Bitmap boxBitmap, slamBitmap;
     private RectF slamRect = new RectF();
     private boolean robotSeriesX9;
     private boolean unconditionalRecreate;
+    private final int extraWH = 60;//额外的宽高
 
     public MapView(Context context) {
         super(context);
@@ -175,8 +176,8 @@ public class MapView extends View {
      * @param historyRoadList 历史地图数据
      */
     private void drawRoadMap(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList) {
-        MyLogger.d(TAG, "drawRoadMap-----");
         roadPath.reset();
+        MyLogger.d(TAG, "drawRoadMap-----");
         List<Integer> allPoint = new ArrayList<>();
         if (historyRoadList != null) {
             allPoint.addAll(historyRoadList);
@@ -285,8 +286,8 @@ public class MapView extends View {
     }
 
     public void setPaddingBottom(int paddingBottom) {
-        if (!isSetExtraPadding) {
-            isSetExtraPadding = true;
+        if (!isSetExtraDrag) {
+            isSetExtraDrag = true;
             dragY -= paddingBottom / 2f;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
@@ -321,7 +322,9 @@ public class MapView extends View {
             if (baseScare < minScare) {
                 MyLogger.d(TAG, "SYSTEM SCALE MAP -------------");
                 baseScare = minScare;
-                systemScale = 1 / (xLength * baseScare / (width * 0.8f));
+                float systenW = 1 / (xLength * baseScare / (width * 0.8f));
+                float systenH = 1 / (yLength * baseScare / (height * 0.8f));
+                systemScale = Math.min(systenH, systenW);
             }
         } else {
             baseScare = 15;
@@ -333,8 +336,8 @@ public class MapView extends View {
         MyLogger.d(TAG, "--systemScale--:" + systemScale + "------baseScare----:" + baseScare);
         slamRect.set(xMin, yMin, xMax, yMax);
         if (robotSeriesX9) {
-            int needWidth = (int) ((xMax - xMin) * baseScare);
-            int needHeight = (int) ((yMax - yMin) * baseScare);
+            int needWidth = (int) ((xMax - xMin) * baseScare) + extraWH;
+            int needHeight = (int) ((yMax - yMin) * baseScare) + extraWH;
             if (slamCanvas == null && slamBitmap == null) {
                 slamBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
                 slamCanvas = new Canvas(slamBitmap);
@@ -347,8 +350,8 @@ public class MapView extends View {
             }
             drawVirtualWall();//刷新虚拟墙
         } else {
-            int needWidth = (int) ((xMax - xMin + 1) * baseScare);
-            int needHeight = (int) ((yMax - yMin + 1) * baseScare);
+            int needWidth = (int) ((xMax - xMin + 1) * baseScare) + extraWH;
+            int needHeight = (int) ((yMax - yMin + 1) * baseScare) + extraWH;
             if (boxCanvas == null && boxBitmap == null) {
                 boxBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
                 boxCanvas = new Canvas(boxBitmap);
@@ -371,11 +374,11 @@ public class MapView extends View {
      * @return
      */
     private float matrixCoordinateX(float originalCoordinate) {
-        return (originalCoordinate - slamRect.left) * baseScare;
+        return (originalCoordinate - slamRect.left) * baseScare + extraWH / 2f;
     }
 
     private float reMatrixCoordinateX(float originalCoordinate) {
-        return originalCoordinate / baseScare + slamRect.left;
+        return (originalCoordinate - extraWH / 2f) / baseScare + slamRect.left;
     }
 
     /**
@@ -385,11 +388,11 @@ public class MapView extends View {
      * @return
      */
     private float matrixCoordinateY(float originalCoordinate) {
-        return (originalCoordinate - slamRect.top) * baseScare;
+        return (originalCoordinate - slamRect.top) * baseScare + extraWH / 2f;
     }
 
     private float reMatrixCoordinateY(float originalCoordinate) {
-        return originalCoordinate / baseScare + slamRect.top;
+        return (originalCoordinate - extraWH / 2f) / baseScare + slamRect.top;
     }
 
 
@@ -404,7 +407,7 @@ public class MapView extends View {
         if (!robotSeriesX9) {//X800 series
             if (boxCanvas != null && boxBitmap != null) {
                 matrix.reset();
-                matrix.postTranslate(dragX + (width - boxBitmap.getWidth()) / 2f, dragY + (height - boxBitmap.getHeight()) / 2f);
+                matrix.postTranslate(dragX + sCenter.x - boxBitmap.getWidth() / 2f, dragY + sCenter.y - boxBitmap.getHeight() / 2f);
                 matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
                 canvas.drawBitmap(boxBitmap, matrix, boxPaint);
             }
@@ -420,7 +423,7 @@ public class MapView extends View {
                 canvas.concat(matrix);
                 canvas.drawPath(existVirtualPath, virtualPaint);
 
-                if (MODE == MODE_DELETE_VIRTUAL||MODE==MODE_DELETE_VIRTUAL*MODE_DRAG||MODE==MODE_DELETE_VIRTUAL*MODE_ZOOM) {
+                if (MODE == MODE_DELETE_VIRTUAL || MODE == MODE_DELETE_VIRTUAL * MODE_DRAG || MODE == MODE_DELETE_VIRTUAL * MODE_ZOOM) {
                     for (RectF rf : deleteIconRectFs) {
                         canvas.drawBitmap(deleteBitmap, rf.left, rf.top, virtualPaint);
                     }

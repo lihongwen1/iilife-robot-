@@ -20,10 +20,10 @@
     </string-array>
     <!--ZACO-->
     <string-array name="device_name_zaco">
+        <item>"X910"</item>
         <item>"A9s"</item>
         <item>"A8s"</item>
         <item>"V85"</item>
-        <item>"X910"</item>
         <item>"V5x"</item>
     </string-array>
     <string-array name="array_week">

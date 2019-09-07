@@ -93,7 +93,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         et_phone_number.addOnInputEndListener(s -> mPresenter.isMobileEmpty());
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         if (!Utils.isIlife()) {
-            tv_slogan.setVisibility(View.INVISIBLE);
+            tv_slogan.setVisibility(View.GONE);
         }
         unUsableQuickLogin();
     }
@@ -115,7 +115,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 break;
             case R.id.bt_quick_login:
                 if (!rb_privacy_policy.isChecked()) {
-                    ToastUtils.showToast(getResources().getString(R.string.please_agree_policy," "+Utils.getString(R.string.personal_aty_protocol)));
+                    ToastUtils.showToast(getResources().getString(R.string.please_agree_policy, " " + Utils.getString(R.string.personal_aty_protocol)));
                 } else {
                     mPresenter.checkVerificationCode();
                 }

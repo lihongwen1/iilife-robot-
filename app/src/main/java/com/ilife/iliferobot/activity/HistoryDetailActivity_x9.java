@@ -87,14 +87,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 historyPointsList.add((pointy * 224) / 100 + 750);
             }
         }
-        boolean isAllData750 = true;
-        for (int value : historyPointsList) {
-            if (value != 750) {
-                isAllData750 = false;
-                break;
-            }
-        }
-        if (isAllData750) {
+        if (historyPointsList.size() == 4 && historyPointsList.get(0).equals(historyPointsList.get(2)) && historyPointsList.get(1).equals(historyPointsList.get(3))) {
             historyPointsList.clear();
         }
     }
@@ -177,7 +170,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 maxY = y;
             }
         }
-        mapView.updateSlam(minX, maxX, minY, maxY, 15, 9);
+        mapView.updateSlam(minX, maxX, minY, maxY, 30, 15);
         mapView.drawMapX8(pointList);
 
     }
