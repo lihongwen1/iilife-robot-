@@ -956,6 +956,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {
+                if (msg.getCode()==MsgCodeUtils.UPLOADMSG){//上传地图数据的请求不提示超时
+                    return;
+                }
                 MyLogger.d(TAG, msg.getContent()[0] + " command failed reason" + e.getMessage());
                 ToastUtils.showErrorToast(MyApplication.getInstance(), e.getErrorCode());
             }

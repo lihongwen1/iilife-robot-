@@ -181,6 +181,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         application.removeALLActivity_();// 调用myApplication的销毁所有Activity方法
     }
 
+    /**
+     * 销毁所有页面，只保留当前页面
+     */
     public void removeAllActivityExclude() {
         application.removeALLActivityExclude(oContext);
     }
