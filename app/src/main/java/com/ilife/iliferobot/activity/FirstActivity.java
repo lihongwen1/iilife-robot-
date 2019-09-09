@@ -4,13 +4,17 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.accloud.cloudservice.AC;
 import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.utils.Utils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import butterknife.BindView;
 
 
 /**
@@ -20,6 +24,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 public class FirstActivity extends BaseActivity {
     private final String TAG = FirstActivity.class.getSimpleName();
     private final int GOTOMAIN = 0x11;
+    @BindView(R.id.iv_launcher)
+    ImageView iv_launcher;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,11 @@ public class FirstActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        if (Utils.isChinaEnvironment()) {
+             iv_launcher.setImageResource(R.drawable.launcher_page_zh);
+        } else {
+             iv_launcher.setImageResource(R.drawable.launcher_page);
+        }
     }
 
     private WeakHandler handler = new WeakHandler(msg -> {
