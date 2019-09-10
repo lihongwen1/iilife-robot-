@@ -1,6 +1,7 @@
 package com.ilife.iliferobot.presenter;
 
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.util.Base64;
 
 import com.accloud.cloudservice.AC;
@@ -33,6 +34,9 @@ import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,11 +48,17 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 // TODO APP后台CPU消耗问题
@@ -65,7 +75,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private Gson gson;
     private byte[] slamBytes;
     private int curStatus, errorCode, batteryNo = -1, workTime, cleanArea, virtualStatus;
-    private Timer timer;
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
     private List<int[]> existPointList = new ArrayList<>();
@@ -93,10 +102,12 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private boolean haveMap = true;//标记机型是否有地图 V85机器没有地图，但是有地图清扫数据
     private boolean havMapData = true;//A7 无地图，也无地图清扫数据
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
-
+    private CompositeDisposable mComDisposable;
+    private  int retryTimes = 1;//the retry times of gaining the device status
     @Override
     public void attachView(MapX9Contract.View view) {
         super.attachView(view);
+        mComDisposable = new CompositeDisposable();
         gson = new Gson();
         realTimePoints = new ArrayList<>();
         historyRoadList = new ArrayList<>();
@@ -151,20 +162,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         isInitSlamTimer = true;
         getRealTimeMap();//need to get the real time map in the first time enter
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                LogUtil.d(TAG, "getRealTimeMap---" + curStatus);
-                if (!isViewAttached()) {
-                    return;
-                }
-                if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
-                    getRealTimeMap();
-                }
+        Disposable disposable = Observable.interval(0, 3, TimeUnit.SECONDS).subscribe(aLong -> {
+            LogUtil.d(TAG, "getRealTimeMap---" + curStatus);
+            if (!isViewAttached()) {
+                return;
             }
-        };
-        timer.schedule(task, 0, 3 * 1000);
+            if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
+                getRealTimeMap();
+            }
+        });
+        mComDisposable.add(disposable);
     }
 
     /**
@@ -616,6 +623,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     @Override
     public void getDevStatus() {
+        retryTimes=1;//reset the number of retries for getting devices status
         Single.create((SingleOnSubscribe<ACDeviceMsg>) emitter -> {
             MyLogger.d(TAG, "gain the device status");
             ACDeviceMsg msg_devStatus = new ACDeviceMsg(MsgCodeUtils.DevStatus, new byte[]{0x00});
@@ -631,7 +639,18 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             emitter.onError(e);
                         }
                     });
-        }).retry(5).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<ACDeviceMsg>() {
+        }).retryWhen(tf -> tf.flatMap((Function<Throwable, Publisher<?>>) throwable -> (Publisher<Boolean>) s -> {
+            MyLogger.d(TAG,"GAIN DEVICE STATUS ERROR-----:"+throwable.getMessage());
+            if (retryTimes > 5) {
+                s.onError(throwable);
+            } else {
+                Disposable disposable = Observable.timer(1, TimeUnit.SECONDS).subscribe(aLong -> {
+                    s.onNext(true);
+                    retryTimes++;
+                });
+                mComDisposable.add(disposable);
+            }
+        })).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<ACDeviceMsg>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -956,7 +975,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {
-                if (msg.getCode()==MsgCodeUtils.UPLOADMSG){//上传地图数据的请求不提示超时
+                if (msg.getCode() == MsgCodeUtils.UPLOADMSG) {//上传地图数据的请求不提示超时
                     return;
                 }
                 MyLogger.d(TAG, msg.getContent()[0] + " command failed reason" + e.getMessage());
@@ -1169,8 +1188,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void detachView() {
-        if (timer != null) {
-            timer.cancel();
+        if (mComDisposable != null) {
+            mComDisposable.dispose();
         }
         try {
             if (isSubscribeRealMap) {
