@@ -285,10 +285,9 @@ public class MapView extends View {
         invalidateUI();
     }
 
-    public void setPaddingBottom(int paddingBottom) {
+    public void resetCenter(int paddingBottom) {
         if (!isSetExtraDrag) {
             isSetExtraDrag = true;
-            dragY -= paddingBottom / 2f;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
     }
@@ -414,7 +413,7 @@ public class MapView extends View {
         } else {//x900 series
             if (slamCanvas != null && slamBitmap != null) {
                 matrix.reset();
-                matrix.postTranslate(dragX + (width - slamBitmap.getWidth()) / 2f, dragY + (height - slamBitmap.getHeight()) / 2f);
+                matrix.postTranslate(dragX + sCenter.x - slamBitmap.getWidth() / 2f, dragY + sCenter.y - slamBitmap.getHeight() / 2f);
                 matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
                 canvas.drawBitmap(slamBitmap, matrix, null);
                 /**
@@ -451,19 +450,24 @@ public class MapView extends View {
     }
 
     private float getOffsetX() {
+        float actualDragX;
         if (robotSeriesX9) {
-            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - (dragX + (width - (slamBitmap == null ? 0 : slamBitmap.getWidth())) / 2f);
+            actualDragX = dragX + sCenter.x - (slamBitmap == null ? 0 : slamBitmap.getWidth() / 2f);
         } else {
-            return (sCenter.x * (getRealScare() - 1) / getRealScare()) - dragX;
+            actualDragX = dragX + sCenter.x - (boxBitmap == null ? 0 : boxBitmap.getWidth() / 2f);
         }
+        return sCenter.x * (getRealScare() - 1) / getRealScare() - actualDragX;
+
     }
 
     private float getOffsetY() {
-        if (robotSeriesX9) {
-            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - (dragY + (height - (slamBitmap == null ? 0 : slamBitmap.getHeight())) / 2f);
-        } else {
-            return (sCenter.y * (getRealScare() - 1) / getRealScare()) - dragY;
+        float actualDragY;
+        if (robotSeriesX9){
+            actualDragY=dragY + sCenter.y - (slamBitmap==null?0:slamBitmap.getHeight() / 2f);
+        }else{
+            actualDragY=dragY + sCenter.y - (boxBitmap==null?0:boxBitmap.getHeight() / 2f);
         }
+        return sCenter.y * (getRealScare() - 1) / getRealScare() -actualDragY;
     }
 
 
