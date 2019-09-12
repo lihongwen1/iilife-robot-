@@ -305,5 +305,7 @@
     <string name="agree_privacy_policy">принимать</string>
     <string name="please_agree_policy">пожалуйста, согласитесь%1$s</string>
     <string name="ap_guide_aty_tip2_a9">Нажмите и удерживайте в течение 3 секунд, и вы услышите гудение. Не выпускайте, пока голосовое объявление не скажет «Start WiFi pairing mode» Индикатор WiFi начнет мигать, как только робот войдет в режим AP.</string>
+    <string name="service_time_ja">(Рабочий день 10:00~12:00 | 13:00~16:00)</string>
+    <string name="service_time1_ja">(* Кроме официальных праздников)</string>
 
 </resources>

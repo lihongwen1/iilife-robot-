@@ -304,4 +304,6 @@
     <string name="agree_privacy_policy">註冊登錄表示同意</string>
     <string name="ap_guide_aty_tip2_a9">長按機器的啟動鍵，3秒後聽到嘀的一聲，繼續長按聽到WiFi連接中後鬆開，WiFi指示燈閃爍。</string>
     <string name="ap_guide_already_open_wifi_a9">已聽到「WiFi連接中」</string>
+    <string name="service_time_ja">(工作日10:00–12:00 | 13:00–16:00)</string>
+    <string name="service_time1_ja">(*法定節假日除外)</string>
 </resources>

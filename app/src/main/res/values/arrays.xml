@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--东南亚-->
+    <string-array name="device_name_ilife_as">
+        <item>"A7"</item>
+        <item>"A9s"</item>
+    </string-array>
     <!--美国-->
     <string-array name="device_name_ilife_us">
-        <item>"A7"</item>
-        <item>"A9"</item>
-    </string-array>
-    <!--东南亚-->
-    <string-array name="device_name_ilife_sea">
         <item>"A7"</item>
         <item>"A9"</item>
     </string-array>

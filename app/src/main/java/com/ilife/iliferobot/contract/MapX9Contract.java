@@ -77,11 +77,9 @@ public interface MapX9Contract {
 
         String getRobotType();
 
-        void initTimer();
+        void intervalToObtainSlam();
 
-        void getRealTimeMap();
-
-        void getHistoryRoad();
+        void getHistoryRoadX9();
 
         void queryVirtualWall();
 

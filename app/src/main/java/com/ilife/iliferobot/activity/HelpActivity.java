@@ -129,9 +129,14 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
             findViewById(R.id.ll_tel_zaco).setVisibility(View.GONE);
             findViewById(R.id.ll_tel_ilife).setVisibility(View.VISIBLE);
             switch (BuildConfig.Area) {
-                case 3://US
+                case AC.REGIONAL_NORTH_AMERICA://US
                     ((TextView) findViewById(R.id.tv_telNum1)).setText("1-800-631-9676");
-                    ((TextView) findViewById(R.id.tv_phone_time)).setText("（Mon-Fri 09:00-17:00,CST）");
+                    ((TextView) findViewById(R.id.tv_phone_time)).setText("(Mon-Fri 09:00-17:00,CST)");
+                    break;
+                case  AC.REGIONAL_SOUTHEAST_ASIA:
+                    ((TextView) findViewById(R.id.tv_telNum1)).setText("072-730-2277");
+                    ((TextView) findViewById(R.id.tv_phone_time)).setText(Utils.getString(R.string.service_time_ja));
+                    ((TextView) findViewById(R.id.tv_phone_time1)).setText(Utils.getString(R.string.service_time1_ja));
                     break;
             }
         } else {//ZACO

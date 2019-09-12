@@ -21,6 +21,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
             android:background="@color/white">
@@ -29,14 +30,12 @@
                 android:id="@+id/image_tel1_all"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_30"
                 android:background="@drawable/n_icon_tel" />
 
             <com.ilife.iliferobot.view.AvantGardTextView
                 android:id="@+id/tv_telNum1"
                 style="@style/Text_14sp_33"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_18"
                 android:layout_toEndOf="@+id/image_tel1_all"
                 android:text="400-963-8886" />
@@ -44,10 +43,15 @@
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_phone_time"
                 style="@style/Text_12sp_33"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_toEndOf="@+id/tv_telNum1"
                 android:text="@string/help_aty_time1" />
+            <com.ilife.iliferobot.view.LightTextView
+                android:id="@+id/tv_phone_time1"
+                style="@style/Text_12sp_33"
+                android:layout_alignStart="@id/tv_telNum1"
+                android:layout_below="@id/tv_telNum1"
+                />
         </RelativeLayout>
 
         <View style="@style/View_Line_Style" />

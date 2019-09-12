@@ -79,6 +79,9 @@ public class SelectActivity_x extends BackBaseActivity {
                 case AC.REGIONAL_NORTH_AMERICA:
                     series = "A";
                     break;
+                case AC.REGIONAL_SOUTHEAST_ASIA:
+                    series = "A";
+                    break;
                 default:
                     series = "X";
                     break;
@@ -114,7 +117,11 @@ public class SelectActivity_x extends BackBaseActivity {
                     robots.add(new CleanningRobot(R.drawable.n_a8s, robotName, Constants.subdomain_a8s, Constants.subdomaiId_a8s));
                     break;
                 case Constants.A9s:
-                    robots.add(new CleanningRobot(R.drawable.n_a9s, robotName, Constants.subdomain_a9s, Constants.subdomaiId_a9s));
+                    if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {
+                        robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    } else {
+                        robots.add(new CleanningRobot(R.drawable.n_a9s, robotName, Constants.subdomain_a9s, Constants.subdomaiId_a9s));
+                    }
                     break;
                 case Constants.V85:
                     robots.add(new CleanningRobot(R.drawable.n_v85, robotName, Constants.subdomain_v85, Constants.subdomaiId_v85));
@@ -122,7 +129,7 @@ public class SelectActivity_x extends BackBaseActivity {
                 case Constants.X910:
                     robots.add(new CleanningRobot(R.drawable.n_x910, robotName, Constants.subdomain_x910, Constants.subdomaiId_x910));
                     break;
-                    case Constants.V5x:
+                case Constants.V5x:
                     robots.add(new CleanningRobot(R.drawable.n_v5x, robotName, Constants.subdomain_v5x, Constants.subdomaiId_v5x));
                     break;
                 case Constants.A9:

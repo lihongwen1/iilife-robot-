@@ -1,7 +1,6 @@
 package com.ilife.iliferobot.presenter;
 
 import android.text.TextUtils;
-import android.text.format.Time;
 import android.util.Base64;
 
 import com.accloud.cloudservice.AC;
@@ -35,23 +34,19 @@ import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -103,7 +98,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private boolean havMapData = true;//A7 无地图，也无地图清扫数据
     private int minX, maxX, minY, maxY;//数据的边界，X800系列机器会用到
     private CompositeDisposable mComDisposable;
-    private  int retryTimes = 1;//the retry times of gaining the device status
+    private int retryTimes = 1;//the retry times of gaining the device status
+
     @Override
     public void attachView(MapX9Contract.View view) {
         super.attachView(view);
@@ -156,112 +152,54 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     /**
      * 包含3s查询实时地图(slam map)
      */
-    public void initTimer() {
+    public void intervalToObtainSlam() {
         if (!isX900Series()) {//只有x900需要每3s获取实时地图
             return;
         }
         isInitSlamTimer = true;
-        getRealTimeMap();//need to get the real time map in the first time enter
-        Disposable disposable = Observable.interval(0, 3, TimeUnit.SECONDS).subscribe(aLong -> {
+        MyLogger.d(TAG, "intervalToObtainSlam-------------------------------");
+        ACMsg req = new ACMsg();
+        req.setName("searchCleanRealTime");
+        req.put("device_id", deviceId);
+        Disposable disposable = Observable.interval(0, 3, TimeUnit.SECONDS).subscribeOn(Schedulers.single()).
+                observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
             LogUtil.d(TAG, "getRealTimeMap---" + curStatus);
             if (!isViewAttached()) {
                 return;
             }
-            if (curStatus == MsgCodeUtils.STATUE_PLANNING) {
-                getRealTimeMap();
+            if (isDrawMap()) {
+                AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+                    @Override
+                    public void success(ACMsg resp) {
+                        MyLogger.d(TAG, "intervalToObtainSlam-------------success------------------");
+                        if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
+                            return;
+                        }
+                        String strMap = resp.getString("slam_map");
+                        int xMax = resp.getInt("slam_x_max");
+                        int xMin = resp.getInt("slam_x_min");
+                        int yMin = 1500 - resp.getInt("slam_y_max");
+                        int yMax = 1500 - resp.getInt("slam_y_min");
+                        if (!TextUtils.isEmpty(strMap)) {
+                            slamBytes = Base64.decode(strMap, Base64.DEFAULT);
+                            //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
+                            if (isViewAttached() && isDrawMap()) {
+                                mView.updateSlam(xMin, xMax, yMin, yMax, 6, 4);
+                                mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void error(ACException e) {
+                        MyLogger.e(TAG, "Failed to obtain the slam data,and the error information is  " + e.getMessage());
+                    }
+                });
             }
         });
         mComDisposable.add(disposable);
     }
 
-    /**
-     * x900 slam map
-     * x800 history road
-     * 数据处理时间过久,大量数据处理
-     */
-    @Override
-    public void getRealTimeMap() {
-        if (!isViewAttached()) {//page destroyedm
-            return;
-        }
-        MyLogger.d(TAG, "getRealTimeMap-------------------------------");
-        ACMsg req;
-        if (isX900Series()) {
-            req = new ACMsg();
-            req.setName("searchCleanRealTime");
-            req.put("device_id", deviceId);
-        } else {
-            req = new ACMsg();
-            req.setName("searchCleanRealTimeMore");
-            req.put("device_id", deviceId);
-            req.put("pageNo", pageNo);
-        }
-        AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
-            @Override
-            public void success(ACMsg resp) {
-                MyLogger.d(TAG, "getRealTimeMap-------------success------------------");
-                if (!isViewAttached()) {//回冲或者视图销毁后不绘制路径
-                    return;
-                }
-                if (isX900Series()) {
-                    String strMap = resp.getString("slam_map");
-                    int xMax = resp.getInt("slam_x_max");
-                    int xMin = resp.getInt("slam_x_min");
-                    int yMin = 1500 - resp.getInt("slam_y_max");
-                    int yMax = 1500 - resp.getInt("slam_y_min");
-                    if (!TextUtils.isEmpty(strMap)) {
-                        slamBytes = Base64.decode(strMap, Base64.DEFAULT);
-                        //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
-                        if (isViewAttached() && isDrawMap()) {
-                            mView.updateSlam(xMin, xMax, yMin, yMax, 6, 4);
-                            mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
-                        }
-                    }
-                } else {//x800系列
-                    isGetHistory = true;
-                    Completable.create(e -> {
-                        ArrayList<ACObject> data = resp.get("data");
-                        if (data == null || data.size() == 0) {
-                            e.onError(new Throwable("data is null"));
-                        } else if (data.size() == 1000) {
-                            pageNo++;
-                            getRealTimeMap();//请求下一页数据
-                        } else {
-                            for (int i = 0; i < data.size(); i++) {
-                                parseRealTimeMapX8(data.get(i).getString("clean_data"));
-                            }
-                            updateSlamX8(pointList, 0);
-                            e.onComplete();
-                        }
-                    }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            mView.updateCleanTime(getTimeValue());
-                            mView.updateCleanArea(getAreaValue());
-                            if (haveMap && isViewAttached() && isDrawMap()) {
-                                mView.drawMapX8(pointList);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            //数据处理异常
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void error(ACException e) {
-                // TODO 需处理当历史地图请求失败时，需重新请求
-                getRealTimeMap();
-            }
-        });
-    }
 
     @Override
     public void updateSlamX8(ArrayList<Integer> src, int offset) {
@@ -299,39 +237,123 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private int pageNo = 1;// 900 800等机器分页请求历史地图
 
     /**
+     * Repetition only happens after each success.
+     */
+    private void getHistoryDataX8() {
+        pageNo = 1;
+        Disposable d = Single.create((SingleOnSubscribe<ACMsg>) emitter -> {
+            if (!isViewAttached()) {//page has been destroyed
+                emitter.onError(new Exception("you need to retry after a while as the view is not attach"));
+            } else {
+                MyLogger.d(TAG, "getHistoryDataX8-------------------------------");
+                ACMsg req = new ACMsg();
+                req.setName("searchCleanRealTimeMore");
+                req.put("device_id", deviceId);
+                req.put("pageNo", pageNo);
+                AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+                    @Override
+                    public void success(ACMsg resp) {
+                        MyLogger.d(TAG, "getHistoryDataX8,and success to get the data of page " + pageNo);
+                        emitter.onSuccess(resp);
+                    }
+
+                    @Override
+                    public void error(ACException e) {
+                        // TODO 需处理当历史地图请求失败时，需重新请求
+                        emitter.onError(e);
+                    }
+                });
+            }
+
+
+        }).map(acMsg -> {
+            ArrayList<ACObject> data = acMsg.get("data");
+            if (data != null && data.size() > 0) {
+                for (int i = 0; i < data.size(); i++) {
+                    parseRealTimeMapX8(data.get(i).getString("clean_data"));
+                }
+                updateSlamX8(pointList, 0);
+            }
+            if (data == null || data.size() != 1000) {
+                pageNo = -1;
+            } else {
+                pageNo++;
+            }
+            return true;
+        }).retry(2).repeatUntil(() -> {
+            MyLogger.e(TAG, "Ready to get the data of page " + pageNo + ", it won't work if the pageNo is -1");
+            return pageNo == -1;
+        }).observeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+            isGetHistory = true;
+            mView.updateCleanTime(getTimeValue());
+            mView.updateCleanArea(getAreaValue());
+            if (haveMap && isViewAttached() && isDrawMap()) {
+                mView.drawMapX8(pointList);
+            }
+        }, throwable -> {
+            isGetHistory = false;
+            MyLogger.e(TAG, "Failed to get history map data,and you need to retry sometime");
+        });
+        mComDisposable.add(d);
+    }
+
+    /**
      * x900获取历史地图
      * 考虑多线程同步问题
      */
     @Override
-    public void getHistoryRoad() {
-        ACMsg req = new ACMsg();
-        req.setName("searchCleanRoadDataMore");
-        req.put("device_id", deviceId);
-        req.put("pageNo", pageNo);
-        AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+    public void getHistoryRoadX9() {
+        pageNo = 1;
+        Disposable d = Single.create(new SingleOnSubscribe<ACMsg>() {
             @Override
-            public void success(ACMsg acMsg) {
-                if (!isViewAttached()) {
-                    return;
-                }
-                isGetHistory = true;
-                ArrayList<ACObject> objects = acMsg.get("data");
-                if (objects == null || objects.size() == 0) {
-                    return;
-                }
-                MyLogger.d(TAG, "getHistoryRoad()-----------" + objects.size());
-                if (objects.size() == 1000) {
-                    pageNo++;
-                    getHistoryRoad();
-                }
-                parseHistoryX9(objects);
-            }
+            public void subscribe(SingleEmitter<ACMsg> emitter) throws Exception {
+                if (!isViewAttached()) {//page has been destroyed
+                    emitter.onError(new Exception("you need to retry after a while as the view is not attach"));
+                } else {
+                    ACMsg req = new ACMsg();
+                    req.setName("searchCleanRoadDataMore");
+                    req.put("device_id", deviceId);
+                    req.put("pageNo", pageNo);
+                    AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
+                        @Override
+                        public void success(ACMsg acMsg) {
+                            emitter.onSuccess(acMsg);
+                        }
 
-            @Override
-            public void error(ACException e) {
-                getHistoryRoad();
+                        @Override
+                        public void error(ACException e) {
+                            emitter.onError(e);
+                        }
+                    });
+                }
             }
+        }).map(acMsg -> {
+            ArrayList<ACObject> objects = acMsg.get("data");
+            parseHistoryX9(objects);
+            if (objects == null || objects.size() != 1000) {
+                pageNo = -1;
+            } else {
+                pageNo++;
+            }
+            return true;
+        }).retry(2).repeatUntil(() -> {
+            MyLogger.e(TAG, "Ready to get the data of page " + pageNo + ", it won't work if the pageNo is -1");
+            return pageNo == -1;
+        }).observeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+            isGetHistory = true;
+            if (isViewAttached()) {
+                mView.updateCleanArea(getAreaValue());
+                mView.updateCleanTime(getTimeValue());
+                //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
+                if (isDrawMap()) {
+                    mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
+                }
+            }
+        }, throwable -> {
+            isGetHistory = false;
+            MyLogger.e(TAG, "Failed to get history map data,and you need to retry sometime");
         });
+        mComDisposable.add(d);
     }
 
 
@@ -361,12 +383,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                     }
                 }
-            }
-            mView.updateCleanArea(getAreaValue());
-            mView.updateCleanTime(getTimeValue());
-            //绘制历史路径坐标点，下一条路径的起始坐标为上 一条路径的终点坐标
-            if (isDrawMap()) {
-                mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
             }
         }
     }
@@ -425,43 +441,49 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     public void subscribeRealTimeMap() {
         Map<String, Object> primaryKey = new HashMap<>();
         primaryKey.put("device_id", deviceId);
-        AC.classDataMgr().subscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL,
-                new VoidCallback() {
-                    @Override
-                    public void success() {
-                        isSubscribeRealMap = true;
-                        AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
-                            MyLogger.d(TAG, "received map data------" + s1 + "----" + "---" + i + "-----------" + s);
-                            if (!isViewAttached()) {//
-                                return;
-                            }
-                            if (isX900Series()) {
-                                parseRealTimeMapX9(s1);
-                                if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
-                                    mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
-                                }
-                            } else {//x800 x785 x787  a9s a8s  v85 series
-                                Gson gson = new Gson();
-                                RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
-                                String clean_data = mapInfo.getClean_data();
-                                int offset = pointList.size();
-                                parseRealTimeMapX8(clean_data);
-                                updateSlamX8(pointList, offset);
-                                mView.updateCleanTime(getTimeValue());
-                                mView.updateCleanArea(getAreaValue());
-                                if (haveMap && pointList != null && isDrawMap()) {
-                                    mView.drawMapX8(pointList);
-                                }
-                            }
-                        });
-                    }
+        Disposable d = Single.create((SingleOnSubscribe<Boolean>) emitter -> AC.classDataMgr().
+                subscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL, new VoidCallback() {
+            @Override
+            public void success() {
+                emitter.onSuccess(true);
+            }
 
-                    @Override
-                    public void error(ACException e) {
-                        MyLogger.d(TAG, "订阅实时地图异常" + e.getMessage());
+            @Override
+            public void error(ACException e) {
+                MyLogger.e(TAG, "Register real time map failed,and the error information is " + e.getMessage() + "and it will trigger to retry");
+                emitter.onError(e);
+            }
+        })).retry(3).subscribe(aBoolean -> {
+            isSubscribeRealMap = true;
+            AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
+                MyLogger.d(TAG, "received map data------" + s1 + "----" + "---" + i + "-----------" + s);
+                if (!isViewAttached()) {//
+                    return;
+                }
+                if (isX900Series()) {
+                    parseRealTimeMapX9(s1);
+                    if (realTimePoints != null && realTimePoints.size() > 0 && isDrawMap()) {
+                        mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
+                    }
+                } else {//x800 x785 x787  a9s a8s  v85 series
+                    Gson gson = new Gson();
+                    RealTimeMapInfo mapInfo = gson.fromJson(s1, RealTimeMapInfo.class);
+                    String clean_data = mapInfo.getClean_data();
+                    int offset = pointList.size();
+                    parseRealTimeMapX8(clean_data);
+                    updateSlamX8(pointList, offset);
+                    mView.updateCleanTime(getTimeValue());
+                    mView.updateCleanArea(getAreaValue());
+                    if (haveMap && pointList != null && isDrawMap()) {
+                        mView.drawMapX8(pointList);
                     }
                 }
-        );
+            });
+        }, e -> {
+            isSubscribeRealMap = false;
+            MyLogger.d(TAG, "Register real time map Exception:" + e.getMessage());
+        });
+        mComDisposable.add(d);
     }
 
     /**
@@ -483,7 +505,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 int x = DataUtils.bytesToInt(new byte[]{bytes[j - 3], bytes[j - 2]}, 0);
                 int y = DataUtils.bytesToInt(new byte[]{bytes[j - 1], bytes[j]}, 0);
                 if ((x == 0x7fff) & (y == 0x7fff)) {
-                    MyLogger.e(TAG, "subscribeRealTimeMap===== (x==0x7fff)&(y==0x7fff) 地图被清掉了");
+                    MyLogger.e(TAG, "the map data has been cleaned and reset");
                     pointList.clear();
                     workTime = 0;
                     cleanArea = 0;
@@ -623,7 +645,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      */
     @Override
     public void getDevStatus() {
-        retryTimes=1;//reset the number of retries for getting devices status
+        retryTimes = 1;//reset the number of retries for getting devices status
         Single.create((SingleOnSubscribe<ACDeviceMsg>) emitter -> {
             MyLogger.d(TAG, "gain the device status");
             ACDeviceMsg msg_devStatus = new ACDeviceMsg(MsgCodeUtils.DevStatus, new byte[]{0x00});
@@ -640,7 +662,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         }
                     });
         }).retryWhen(tf -> tf.flatMap((Function<Throwable, Publisher<?>>) throwable -> (Publisher<Boolean>) s -> {
-            MyLogger.d(TAG,"GAIN DEVICE STATUS ERROR-----:"+throwable.getMessage());
+            MyLogger.d(TAG, "GAIN DEVICE STATUS ERROR-----:" + throwable.getMessage());
             if (retryTimes > 5) {
                 s.onError(throwable);
             } else {
@@ -666,7 +688,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x01));
                 }
                 /**
-                 * 避免第一次注册属性监听失败，查询到状态后重新注册
+                 * To avoid the failure of the first registration property listener, re-register it after the status is checked
                  */
                 if (propertyReceiver == null) {
                     registerPropReceiver();
@@ -697,15 +719,15 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             subscribeRealTimeMap();
                         }
                         if (!isInitSlamTimer) {
-                            initTimer();
+                            intervalToObtainSlam();
                         }
                         if (!isGetHistory) {
-                            getHistoryRoad();
+                            getHistoryRoadX9();
                         }
                         queryVirtualWall();
                     } else {//x800系列
                         if (!isGetHistory && havMapData) {
-                            getRealTimeMap();
+                            getHistoryDataX8();
                         }
                         if (!isSubscribeRealMap && havMapData) {
                             subscribeRealTimeMap();
@@ -729,7 +751,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     registerPropReceiver();
                 }
                 isGainDevStatus = false;
-                MyLogger.d(TAG, "gain the device status fail ,the reason is: " + e.getMessage());
+                MyLogger.d(TAG, "To gain the device status fail ,and the reason is: " + e.getMessage());
             }
         });
     }
@@ -947,7 +969,16 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         emitter.onError(e);
                     }
                 }
-        )).retry(2).subscribe(new SingleObserver<Boolean>() {
+        )).retryWhen(throwable -> throwable.flatMap((Function<Throwable, Publisher<?>>) throwable1 -> (Publisher<Boolean>) subscriber -> {
+            Disposable disposable = Observable.timer(1, TimeUnit.SECONDS).subscribe(aLong -> {
+                if (propertyReceiver == null) {
+                    subscriber.onNext(true);
+                } else {
+                    subscriber.onError(new Exception("this task has been done by other object"));
+                }
+            });
+            mComDisposable.add(disposable);
+        })).subscribe(new SingleObserver<Boolean>() {
             @Override
             public void onSubscribe(Disposable d) {
 

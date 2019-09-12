@@ -232,8 +232,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale,int minScale) {
-        mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale, int minScale) {
         mMapView.updateSlam(xMin, xMax, yMin, yMax, maxScale, minScale);
     }
 
@@ -484,7 +483,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
-                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT||mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE) {
+                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE) {
                     mPresenter.refreshStatus();
                 } else {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -729,6 +728,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fl_bottom_x9.post(() -> mMapView.resetCenter(fl_bottom_x9.getHeight()));
     }
 
     @Override
