@@ -34,19 +34,19 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void checkVerificationCode(String s) {
-        isCodeOk = s.length()==6;
+        isCodeOk = s.length() == 6;
         updateBtnConfirm();
     }
 
     @Override
     public void checkPwd1(String s) {
-        isPw1Ok = s.length() >=6;
+        isPw1Ok = s.length() >= 6;
         updateBtnConfirm();
     }
 
     @Override
     public void checkPwd2(String s) {
-        isPw2Ok = s.length() >=6;
+        isPw2Ok = s.length() >= 6;
         updateBtnConfirm();
     }
 
@@ -112,17 +112,33 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
 
     @Override
     public void confirm() {
-        if (!UserUtils.checkPassword(mView.getPwd1())) {
-            ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
-            mView.resetPwdFail();
-            return;
+        String str_email = mView.getAccount();
+        if (Utils.checkAccountUseful(str_email)) {
+            {
+                AC.accountMgr().checkExist(str_email, new PayloadCallback<Boolean>() {
+                    @Override
+                    public void error(ACException e) {
+                        if (!UserUtils.checkPassword(mView.getPwd1())) {
+                            ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
+                            mView.resetPwdFail();
+                            return;
+                        }
+                        if (!mView.getPwd1().equals(mView.getPwd2())) {
+                            ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
+                            mView.resetPwdFail();
+                            return;
+                        }
+                        checkVerificationCode();
+                    }
+
+                    @Override
+                    public void success(Boolean aBoolean) {
+                        ToastUtils.showToast(Utils.getString(R.string.login_aty_account_no));
+                        mView.resetPwdFail();
+                    }
+                });
+            }
         }
-        if (!mView.getPwd1().equals(mView.getPwd2())) {
-            ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
-            mView.resetPwdFail();
-            return;
-        }
-        checkVerificationCode();
     }
 
     @Override

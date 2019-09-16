@@ -102,8 +102,8 @@
     <string name="personal_input_email">請輸入郵箱</string>
     <string name="personal_aty_chose_type">請選擇您的產品型號</string>
     <string name="help_aty_content">請描述遇到的問題和現象</string>
-    <string name="personal_aty_count">可輸入字數140/140</string>
-    <string name="help_aty_text_count">可輸入字數%1$s/140</string>
+    <string name="personal_aty_count">可輸入字數140</string>
+    <string name="help_aty_text_count">可輸入字數%1$s</string>
     <string name="help_aty_add_pic">請添加圖片文件</string>
     <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
     <string name="help_aty_photo">拍照</string>

@@ -4,7 +4,7 @@
     <string name="login_aty_pw">新しいパスワード（6文字以上）</string>
     <string name="login_aty_input_email_phone">携帯/メールアドレスを入力してください</string>
     <string name="login_aty_input_pw">パスワードを入力してください</string>
-    <string name="login_aty_pw_ensure">新しいパスワードを再入力してください</string>
+    <string name="login_aty_pw_ensure">新しいパスワードを確認</string>
     <string name="login_aty_fw">パスワードを忘れた</string>
     <string name="login_aty_wrong_email">無効なアカウント</string>
     <string name="regist_wrong_account">間違った携帯電話/ Eメール</string>
@@ -81,7 +81,7 @@
     <string name="personal_aty_protocol">プライバシーポリシーとサービス契約</string>
     <string name="personal_acy_exit">ログアウト</string>
     <string name="personal_aty_cancel">キャンセル</string>
-    <string name="dialog_del_confirm">確認します</string>
+    <string name="dialog_del_confirm">確認する</string>
     <string name="confirm">完了しました</string>
     <string name="setting_aty_devName_null">ユーザー名を入力してください</string>
     <string name="personal_aty_reset_suc">ユーザー名の変更が完了しました</string>
@@ -104,7 +104,7 @@
     <string name="personal_input_email">メールアドレスを入力してください</string>
     <string name="personal_aty_chose_type">製品モデルを選択</string>
     <string name="help_aty_content">発生した問題の詳細</string>
-    <string name="personal_aty_count">残り140文字)</string>
+    <string name="personal_aty_count">残り140文字</string>
     <string name="help_aty_text_count">残り%1$s文字</string>
     <string name="help_aty_add_pic">写真を追加します</string>
     <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
@@ -171,7 +171,7 @@
     <string name="adapter_error_xj">ビリティエラー</string>
     <string name="adapter_error_qt">その他のエラー</string>
     <string name="setting_aty_type">モデル番号:</string>
-    <string name="clock_aty_appoint">スケジュール</string>
+    <string name="clock_aty_appoint">ロボット名</string>
     <string name="setting_aty_clean_record">クリーニング履歴</string>
     <string name="setting_aty_consume_detail">部品の消費</string>
     <string name="setting_aty_water_control">水位のコントロール</string>
@@ -217,7 +217,7 @@
     <string name="consume_aty_reset_suc">リセット完了</string>
     <string name="clock_aty_dev_offline">デバイスはオフラインです</string>
     <string name="setting_aty_hit_">ユーザー名</string>
-    <string name="consume_aty_text_2">終了</string>
+    <string name="consume_aty_text_2">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
     <string name="consume_aty_text_2_a9">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
     <string name="access_camera">カメラへのアクセスを許可してください</string>
     <string name="access_location">場所へのアクセスを許可してください</string>

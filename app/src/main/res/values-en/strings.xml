@@ -148,7 +148,7 @@
     <string name="adapter_error_yq">Edge cleaning parts error</string>
     <string name="adapter_error_td">Detectors error</string>
     <string name="dev_error_xuankong">Robot isn\'t on a flat surface</string>
-    <string name="adapter_error_wxl">Nosewheel error</string>
+    <string name="adapter_error_wxl">Nose wheel error</string>
     <string name="adapter_error_zbs">Left brush error</string>
     <string name="adapter_error_ybs">Right brush error</string>
     <string name="adapter_error_zbl">Left side wheel error</string>

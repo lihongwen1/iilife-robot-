@@ -148,6 +148,8 @@ public class MapView extends View {
      */
     public void setUnconditionalRecreate(boolean unconditionalRecreate) {
         this.unconditionalRecreate = unconditionalRecreate;
+        userScale=1;
+        originalScale=userScale;
     }
 
 
@@ -326,7 +328,7 @@ public class MapView extends View {
                 systemScale = Math.min(systenH, systenW);
             }
         } else {
-            baseScare = 15;
+            baseScare =25;
             if (xLength * baseScare > width * 0.8f) {
                 systemScale = 1 / (xLength * baseScare / (width * 0.8f));
             }

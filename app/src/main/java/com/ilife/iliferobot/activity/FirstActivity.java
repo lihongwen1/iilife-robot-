@@ -47,9 +47,9 @@ public class FirstActivity extends BaseActivity {
     @Override
     public void initView() {
         if (Utils.isChinaEnvironment()) {
-             iv_launcher.setImageResource(R.drawable.launcher_page_zh);
+            iv_launcher.setImageResource(R.drawable.launcher_page_zh);
         } else {
-             iv_launcher.setImageResource(R.drawable.launcher_page);
+            iv_launcher.setImageResource(R.drawable.launcher_page);
         }
     }
 
@@ -82,11 +82,13 @@ public class FirstActivity extends BaseActivity {
 
     public void gotoMain() {
         Intent i;
-//        i = new Intent(this,MapActivity_X9_.class);
         if (AC.accountMgr().isLogin()) {
             i = new Intent(this, MainActivity.class);
         } else {
             i = new Intent(this, QuickLoginActivity.class);
+            if (!Utils.isIlife()) {//Only ZACO Brand
+                i.putExtra(QuickLoginActivity.QR_CODE_TIP, true);
+            }
         }
         startActivity(i);
         removeActivity();
