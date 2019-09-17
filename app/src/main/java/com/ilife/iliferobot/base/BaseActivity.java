@@ -32,6 +32,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private Dialog loadingDialog;
     private MyApplication application;
     private BaseActivity oContext;
+    protected boolean isActivityInteraction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,10 +107,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
@@ -184,6 +181,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         application.removeALLActivity_();// 调用myApplication的销毁所有Activity方法
     }
 
+    /**
+     * 销毁所有页面，只保留当前页面
+     */
     public void removeAllActivityExclude() {
         application.removeALLActivityExclude(oContext);
     }
@@ -215,6 +215,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 main.scrollTo(0, 0);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isActivityInteraction = true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isActivityInteraction=false;
     }
 
 }

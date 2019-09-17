@@ -58,7 +58,7 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 4
-            versionName = '1.2.5'
+            versionName = '1.2.7'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO"
             buildConfigField("int", "Area", "4")
@@ -67,11 +67,12 @@ android {
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-CN\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
@@ -93,11 +94,12 @@ android {
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-CN\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
@@ -109,7 +111,7 @@ android {
         china {
             dimension "default"
             versionCode = 34
-            versionName = '3.2.5'
+            versionName = '3.2.7'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -119,11 +121,12 @@ android {
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-CN\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-CN\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-CN\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-CN\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
@@ -134,22 +137,23 @@ android {
         /*东南亚*/
         _SouthEast_Asia {
             dimension "default"
-            versionCode = 32
+            versionCode = 37
             versionName = '3.0.0'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFE AS"
+            resValue "string", "app_name", "ILIFE Robot AS"
             buildConfigField("int", "Area", "1")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-AS\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-AS\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-AS\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-AS\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-AS\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-AS\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-AS\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-AS\"")
@@ -161,8 +165,8 @@ android {
         _America {
             dimension "default"
             versionCode = 1
-            versionName = '1.0.2'
-            applicationId "com.ilife.iliferobot_us"
+            versionName = '3.0.0'
+            applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE US"
             buildConfigField("int", "Area", "3")
@@ -171,11 +175,12 @@ android {
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-US\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-US\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-US\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-US\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-US\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-US\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-US\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-US\"")
@@ -197,11 +202,12 @@ android {
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
             buildConfigField("String", "SERVICE_NAME_V5x", "\"ZACO-V5x\"")
-            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-x910\"")
+            buildConfigField("String", "SERVICE_NAME_X910", "\"ZACO-X910\"")
             buildConfigField("String", "SERVICE_NAME_X430", "\"ILife-X430-EU\"")
             buildConfigField("String", "SERVICE_NAME_X780", "\"ILife-X780-EU\"")
             buildConfigField("String", "SERVICE_NAME_X782", "\"ILife-X782-EU\"")
             buildConfigField("String", "SERVICE_NAME_X785", "\"ILife-X785-EU\"")
+            buildConfigField("String", "SERVICE_NAME_X786", "\"ILife-X786-EU\"")
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-EU\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-EU\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-EU\"")
@@ -234,10 +240,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0-beta01', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'

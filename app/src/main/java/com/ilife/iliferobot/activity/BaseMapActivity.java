@@ -154,6 +154,11 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
 
     @Override
+    public boolean isActivityInteraction() {
+        return isActivityInteraction;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         int sleepTime = (int) ((System.currentTimeMillis() - appPauseTime) / 1000f / 60f);
@@ -227,9 +232,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxscare) {
-        mMapView.setPaddingBottom(fl_bottom_x9.getHeight());
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxscare, 4);
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale, int minScale) {
+        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxScale, minScale);
     }
 
     @Override
@@ -460,9 +464,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     if (mPresenter.isLowPowerWorker()) {
                         ToastUtils.showToast(getString(R.string.low_power));
                     }
-                    if (mPresenter.getCurStatus() != MsgCodeUtils.STATUE_PAUSE) {//新的一次清扫
-                        mMapView.setUnconditionalRecreate(true);
-                    }
                     mPresenter.sendToDeviceWithOption(mPresenter.isRandomMode() ? ACSkills.get().enterRandomMode() : ACSkills.get().enterPlanningMode());
                 }
                 break;
@@ -482,7 +483,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 break;
             case R.id.iv_control_close_x9:
                 USE_MODE = USE_MODE_NORMAL;
-                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT||mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE) {
+                if (mPresenter.getCurStatus() == MsgCodeUtils.STATUE_WAIT || mPresenter.getCurStatus() == MsgCodeUtils.STATUE_PAUSE) {
                     mPresenter.refreshStatus();
                 } else {
                     mPresenter.sendToDeviceWithOption(ACSkills.get().enterWaitMode());
@@ -727,6 +728,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fl_bottom_x9.post(() -> mMapView.resetCenter(fl_bottom_x9.getHeight()));
+    }
+
+    @Override
+    public void setUnconditionalRecreate(boolean recreate) {
+        mMapView.setUnconditionalRecreate(recreate);
     }
 
     @Override

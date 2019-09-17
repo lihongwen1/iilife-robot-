@@ -25,14 +25,25 @@ import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.WifiUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
 import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.content.Context.WIFI_SERVICE;
@@ -48,11 +59,13 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private final String apPassWord = "123456789";
     private String physicalId = "";
     private String mApSsid;
-    private Disposable apWifiDisposable, apProgressDsiposable;
+    private CompositeDisposable mCpDisposable;
+    private boolean isFirstSucceed = true;//whether it is the first time of successful bind/whether the first successful bind
 
     @Override
     public void attachView(ApWifiContract.View view) {
         super.attachView(view);
+        mCpDisposable = new CompositeDisposable();
         activator = AC.deviceActivator(Constants.DEVICE_TYPE_QCLTLINK);
         wifiManager = (WifiManager) MyApplication.getInstance().getApplicationContext().getSystemService(WIFI_SERVICE);
     }
@@ -87,18 +100,19 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
     @Override
     public void connectToDeviceWithSsid(String ssid) {
-        apProgressDsiposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+        Disposable apProgressDisposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
                 MyLogger.d(TAG, "update progress");
-                if (aLong==25){
-                    mView.updateBindProgress("",80);
-                }else {
+                if (aLong == 25) {
+                    mView.updateBindProgress("", 80);
+                } else {
                     mView.updateBindProgress("", (int) (aLong * 3));
                 }
             }
         });
+        mCpDisposable.add(apProgressDisposable);
         mApSsid = ssid;
-        apWifiDisposable = connectToAp(1).delay(8, TimeUnit.SECONDS).
+        Disposable apWifiDisposable = connectToAp(1).delay(8, TimeUnit.SECONDS).
                 andThen(broadCastWifi(mView.getHomeSsid(), mView.getPassWord())).
                 delay(18, TimeUnit.SECONDS)
                 .andThen(connectToAp(2)).delay(6, TimeUnit.SECONDS)
@@ -122,21 +136,23 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                                 }
                             }
                         });
+        mCpDisposable.add(apWifiDisposable);
     }
 
     @Override
     public void connectToDevice() {
-        apProgressDsiposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
+        Disposable apProgressDisposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
                 MyLogger.d(TAG, "update progress");
-                if (aLong==25){
-                    mView.updateBindProgress("",80);
-                }else {
-                mView.updateBindProgress("", (int) (aLong * 3));
+                if (aLong == 25) {
+                    mView.updateBindProgress("", 80);
+                } else {
+                    mView.updateBindProgress("", (int) (aLong * 3));
                 }
             }
         });
-        apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).
+        mCpDisposable.add(apProgressDisposable);
+        Disposable apWifiDisposable = detectTargetWifi().andThen(connectToAp(1)).delay(8, TimeUnit.SECONDS).
                 andThen(broadCastWifi(mView.getHomeSsid(), mView.getPassWord())).
                 delay(18, TimeUnit.SECONDS)
                 .andThen(connectToAp(2)).delay(6, TimeUnit.SECONDS)
@@ -160,6 +176,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                                 }
                             }
                         });
+        mCpDisposable.add(apWifiDisposable);
     }
 
 
@@ -237,7 +254,6 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
      *
      * @param ssid
      * @param passWord
-     * @return
      */
     @Override
     public Completable broadCastWifi(String ssid, String passWord) {
@@ -265,7 +281,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     public void error(ACException e) {
                         //设备配置SSID与Password失败
 //                    emitter.onError(new Exception("设置ssid失败"));
-                        apMsg.append("设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
+                        apMsg.append("设备配置ssid失败!").append(e.getMessage()).append("code:").append(e.getErrorCode());
                         MyLogger.d(TAG, "设备配置ssid失败!" + e.getMessage() + "code:" + e.getErrorCode());
                     }
                 }, new PayloadCallback<ACDeviceBind>() {
@@ -280,7 +296,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
                     @Override
                     public void error(ACException e) {
-                        apMsg.append("设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
+                        apMsg.append("设备连云失败").append(e.getMessage()).append("code:").append(e.getErrorCode());
                         MyLogger.d(TAG, "设备连云失败" + e.getMessage() + "code:" + e.getErrorCode());
 //                    emitter.onError(e);
                         //此处一般为1993的超时错误，建议处理逻辑为页面上提示配网失败，提示用户检查自己输入的WIFI信息是否正确等，回到上述第一步骤，重新开始所有配网步骤。
@@ -295,41 +311,54 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     /**
      * 绑定设备
      *
-     * @return
      */
     @Override
     public Single<ACUserDevice> bindDevice() {
-        return Single .create(emitter -> {
+        return Single.create((SingleOnSubscribe<ACUserDevice>) emitter -> {
             String bindPhysicalId = physicalId;
-            String subdomain=SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN);
-            LogUtil.d(TAG, "physicalId--" + physicalId+"---subdomain---- "+subdomain);
+            String subdomain = SpUtils.getSpString(MyApplication.getInstance(), SelectActivity_x.KEY_SUBDOMAIN);
+            LogUtil.d(TAG, "physicalId--" + physicalId + "---subdomain---- " + subdomain);
             mView.updateBindProgress("开始绑定设备", 90);
             AC.bindMgr().bindDevice(subdomain, bindPhysicalId, "", new PayloadCallback<ACUserDevice>() {
                 @Override
                 public void success(ACUserDevice userDevice) {
                     MyLogger.e(TAG, "设备绑定成功！ " + userDevice.toString());
-                    mView.updateBindProgress("设备绑定成功", 100);
-                    emitter.onSuccess(userDevice);
+                    if (isFirstSucceed) {
+                        isFirstSucceed = false;
+                        emitter.onError(new Exception("bind success,but need a retry to make sure the result"));
+                    } else {
+                        mView.updateBindProgress("设备绑定成功", 100);
+                        emitter.onSuccess(userDevice);
+                    }
                 }
 
                 @Override
                 public void error(ACException e) {
-                    apMsg.append("绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
+//                    if (!isFirstSucceed && e.getErrorCode() == 0x3811) {
+//                        mView.updateBindProgress("in this case,it present that the device has been bound,but there is no massage about the device here to rename it", 100);
+//                    }
+                    apMsg.append("绑定设备失败").append(e.toString()).append(e.getMessage()).append("code:").append(e.getErrorCode());
                     MyLogger.e(TAG, "绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
                     emitter.onError(e);
                 }
             });
-        });
+        }).retryWhen(throwableFlowable -> throwableFlowable.flatMap((Function<Throwable, Publisher<?>>) throwable -> (Publisher<Boolean>) s -> {
+            MyLogger.e(TAG, "Bind error msg------------:" + throwable.getMessage());
+            if (throwable.getMessage().contains("success")) {
+               Disposable disposable= Observable.timer(3, TimeUnit.SECONDS).subscribe(aLong -> {
+                    MyLogger.e(TAG, "it's time to retry again!");
+                    s.onNext(true);
+                });
+               mCpDisposable.add(disposable);
+            } else {
+                s.onError(throwable);
+            }
+        }));
     }
 
     @Override
     public void cancelApWifi() {
-        if (apProgressDsiposable != null && apProgressDsiposable.isDisposed()) {
-            apProgressDsiposable.dispose();
-        }
-        if (apWifiDisposable != null && !apWifiDisposable.isDisposed()) {
-            apWifiDisposable.dispose();
-        }
+        mCpDisposable.dispose();
         activator.stopAbleLink();
     }
 }

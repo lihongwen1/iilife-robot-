@@ -61,6 +61,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:paddingStart="@dimen/dp_24"
+        android:paddingEnd="@dimen/dp_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_22"
@@ -70,8 +72,9 @@
         <com.ilife.iliferobot.view.RegularTextView
             android:visibility="invisible"
             android:id="@+id/tv_guide_tip4"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_16"
             android:text="@string/ap_guide_tip4"
             android:textColor="#ff333333"

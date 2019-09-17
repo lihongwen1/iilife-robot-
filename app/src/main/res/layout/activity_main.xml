@@ -60,6 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_notice"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:gravity="center_horizontal"
             android:text="@string/no_device_tip_hi"
             android:textColor="@color/color_f08300"
             android:textSize="24sp" />

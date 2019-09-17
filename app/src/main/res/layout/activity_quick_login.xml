@@ -9,27 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_120"
-            android:background="@drawable/logo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <com.ilife.iliferobot.view.LightTextView
-            android:id="@+id/tv_slogan"
-            style="@style/Text_16sp_33"
-            android:layout_marginTop="@dimen/dp_16"
-            android:text="@string/ilife_slogan"
-            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/logo" />
+
+            <com.ilife.iliferobot.view.LightTextView
+                android:id="@+id/tv_slogan"
+                style="@style/Text_16sp_33"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="@string/ilife_slogan" />
+        </LinearLayout>
 
         <com.ilife.iliferobot.view.SuperEditText
             android:id="@+id/et_phone_number"
             style="@style/super_edit_text_16sp"
             android:layout_marginStart="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_80"
             android:layout_marginEnd="@dimen/dp_30"
             android:inputType="textEmailAddress"
             app:ic_left_click="@drawable/n_icon_personal"
@@ -80,9 +84,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_40"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <com.ilife.iliferobot.view.ShadowContainer
@@ -120,7 +123,8 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:layout_marginTop="@dimen/dp_100"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -132,15 +136,18 @@
                 style="@style/Text_12sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/agree_privacy_policy" />
+
             <TextView
                 android:id="@+id/tv_privacy_policy"
-                android:text="@string/personal_aty_protocol"
                 style="@style/Text_12sp_33"
-                android:textColor="@color/color_f08300"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_alignBaseline="@id/rb_privacy_policy"
+                android:layout_toEndOf="@id/rb_privacy_policy"
+                android:includeFontPadding="true"
+                android:text="@string/personal_aty_protocol"
+                android:textColor="@color/color_f08300" />
+        </RelativeLayout>
 
     </LinearLayout>
 

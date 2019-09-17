@@ -382,6 +382,7 @@
 
         <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33_center"
+            android:layout_marginEnd="@dimen/dp_50"
             android:text="@string/setting_aty_factory_reset" />
 
         <ImageView style="@style/Image_Style_Forward" />

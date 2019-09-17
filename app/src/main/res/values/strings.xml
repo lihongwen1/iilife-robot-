@@ -309,4 +309,6 @@
     <string name="agree_privacy_policy">Agree</string>
     <string name="please_agree_policy">Please agree%1$s</string>
     <string name="ap_guide_aty_tip2_a9">"Press and hold for 3 seconds and you will hear a buzz. Don't release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  "</string>
+    <string name="service_time_ja">(Workday 10:00~12:00 | 13:00~16:00)</string>
+    <string name="service_time1_ja">(* Except legal holidays)</string>
 </resources>

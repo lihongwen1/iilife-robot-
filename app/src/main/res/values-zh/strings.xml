@@ -104,8 +104,8 @@
     <string name="personal_input_email">请输入邮箱</string>
     <string name="personal_aty_chose_type">请选择您的产品型号</string>
     <string name="help_aty_content">请描述遇到的问题和现象</string>
-    <string name="personal_aty_count">可输入字数140/140</string>
-    <string name="help_aty_text_count">可输入字数%1$s/140</string>
+    <string name="personal_aty_count">可输入字数140</string>
+    <string name="help_aty_text_count">可输入字数%1$s</string>
     <string name="help_aty_add_pic">请添加图片文件</string>
     <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
     <string name="help_aty_photo">拍照</string>
@@ -304,4 +304,6 @@
     <string name="please_agree_policy">请同意%1$s</string>
     <string name="ap_guide_aty_tip2_a9">长按机器的启动键，3秒后听到嘀的一声，继续长按听到WiFi连接中后松开，WiFi指示灯闪烁。</string>
     <string name="ap_guide_already_open_wifi_a9">已听到\"WiFi连接中\"</string>
+    <string name="service_time_ja">(工作日10:00–12:00 | 13:00–16:00)</string>
+    <string name="service_time1_ja">(*法定节假日除外)</string>
 </resources>

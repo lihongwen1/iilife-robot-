@@ -52,6 +52,9 @@ public class DeviceUtils {
             case Constants.subdomain_x785:
                 serviceName = BuildConfig.SERVICE_NAME_X785;
                 break;
+            case Constants.subdomain_a7:
+                serviceName = BuildConfig.SERVICE_NAME_X786;
+                break;
             case Constants.subdomain_x800:
                 serviceName = BuildConfig.SERVICE_NAME_X800;
                 break;
@@ -95,8 +98,10 @@ public class DeviceUtils {
                         robotType = Constants.X787;
                         break;
                     case Constants.subdomain_x800:
-                        if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA || BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//美规，日规
+                        if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA) {//美规，日规
                             robotType = Constants.A9;
+                        } else if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {
+                            robotType = Constants.A9s;
                         } else {
                             robotType = Constants.X800;
                         }
@@ -412,7 +417,7 @@ public class DeviceUtils {
                     types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_cn);
                     break;
                 case AC.REGIONAL_SOUTHEAST_ASIA://东南亚
-                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_sea);
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_as);
                     break;
                 case AC.REGIONAL_NORTH_AMERICA://美洲
                     types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_us);

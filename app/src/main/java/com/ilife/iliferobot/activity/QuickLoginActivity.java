@@ -42,6 +42,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     private final String TAG = QuickLoginActivity.class.getSimpleName();
     public static final String PHONE = "phone";
     public static final String VER_CODE = "ver_code";
+    public static final String QR_CODE_TIP = "qr_code_tip";
     Context context;
     @BindView(R.id.et_verification_code)
     SuperEditText et_verification_code;
@@ -65,7 +66,8 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Utils.isIlife()) {//Only ZACO Brand
+        Intent it = getIntent();
+        if (it.getBooleanExtra(QR_CODE_TIP, false)) {//Only ZACO Brand
             showQRCodeTip();
         }
     }
@@ -93,7 +95,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         et_phone_number.addOnInputEndListener(s -> mPresenter.isMobileEmpty());
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
         if (!Utils.isIlife()) {
-            tv_slogan.setVisibility(View.INVISIBLE);
+            tv_slogan.setVisibility(View.GONE);
         }
         unUsableQuickLogin();
     }
@@ -115,7 +117,7 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
                 break;
             case R.id.bt_quick_login:
                 if (!rb_privacy_policy.isChecked()) {
-                    ToastUtils.showToast(getResources().getString(R.string.please_agree_policy," "+Utils.getString(R.string.personal_aty_protocol)));
+                    ToastUtils.showToast(getResources().getString(R.string.please_agree_policy, " " + Utils.getString(R.string.personal_aty_protocol)));
                 } else {
                     mPresenter.checkVerificationCode();
                 }
