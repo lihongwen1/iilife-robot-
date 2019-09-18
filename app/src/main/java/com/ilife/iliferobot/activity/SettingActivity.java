@@ -294,6 +294,7 @@ public class SettingActivity extends BackBaseActivity {
                 rl_update.setVisibility(View.VISIBLE);
                 rl_mode.setVisibility(View.GONE);
                 break;
+            case Constants.XV3PRO:
             case Constants.V5x:
                 product = R.drawable.n_v5x;
                 rl_record.setVisibility(View.GONE);

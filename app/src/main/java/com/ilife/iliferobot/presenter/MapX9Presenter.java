@@ -112,13 +112,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
         robotType = DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
+        if (robotType.equals(Constants.XV3PRO) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
-        if (robotType.equals(Constants.A7) || robotType.equals(Constants.V5x)) {
+        if (robotType.equals(Constants.A7) || robotType.equals(Constants.V5x) || robotType.equals(Constants.XV3PRO)) {
             havMapData = false;
         }
-        if (robotType.equals(Constants.V5x)) {//V5x只有随机模式
+        if (robotType.equals(Constants.V5x) || robotType.equals(Constants.XV3PRO)) {//V5x只有随机模式
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
         }
     }
@@ -443,17 +443,17 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         primaryKey.put("device_id", deviceId);
         Disposable d = Single.create((SingleOnSubscribe<Boolean>) emitter -> AC.classDataMgr().
                 subscribe("clean_realtime", primaryKey, ACClassDataMgr.OPTYPE_ALL, new VoidCallback() {
-            @Override
-            public void success() {
-                emitter.onSuccess(true);
-            }
+                    @Override
+                    public void success() {
+                        emitter.onSuccess(true);
+                    }
 
-            @Override
-            public void error(ACException e) {
-                MyLogger.e(TAG, "Register real time map failed,and the error information is " + e.getMessage() + "and it will trigger to retry");
-                emitter.onError(e);
-            }
-        })).retry(3).subscribe(aBoolean -> {
+                    @Override
+                    public void error(ACException e) {
+                        MyLogger.e(TAG, "Register real time map failed,and the error information is " + e.getMessage() + "and it will trigger to retry");
+                        emitter.onError(e);
+                    }
+                })).retry(3).subscribe(aBoolean -> {
             isSubscribeRealMap = true;
             AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
                 MyLogger.d(TAG, "received map data------" + s1 + "----" + "---" + i + "-----------" + s);
@@ -695,14 +695,17 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 }
                 byte[] bytes = deviceMsg.getContent();
                 if (bytes != null) {
-                    errorCode = bytes[8] & 0xff;
+                    errorCode = bytes[8] &0xff;
                     batteryNo = bytes[5];
                     mopForce = bytes[4];
                     isMaxMode = bytes[3] == 0x01;
                     voiceOpen = bytes[6] == 0x01;
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
-                    MyLogger.d(TAG, "gain the device statue success and the status is :" + curStatus);
+                    if (robotType.equals(Constants.X800) && device_type == 0) {
+                        device_type = bytes[9]&0xff;
+                    }
+                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------");
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                     mView.updateCleanArea(getAreaValue());
                     mView.updateCleanTime(getTimeValue());
@@ -899,7 +902,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             isMaxMode = info.getVacuum_cleaning() == MsgCodeUtils.CLEANNING_CLEANING_MAX;
             mopForce = info.getCleaning_cleaning();
             voiceOpen = info.getVoice_mode() == 0x01;
-            device_type = info.getDevice_type();
+            if (device_type == 0) {
+                device_type = info.getDevice_type();
+            }
             virtualStatus = info.getLight_mode();
             int lastStatus = curStatus;
             curStatus = info.getWork_pattern();
@@ -1151,7 +1156,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
+        return robotType.equals(Constants.XV3PRO) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
     }
 
     @Override

@@ -113,6 +113,9 @@ public class DeviceUtils {
                     case Constants.subdomain_a7:
                         robotType = Constants.A7;
                         break;
+                    case Constants.subdomain_V3P:
+                        robotType=Constants.XV3PRO;
+                        break;
                 }
 
                 break;
@@ -259,6 +262,7 @@ public class DeviceUtils {
             case Constants.V85:
                 src = R.drawable.rechage_device_v85;
                 break;
+            case Constants.XV3PRO:
             case Constants.V5x:
                 src = R.drawable.rechage_device_v5x;
                 break;

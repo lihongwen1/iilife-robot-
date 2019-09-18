@@ -268,10 +268,10 @@
                         android:layout_marginStart="@dimen/dp_40"
                         android:layout_marginTop="@dimen/sp_18"
                         android:drawableTop="@drawable/image_along_bg"
-                        android:textColor="@color/text_color_33_300"
                         android:drawablePadding="@dimen/dp_8"
                         android:gravity="center"
-                        android:text="@string/map_aty_along" />
+                        android:text="@string/map_aty_along"
+                        android:textColor="@color/text_color_33_300" />
 
                     <com.ilife.iliferobot.view.RegularTextView
                         android:id="@+id/tv_point_x9"
@@ -281,10 +281,10 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/sp_18"
                         android:drawableTop="@drawable/image_point_bg"
-                        android:textColor="@color/text_color_33_300"
                         android:drawablePadding="@dimen/dp_8"
                         android:gravity="center"
-                        android:text="@string/map_aty_point" />
+                        android:text="@string/map_aty_point"
+                        android:textColor="@color/text_color_33_300" />
 
                     <com.ilife.iliferobot.view.RegularTextView
                         android:id="@+id/tv_appointment_x9"
@@ -295,10 +295,10 @@
                         android:layout_marginTop="@dimen/sp_18"
                         android:layout_marginEnd="@dimen/dp_40"
                         android:drawableTop="@drawable/selector_appointment"
-                        android:textColor="@color/text_color_33_300"
                         android:drawablePadding="@dimen/dp_8"
                         android:gravity="center"
                         android:text="@string/map_aty_appoint"
+                        android:textColor="@color/text_color_33_300"
                         android:visibility="gone" />
 
                     <com.ilife.iliferobot.view.RegularTextView
@@ -387,4 +387,13 @@
         </FrameLayout>
 
     </LinearLayout>
+    <!--用来显示调试信息的-->
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_300"
+        android:layout_marginTop="@dimen/dp_100"
+        android:background="@color/colorPrimary"
+        android:scrollbars="vertical"
+        android:visibility="gone" />
 </FrameLayout>

@@ -12,6 +12,7 @@ public interface MapX9Contract {
     }
 
     interface View extends BaseView {
+        void setTestText(String text);
         void setDevName();
 
         void showRemoteView();

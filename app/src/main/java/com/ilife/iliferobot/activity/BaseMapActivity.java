@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -138,8 +139,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public static final int USE_MODE_NORMAL = 1;
     public static final int USE_MODE_REMOTE_CONTROL = 2;
     protected int USE_MODE = USE_MODE_NORMAL;
-
-
+    @BindView(R.id.tv_test)
+    TextView textView;
     @Override
     public void attachPresenter() {
         super.attachPresenter();
@@ -728,6 +729,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        textView.setMovementMethod(ScrollingMovementMethod.getInstance());
         fl_bottom_x9.post(() -> mMapView.resetCenter(fl_bottom_x9.getHeight()));
     }
 
@@ -740,5 +742,13 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+    }
+
+    @Override
+    public void setTestText(String text) {
+        String s=textView.getText().toString();
+        s+="\n";
+        s+=text;
+        textView.setText(s);
     }
 }

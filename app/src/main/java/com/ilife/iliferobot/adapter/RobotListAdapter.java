@@ -60,7 +60,6 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
                     break;
                 case Constants.subdomain_x910:
-                    //TODO 修改为ZACO 910的机器图片
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x910);
                     break;
                 case Constants.subdomain_x900:
@@ -76,6 +75,10 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v85);
                     break;
                 case Constants.subdomain_v5x:
+                    holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
+                    break;
+                case Constants.subdomain_V3P:
+                    //TODO 修改为V3 Pro的图片
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
                     break;
                 default:

@@ -170,7 +170,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 maxY = y;
             }
         }
-        mapView.updateSlam(minX, maxX, minY, maxY, 30, 15);
+        mapView.updateSlam(minX, maxX, minY, maxY, 30, 4);
         mapView.drawMapX8(pointList);
 
     }
