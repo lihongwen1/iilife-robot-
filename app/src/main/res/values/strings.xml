@@ -219,7 +219,7 @@
 
     <string name="setting_aty_hit_">User name</string>
     <string name="consume_aty_text_2">Reminder:Clean side brush, roller brush and high performance filter after each use. Replace side brushes every 3–6 months, roller brush 5–12 months, and high performance filter 3–5 months.</string>
-    <string name="consume_aty_text_2_a9">Reminder:Clean side brush, Main brush and high performance filter after each use. Replace side brushes every 3–6 months, Main brush 5–12 months, and high performance filter 3–5 months.</string>
+    <string name="consume_aty_text_2_a9">Reminder:Clean side brush, main brush and high performance filter after each use. Replace side brushes every 3–6 months, main brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="access_camera">Please allow camera access</string>
     <string name="access_location">Please allow location access</string>
     <string name="access_storage">Please allow internal storage write access</string>
@@ -241,7 +241,7 @@
     <string name="setting_aty_ota_update">Firmware update</string>
     <string name="ota_aty_update_suc">Upgrade completed</string>
     <string name="ota_aty_latest_ver">Your OTA is up to date</string>
-    <string name="ilife_slogan">Make cleaning easier  Make life better</string>
+    <string name="ilife_slogan">Make cleaning easier&#160;&#160;&#160;Make life better</string>
     <string name="verification_code_tip">Verification code</string>
     <string name="get_ver_code_tip"> Get verification code</string>
     <string name="have_account_and_login">Already have an account?</string>

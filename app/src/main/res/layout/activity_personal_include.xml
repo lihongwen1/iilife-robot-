@@ -43,7 +43,6 @@
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_phone_time"
                 style="@style/Text_12sp_33"
-                android:layout_marginStart="@dimen/dp_16"
                 android:layout_toEndOf="@+id/tv_telNum1"
                 android:text="@string/help_aty_time1" />
             <com.ilife.iliferobot.view.LightTextView

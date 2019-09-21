@@ -141,6 +141,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     protected int USE_MODE = USE_MODE_NORMAL;
     @BindView(R.id.tv_test)
     TextView textView;
+
     @Override
     public void attachPresenter() {
         super.attachPresenter();
@@ -167,7 +168,6 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         if (sleepTime >= 3) {
             MyLogger.d(TAG, "prepare for first or reload history map data");
             mPresenter.prepareToReloadData();//重新获取历史map
-            mPresenter.registerPropReceiver();
         }
         mPresenter.getDevStatus();
         setDevName();
@@ -746,9 +746,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     @Override
     public void setTestText(String text) {
-        String s=textView.getText().toString();
-        s+="\n";
-        s+=text;
+        String s = textView.getText().toString();
+        s += "\n";
+        s += text;
         textView.setText(s);
     }
 }

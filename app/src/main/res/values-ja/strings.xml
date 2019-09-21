@@ -30,7 +30,7 @@
     <string name="select_x_aty_add">ロボットを追加する</string>
     <string name="guide_ap_prepare">ネットワークを見つけるための準備</string>
     <string name="guide_aty_next">次に</string>
-    <string name="ap_aty_input_pass">WiFiパスワードを入力してください</string>
+    <string name="ap_aty_input_pass">WiFiパスワード</string>
     <string name="ap_aty_input_wifi_ssid">WiFiネットワークを選択してください</string>
     <string name="add_aty_start_connect">接続中</string>
     <string name="add_aty_wrong_wifi_pass">パスワードに不正な文字が含まれています</string>

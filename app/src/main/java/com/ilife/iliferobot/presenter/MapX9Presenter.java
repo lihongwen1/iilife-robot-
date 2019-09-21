@@ -456,7 +456,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 })).retry(3).subscribe(aBoolean -> {
             isSubscribeRealMap = true;
             AC.classDataMgr().registerDataReceiver((s, i, s1) -> {
-                MyLogger.d(TAG, "received map data------" + s1 + "----" + "---" + i + "-----------" + s);
+                MyLogger.d(TAG, "received map data------");
                 if (!isViewAttached()) {//
                     return;
                 }
@@ -690,12 +690,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 /**
                  * To avoid the failure of the first registration property listener, re-register it after the status is checked
                  */
-                if (propertyReceiver == null) {
-                    registerPropReceiver();
-                }
+                registerPropReceiver();
                 byte[] bytes = deviceMsg.getContent();
                 if (bytes != null) {
-                    errorCode = bytes[8] &0xff;
+                    errorCode = bytes[8] & 0xff;
                     batteryNo = bytes[5];
                     mopForce = bytes[4];
                     isMaxMode = bytes[3] == 0x01;
@@ -703,7 +701,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
                     if (robotType.equals(Constants.X800) && device_type == 0) {
-                        device_type = bytes[9]&0xff;
+                        device_type = bytes[9] & 0xff;
                     }
                     MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------");
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
@@ -750,9 +748,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 /**
                  * 避免第一次注册属性监听失败，查询到状态后重新注册
                  */
-                if (propertyReceiver == null) {
-                    registerPropReceiver();
-                }
+                registerPropReceiver();
                 isGainDevStatus = false;
                 MyLogger.d(TAG, "To gain the device status fail ,and the reason is: " + e.getMessage());
             }
@@ -1003,7 +999,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void sendToDeviceWithOption(ACDeviceMsg msg) {
-        if (propertyReceiver == null || statusFlag != STATUS_FLAG_COMPLETION) {
+        if (statusFlag != STATUS_FLAG_COMPLETION) {
             MyLogger.d(TAG, "注册属性监听失效或者未注册,需要重新注册！");
             registerPropReceiver();
             statusFlag = STATUS_FLAG_COMPLETION;

@@ -12,6 +12,7 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
@@ -92,10 +93,12 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         acDeviceMsg.setContent(new byte[]{0x00});
         sendToDeviceWithOption(acDeviceMsg, physicalId);
         tv_top_title.setText(R.string.setting_aty_consume_detail);
-        tv_roll.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
-                R.string.consume_aty_roll_time_a9 : R.string.consume_aty_roll_time);
-        tv_tips.setText(DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
-                R.string.consume_aty_text_2_a9 : R.string.consume_aty_text_2);
+//        tv_roll.setText((BuildConfig.Area==AC.REGIONAL_SOUTHEAST_ASIA&&DeviceUtils.getRobotType(subdomain).equals(Constants.A9s))||DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
+//                R.string.consume_aty_roll_time_a9 : R.string.consume_aty_roll_time);
+        tv_roll.setText(R.string.consume_aty_roll_time_a9);
+//        tv_tips.setText((BuildConfig.Area==AC.REGIONAL_SOUTHEAST_ASIA&&DeviceUtils.getRobotType(subdomain).equals(Constants.A9s))||DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
+//                R.string.consume_aty_text_2_a9 : R.string.consume_aty_text_2);
+        tv_tips.setText(R.string.consume_aty_text_2_a9);
     }
 
     public void showResetDialog(int tag) {
@@ -107,13 +110,15 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                 hint = Utils.getString(R.string.consume_aty_resetSide_over);
                 break;
             case R.id.rl_roll:
-                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7)) {
-                    title = Utils.getString(R.string.consume_aty_resetRoll_a9);
-                    hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
-                } else {
-                    title = Utils.getString(R.string.consume_aty_resetRoll);
-                    hint = Utils.getString(R.string.consume_aty_resetRoll_over);
-                }
+                title = Utils.getString(R.string.consume_aty_resetRoll_a9);
+                hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
+//                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7)) {
+//                    title = Utils.getString(R.string.consume_aty_resetRoll_a9);
+//                    hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
+//                } else {
+//                    title = Utils.getString(R.string.consume_aty_resetRoll);
+//                    hint = Utils.getString(R.string.consume_aty_resetRoll_over);
+//                }
                 break;
             case R.id.rl_filter:
                 title = Utils.getString(R.string.consume_aty_resetFilter);

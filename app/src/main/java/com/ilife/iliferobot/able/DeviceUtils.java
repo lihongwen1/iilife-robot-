@@ -324,11 +324,12 @@ public class DeviceUtils {
                 }
                 break;
             case 0x61:
-                if (robotType.equals(Constants.A9)) {
-                    strError = context.getString(R.string.adapter_error_gs_a9);
-                } else {
-                    strError = context.getString(R.string.adapter_error_gs);
-                }
+//                if (robotType.equals(Constants.A9)) {
+//                    strError = context.getString(R.string.adapter_error_gs_a9);
+//                } else {
+//                    strError = context.getString(R.string.adapter_error_gs);
+//                }
+                strError = context.getString(R.string.adapter_error_gs_a9);
                 break;
             case 0x71:
                 strError = context.getString(R.string.adapter_error_fs);

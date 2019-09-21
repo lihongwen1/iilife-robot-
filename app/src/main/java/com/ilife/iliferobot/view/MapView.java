@@ -148,8 +148,8 @@ public class MapView extends View {
      */
     public void setUnconditionalRecreate(boolean unconditionalRecreate) {
         this.unconditionalRecreate = unconditionalRecreate;
-        userScale=1;
-        originalScale=userScale;
+        userScale = 1;
+        originalScale = userScale;
     }
 
 
@@ -263,7 +263,7 @@ public class MapView extends View {
         boxCanvas.drawPath(boxPath, boxPaint);
         if (endX != 0 || endY != 0) {
             positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-            boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 6), positionCirclePaint);
+            boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 12), positionCirclePaint);
         }
         invalidateUI();
     }
@@ -323,15 +323,21 @@ public class MapView extends View {
             if (baseScare < minScare) {
                 MyLogger.d(TAG, "SYSTEM SCALE MAP -------------");
                 baseScare = minScare;
-                float systenW = 1 / (xLength * baseScare / (width * 0.8f));
-                float systenH = 1 / (yLength * baseScare / (height * 0.8f));
-                systemScale = Math.min(systenH, systenW);
+                float systemW = 1 / (xLength * baseScare / (width * 0.8f));
+                float systemH = 1 / (yLength * baseScare / (height * 0.8f));
+                systemScale = Math.min(systemH, systemW);
             }
         } else {
-            baseScare =25;
-            if (xLength * baseScare > width * 0.8f) {
-                systemScale = 1 / (xLength * baseScare / (width * 0.8f));
+            baseScare = 30;
+            if (xLength * baseScare/2f > width || yLength * baseScare/2f > height) {
+                float systemW = (width * 0.9f) / (xLength * baseScare);
+                float systemH = (height * 0.9f) / (yLength * baseScare);
+                systemScale = Math.min(systemH, systemW);
+                systemScale = new BigDecimal(systemScale).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
+            } else {
+                systemScale = 0.5f;
             }
+
         }
 
         MyLogger.d(TAG, "--systemScale--:" + systemScale + "------baseScare----:" + baseScare);
@@ -464,12 +470,12 @@ public class MapView extends View {
 
     private float getOffsetY() {
         float actualDragY;
-        if (robotSeriesX9){
-            actualDragY=dragY + sCenter.y - (slamBitmap==null?0:slamBitmap.getHeight() / 2f);
-        }else{
-            actualDragY=dragY + sCenter.y - (boxBitmap==null?0:boxBitmap.getHeight() / 2f);
+        if (robotSeriesX9) {
+            actualDragY = dragY + sCenter.y - (slamBitmap == null ? 0 : slamBitmap.getHeight() / 2f);
+        } else {
+            actualDragY = dragY + sCenter.y - (boxBitmap == null ? 0 : boxBitmap.getHeight() / 2f);
         }
-        return sCenter.y * (getRealScare() - 1) / getRealScare() -actualDragY;
+        return sCenter.y * (getRealScare() - 1) / getRealScare() - actualDragY;
     }
 
 
@@ -606,9 +612,7 @@ public class MapView extends View {
                     case MODE_DRAG:
                         break;
                     case MODE_ZOOM:
-//                        if (event.getPointerCount() == 2) {//多指变为单指
-//                            MODE = MODE_DRAG;
-//                        }
+                        userScale = new BigDecimal(userScale).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
                         break;
                 }
                 break;
@@ -642,11 +646,10 @@ public class MapView extends View {
             if (userScale < minScale) {
                 userScale = minScale;
             }
-            float maxScale = 5.0f;
+            float maxScale = 2.0f / systemScale;
             if (userScale > maxScale) {
                 userScale = maxScale;
             }
-
         }
     }
 
@@ -932,15 +935,16 @@ public class MapView extends View {
         //绘制清扫区域的白方格
         boxPaint.setColor(getResources().getColor(R.color.white));
         boxPaint.setStrokeWidth(1);
+        float space = getResources().getDimensionPixelSize(R.dimen.dp_1) / 2f;
         if (pointList.size() > 0) {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);
                 y = -pointList.get(i);
-                boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare * 0.9f, matrixCoordinateY(y) + baseScare * 0.9f, Path.Direction.CCW);
+                boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
             }
         }
-        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1));
-        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2));
+        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1))+(baseScare-space)/2f;
+        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2))+(baseScare-space)/2f;
     }
 
     private void invalidateUI() {

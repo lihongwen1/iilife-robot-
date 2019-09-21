@@ -200,11 +200,11 @@ public class SettingActivity extends BackBaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (propReceiver != null) {
             AC.deviceDataMgr().unregisterPropertyReceiver(propReceiver);
             AC.deviceDataMgr().unSubscribeAllProperty();
         }
+        super.onDestroy();
 
     }
 
@@ -233,6 +233,7 @@ public class SettingActivity extends BackBaseActivity {
         rl_standard.setOnClickListener(new MyListener());
         rl_strong.setOnClickListener(new MyListener());
         tv_ota_ver.setText("当前版本：0.0.1.10");
+
     }
 
     public void initData() {
@@ -281,8 +282,13 @@ public class SettingActivity extends BackBaseActivity {
                 rl_mode.setVisibility(View.GONE);
                 break;
             case Constants.A9s:
-                product = R.drawable.n_a9s;
-                rl_mode.setVisibility(View.GONE);
+                if (Utils.isIlife()) {
+                    product = R.drawable.n_x800;
+                    rl_mode.setVisibility(View.GONE);
+                } else {
+                    product = R.drawable.n_a9s;
+                    rl_mode.setVisibility(View.GONE);
+                }
                 break;
             case Constants.V85:
                 product = R.drawable.n_v85;
