@@ -323,7 +323,7 @@ public class MapView extends View {
             return;
         }
         if (robotSeriesX9) {
-            baseScare = 6;
+            baseScare = 10.0f;
             if (xLength * baseScare > width || yLength * baseScare > sCenter.y * 2) {
                 MyLogger.d(TAG, "SYSTEM SCALE MAP -------------");
                 float systemW = (width * 0.9f) / ((xLength * baseScare));
@@ -480,7 +480,6 @@ public class MapView extends View {
             actualDragX = dragX + sCenter.x - (boxBitmap == null ? 0 : boxBitmap.getWidth() / 2f);
         }
         return sCenter.x * (getRealScare() - 1) / getRealScare() - actualDragX;
-
     }
 
     private float getOffsetY() {
@@ -529,7 +528,7 @@ public class MapView extends View {
                     case MODE_ZOOM * MODE_DELETE_VIRTUAL:
                     case MODE_ZOOM:
                         if (event.getPointerCount() == 2) {
-                            calculateScare(event);
+                            calculateScale(event);
                         }
                         break;
                     case MODE_DELETE_VIRTUAL:
@@ -670,7 +669,7 @@ public class MapView extends View {
         return true;
     }
 
-    private void calculateScare(MotionEvent event) {
+    private void calculateScale(MotionEvent event) {
         float afterDistance = distance(event);
         if (Math.abs(afterDistance - beforeDistance) > 10) {
             userScale = (afterDistance / beforeDistance) * originalScale;
