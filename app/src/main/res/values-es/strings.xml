@@ -307,5 +307,11 @@
     <string name="ap_guide_aty_tip2_a9">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Start WiFi pairing mode\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
     <string name="service_time1_ja">(* Excepto feriados legales)</string>
     <string name="service_time_ja">(Día laborable 10:00~12:00 | 13:00~16:00)</string>
+    <string name="area_russia">Rusia</string>
+    <string name="area_spanish">España</string>
+    <string name="area_other">Otros</string>
+    <string name="country_or_area">País y región</string>
+    <string name="russia_phone_server_time">(Lunes a viernes 09:00 – 18:00)</string>
+    <string name="spanish_server_time_sat">(Sábado 10:00 – 14:00)</string>
 
 </resources>

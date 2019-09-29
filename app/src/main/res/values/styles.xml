@@ -388,4 +388,12 @@
         <item name="android:maxHeight">20dip</item>
         <item name="android:mirrorForRtl">true</item>
     </style>
+
+    <style name="popupwindow_anim_style">
+
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <!-- 指定消失的动画xml -->
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 </resources>

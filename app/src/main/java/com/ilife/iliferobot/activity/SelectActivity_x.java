@@ -76,6 +76,7 @@ public class SelectActivity_x extends BackBaseActivity {
                 case AC.REGIONAL_CHINA:
                     series = "X";
                     break;
+                case AC.REGIONAL_CENTRAL_EUROPE:
                 case AC.REGIONAL_NORTH_AMERICA:
                     series = "A";
                     break;
@@ -86,7 +87,7 @@ public class SelectActivity_x extends BackBaseActivity {
                     series = "X";
                     break;
             }
-            tv_x_series.setText(getResources().getString(R.string.x_series_robot, series));
+            tv_x_series.setText(getResources().getString(R.string.x_series_robot,series));
         }
     }
 
@@ -117,7 +118,7 @@ public class SelectActivity_x extends BackBaseActivity {
                     robots.add(new CleanningRobot(R.drawable.n_a8s, robotName, Constants.subdomain_a8s, Constants.subdomaiId_a8s));
                     break;
                 case Constants.A9s:
-                    if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {
+                    if (Utils.isIlife()) {
                         robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
                     } else {
                         robots.add(new CleanningRobot(R.drawable.n_a9s, robotName, Constants.subdomain_a9s, Constants.subdomaiId_a9s));

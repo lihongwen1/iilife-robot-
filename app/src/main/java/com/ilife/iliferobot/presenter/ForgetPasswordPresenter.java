@@ -117,22 +117,27 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
             {
                 AC.accountMgr().checkExist(str_email, new PayloadCallback<Boolean>() {
                     @Override
-                    public void error(ACException e) {
-                        if (!UserUtils.checkPassword(mView.getPwd1())) {
-                            ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
+                    public void success(Boolean aBoolean) {
+                        if (aBoolean) {
+                            if (!UserUtils.checkPassword(mView.getPwd1())) {
+                                ToastUtils.showToast(Utils.getString(R.string.register2_aty_short_char));
+                                mView.resetPwdFail();
+                                return;
+                            }
+                            if (!mView.getPwd1().equals(mView.getPwd2())) {
+                                ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
+                                mView.resetPwdFail();
+                                return;
+                            }
+                            checkVerificationCode();
+                        } else {
+                            ToastUtils.showToast(Utils.getString(R.string.login_aty_account_no));
                             mView.resetPwdFail();
-                            return;
                         }
-                        if (!mView.getPwd1().equals(mView.getPwd2())) {
-                            ToastUtils.showToast(Utils.getString(R.string.register2_aty_no_same));
-                            mView.resetPwdFail();
-                            return;
-                        }
-                        checkVerificationCode();
                     }
 
                     @Override
-                    public void success(Boolean aBoolean) {
+                    public void error(ACException e) {
                         ToastUtils.showToast(Utils.getString(R.string.login_aty_account_no));
                         mView.resetPwdFail();
                     }

@@ -58,7 +58,7 @@ import io.reactivex.schedulers.Schedulers;
 
 // TODO APP后台CPU消耗问题
 //TODO 处理x800系列绘制地图不全部绘制，只绘制新增的点
-//TODO 重点，延边，遥控模式下机器会清扫完成，此时可以清空地图数据
+//TODO 重点，延边，遥控模式下机器会清扫完成，此时可以清空地图数据(机器进入待机模式后，会从头开始清扫，此时可以清空地图数据)
 public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements MapX9Contract.Presenter {
     private final String TAG = "MapX9Presenter";
     private ACDeviceDataMgr.PropertyReceiver propertyReceiver;
@@ -184,7 +184,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                             slamBytes = Base64.decode(strMap, Base64.DEFAULT);
                             //判断isViewAttached避免页面销毁后最后一次的定时器导致程序崩溃
                             if (isViewAttached() && isDrawMap()) {
-                                mView.updateSlam(xMin, xMax, yMin, yMax, 6, 4);
+                                mView.updateSlam(xMin, xMax, yMin, yMax);
                                 mView.drawMapX9(realTimePoints, historyRoadList, slamBytes);
                             }
                         }
@@ -231,7 +231,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 maxY = y;
             }
         }
-        mView.updateSlam(minX, maxX, minY, maxY, 15, 9);
+        mView.updateSlam(minX, maxX, minY, maxY);
     }
 
     private int pageNo = 1;// 900 800等机器分页请求历史地图
@@ -603,9 +603,6 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     }
 
 
-    /**
-     * 休眠或者充电随便发一条命令，以激活设备
-     */
     @Override
     public void getDeviceProperty() {
         Completable.timer(2, TimeUnit.SECONDS).observeOn(Schedulers.single()).subscribe(new CompletableObserver() {
@@ -700,7 +697,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     voiceOpen = bytes[6] == 0x01;
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
-                    if (robotType.equals(Constants.X800) && device_type == 0) {
+                    if (robotType.equals(Constants.X800) && device_type == 0 && bytes.length > 9) {
                         device_type = bytes[9] & 0xff;
                     }
                     MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------");

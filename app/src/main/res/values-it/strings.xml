@@ -310,4 +310,10 @@
     <string name="ap_guide_aty_tip2_a9">Tenere premuto per 3 secondi e si sentirà un ronzio. Non rilasciare fino a quando l\'annuncio vocale non dice \"Start WiFi pairing mode\". La spia WiFi inizia a lampeggiare quando il robot entra in modalità AP.</string>
     <string name="service_time_ja">(Giorni feriali 10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(* Tranne le festività legali)</string>
+    <string name="area_other">Altri</string>
+    <string name="area_russia">Russia</string>
+    <string name="area_spanish">Spagna</string>
+    <string name="country_or_area">Paese e regione</string>
+    <string name="russia_phone_server_time">Dal lunedì al venerdì 09:00 – 18:00</string>
+    <string name="spanish_server_time_sat">(Sabato 10:00 - 14:00)\t</string>
 </resources>

@@ -17,7 +17,7 @@ public interface MapX9Contract {
 
         void showRemoteView();
 
-        void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale,int minScale);
+        void updateSlam(int xMin, int xMax, int yMin, int yMax);
 
 
         void updateCleanTime(String value);

@@ -307,7 +307,13 @@
     <string name="agree_privacy_policy">Zustimmen</string>
     <string name="please_agree_policy">S\'il vous plaît accepter%1$s</string>
     <string name="ap_guide_aty_tip2_a9">Appuyez et maintenez pendant 3 secondes et vous entendrez un bourdonnement. Ne le relâchez pas avant que l’annonce vocale indique \"Starting Wifi pairing mode\". Le voyant WiFi commence à clignoter une fois que le robot passe en mode AP.</string>
-    <string name="service_time_ja" />
-    <string name="service_time1_ja">(Journée de travail de 10:00~12:00 | 13:00~16:00)</string>
+    <string name="service_time_ja" >(Journée de travail de 10h à midi: de 13h à 16h)</string>
+    <string name="service_time1_ja">(sauf les jours fériés)</string>
+    <string name="area_other">Autre</string>
+    <string name="area_russia">La russie</string>
+    <string name="area_spanish">Espagne</string>
+    <string name="country_or_area">Pays et région</string>
+    <string name="russia_phone_server_time">(Mo. - Fr. 09.00 – 18.00 Uhr)</string>
+    <string name="spanish_server_time_sat">(Sam. 10h00–14h00)\t</string>
 
 </resources>

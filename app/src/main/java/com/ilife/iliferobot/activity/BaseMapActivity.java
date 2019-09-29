@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.able.Constants;
@@ -233,8 +234,8 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScale, int minScale) {
-        mMapView.updateSlam(xMin, xMax, yMin, yMax, maxScale, minScale);
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
+        mMapView.updateSlam(xMin, xMax, yMin, yMax);
     }
 
     @Override
@@ -448,7 +449,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 image_center.setSelected(image_center.isSelected());
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
-                    if ((mPresenter.getRobotType().equals(Constants.A9s) || mPresenter.getRobotType().equals(Constants.A8s) ||
+                    if ((BuildConfig.BRAND.equals(Constants.BRAND_ZACO) && (mPresenter.getRobotType().equals(Constants.A9s) || mPresenter.getRobotType().equals(Constants.A8s)) ||
                             mPresenter.getDevice_type() == 128) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
@@ -550,32 +551,32 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 }
                 break;
             case R.id.tv_close_virtual_x9://弹出退出电子墙的的pop
-                CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
                 if (exitVirtualWallPop == null) {
-                    builder.cancelTouchout(false).view(R.layout.pop_virtual_wall).widthDimenRes(R.dimen.dp_315).
-                            addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
-                                mMapView.undoAllOperation();
-                                /**
-                                 * 退出电子墙编辑模式，相当于撤销所有操作，电子墙数据没有变化，无需发送数据到设备端
-                                 */
-                                mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
-                                if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
-                                    exitVirtualWallPop.disMissPop(this);
-                                }
-                            }).addViewOnclick(R.id.tv_ensure_virtual_x9, v12 -> {
+                    CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
+                    exitVirtualWallPop = builder.enableOutsideTouchableDissmiss(false).setView(R.layout.pop_virtual_wall).
+                            size(R.dimen.dp_315, 0).setBgDarkAlpha(0.6f).create();
+                    exitVirtualWallPop.addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
+                        mMapView.undoAllOperation();
+                        /**
+                         * 退出电子墙编辑模式，相当于撤销所有操作，电子墙数据没有变化，无需发送数据到设备端
+                         */
+                        mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
                         if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
-                            exitVirtualWallPop.disMissPop(this);
+                            exitVirtualWallPop.dissmiss();
+                        }
+                    }).addViewOnclick(R.id.tv_ensure_virtual_x9, v12 -> {
+                        if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
+                            exitVirtualWallPop.dissmiss();
                         }
                         mPresenter.sendVirtualWallData(mMapView.getVirtualWallPointfs());
                     }).addViewOnclick(R.id.cancel_virtual_pop, v13 -> {
                         if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
-                            exitVirtualWallPop.disMissPop(this);
+                            exitVirtualWallPop.dissmiss();
                         }
                     });
-                    exitVirtualWallPop = builder.build();
                 }
                 if (!exitVirtualWallPop.isShowing()) {
-                    exitVirtualWallPop.showAtLocation(this, findViewById(R.id.fl_map), Gravity.BOTTOM, 0, (int) getResources().getDimension(R.dimen.dp_10));
+                    exitVirtualWallPop.showAtLocation(findViewById(R.id.fl_map), Gravity.BOTTOM, 0, (int) getResources().getDimension(R.dimen.dp_10));
                 }
                 break;
         }
@@ -704,7 +705,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             virtualWallTipDialog.dismiss();
         }
         if (exitVirtualWallPop != null && exitVirtualWallPop.isShowing()) {
-            exitVirtualWallPop.disMissPop(this);
+            exitVirtualWallPop.dissmiss();
         }
     }
 

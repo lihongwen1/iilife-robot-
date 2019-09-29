@@ -35,8 +35,8 @@
     <string name="add_aty_start_connect">接続中</string>
     <string name="add_aty_wrong_wifi_pass">パスワードに不正な文字が含まれています</string>
     <string name="ap_guide_aty_tip1_x900">本機側面の電源スイッチを入れてください。（注：充電スタンドに本​​機を置かないでください）</string>
-    <string name="ap_guide_aty_tip2_x900">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFiペアリングの開始」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
-    <string name="ap_guide_aty_tip2_a9s">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFiペアリングの開始」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
+    <string name="ap_guide_aty_tip2_x900">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFi接続中」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
+    <string name="ap_guide_aty_tip2_a9s">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFi接続中」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_x7">APネットワーク配布キーを3秒間押し続けると、カチッという音がします。 2回鳴るまでリリースしないでください。 ロボットがAPモードに入り、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_v85">APネットワーク配布キーを8秒間押し続けると、カチッという音がします。ロボットがAPモードに入り、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_tip4">音声アナウンスがない、この前の手順を再試行してください。</string>
@@ -51,7 +51,7 @@
     <string name="ap_aty_robot_wifi">マシンWi-Fi：</string>
     <string name="third_ap_tip2">*ヒント：</string>
     <string name="third_ap_aty_tip1">機械で生成された\"Robot-XXXX\"ワイヤレスネットワークを選択してください。デフォルトのパスワードは123456789です。接続後にこのページに戻って、クリックして接続を開始してください。</string>
-    <string name="third_ap_aty_port_">检查设备的WiFi连接</string>
+    <string name="third_ap_aty_port_">機械で生成された「Robot-XXXX」ワイヤレスネットワークを選択してください</string>
     <string name="bind_suc_aty_name">ロボットに名前を付けてください</string>
     <string name="bind_suc_sty_robot_done">完了しました</string>
     <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
@@ -304,8 +304,14 @@
     <string name="login_aty_input_email">メールアドレスを入力してください</string>
     <string name="agree_privacy_policy">同意する</string>
     <string name="please_agree_policy">同意してください%1$s</string>
-    <string name="ap_guide_aty_tip2_a9">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFiペアリングの開始」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
+    <string name="ap_guide_aty_tip2_a9">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFi接続中」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
     <string name="service_time_ja">(平日10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(※年末年始お盆を除)</string>
+    <string name="area_russia">ロシア</string>
+    <string name="area_spanish">スペイン</string>
+    <string name="area_other">その他</string>
+    <string name="country_or_area">国と地域</string>
+    <string name="russia_phone_server_time">（月曜日〜金曜日：09：00〜18：00）</string>
+    <string name="spanish_server_time_sat">（土曜日10:00-14:00）</string>
 
 </resources>

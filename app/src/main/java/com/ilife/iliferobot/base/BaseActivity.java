@@ -162,6 +162,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     public abstract void initView();
 
+    /**
+     * 初始化传递过来的变量，序列化到本地的变量
+     */
+    public void initVariables(){
+
+    }
+
+    /**
+     * 初始化，处理耗时数据，网络数据
+     */
     public void initData() {
     }
 

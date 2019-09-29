@@ -67,8 +67,10 @@ public class MapView extends View {
     private RectF slamRect = new RectF();
     private boolean robotSeriesX9;
     private boolean unconditionalRecreate;
-    private final int extraWH = 60;//额外的宽高
-
+    private int extraWH = 60;//额外的宽高
+    private Runnable restoreRunnable;//控制延迟15s后恢复地图
+    private boolean isNeedRestore = true;
+    private  int paddingBottom;//改变地图居中中心点
     public MapView(Context context) {
         super(context);
         init();
@@ -84,8 +86,17 @@ public class MapView extends View {
         init();
     }
 
+    public void setNeedRestore(boolean needRestore) {
+        isNeedRestore = needRestore;
+    }
+
     public void setRobotSeriesX9(boolean isX9) {
         this.robotSeriesX9 = isX9;
+        if (isX9) {
+            extraWH = 100;
+        } else {
+            extraWH = 60;
+        }
     }
 
     private void init() {
@@ -236,7 +247,7 @@ public class MapView extends View {
         }
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.save();
-//        slamCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
+        slamCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
         slamPaint.setColor(colors[1]);
         slamCanvas.drawPath(slamPath, slamPaint);
         slamPaint.setColor(colors[0]);
@@ -290,6 +301,7 @@ public class MapView extends View {
     public void resetCenter(int paddingBottom) {
         if (!isSetExtraDrag) {
             isSetExtraDrag = true;
+            this.paddingBottom=paddingBottom;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
     }
@@ -300,47 +312,39 @@ public class MapView extends View {
      * @param xMax
      * @param yMin
      * @param yMax
-     * @param maxScare 决定着地图的最大缩放比例，明显的是800系列的方格大小
-     * @param minScare 决定着地图的清晰度
      */
     // TODO it should't be created ,when it's size is less than the old
     //TODO  judge if you need redraw the virtual walls
     //TODO 清扫完成后recreate the bitmap
-    public void updateSlam(int xMin, int xMax, int yMin, int yMax, int maxScare, int minScare) {
+    public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
         if (xLength <= 0 || yLength <= 0) {
             return;
         }
         if (robotSeriesX9) {
-            double resultX = width * 0.80f / xLength;
-            double resultY = (height) * 0.80f / yLength;
-            BigDecimal bigDecimal = new BigDecimal(Math.min(resultX, resultY)).setScale(1, BigDecimal.ROUND_HALF_UP);
-            baseScare = Math.round(bigDecimal.floatValue());
-            if (baseScare > maxScare) {
-                baseScare = maxScare;
-            }
-            if (baseScare < minScare) {
+            baseScare = 6;
+            if (xLength * baseScare > width || yLength * baseScare > sCenter.y * 2) {
                 MyLogger.d(TAG, "SYSTEM SCALE MAP -------------");
-                baseScare = minScare;
-                float systemW = 1 / (xLength * baseScare / (width * 0.8f));
-                float systemH = 1 / (yLength * baseScare / (height * 0.8f));
+                float systemW = (width * 0.9f) / ((xLength * baseScare));
+                float systemH = (sCenter.y * 2 * 0.9f) / ((yLength * baseScare));
                 systemScale = Math.min(systemH, systemW);
+                systemScale = new BigDecimal(systemScale).setScale(2, BigDecimal.ROUND_HALF_DOWN).floatValue();
+                if (systemScale < 0.3f) {
+                    baseScare = new BigDecimal(baseScare * systemScale / 0.3f).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
+                    systemScale = 0.3f;
+                }
             }
         } else {
             baseScare = 30;
-            if (xLength * baseScare/2f > width || yLength * baseScare/2f > height) {
-                float systemW = (width * 0.9f) / (xLength * baseScare);
-                float systemH = (height * 0.9f) / (yLength * baseScare);
-                systemScale = Math.min(systemH, systemW);
-                systemScale = new BigDecimal(systemScale).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
+            if (xLength * baseScare > width * 1.6f || yLength * baseScare > height * 1.6f) {
+                systemScale = new BigDecimal(caculateSystemScale(xLength, yLength, 30)).setScale(1, BigDecimal.ROUND_DOWN).floatValue();
             } else {
                 systemScale = 0.5f;
             }
-
         }
-
-        MyLogger.d(TAG, "--systemScale--:" + systemScale + "------baseScare----:" + baseScare);
+        MyLogger.d(TAG, "xLength----" + xLength + "----yLength-----" + yLength+"---------height"+height+"---------width--------"+width);
+        MyLogger.d(TAG, "--systemScale--:" + systemScale + "------baseScare----:" + baseScare + "------userScale-------" + userScale);
         slamRect.set(xMin, yMin, xMax, yMax);
         if (robotSeriesX9) {
             int needWidth = (int) ((xMax - xMin) * baseScare) + extraWH;
@@ -373,6 +377,17 @@ public class MapView extends View {
 
     }
 
+    private float caculateSystemScale(int xLength, int yLength, int scale) {
+        float systemW = (width * 0.9f) / ((xLength * scale));
+        float systemH = (height * 0.9f) / ((yLength * scale));
+        float value = Math.min(systemH, systemW);
+        if (value > 0.3f || scale - 10 == 0) {
+            baseScare = scale;
+            return value;
+        } else {
+            return caculateSystemScale(xLength, yLength, scale - 10);
+        }
+    }
 
     /**
      * s
@@ -450,7 +465,7 @@ public class MapView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
-        sCenter.set(width / 2f, height / 2f);
+        sCenter.set(width / 2f, (height - paddingBottom) / 2f);
     }
 
     private float getRealScare() {
@@ -488,9 +503,10 @@ public class MapView extends View {
         float y = event.getY() / getRealScare() + getOffsetY();
         switch (me) {
             case MotionEvent.ACTION_CANCEL:
-                MyLogger.d(TAG, "TOUCH------ACTION_CANCEL");
             case MotionEvent.ACTION_DOWN:
-                MyLogger.d(TAG, "TOUCH------ACTION_DOWN");
+                if (isNeedRestore && restoreRunnable != null) {
+                    removeCallbacks(restoreRunnable);
+                }
                 downPoint.set(x, y);
                 switch (MODE) {
                     case MODE_ADD_VIRTUAL:
@@ -508,7 +524,6 @@ public class MapView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                MyLogger.e(TAG, "TOUCH------ACTION_MOVE");
                 switch (MODE) {
                     case MODE_ZOOM * MODE_ADD_VIRTUAL:
                     case MODE_ZOOM * MODE_DELETE_VIRTUAL:
@@ -543,7 +558,7 @@ public class MapView extends View {
                 invalidateUI();
                 break;
             case MotionEvent.ACTION_UP:
-                MyLogger.d(TAG, "TOUCH------ACTION_UP");
+                boolean needResetChange = false;
                 float distance = distance(downPoint.x, downPoint.y, x, y);
                 if (distance < 5 && MODE == MODE_DRAG * MODE_DELETE_VIRTUAL) {//删除时，拖动距离小，认为是点击
                     MODE = MODE_DELETE_VIRTUAL;
@@ -585,25 +600,43 @@ public class MapView extends View {
                     case MODE_ADD_VIRTUAL * MODE_ZOOM:
                         originalScale = userScale;
                         MODE = MODE_ADD_VIRTUAL;
+                        needResetChange = true;
                         break;
                     case MODE_DELETE_VIRTUAL * MODE_ZOOM:
                         originalScale = userScale;
                         MODE = MODE_DELETE_VIRTUAL;
+                        needResetChange = true;
                         break;
                     case MODE_ZOOM:
                         originalScale = userScale;
                         MODE = MODE_NONE;
+                        needResetChange = true;
                         break;
                     case MODE_DELETE_VIRTUAL * MODE_DRAG:
                         MODE = MODE_DELETE_VIRTUAL;
+                        needResetChange = true;
                         break;
                     case MODE_DRAG:
+                        needResetChange = true;
                         MODE = MODE_NONE;
                         break;
                 }
+
+                if (needResetChange) {
+                    if (isNeedRestore && restoreRunnable == null) {
+                        restoreRunnable = () -> {
+                            userScale = 1;
+                            originalScale = 1;
+                            dragX = 0;
+                            dragY = 0;
+                            invalidateUI();
+                            MyLogger.d(TAG, "-------restore map to the original state----------");
+                        };
+                    }
+                    postDelayed(restoreRunnable, 15 * 1000);
+                }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
-                MyLogger.d(TAG, "TOUCH------ACTION_POINTER_UP----" + event.getPointerCount());
                 switch (MODE) {
                     case MODE_ADD_VIRTUAL:
                         break;
@@ -617,7 +650,6 @@ public class MapView extends View {
                 }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN://多指DOWN
-                MyLogger.d(TAG, "TOUCH------ACTION_POINTER_DOWN");
                 if (event.getPointerCount() == 2) {//双指
                     switch (MODE) {
                         case MODE_DRAG:
@@ -935,7 +967,7 @@ public class MapView extends View {
         //绘制清扫区域的白方格
         boxPaint.setColor(getResources().getColor(R.color.white));
         boxPaint.setStrokeWidth(1);
-        float space = getResources().getDimensionPixelSize(R.dimen.dp_1) / 2f;
+        float space = new BigDecimal(baseScare * 0.1f).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
         if (pointList.size() > 0) {
             for (int i = 1; i < pointList.size(); i += 2) {
                 x = -pointList.get(i - 1);
@@ -943,8 +975,8 @@ public class MapView extends View {
                 boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
             }
         }
-        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1))+(baseScare-space)/2f;
-        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2))+(baseScare-space)/2f;
+        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1)) + (baseScare - space) / 2f;
+        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2)) + (baseScare - space) / 2f;
     }
 
     private void invalidateUI() {

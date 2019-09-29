@@ -307,5 +307,11 @@
     <string name="ap_guide_aty_tip2_a9">Нажмите и удерживайте в течение 3 секунд, и вы услышите гудение. Не выпускайте, пока голосовое объявление не скажет «Start WiFi pairing mode» Индикатор WiFi начнет мигать, как только робот войдет в режим AP.</string>
     <string name="service_time_ja">(Рабочий день 10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(* Кроме официальных праздников)</string>
+    <string name="area_russia">Россия</string>
+    <string name="area_spanish">Испания</string>
+    <string name="area_other">другое</string>
+    <string name="country_or_area">Страна и регион</string>
+    <string name="russia_phone_server_time">(Пн–пт: 09:00–18:00)</string>
+    <string name="spanish_server_time_sat">(Суббота 10:00 – 14:00)</string>
 
 </resources>

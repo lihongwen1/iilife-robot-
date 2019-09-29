@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,14 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACFeedback;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.adapter.HelpFeedImgAdapter;
@@ -50,6 +52,7 @@ import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.ilife.iliferobot.view.CustomPopupWindow;
 import com.ilife.iliferobot.view.SpaceItemDecoration;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -75,7 +78,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     EditText et_email, et_type, et_content;
     RelativeLayout rl_type;
     File captureFile, albumFile;
-    PopupWindow typePop;
+    CustomPopupWindow typePop;
+    BottomSheetDialog areaDialog;
     AlertDialog alertDialog;
     String[] types;
     Activity activity;
@@ -90,6 +94,27 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     RecyclerView rv_feed_image;
     @BindView(R.id.image_add)
     ImageView image_add;
+
+    @BindView(R.id.tv_telNum)
+    TextView tv_telNum;
+
+    @BindView(R.id.tv_phone_time_pre)
+    TextView tv_phone_time_pre;
+    @BindView(R.id.tv_phone_time2_pre)
+    TextView tv_phone_time_pre2;
+
+    @BindView(R.id.tv_phone_time)
+    TextView tv_phone_time;
+    @BindView(R.id.tv_telNum2)
+    TextView tv_telNum2;
+    @BindView(R.id.tv_phone_time2)
+    TextView tv_phone_time2;
+    @BindView(R.id.tv_email)
+    TextView tv_email;
+    @BindView(R.id.ll_area_container)
+    LinearLayout ll_area_container;
+    @BindView(R.id.tv_area)
+    TextView tv_area;
     private List<Bitmap> images = new ArrayList<>();
     private HelpFeedImgAdapter rvAdapter;
     private int replacePosition = -1;//标记需要替换的feed image的位置
@@ -125,24 +150,6 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         view = findViewById(R.id.view);
         tv_title.setText(R.string.personal_aty_help);
         et_content.addTextChangedListener(new MyTextWatcher());
-        if (Utils.isIlife()) {
-            findViewById(R.id.ll_tel_zaco).setVisibility(View.GONE);
-            findViewById(R.id.ll_tel_ilife).setVisibility(View.VISIBLE);
-            switch (BuildConfig.Area) {
-                case AC.REGIONAL_NORTH_AMERICA://US
-                    ((TextView) findViewById(R.id.tv_telNum1)).setText("1-800-631-9676");
-                    ((TextView) findViewById(R.id.tv_phone_time)).setText("(Mon-Fri 09:00-17:00,CST)");
-                    break;
-                case  AC.REGIONAL_SOUTHEAST_ASIA:
-                    ((TextView) findViewById(R.id.tv_telNum1)).setText("072-730-2277");
-                    ((TextView) findViewById(R.id.tv_phone_time)).setText(Utils.getString(R.string.service_time_ja));
-                    ((TextView) findViewById(R.id.tv_phone_time1)).setText(Utils.getString(R.string.service_time1_ja));
-                    break;
-            }
-        } else {//ZACO
-            findViewById(R.id.ll_tel_zaco).setVisibility(View.VISIBLE);
-            findViewById(R.id.ll_tel_ilife).setVisibility(View.GONE);
-        }
         rv_feed_image.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rv_feed_image.setAdapter(rvAdapter = new HelpFeedImgAdapter(context, R.layout.item_feed_image, images));
         rv_feed_image.addItemDecoration(new SpaceItemDecoration(Utils.dip2px(this, 6), true));
@@ -161,6 +168,47 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                     break;
             }
         });
+
+
+        if (Utils.isIlife()) {
+            switch (BuildConfig.Area) {
+                case AC.REGIONAL_CHINA:
+                    tv_telNum.setText("400-963-8886");
+                    tv_phone_time.setText(Utils.getString(R.string.help_aty_time1));
+                    tv_email.setText("support@iliferobot.com");
+                    break;
+                case AC.REGIONAL_NORTH_AMERICA://US
+                    tv_telNum.setText("1-800-631-9676");
+                    tv_phone_time.setText("(Mon-Fri 09:00-17:00,CST)");
+                    tv_email.setText("support@iliferobot.com");
+                    break;
+                case AC.REGIONAL_SOUTHEAST_ASIA:
+                    tv_telNum.setText("072-730-2277");
+                    tv_phone_time_pre.setText(Utils.getString(R.string.service_time_ja));
+                    tv_phone_time.setText(Utils.getString(R.string.service_time1_ja));
+                    tv_email.setText("support@iliferobot.com");
+                    break;
+                case AC.REGIONAL_CENTRAL_EUROPE:
+                    tv_area.setText(getString(R.string.area_russia));
+                    tv_telNum.setText("89299401228");
+                    tv_phone_time.setText(Utils.getString(R.string.russia_phone_server_time));
+                    tv_email.setText("service_russia@iliferobot.com");
+                    ll_area_container.setVisibility(View.VISIBLE);
+                    ll_area_container.setOnClickListener(v -> showAreaPopup());
+                    break;
+            }
+        } else {//ZACO
+            findViewById(R.id.area_contact2).setVisibility(View.VISIBLE);
+            tv_telNum.setText("00800-42377961");
+            tv_phone_time_pre.setText(Utils.getString(R.string.help_aty_all_eu));
+            tv_phone_time.setText(Utils.getString(R.string.zaco_phone_server_time));
+            tv_telNum2.setText("0209-513038-380");
+            tv_phone_time_pre2.setText(Utils.getString(R.string.help_aty_dir_de));
+            tv_phone_time2.setText(Utils.getString(R.string.zaco_phone_server_time));
+            tv_email.setText("support@zacorobot.eu");
+        }
+
+
     }
 
     @Override
@@ -194,17 +242,15 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     }
 
 
-    @OnClick({R.id.tv_telNum_de, R.id.tv_telNum_eu, R.id.tv_telNum1, R.id.et_type, R.id.image_add
-            , R.id.bt_confirm})
+    @OnClick({R.id.et_type, R.id.image_add, R.id.bt_confirm, R.id.tv_telNum, R.id.tv_telNum2})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_telNum_de:
-            case R.id.tv_telNum_eu:
-            case R.id.tv_telNum1:
+            case R.id.tv_telNum:
+            case R.id.tv_telNum2:
                 new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(permission -> {
                     if (permission.granted) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
-                        Uri data = Uri.parse("tel:" + ((TextView) v).getText().toString().trim());
+                        Uri data = Uri.parse("tel:" + ((TextView) view).getText().toString().trim());
                         intent.setData(data);
                         startActivity(intent);
                     } else {
@@ -214,7 +260,8 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                 }).dispose();
                 break;
             case R.id.et_type:
-                showPopup();
+                showDeviceTypePopup();
+//                showAreaPopup(new String[]{"中国","美国","德国"});
                 break;
             case R.id.image_add:
                 permissionFlag = 0;
@@ -312,33 +359,68 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
         albumFile = new File(imageFile, "album.jpg");
     }
 
-    public void showPopup() {
+
+    public void showDeviceTypePopup() {
         KeyboardUtils.hideSoftInput(this);
         if (typePop == null) {
-            View contentView = LayoutInflater.from(this).inflate(R.layout.typelist, null);
-            initPopView(contentView);
-            ListView listView = (ListView) contentView.findViewById(R.id.listView);
-            listView.setAdapter(new ArrayAdapter<>(this, R.layout.simple_list_item, R.id.simple_list_item_textView, types));
-            typePop = new PopupWindow(this);
-            typePop.setContentView(contentView);
-            typePop.setWidth(et_type.getWidth() + 4);
-            typePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-            typePop.setBackgroundDrawable(new ColorDrawable());
-            typePop.setOutsideTouchable(true);
-            typePop.setFocusable(true);
+            CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
+            typePop = builder.setBgDarkAlpha(0.6f).setView(R.layout.typelist).size(et_type.getWidth() + 4, 0).setOutsideTouchable(true).setFocusable(true).create();
+            typePop.initView(() -> {
+                ListView listView = typePop.getPopupWindow().getContentView().findViewById(R.id.listView);
+                listView.setAdapter(new ArrayAdapter<>(this, R.layout.simple_list_item, R.id.simple_list_item_textView, types));
+                listView.setOnItemClickListener((parent, view1, position, id) -> {
+                    et_type.setText(types[position]);
+                    typePop.dissmiss();
+                });
+            });
         }
         if (!typePop.isShowing()) {
             int xOff = (int) (rl_type.getLeft() + getResources().getDimension(R.dimen.dp_30) - 2);
             typePop.showAsDropDown(rl_type, xOff, Utils.dip2px(this, 4));
         }
+
     }
 
-    public void initPopView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.listView);
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            et_type.setText(types[position]);
-            typePop.dismiss();
-        });
+
+    public void showAreaPopup() {
+        String[] area = new String[]{getString(R.string.area_russia), getString(R.string.area_spanish), getString(R.string.area_other)};
+        KeyboardUtils.hideSoftInput(this);
+        if (areaDialog == null) {
+            areaDialog = new BottomSheetDialog(this);
+            View view = View.inflate(this, R.layout.typelist, null);
+            ListView listView = view.findViewById(R.id.listView);
+            listView.setAdapter(new ArrayAdapter<>(view.getContext(), R.layout.simple_list_item, R.id.simple_list_item_textView, area));
+            listView.setOnItemClickListener((parent, view1, position, id) -> {
+                tv_area.setText(area[position]);
+                switch (position) {
+                    case 0:
+                        tv_telNum.setText("89299401228");
+                        tv_phone_time_pre.setText("");
+                        tv_phone_time.setText(Utils.getString(R.string.russia_phone_server_time));
+                        tv_email.setText("service_russia@iliferobot.com");
+                        break;
+                    case 1:
+                        tv_telNum.setText("0034-918-607768");
+                        tv_phone_time_pre.setText(Utils.getString(R.string.spanish_server_time_sat));
+                        tv_phone_time.setText("("+Utils.getString(R.string.zaco_phone_server_time)+")");
+                        tv_email.setText("serviciotecnico.ilife@edawms.com");
+                        break;
+                    case 2:
+                        tv_telNum.setText("400-963-8886");
+                        tv_phone_time_pre.setText("");
+                        tv_phone_time.setText(Utils.getString(R.string.help_aty_time1));
+                        tv_email.setText("support@iliferobot.com");
+                        break;
+                }
+                areaDialog.dismiss();
+            });
+            areaDialog.setContentView(view);
+        }
+        if (!areaDialog.isShowing()) {
+            areaDialog.show();
+        }
+
+
     }
 
     class MyTextWatcher implements TextWatcher {

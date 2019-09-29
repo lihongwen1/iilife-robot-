@@ -74,7 +74,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 drawRoad(roadBytes);
             }
         }
-        mapView.updateSlam(xMin, xMax, yMin, yMax, 8, 4);
+        mapView.updateSlam(xMin, xMax, yMin, yMax);
         mapView.drawMapX9(null, historyPointsList, slamBytes);
     }
 
@@ -170,7 +170,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 maxY = y;
             }
         }
-        mapView.updateSlam(minX, maxX, minY, maxY, 30, 4);
+        mapView.updateSlam(minX, maxX, minY, maxY);
         mapView.drawMapX8(pointList);
 
     }
@@ -183,6 +183,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         }
         String robotType = DeviceUtils.getRobotType(subdomain);
         mapView.setRobotSeriesX9(robotType.equals(Constants.X900) || robotType.equals(Constants.X910));
+        mapView.setNeedRestore(false);
         Intent intent = getIntent();
         if (intent != null) {
             HistoryRecord_x9 record = (HistoryRecord_x9) intent.getSerializableExtra("Record");

@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     TextView tv_login;
     @BindView(R.id.tv_slogan)
     TextView tv_slogan;
+    @BindView(R.id.iv_logo)
+    ImageView iv_logo;
     @BindView(R.id.tv_privacy_policy)
     TextView tv_privacy_policy;
     @BindView(R.id.rb_privacy_policy)
@@ -97,6 +100,13 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         if (!Utils.isIlife()) {
             tv_slogan.setVisibility(View.GONE);
         }
+
+        if (Utils.isChinaEnvironment()){
+            iv_logo.setBackground(getResources().getDrawable(R.drawable.logo_zh));
+        }else {
+            iv_logo.setBackground(getResources().getDrawable(R.drawable.logo));
+        }
+
         unUsableQuickLogin();
     }
 

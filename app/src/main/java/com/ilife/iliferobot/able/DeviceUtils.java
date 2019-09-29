@@ -98,12 +98,19 @@ public class DeviceUtils {
                         robotType = Constants.X787;
                         break;
                     case Constants.subdomain_x800:
-                        if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA) {//美规，日规
-                            robotType = Constants.A9;
-                        } else if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {
-                            robotType = Constants.A9s;
-                        } else {
-                            robotType = Constants.X800;
+                        switch (BuildConfig.Area) {
+                            case AC.REGIONAL_NORTH_AMERICA:
+                                robotType = Constants.A9;
+                                break;
+                            case AC.REGIONAL_CENTRAL_EUROPE:
+                            case AC.REGIONAL_SOUTHEAST_ASIA:
+                                robotType = Constants.A9s;
+                                break;
+                            case AC.REGIONAL_CHINA:
+                                robotType = Constants.X800;
+                                break;
+                            default:
+                                robotType = Constants.X800;
                         }
                         break;
                     case Constants.subdomain_x900:
@@ -114,7 +121,7 @@ public class DeviceUtils {
                         robotType = Constants.A7;
                         break;
                     case Constants.subdomain_V3P:
-                        robotType=Constants.XV3PRO;
+                        robotType = Constants.XV3PRO;
                         break;
                 }
 
@@ -370,6 +377,8 @@ public class DeviceUtils {
             case 0xF1:
                 strError = context.getString(R.string.adapter_error_qt);
                 break;
+            default:
+                strError = context.getString(R.string.adapter_error_qt);
         }
         return strError;
     }
@@ -428,6 +437,7 @@ public class DeviceUtils {
                     types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_us);
                     break;
                 case AC.REGIONAL_CENTRAL_EUROPE://欧洲
+                    types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_eu);
                     break;
                 default://默认中国
                     types = MyApplication.getInstance().getResources().getStringArray(R.array.device_name_ilife_cn);

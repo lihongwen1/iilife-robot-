@@ -310,4 +310,10 @@
     <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
     <string name="service_time_ja">(Workday 10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(* Except legal holidays)</string>
+    <string name="area_other">Other</string>
+    <string name="area_russia">Russia</string>
+    <string name="area_spanish">Spain</string>
+    <string name="country_or_area">Country and region</string>
+    <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
+    <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
 </resources>
