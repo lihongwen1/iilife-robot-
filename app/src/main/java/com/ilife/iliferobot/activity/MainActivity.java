@@ -36,7 +36,6 @@ import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.tencent.bugly.Bugly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,11 +109,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void initView() {
         context = this;
         mAcUserDevices=MyApplication.getInstance().getmAcUserDevices();
@@ -134,6 +128,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         adapter = new RobotListAdapter(context, mAcUserDevices);
         adapter.setOnItemClickListener((adapter, view, position) -> {
             if (recyclerView.closeMenu()){
+                return;
+            }
+            if (mAcUserDevices!=null&&position==mAcUserDevices.size()){//Add button
                 return;
             }
             if (mAcUserDevices!=null&&mAcUserDevices.size()>position&&mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
