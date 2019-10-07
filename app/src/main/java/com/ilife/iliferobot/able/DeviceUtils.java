@@ -17,9 +17,6 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.Utils;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-
 /**
  * Created by chenjiaping on 2017/8/3.
  */
@@ -45,6 +42,9 @@ public class DeviceUtils {
                 break;
             case Constants.subdomain_x780:
                 serviceName = BuildConfig.SERVICE_NAME_X780;
+                break;
+            case Constants.subdomain_V3x:
+                serviceName = BuildConfig.SERVICE_NAME_X320;
                 break;
             case Constants.subdomain_x782:
                 serviceName = BuildConfig.SERVICE_NAME_X782;
@@ -120,8 +120,8 @@ public class DeviceUtils {
                     case Constants.subdomain_a7:
                         robotType = Constants.A7;
                         break;
-                    case Constants.subdomain_V3P:
-                        robotType = Constants.XV3PRO;
+                    case Constants.subdomain_V3x:
+                        robotType = Constants.V3x;
                         break;
                 }
 
@@ -269,7 +269,7 @@ public class DeviceUtils {
             case Constants.V85:
                 src = R.drawable.rechage_device_v85;
                 break;
-            case Constants.XV3PRO:
+            case Constants.V3x:
             case Constants.V5x:
                 src = R.drawable.rechage_device_v5x;
                 break;
@@ -315,6 +315,9 @@ public class DeviceUtils {
                 break;
             case 0x42:
                 strError = context.getString(R.string.adapter_error_ybs);
+                break;
+            case 0x43:
+                strError=context.getString(R.string.adapter_error_bs);
                 break;
             case 0x51:
                 if (robotType.equals(Constants.A9)) {

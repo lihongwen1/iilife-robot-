@@ -187,7 +187,6 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
      */
     @Override
     public Completable connectToAp(int type) {
-
         return Completable.create(completableEmitter -> {
             // TODO apssid为null
             String connectSsid, connectPwd;
@@ -274,7 +273,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
                     public void success(Boolean aBoolean) {
                         //设备配置SSID与Password成功
 //                        mView.updateBindProgress("设备配置SSID成功", 60);
-                        MyLogger.d(TAG, "设备配置ssid成功！");
+                        MyLogger.d(TAG, "设备配置ssid成功");
                     }
 
                     @Override

@@ -2,18 +2,12 @@ package com.ilife.iliferobot.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.view.MyPDF;
+import com.ilife.iliferobot.view.TouchablePDF;
 
 import java.util.Locale;
 
@@ -24,7 +18,7 @@ import butterknife.BindView;
  */
 
 public class ProtocolActivity extends BackBaseActivity {
-    MyPDF pdfView;
+    TouchablePDF pdfView;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
     @BindView(R.id.tv_page_indicator)
@@ -54,7 +48,7 @@ public class ProtocolActivity extends BackBaseActivity {
             fileName = "ilife_en.pdf";
         }
 //        String fileName = lan.equals("zh")?"ilife_zh.pdf":"ilife_en.pdf";
-        pdfView = (MyPDF) findViewById(R.id.pdfView);
+        pdfView = findViewById(R.id.pdfView);
         tv_title.setText(R.string.personal_aty_protocol);
         pdfView.fromAsset(fileName)// all pages are displayed by default
                 .enableSwipe(true) // allows to block changing pages using swipe
@@ -70,7 +64,7 @@ public class ProtocolActivity extends BackBaseActivity {
                 .onPageChange((page, pageCount) -> tv_page_indicator.setText(page + 1 + "/" + pageCount)
                 )
                 .load();
-        pdfView.setOnActionUpLister(new MyPDF.OnActionUp() {
+        pdfView.setOnActionUpLister(new TouchablePDF.OnActionUp() {
             @Override
             public void actionUp() {
                 tv_page_indicator.startAnimation(

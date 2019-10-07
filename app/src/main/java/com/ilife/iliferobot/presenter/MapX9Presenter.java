@@ -52,7 +52,6 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -112,13 +111,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         subdomain = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(MyApplication.getInstance(), MainActivity.KEY_PHYCIALID);
         robotType = DeviceUtils.getRobotType(subdomain);
-        if (robotType.equals(Constants.XV3PRO) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
+        if (robotType.equals(Constants.V3x) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.A7)) {
             haveMap = false;
         }
-        if (robotType.equals(Constants.A7) || robotType.equals(Constants.V5x) || robotType.equals(Constants.XV3PRO)) {
+        if (robotType.equals(Constants.A7) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V3x)) {
             havMapData = false;
         }
-        if (robotType.equals(Constants.V5x) || robotType.equals(Constants.XV3PRO)) {//V5x只有随机模式
+        if (robotType.equals(Constants.V5x) || robotType.equals(Constants.V3x)) {//V5x只有随机模式
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
         }
     }
@@ -1149,7 +1148,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public boolean pointToAlong() {
-        return robotType.equals(Constants.XV3PRO) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
+        return robotType.equals(Constants.V3x) || robotType.equals(Constants.V5x) || robotType.equals(Constants.V85) || robotType.equals(Constants.X785) || robotType.equals(Constants.X787) || robotType.equals(Constants.A7);
     }
 
     @Override

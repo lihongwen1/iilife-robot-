@@ -312,4 +312,5 @@
     <string name="area_russia">俄罗斯</string>
     <string name="area_spanish">西班牙</string>
     <string name="country_or_area">国家与地区</string>
+    <string name="adapter_error_bs">边刷异常</string>
 </resources>

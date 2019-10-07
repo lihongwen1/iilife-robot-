@@ -151,6 +151,7 @@
     <string name="dev_error_xuankong">Robot isn\'t on a flat surface</string>
     <string name="adapter_error_wxl">Nose wheel error</string>
     <string name="adapter_error_zbs">Left brush error</string>
+    <string name="adapter_error_bs">brush error</string>
     <string name="adapter_error_ybs">Right brush error</string>
     <string name="adapter_error_zbl">Left side wheel error</string>
     <string name="adapter_error_zbl_a9">Left wheel error</string>

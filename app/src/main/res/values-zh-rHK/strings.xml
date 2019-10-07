@@ -312,4 +312,5 @@
     <string name="country_or_area">國家與地區</string>
     <string name="russia_phone_server_time">(周一到周五 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(周六 10:00 - 14:00)</string>
+    <string name="adapter_error_bs">邊刷異常</string>
 </resources>

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,12 +42,10 @@ import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
-import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -300,7 +297,7 @@ public class SettingActivity extends BackBaseActivity {
                 rl_update.setVisibility(View.VISIBLE);
                 rl_mode.setVisibility(View.GONE);
                 break;
-            case Constants.XV3PRO:
+            case Constants.V3x:
             case Constants.V5x:
                 product = R.drawable.n_v5x;
                 rl_record.setVisibility(View.GONE);

@@ -36,6 +36,7 @@ import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.Bugly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void attachPresenter() {
         mPresenter = new MainPresenter();
         mPresenter.attachView(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override

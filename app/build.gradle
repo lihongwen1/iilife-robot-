@@ -63,6 +63,8 @@ android {
             resValue "string", "app_name", "ZACO"
             buildConfigField("int", "Area", "4")
             buildConfigField("String", "BRAND", "\"ZACO\"")
+            buildConfigField("String", "BUGKY_KEY", "\"51aa5419-3c1a-4036-9295-e47d336ab7d0\"")
+            buildConfigField("String", "BUGLY_ID", "\"7caa78b9ea\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -76,6 +78,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-CN\"")
             buildConfigField("String", "FLAVOR_NAME", "\"EU\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"12345678900\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "6742")
@@ -90,6 +93,8 @@ android {
             resValue "string", "app_name", "智意机器人TEST"
             buildConfigField("int", "Area", "0")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
+            buildConfigField("String", "BUGKY_KEY", "\"2b09f20d-6fca-47de-9e45-3d14223e6731\"")
+            buildConfigField("String", "BUGLY_ID", "\"76637b4e00\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -103,6 +108,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-CN\"")
             buildConfigField("String", "FLAVOR_NAME", "\"TEST\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
@@ -111,12 +117,14 @@ android {
         china {
             dimension "default"
             versionCode = 34
-            versionName = '3.2.7'
+            versionName = '3.2.8'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
             buildConfigField("int", "Area", "0")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
+            buildConfigField("String", "BUGKY_KEY", "\"2b09f20d-6fca-47de-9e45-3d14223e6731\"")
+            buildConfigField("String", "BUGLY_ID", "\"76637b4e00\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -130,6 +138,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-CN\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-CN\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-CN\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-CN\"")
             buildConfigField("String", "FLAVOR_NAME", "\"CN\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
@@ -144,6 +153,8 @@ android {
             resValue "string", "app_name", "ILIFE Robot AS"
             buildConfigField("int", "Area", "1")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
+            buildConfigField("String", "BUGKY_KEY", "\"9293f6da-a078-4f71-ac5c-e994941ce255\"")
+            buildConfigField("String", "BUGLY_ID", "\"b691f9a0e8\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -157,6 +168,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-AS\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-AS\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-AS\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-AS\"")
             buildConfigField("String", "FLAVOR_NAME", "\"AS\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
@@ -171,6 +183,8 @@ android {
             resValue "string", "app_name", "ILIFE US"
             buildConfigField("int", "Area", "3")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
+            buildConfigField("String", "BUGKY_KEY", "\"66ff1a7c-c9bf-4d3b-9733-d1cbf4d866bd\"")
+            buildConfigField("String", "BUGLY_ID", "\"8afe2094b4\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -184,6 +198,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-US\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-US\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-US\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-US\"")
             buildConfigField("String", "FLAVOR_NAME", "\"US\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
@@ -198,6 +213,8 @@ android {
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE Robot EU"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
+            buildConfigField("String", "BUGKY_KEY", "\"3a02ebba-97c1-4c06-8568-4183a0760ada\"")
+            buildConfigField("String", "BUGLY_ID", "\"aaffb5e34d\"")
             buildConfigField("String", "SERVICE_NAME_A9s", "\"ZACO-A9s\"")
             buildConfigField("String", "SERVICE_NAME_A8s", "\"ZACO-A8s\"")
             buildConfigField("String", "SERVICE_NAME_V85", "\"ZACO-V85\"")
@@ -211,6 +228,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X787", "\"ILife-X787-EU\"")
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-EU\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-EU\"")
+            buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-EU\"")
             buildConfigField("String", "FLAVOR_NAME", "\"EU\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
@@ -248,10 +266,10 @@ dependencies {
     })
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha09'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
     testImplementation 'junit:junit:4.13-beta-3'
     implementation project(':PushSDK')
     implementation files('libs/android-async-http-1.4.9.jar')
@@ -263,7 +281,7 @@ dependencies {
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
     implementation 'com.android.support:multidex:'
     implementation 'com.airbnb.android:lottie:3.0.3'
     implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
@@ -281,7 +299,7 @@ dependencies {
     implementation files('libs/hiflying-iots-android-smartlink-8.2.0.jar')
     implementation 'commons-codec:commons-codec:20041127.091804'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
     implementation 'com.badoo.mobile:android-weak-handler:1.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-7'

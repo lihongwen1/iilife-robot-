@@ -313,5 +313,6 @@
     <string name="country_or_area">País y región</string>
     <string name="russia_phone_server_time">(Lunes a viernes 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sábado 10:00 – 14:00)</string>
+    <string name="adapter_error_bs">error de pincel</string>
 
 </resources>

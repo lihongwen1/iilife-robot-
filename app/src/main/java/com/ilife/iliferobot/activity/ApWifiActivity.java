@@ -98,6 +98,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         Intent i = new Intent(context, BindSucActivity.class);
         i.putExtra(EXTAR_DEVID, userDevice.deviceId);
         startActivity(i);
+        removeActivity();
     }
 
     @Override

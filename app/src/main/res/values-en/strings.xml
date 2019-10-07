@@ -316,4 +316,5 @@
     <string name="country_or_area">Country and region</string>
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
+    <string name="adapter_error_bs">brush error</string>
 </resources>

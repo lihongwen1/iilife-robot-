@@ -312,4 +312,5 @@
     <string name="country_or_area">Land und Region</string>
     <string name="russia_phone_server_time">(Mo. - Fr. 09.00 – 18.00 Uhr)</string>
     <string name="spanish_server_time_sat">(Sa. 10:00 - 14:00 Uhr)</string>
+    <string name="adapter_error_bs">Bürstenfehler</string>
 </resources>

@@ -313,5 +313,6 @@
     <string name="country_or_area">Страна и регион</string>
     <string name="russia_phone_server_time">(Пн–пт: 09:00–18:00)</string>
     <string name="spanish_server_time_sat">(Суббота 10:00 – 14:00)</string>
+    <string name="adapter_error_bs">ошибка кисти</string>
 
 </resources>

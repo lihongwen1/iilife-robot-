@@ -6,12 +6,10 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.accloud.service.ACUserDevice;
-import com.bumptech.glide.Glide;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.base.BaseViewHolder;
-import com.ilife.iliferobot.view.SlideRecyclerView;
 
 import java.util.List;
 
@@ -77,7 +75,7 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                 case Constants.subdomain_v5x:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
                     break;
-                case Constants.subdomain_V3P:
+                case Constants.subdomain_V3x:
                     //TODO 修改为V3 Pro的图片
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
                     break;

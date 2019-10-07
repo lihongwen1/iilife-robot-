@@ -29,7 +29,7 @@ public class Constants {
     public static final String subdomain_x900 = "ilifex900";
 
     //V3 Plus的字域
-    public static final String subdomain_V3P = "ilifex782";
+    public static final String subdomain_V3x = "ilifex320";
 
     //    ZACO
     public static final String subdomain_a9s = "zacoa9s";
@@ -44,7 +44,7 @@ public class Constants {
     public static final long subdomainId_x800 = 6312;
     public static final long subdomainId_A7 = 6370;
     public static final long subdomainId_x900 = 6369;
-    public static final long subdomainId_V3P = 6234;
+    public static final long subdomainId_V3x = 6855;
 
     //    ZACO
     public static final long subdomaiId_a9s = 6746;
@@ -58,7 +58,7 @@ public class Constants {
     public static final String X800 = "X800";
     public static final String X787 = "X787";
     public static final String X785 = "X785";
-    public static final String XV3PRO = "XV3PRO";
+    public static final String V3x = "V3x";
     //ZACO
     public static final String A9s = "A9s";
     public static final String A8s = "A8s";

@@ -6,7 +6,10 @@ import android.view.MotionEvent;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-public class MyPDF extends PDFView {
+/**
+ * this can response to the click event
+ */
+public class TouchablePDF extends PDFView {
     private OnActionUp onActionUp;
     /**
      * Construct the initial view
@@ -14,7 +17,7 @@ public class MyPDF extends PDFView {
      * @param context
      * @param set
      */
-    public MyPDF(Context context, AttributeSet set) {
+    public TouchablePDF(Context context, AttributeSet set) {
         super(context, set);
     }
 
