@@ -99,7 +99,7 @@ public class FirstApActivity extends BackBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().trim().length() >=8) {
+                if (s.toString().trim().length() >= 8) {
                     bt_next.setSelected(true);
                     bt_next.setClickable(true);
                 } else {
@@ -169,10 +169,8 @@ public class FirstApActivity extends BackBaseActivity {
 
 
     private boolean checkGpsIsOpen() {
-        boolean isOpen;
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        isOpen = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        return isOpen;
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     private void goSetGps() {

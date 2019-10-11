@@ -176,6 +176,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
 
                                 @Override
                                 public void error(ACException e) {
+                                    MyLogger.d(TAG,"绑定失败："+e.toString());
                                     ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
                                     DialogUtils.closeDialog(loadingDialog);
                                 }

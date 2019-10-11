@@ -183,7 +183,7 @@
     <string name="setting_aty_standard">Estándar</string>
     <string name="setting_aty_soft">Suave</string>
     <string name="setting_aty_strong">Fuerte</string>
-    <string name="setting_aty_nav_clean">Forma de S</string>
+    <string name="setting_aty_nav_clean">S-forma</string>
     <string name="setting_aty_random_clean">Auto</string>
     <string name="setting_aty_confirm_reset">¿Restablecer los valores predeterminados de fábrica ahora</string>
     <string name="setting_aty_reset_hint">Se borrarán todos los datos</string>
@@ -313,6 +313,6 @@
     <string name="country_or_area">País y región</string>
     <string name="russia_phone_server_time">(Lunes a viernes 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sábado 10:00 – 14:00)</string>
-    <string name="adapter_error_bs">error de pincel</string>
+    <string name="adapter_error_bs">Error de pincel</string>
 
 </resources>

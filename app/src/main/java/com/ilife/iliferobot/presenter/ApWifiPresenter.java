@@ -61,6 +61,7 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     private String mApSsid;
     private CompositeDisposable mCpDisposable;
     private boolean isFirstSucceed = true;//whether it is the first time of successful bind/whether the first successful bind
+    private int failTimes = 0;
 
     @Override
     public void attachView(ApWifiContract.View view) {
@@ -102,7 +103,6 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
     public void connectToDeviceWithSsid(String ssid) {
         Disposable apProgressDisposable = Observable.intervalRange(1, 25, 1, 1, TimeUnit.SECONDS).subscribe(aLong -> {
             if (isViewAttached()) {
-                MyLogger.d(TAG, "update progress");
                 if (aLong == 25) {
                     mView.updateBindProgress("", 80);
                 } else {
@@ -309,7 +309,6 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
     /**
      * 绑定设备
-     *
      */
     @Override
     public Single<ACUserDevice> bindDevice() {
@@ -333,24 +332,30 @@ public class ApWifiPresenter extends BasePresenter<ApWifiContract.View> implemen
 
                 @Override
                 public void error(ACException e) {
-//                    if (!isFirstSucceed && e.getErrorCode() == 0x3811) {
-//                        mView.updateBindProgress("in this case,it present that the device has been bound,but there is no massage about the device here to rename it", 100);
-//                    }
-                    apMsg.append("绑定设备失败").append(e.toString()).append(e.getMessage()).append("code:").append(e.getErrorCode());
-                    MyLogger.e(TAG, "绑定设备失败" + e.toString() + e.getMessage() + "code:" + e.getErrorCode());
+                    failTimes++;
                     emitter.onError(e);
                 }
             });
         }).retryWhen(throwableFlowable -> throwableFlowable.flatMap((Function<Throwable, Publisher<?>>) throwable -> (Publisher<Boolean>) s -> {
             MyLogger.e(TAG, "Bind error msg------------:" + throwable.getMessage());
-            if (throwable.getMessage().contains("success")) {
-               Disposable disposable= Observable.timer(3, TimeUnit.SECONDS).subscribe(aLong -> {
+            if (throwable.getMessage().contains("bind success")) {
+                Disposable disposable = Observable.timer(3, TimeUnit.SECONDS).subscribe(aLong -> {
                     MyLogger.e(TAG, "it's time to retry again!");
                     s.onNext(true);
                 });
-               mCpDisposable.add(disposable);
+                mCpDisposable.add(disposable);
             } else {
-                s.onError(throwable);
+                if (failTimes <= 5) {
+                    Disposable disposable = Observable.timer(5, TimeUnit.SECONDS).subscribe(aLong -> {
+                        MyLogger.e(TAG, "rebind device due to failure");
+                        s.onNext(true);
+                    });
+                    mCpDisposable.add(disposable);
+                } else {
+                    s.onError(throwable);
+                    apMsg.append("绑定设备失败").append(throwable.toString());
+                    MyLogger.e(TAG, "绑定设备失败" + throwable.toString());
+                }
             }
         }));
     }

@@ -15,6 +15,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ilife.iliferobot.app.MyApplication;
+
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ public class WifiUtils {
         for (ScanResult scResult : list) {
             ssid = scResult.SSID;
             mac = scResult.BSSID;
-            MyLogger.d(TAG,"SSID:  "+ssid+"       mac:     "+mac);
+            MyLogger.d(TAG, "SSID:  " + ssid + "       mac:     " + mac);
             if (ssid != null && ssid.length() == 10 && ssid.contains("Robot") && (mac.contains("84:5d:d7") || mac.contains("98:d8:63"))) {
                 targetSsid = scResult.SSID;
                 break;
@@ -192,42 +194,24 @@ public class WifiUtils {
      */
     public static String getSsid(Context activity) {
         String ssid = "unknown id";
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O || Build.VERSION.SDK_INT == Build.VERSION_CODES.P) {
-
-            WifiManager mWifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-            assert mWifiManager != null;
-            WifiInfo info = mWifiManager.getConnectionInfo();
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                return info.getSSID();
-            } else {
-                return info.getSSID().replace("\"", "");
-            }
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
-
-            ConnectivityManager connManager = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            assert connManager != null;
-            NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-            if (networkInfo.isConnected()) {
-                if (networkInfo.getExtraInfo() != null) {
-                    return networkInfo.getExtraInfo().replace("\"", "");
+        if (isWifiConnected(activity)) {
+            WifiManager wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager != null) {
+                WifiInfo info = wifiManager.getConnectionInfo();
+                int networkId = info.getNetworkId();
+                List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
+                for (WifiConfiguration wifiConfiguration : configuredNetworks) {
+                    if (wifiConfiguration.networkId == networkId) {
+                        ssid = wifiConfiguration.SSID;
+                        break;
+                    }
+                }
+                if (ssid.contains("\"")) {
+                    return ssid.replace("\"", "");
                 }
             }
         }
         return ssid;
-    }
-
-    public static boolean isWifiConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (wifiInfo != null && wifiInfo.isConnected()) {
-                return true;
-            }
-        }
-        return false;
     }
 
 
@@ -244,11 +228,8 @@ public class WifiUtils {
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
         boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (gps || network) {
-            return true;
-        }
+        return gps || network;
 
-        return false;
     }
 
     /**
@@ -269,4 +250,40 @@ public class WifiUtils {
         }
     }
 
+    public static boolean isWifiConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifiNetworkInfo.isConnected();
+    }
+
+
+    /**
+     * determine whether the network is available
+     *
+     * @return
+     */
+    public boolean isNetAvailable() {
+        Context context = MyApplication.getInstance();
+        //determine wifi
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mWiFiNetworkInfo = mConnectivityManager
+                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (mWiFiNetworkInfo != null) {
+                return mWiFiNetworkInfo.isAvailable();
+            }
+        }
+        //determine mobile net
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mMobileNetworkInfo = mConnectivityManager
+                    .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (mMobileNetworkInfo != null) {
+                return mMobileNetworkInfo.isAvailable();
+            }
+        }
+        return false;
+    }
 }

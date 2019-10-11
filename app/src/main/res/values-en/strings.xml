@@ -105,7 +105,7 @@
     <string name="personal_aty_chose_type">Select product model</string>
     <string name="help_aty_content">Detail the issues you\'ve encountered</string>
     <string name="personal_aty_count">140 characters left</string>
-    <string name="help_aty_text_count">%1$s scharacters left</string>
+    <string name="help_aty_text_count">%1$s characters left</string>
     <string name="help_aty_add_pic">Add a photo</string>
     <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
     <string name="help_aty_photo">Take a photo</string>
@@ -316,5 +316,5 @@
     <string name="country_or_area">Country and region</string>
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
-    <string name="adapter_error_bs">brush error</string>
+    <string name="adapter_error_bs">Brush error</string>
 </resources>

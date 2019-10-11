@@ -105,7 +105,7 @@
     <string name="personal_aty_chose_type">Select product model</string>
     <string name="help_aty_content">Detail the issues you\'ve encountered</string>
     <string name="personal_aty_count">140 characters left</string>
-    <string name="help_aty_text_count">%1$s scharacters left</string>
+    <string name="help_aty_text_count">%1$s characters left</string>
     <string name="help_aty_add_pic">Add a photo</string>
     <string name="help_aty_add_pic1">(JPG/PNG/WBMP)</string>
     <string name="help_aty_photo">Take a photo</string>
@@ -151,7 +151,7 @@
     <string name="dev_error_xuankong">Robot isn\'t on a flat surface</string>
     <string name="adapter_error_wxl">Nose wheel error</string>
     <string name="adapter_error_zbs">Left brush error</string>
-    <string name="adapter_error_bs">brush error</string>
+    <string name="adapter_error_bs">Brush error</string>
     <string name="adapter_error_ybs">Right brush error</string>
     <string name="adapter_error_zbl">Left side wheel error</string>
     <string name="adapter_error_zbl_a9">Left wheel error</string>

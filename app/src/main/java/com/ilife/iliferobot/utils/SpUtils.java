@@ -272,17 +272,4 @@ public class SpUtils {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, MODE_PRIVATE);
         return sp.getBoolean(key, false);
     }
-
-    public static boolean saveSubdomain(Context context, String value) {
-        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("subdomain", value);
-        return editor.commit();
-    }
-
-    public static String getSubdomain(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, MODE_PRIVATE);
-        return sp.getString("subdomain", "");
-    }
-
 }
