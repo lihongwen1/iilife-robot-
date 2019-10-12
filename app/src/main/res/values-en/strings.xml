@@ -54,7 +54,6 @@
     <string name="third_ap_aty_port_">Connect to WiFi starting with \"Robot-\"</string>
     <string name="bind_suc_aty_name">Name your robot</string>
     <string name="bind_suc_sty_robot_done">Completed</string>
-    <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
     <string name="bind_aty_reName_suc">Nickname change completed</string>
     <string name="bind_aty_reName_fail">Nickname change failed</string>
     <string name="open_gps_location">Enable GPS</string>
@@ -241,7 +240,6 @@
     <string name="set_password">Set a password</string>
     <string name="no_device_tip_hi">Hi, good to see you again</string>
     <string name="no_device_tip_cleaning">Begin your cleaning journey~</string>
-    <string name="x_series_robot">%1$s Series robot vacuum</string>
     <string name="map_aty_temp_keypoint">Spot</string>
     <string name="robot_connected">Connected</string>
     <string name="back_to_recharge">Return to charging dock</string>

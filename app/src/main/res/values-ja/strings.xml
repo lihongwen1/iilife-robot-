@@ -54,7 +54,6 @@
     <string name="third_ap_aty_port_">機械で生成された「Robot-XXXX」ワイヤレスネットワークを選択してください</string>
     <string name="bind_suc_aty_name">ロボットに名前を付けてください</string>
     <string name="bind_suc_sty_robot_done">完了しました</string>
-    <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
     <string name="bind_aty_reName_suc">ニックネームの変更が完了しました</string>
     <string name="bind_aty_reName_fail">ニックネームの変更に失敗しました</string>
     <string name="open_gps_location">GPSを有効にする</string>
@@ -249,7 +248,6 @@
     <string name="set_password">パスワードを設定します</string>
     <string name="no_device_tip_hi">お久しぶりです</string>
     <string name="no_device_tip_cleaning">あなたの掃除の旅を始めましょう</string>
-    <string name="x_series_robot">ロボット掃除機 %1$s シリーズ</string>
     <string name="map_aty_temp_keypoint">スポット</string>
     <string name="robot_connected">接続済み</string>
     <string name="back_to_recharge">充電スタンドに戻る</string>

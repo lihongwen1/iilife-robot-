@@ -40,8 +40,6 @@ public class SelectActivity_x extends BackBaseActivity {
     BaseQuickAdapter adapter;
     @BindView(R.id.tv_top_title)
     TextView tvTitle;
-    @BindView(R.id.tv_x_series)
-    TextView tv_x_series;
     private List<CleanningRobot> robots = new ArrayList<>();
     private String[] supportRobots;
 
@@ -68,27 +66,6 @@ public class SelectActivity_x extends BackBaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         initAdapter();
         recyclerView.setAdapter(adapter);
-        if (BuildConfig.BRAND.equals(Constants.BRAND_ZACO)) {
-            tv_x_series.setText(R.string.x_series_robot);
-        } else {
-            String series;
-            switch (BuildConfig.Area) {
-                case AC.REGIONAL_CHINA:
-                    series = "X";
-                    break;
-                case AC.REGIONAL_CENTRAL_EUROPE:
-                case AC.REGIONAL_NORTH_AMERICA:
-                    series = "A";
-                    break;
-                case AC.REGIONAL_SOUTHEAST_ASIA:
-                    series = "A";
-                    break;
-                default:
-                    series = "X";
-                    break;
-            }
-            tv_x_series.setText(getResources().getString(R.string.x_series_robot,series));
-        }
     }
 
     private void initAdapter() {

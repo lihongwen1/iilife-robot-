@@ -73,12 +73,11 @@ public class BindSucActivity extends BackBaseActivity {
 
     public void initData() {
         Bundle bundle = getIntent().getExtras();
-        int image_device;
         if (bundle != null) {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
-        String devName = getResources().getString(R.string.bind_suc_sty_robot_name, DeviceUtils.getRobotType(subdomain));
+        String devName = BuildConfig.BRAND+" "+DeviceUtils.getRobotType(subdomain);//ILIFE X800
         iv_bind_device.setImageResource(DeviceUtils.getRechargeImageSrc(DeviceUtils.getRobotType(subdomain)));
         et_devName.setText(devName);
         et_devName.setSelection(et_devName.getText().toString().trim().length());

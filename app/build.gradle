@@ -117,7 +117,7 @@ android {
         china {
             dimension "default"
             versionCode = 34
-            versionName = '3.2.8'
+            versionName = '3.2.9'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -176,11 +176,11 @@ android {
         /*美国*/
         _America {
             dimension "default"
-            versionCode = 1
-            versionName = '3.0.3'
+            versionCode = 38
+            versionName = '3.0.1'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFE US"
+            resValue "string", "app_name", "ILIFE Robot"
             buildConfigField("int", "Area", "3")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"66ff1a7c-c9bf-4d3b-9733-d1cbf4d866bd\"")
@@ -206,8 +206,8 @@ android {
         /*欧洲*/
         _Europe {
             dimension "default"
-            versionCode = 36
-            versionName = '3.0.0'
+            versionCode = 37
+            versionName = '3.0.1'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife

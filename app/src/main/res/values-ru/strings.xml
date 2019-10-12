@@ -55,7 +55,6 @@
     <string name="third_ap_aty_port_">Подключитесь к WiFi, начинающегося с \"Robot-\"</string>
     <string name="bind_suc_aty_name">Назовите  робота</string>
     <string name="bind_suc_sty_robot_done">Завершено</string>
-    <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
     <string name="bind_aty_reName_suc">Наименование присвоено</string>
     <string name="bind_aty_reName_fail">Изменить наименование не удалось</string>
     <string name="open_gps_location">Включить GPS</string>
@@ -250,7 +249,6 @@
     <string name="set_password">Установить пароль</string>
     <string name="no_device_tip_hi">Привет, рад снова видеть Вас</string>
     <string name="no_device_tip_cleaning">Начните свое очищающее путешествие</string>
-    <string name="x_series_robot">Робот пылесос серии %1$s</string>
     <string name="map_aty_temp_keypoint">Точечный режим</string>
     <string name="robot_connected">Подключен</string>
     <string name="back_to_recharge">Возврат на зарядную базу</string>

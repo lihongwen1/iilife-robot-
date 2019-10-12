@@ -247,7 +247,7 @@ public class MapView extends View {
         }
         slamCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         slamCanvas.save();
-        slamCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
+//        slamCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
         slamPaint.setColor(colors[1]);
         slamCanvas.drawPath(slamPath, slamPaint);
         slamPaint.setColor(colors[0]);

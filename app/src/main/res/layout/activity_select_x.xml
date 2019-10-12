@@ -6,17 +6,11 @@
 
     <include layout="@layout/template_top_title" />
 
-    <TextView
-        android:id="@+id/tv_x_series"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_30"
-        style="@style/Text_16sp_33_center" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
         android:layout_gravity="center"
         />
 </LinearLayout>

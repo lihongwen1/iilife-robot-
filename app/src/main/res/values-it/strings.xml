@@ -55,7 +55,6 @@
     <string name="third_ap_aty_port_">Collegarsi con il WiFi: \"Robot-\"</string>
     <string name="bind_suc_aty_name">Denominare il proprio robot</string>
     <string name="bind_suc_sty_robot_done">Completato</string>
-    <string name="bind_suc_sty_robot_name">ILIFE %1$s</string>
     <string name="bind_aty_reName_suc">La modifica del nickname è stata completata</string>
     <string name="bind_aty_reName_fail">La modifica del nickname non è stata effettuata</string>
     <string name="open_gps_location">Attivare il GPS</string>
@@ -250,7 +249,6 @@
     <string name="set_password">Definire una password</string>
     <string name="no_device_tip_hi">Ciao, bentornati!</string>
     <string name="no_device_tip_cleaning">Iniziare il percorso quotidiano</string>
-    <string name="x_series_robot">Robot aspiratore %1$s Series</string>
     <string name="map_aty_temp_keypoint">Enfasi</string>
     <string name="robot_connected">Connesso</string>
     <string name="back_to_recharge">Tornare alla stazione di ricarica</string>
