@@ -242,15 +242,16 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
     }
 
 
-    @OnClick({R.id.et_type, R.id.image_add, R.id.bt_confirm, R.id.tv_telNum, R.id.tv_telNum2})
+    @OnClick({R.id.et_type, R.id.image_add, R.id.bt_confirm, R.id.area_contact1, R.id.area_contact2})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_telNum:
-            case R.id.tv_telNum2:
+            case R.id.area_contact1:
+            case R.id.area_contact2:
                 new RxPermissions(this).requestEach(Manifest.permission.CALL_PHONE).subscribe(permission -> {
                     if (permission.granted) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
-                        Uri data = Uri.parse("tel:" + ((TextView) view).getText().toString().trim());
+                        String phoneNumber=v.getId()==R.id.area_contact1?tv_telNum.getText().toString():tv_telNum2.getText().toString();
+                        Uri data = Uri.parse("tel:"+phoneNumber);
                         intent.setData(data);
                         startActivity(intent);
                     } else {
@@ -402,7 +403,7 @@ public class HelpActivity extends BackBaseActivity implements View.OnClickListen
                     case 1:
                         tv_telNum.setText("0034-918-607768");
                         tv_phone_time_pre.setText(Utils.getString(R.string.spanish_server_time_sat));
-                        tv_phone_time.setText("("+Utils.getString(R.string.zaco_phone_server_time)+")");
+                        tv_phone_time.setText("(" + Utils.getString(R.string.zaco_phone_server_time) + ")");
                         tv_email.setText("serviciotecnico.ilife@edawms.com");
                         break;
                     case 2:

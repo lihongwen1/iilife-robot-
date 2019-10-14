@@ -47,6 +47,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/area_contact1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
             android:background="@color/white"
@@ -69,7 +70,7 @@
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_phone_time_pre"
                 style="@style/Text_12sp_33"
-                android:layout_alignTop="@id/tv_telNum"
+                android:layout_alignBaseline="@id/tv_telNum"
                 android:layout_toRightOf="@id/tv_telNum" />
 
             <com.ilife.iliferobot.view.LightTextView
@@ -106,7 +107,7 @@
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_phone_time2_pre"
                 style="@style/Text_12sp_33"
-                android:layout_alignTop="@id/tv_telNum2"
+                android:layout_alignBaseline="@id/tv_telNum2"
                 android:layout_toRightOf="@id/tv_telNum2" />
 
             <com.ilife.iliferobot.view.LightTextView
