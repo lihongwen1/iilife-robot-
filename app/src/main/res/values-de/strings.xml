@@ -208,7 +208,6 @@
     <string name="consume_aty_reset_suc">Zurücksetzen abgeschlossen</string>
     <string name="clock_aty_dev_offline">Gerät ist Offline</string>
     <string name="setting_aty_hit_">Benutzername</string>
-    <string name="consume_aty_text_2">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
     <string name="access_camera">Bitte Zugriff auf Ihre Kamera gewähren</string>
     <string name="access_location">Bitte Zugriff auf Ihren Standort gewähren</string>
     <string name="access_storage">Bitte Zugriff auf den internen Speicher gewähren</string>
@@ -297,7 +296,7 @@
     <string name="consume_aty_resetRoll_a9">Jetzt Rollbürste zurücksetzen</string>
     <string name="consume_aty_resetRoll_over_a9">Rollbürstenstatus wird nach dem Reset zurückgestellt</string>
     <string name="consume_aty_roll_time_a9">Rollbürstenlebensdauer</string>
-    <string name="consume_aty_text_2_a9">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
+    <string name="consume_aty_text_2">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
     <string name="please_agree_policy">Bitte stimme zu%1$s</string>
     <string name="agree_privacy_policy">zustimmen</string>
     <string name="ap_guide_aty_tip2_a9">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage Start WiFi pairing. (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
@@ -311,4 +310,5 @@
     <string name="russia_phone_server_time">(Mo. - Fr. 09.00 – 18.00 Uhr)</string>
     <string name="spanish_server_time_sat">(Sa. 10:00 - 14:00 Uhr)</string>
     <string name="adapter_error_bs">Bürstenfehler</string>
+    <string name="consume_aty_text_2_v85">Erinnerung: Reinigen Sie die Seitenbürste und den Hochleistungsfilter nach jedem Gebrauch. Ersetzen Sie die Seitenbürsten alle 3 bis 6 Monate und den Hochleistungsfilter alle 3 bis 5 Monate.</string>
 </resources>

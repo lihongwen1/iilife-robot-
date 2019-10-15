@@ -30,6 +30,7 @@ import com.ilife.iliferobot.entity.RealTimeMapInfo;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.TimeUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -52,6 +53,7 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -120,6 +122,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (robotType.equals(Constants.V5x) || robotType.equals(Constants.V3x)) {//V5x只有随机模式
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
         }
+        adjustTime();
     }
 
     @Override
@@ -873,6 +876,24 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 curStatus == MsgCodeUtils.STATUE_RECHARGE;
     }
 
+    @Override
+    public void adjustTime() {
+        Disposable disposable = Observable.timer(10, TimeUnit.SECONDS).subscribe(aLong -> {
+            ACDeviceMsg msg_adjustTime = new ACDeviceMsg(MsgCodeUtils.AdjustTime, TimeUtil.getTimeBytes());
+            AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_adjustTime, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
+                @Override
+                public void success(ACDeviceMsg acDeviceMsg) {
+                    MyLogger.d(TAG, "adjust Time Success");
+                }
+
+                @Override
+                public void error(ACException e) {
+                    MyLogger.d(TAG, "adjust Time Fail");
+                }
+            });
+        });
+        mComDisposable.add(disposable);
+    }
 
     /**
      * @param s1          property json

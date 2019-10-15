@@ -207,7 +207,6 @@
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">設備離線</string>
     <string name="setting_aty_hit_">用戶名</string>
-    <string name="consume_aty_text_2">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網並進行清潔。3&#8211;6個月可更換邊刷、5&#8211;12個月可更換滾刷、3&#8211;5個月可更換高效濾網。</string>
     <string name="access_camera">請授予訪問攝像頭的權限</string>
     <string name="access_location">請授予訪問位置的權限</string>
     <string name="access_storage">請授予訪問內部存儲的權限</string>
@@ -297,7 +296,7 @@
     <string name="consume_aty_resetRoll_a9">是否重置滾刷壽命</string>
     <string name="consume_aty_resetRoll_over_a9">重置後滾刷會更新到最新狀態</string>
     <string name="consume_aty_roll_time_a9">滾刷壽命</string>
-    <string name="consume_aty_text_2_a9">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網並進行清潔。3&#8211;6個月可更換邊刷、5&#8211;12個月可更換滾刷、3&#8211;5個月可更換高效濾網。</string>
+    <string name="consume_aty_text_2">溫馨提示：每次使用後，請及時清理邊刷、滾刷、高效濾網。 3-6個月可更換邊刷、5-12個月可更換滾刷、3-5個月可更換高效濾網。</string>
     <string name="please_agree_policy">請同意%1$s</string>
     <string name="agree_privacy_policy">註冊登錄表示同意</string>
     <string name="ap_guide_aty_tip2_a9">長按機器的啟動鍵，3秒後聽到嘀的一聲，繼續長按聽到WiFi連接中後鬆開，WiFi指示燈閃爍。</string>
@@ -311,4 +310,5 @@
     <string name="russia_phone_server_time">(周一到周五 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(周六 10:00 - 14:00)</string>
     <string name="adapter_error_bs">邊刷異常</string>
+    <string name="consume_aty_text_2_v85">溫馨提示：每次使用後，請及時清理邊刷、高效濾網。 3-6個月可更換邊刷、3-5個月可更換高效濾網。</string>
 </resources>

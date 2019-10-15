@@ -93,12 +93,10 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         acDeviceMsg.setContent(new byte[]{0x00});
         sendToDeviceWithOption(acDeviceMsg, physicalId);
         tv_top_title.setText(R.string.setting_aty_consume_detail);
-//        tv_roll.setText((BuildConfig.Area==AC.REGIONAL_SOUTHEAST_ASIA&&DeviceUtils.getRobotType(subdomain).equals(Constants.A9s))||DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
-//                R.string.consume_aty_roll_time_a9 : R.string.consume_aty_roll_time);
-        tv_roll.setText(R.string.consume_aty_roll_time_a9);
-//        tv_tips.setText((BuildConfig.Area==AC.REGIONAL_SOUTHEAST_ASIA&&DeviceUtils.getRobotType(subdomain).equals(Constants.A9s))||DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7) ?
-//                R.string.consume_aty_text_2_a9 : R.string.consume_aty_text_2);
-        tv_tips.setText(R.string.consume_aty_text_2_a9);
+        if (DeviceUtils.getRobotType(subdomain).equals(Constants.V85)) {//V85是吸口型，没有滚刷。
+            rl_roll.setVisibility(View.GONE);
+            tv_tips.setText(Utils.getString(R.string.consume_aty_text_2_v85));
+        }
     }
 
     public void showResetDialog(int tag) {

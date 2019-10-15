@@ -132,7 +132,7 @@
     <string name="map_aty_remote">Controllo</string>
     <string name="map_aty_stop">Pausa</string>
     <string name="map_aty_start">Start</string>
-    <string name="map_aty_appoint">Orari programmati</string>
+    <string name="map_aty_appoint">Programma</string>
     <string name="map_aty_recharge">Ricarica</string>
     <string name="map_aty_use_control">Il controllo remoto è abilitato</string>
     <string name="map_aty_use_left">Sinistra</string>
@@ -178,7 +178,7 @@
     <string name="setting_aty_clean_mode1">Modalità di pulizia</string>
     <string name="setting_aty_max_suction">Modalità max</string>
     <string name="setting_aty_find_robot">Localizzare il robot</string>
-    <string name="setting_aty_factory_reset">Ripristinare le impostazioni di fabbrica</string>
+    <string name="setting_aty_factory_reset">Ripristina robot aspiratore</string>
     <string name="setting_aty_standard">Standard</string>
     <string name="setting_aty_soft">Delicato</string>
     <string name="setting_aty_strong">Intenso</string>
@@ -218,7 +218,6 @@
     <string name="clock_aty_dev_offline">L\'apparecchiatura \è offline</string>
     <string name="setting_aty_hit_">Nome utente</string>
     <string name="consume_aty_text_2">Reminder:Pulire le spazzole laterali, la spazzola rotante e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituire le spazzole laterali ogni 3–6 mesi, la spazzola laterale ogni 5–12 mesi e il filtro HEPA ogni 3–5 mesi.</string>
-    <string name="consume_aty_text_2_a9">Reminder:Pulire le spazzole laterali, la spazzola rotante e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituire le spazzole laterali ogni 3–6 mesi, la spazzola laterale ogni 5–12 mesi e il filtro HEPA ogni 3–5 mesi.</string>
     <string name="access_camera">Permettere l\'accesso alla propria fotocamera</string>
     <string name="access_location">Permettere l\'accesso alla propria posizione</string>
     <string name="access_storage">Permettere l\'accesso memoria interna</string>
@@ -315,4 +314,5 @@
     <string name="russia_phone_server_time">Dal lunedì al venerdì 09:00 – 18:00</string>
     <string name="spanish_server_time_sat">(Sabato 10:00 - 14:00)\t</string>
     <string name="adapter_error_bs">Errore spazzola</string>
+    <string name="consume_aty_text_2_v85">Promemoria:pulire la spazzola laterale e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituisci le spazzole laterali ogni 3-6 mesi e il filtro ad alte prestazioni 3–5 mesi.</string>
 </resources>

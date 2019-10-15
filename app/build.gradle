@@ -58,9 +58,9 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 6
-            versionName = '1.2.9'
+            versionName = '1.3.0'
             signingConfig signingConfigs.zaco
-            resValue "string", "app_name", "ZACO"
+            resValue "string", "app_name", "ZACO Robot"
             buildConfigField("int", "Area", "4")
             buildConfigField("String", "BRAND", "\"ZACO\"")
             buildConfigField("String", "BUGKY_KEY", "\"51aa5419-3c1a-4036-9295-e47d336ab7d0\"")
@@ -176,8 +176,8 @@ android {
         /*美国*/
         _America {
             dimension "default"
-            versionCode = 38
-            versionName = '3.0.1'
+            versionCode = 39
+            versionName = '3.0.2'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE Robot"
@@ -206,8 +206,8 @@ android {
         /*欧洲*/
         _Europe {
             dimension "default"
-            versionCode = 37
-            versionName = '3.0.1'
+            versionCode = 38
+            versionName = '3.0.2'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife

@@ -209,7 +209,6 @@
     <string name="consume_aty_reset_suc">重置成功</string>
     <string name="clock_aty_dev_offline">设备已离线</string>
     <string name="setting_aty_hit_">用户名</string>
-    <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
     <string name="access_camera">请授予访问摄像头的权限</string>
     <string name="access_location">请授予访问位置的权限</string>
     <string name="access_storage">请授予访问内部存储的权限</string>
@@ -299,7 +298,7 @@
     <string name="consume_aty_resetRoll_a9">是否重置滚刷寿命</string>
     <string name="consume_aty_resetRoll_over_a9">重置后滚刷会更新到最新状态</string>
     <string name="consume_aty_roll_time_a9">滚刷寿命</string>
-    <string name="consume_aty_text_2_a9">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网并进行清洁。3&#8211;6个月可更换边刷、5&#8211;12个月可更换滚刷、3&#8211;5个月可更换高效滤网。</string>
+    <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网。3-6个月可更换边刷、5-12个月可更换滚刷、3-5个月可更换高效滤网。</string>
     <string name="agree_privacy_policy">注册登录表示同意</string>
     <string name="please_agree_policy">请同意%1$s</string>
     <string name="ap_guide_aty_tip2_a9">长按机器的启动键，3秒后听到\"嘀\"的一声，继续长按听到\"WiFi连接中\"后松开，WiFi指示灯闪烁。 </string>
@@ -311,4 +310,5 @@
     <string name="area_spanish">西班牙</string>
     <string name="country_or_area">国家与地区</string>
     <string name="adapter_error_bs">边刷异常</string>
+    <string name="consume_aty_text_2_v85">温馨提示：每次使用后，请及时清理边刷、高效滤网。3-6个月可更换边刷、3-5个月可更换高效滤网。</string>
 </resources>

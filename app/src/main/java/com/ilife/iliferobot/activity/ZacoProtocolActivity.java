@@ -1,5 +1,6 @@
 package com.ilife.iliferobot.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,6 +33,7 @@ public class ZacoProtocolActivity extends BackBaseActivity {
         return R.layout.activity_zaco_protocol;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         tv_title.setText(R.string.personal_aty_protocol);
         frameLayout = findViewById(R.id.web_frame);

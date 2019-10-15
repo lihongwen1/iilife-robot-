@@ -61,7 +61,7 @@ public class MyApplication extends MultiDexApplication {
         /**
          * tencent bugly crash日志上传
          */
-        CrashReport.initCrashReport(getApplicationContext(), "76637b4e00", false);
+        CrashReport.initCrashReport(getApplicationContext(),BuildConfig.BUGLY_ID, false);
         /**
          * 日志打印
          */

@@ -84,7 +84,7 @@
             <TextView
                 android:id="@+id/tv_roll"
                 style="@style/Text_14sp_33"
-                android:text="@string/consume_aty_roll_time" />
+                android:text="@string/consume_aty_roll_time_a9" />
 
             <ProgressBar
                 android:id="@+id/pb_roll"

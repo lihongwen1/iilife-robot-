@@ -178,7 +178,7 @@
     <string name="setting_aty_clean_mode1">Modos de limpieza</string>
     <string name="setting_aty_max_suction">Modo Max</string>
     <string name="setting_aty_find_robot">Localizar robot</string>
-    <string name="setting_aty_factory_reset">Restablecer los valores predeterminados de fábrica</string>
+    <string name="setting_aty_factory_reset">Reiniciar robot aspirador</string>
     <string name="setting_aty_standard">Estándar</string>
     <string name="setting_aty_soft">Suave</string>
     <string name="setting_aty_strong">Fuerte</string>
@@ -218,7 +218,6 @@
     <string name="clock_aty_dev_offline">El dispositivo está offline</string>
     <string name="setting_aty_hit_">Nombre de usuario</string>
     <string name="consume_aty_text_2">Recordatorio:Limpiar el cepillo lateral, el cepillo giratorio y el filtro de alto rendimiento después de cada uso. Sustituir los cepillos cada 3–6 meses, el cepillo giratorio cada 5–12 meses y el filtro HEPA cada 3–5 meses.</string>
-    <string name="consume_aty_text_2_a9">Recordatorio:Limpiar el cepillo lateral, el cepillo giratorio y el filtro de alto rendimiento después de cada uso. Sustituir los cepillos cada 3–6 meses, el cepillo giratorio cada 5–12 meses y el filtro HEPA cada 3–5 meses.</string>
     <string name="access_camera">Permita el acceso a su cámara</string>
     <string name="access_location">Permita el acceso a su ubicación</string>
     <string name="access_storage">Permita el acceso a la memoria interna</string>
@@ -312,5 +311,6 @@
     <string name="russia_phone_server_time">(Lunes a viernes 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sábado 10:00 – 14:00)</string>
     <string name="adapter_error_bs">Error de pincel</string>
+    <string name="consume_aty_text_2_v85">Recordatorio:Limpie el cepillo lateral y el filtro de alto rendimiento después de cada uso. Reemplace los cepillos laterales cada 3–6 meses, y el filtro de alto rendimiento de 3 a 5 meses.</string>
 
 </resources>

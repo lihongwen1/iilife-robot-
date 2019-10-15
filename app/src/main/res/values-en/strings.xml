@@ -209,7 +209,6 @@
     <string name="consume_aty_reset_suc">Reset completed</string>
     <string name="clock_aty_dev_offline">Device is offline</string>
     <string name="setting_aty_hit_">User name</string>
-    <string name="consume_aty_text_2">Reminder:Clean side brush, roller brush and high performance filter after each use. Replace side brushes every 3–6 months, roller brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="access_camera">Please allow camera access</string>
     <string name="access_location">Please allow location access</string>
     <string name="access_storage">Please allow internal storage write access</string>
@@ -302,7 +301,7 @@
     <string name="consume_aty_resetRoll_a9">Reset main brush life now</string>
     <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
     <string name="consume_aty_roll_time_a9">Main brush life</string>
-    <string name="consume_aty_text_2_a9">Reminder:Clean side brush, main brush and high performance filter after each use. Replace side brushes every 3–6 months, main brush 5–12 months, and high performance filter 3–5 months.</string>
+    <string name="consume_aty_text_2">Reminder:Clean side brush, main brush and high performance filter after each use. Replace side brushes every 3–6 months, main brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="please_agree_policy">Please agree%1$s</string>
     <string name="agree_privacy_policy">Agree</string>
     <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
@@ -315,4 +314,5 @@
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
     <string name="adapter_error_bs">Brush error</string>
+    <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
 </resources>

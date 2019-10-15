@@ -217,7 +217,6 @@
     <string name="clock_aty_dev_offline">デバイスはオフラインです</string>
     <string name="setting_aty_hit_">ユーザー名</string>
     <string name="consume_aty_text_2">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
-    <string name="consume_aty_text_2_a9">注意：使用するたびにサイドブラシ、ローラーブラシ、フィルターを清掃し、サイドブラシは3〜6ヶ月ごと、ローラーブラシは5〜12ヶ月、フィルターは3〜5ヶ月ごとに交換してください。</string>
     <string name="access_camera">カメラへのアクセスを許可してください</string>
     <string name="access_location">場所へのアクセスを許可してください</string>
     <string name="access_storage">内部ストレージへの書き込みを許可してください</string>
@@ -312,5 +311,6 @@
     <string name="russia_phone_server_time">（月曜日〜金曜日：09：00〜18：00）</string>
     <string name="spanish_server_time_sat">（土曜日10:00-14:00）</string>
     <string name="adapter_error_bs">のブラシエラー</string>
+    <string name="consume_aty_text_2_v85">注意：使用するたびにサイドブラシと高性能フィルターを清掃してください。 サイドブラシは3〜6か月ごとに、高性能フィルターは3〜5か月ごとに交換してください。</string>
 
 </resources>

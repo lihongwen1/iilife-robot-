@@ -70,6 +70,7 @@ public interface MapX9Contract {
     }
 
     interface Presenter {
+        void adjustTime();
         int getDevice_type();
 
         String getSubDomain();
