@@ -3,7 +3,6 @@ package com.ilife.iliferobot.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,9 +19,9 @@ import butterknife.BindView;
 public class ZacoProtocolActivity extends BackBaseActivity {
     private ImageView image_back;
     private WebView webView;
-    private FrameLayout frameLayout;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +35,9 @@ public class ZacoProtocolActivity extends BackBaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         tv_title.setText(R.string.personal_aty_protocol);
-        frameLayout = findViewById(R.id.web_frame);
         image_back = (ImageView) findViewById(R.id.image_back);
         image_back.setOnClickListener(v -> removeActivity());
-        webView = new WebView(this);
+        webView = findViewById(R.id.web_view);
         WebSettings settings = webView.getSettings();
         settings.setDomStorageEnabled(true);
         settings.setBlockNetworkImage(false);
@@ -51,7 +49,6 @@ public class ZacoProtocolActivity extends BackBaseActivity {
                 return true;
             }
         });
-        frameLayout.addView(webView);
         webView.loadUrl("https://www.zacorobot.eu/privacy/");
 
     }
@@ -59,8 +56,8 @@ public class ZacoProtocolActivity extends BackBaseActivity {
     //监听BACK按键，有可以返回的页面时返回页面
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK) {
-            if(webView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (webView.canGoBack()) {
                 webView.goBack();
                 return true;
             }
