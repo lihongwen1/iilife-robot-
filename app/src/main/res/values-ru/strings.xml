@@ -122,7 +122,7 @@
     <string name="map_aty_time">Площадь</string>
     <string name="map_aty_remaining_charge">батареи</string>
     <string name="map_aty_exception">Ошибка</string>
-    <string name="map_aty_sleep">Гибернация</string>
+    <string name="map_aty_sleep">Спать</string>
     <string name="map_aty_standby_mode">ждать</string>
     <string name="map_aty_random">Авто</string>
     <string name="map_aty_along">Край</string>
@@ -182,7 +182,7 @@
     <string name="setting_aty_standard">Стандартный</string>
     <string name="setting_aty_soft">Слабый</string>
     <string name="setting_aty_strong">Сильный</string>
-    <string name="setting_aty_nav_clean">S-образный</string>
+    <string name="setting_aty_nav_clean">S-форма</string>
     <string name="setting_aty_random_clean">Авто</string>
     <string name="setting_aty_confirm_reset">Сброс к заводским настройкам </string>
     <string name="setting_aty_reset_hint">Все данные будут удалены</string>

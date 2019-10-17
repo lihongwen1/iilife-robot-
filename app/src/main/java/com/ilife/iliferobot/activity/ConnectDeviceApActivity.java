@@ -62,7 +62,7 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
     protected void onResume() {
         super.onResume();
         String ssid = WifiUtils.getSsid(this);
-        if (ssid != null && !ssid.contains("unknown")) {
+        if (ssid != null && !ssid.contains("unknown")&&ssid.startsWith("Robot")) {
             et_ssid.setText(ssid);
             bt_connect.setClickable(true);
             bt_connect.setSelected(true);

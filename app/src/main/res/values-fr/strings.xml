@@ -240,7 +240,7 @@
     <string name="ota_aty_update_suc">Mise à niveau terminée</string>
     <string name="ota_aty_latest_ver">Votre OTA est à jour</string>
     <string name="ilife_slogan">Propreté facile, vie facile</string>
-    <string name="verification_code_tip">Code de confirmation</string>
+    <string name="verification_code_tip">Vérification code</string>
     <string name="get_ver_code_tip">Saisir vérification code</string>
     <string name="have_account_and_login">Vous avez déjà un compte ? </string>
     <string name="have_account_and_login1">Connexion</string>
@@ -259,7 +259,7 @@
     <string name="stop_work_reason5">Pause contrôlée par l\'appli</string>
     <string name="stop_work_reason6">Alarme d\'erreur désactivée</string>
     <string name="resend">Renvoyer</string>
-    <string name="user_nickname">S\'il vous plaît définir le nom d\'utilisateur</string>
+    <string name="user_nickname">D\éfinir le nom d\'utilisateur</string>
     <string name="setting_aty_ota_upadta_success">Mise à niveau terminée</string>
     <string name="ota_aty_back">Retour</string>
     <string name="ota_aty_confirm">OK</string>

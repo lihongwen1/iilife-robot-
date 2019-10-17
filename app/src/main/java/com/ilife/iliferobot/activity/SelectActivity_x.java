@@ -82,7 +82,7 @@ public class SelectActivity_x extends BackBaseActivity {
                 case Constants.X900:
                     robots.add(new CleanningRobot(R.drawable.n_x900, robotName, Constants.subdomain_x900, Constants.subdomainId_x900));
                     break;
-                case Constants.X800:
+                case Constants.X800://国内X800包含 黑色款和白色款
                     robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
                     break;
                 case Constants.X787:
