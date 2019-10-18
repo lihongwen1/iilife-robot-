@@ -262,7 +262,7 @@
     <string name="retry">Retry</string>
     <string name="ap_wifi_timeout">Connection timed out</string>
     <string name="ota_preupdate_title">Before updating, check: </string>
-    <string name="ota_preupdate_tip">1.Battery is sufficiently charged\n2.WiFi connection is working\n3.Robot is on standby</string>
+    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging</string>
     <string name="updating">Updating…Don\'t operate the robot.</string>
     <string name="updating_btn">Updating…</string>
     <string name="choose_your_action">Please select your operation</string>

@@ -34,6 +34,7 @@ public class SelectActivity_x extends BackBaseActivity {
     final String TAG = SelectActivity_x.class.getSimpleName();
     public static final String KEY_SUBDOMAIN = "key_subdomain";
     public static final String KEEY_SUBDOMAIN_ID = "key_subdomain_id";
+    public static final String KEY_BIND_WHITE = "key_bind_white";
     Context context;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -83,7 +84,8 @@ public class SelectActivity_x extends BackBaseActivity {
                     robots.add(new CleanningRobot(R.drawable.n_x900, robotName, Constants.subdomain_x900, Constants.subdomainId_x900));
                     break;
                 case Constants.X800://国内X800包含 黑色款和白色款
-                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName+" • 黑", Constants.subdomain_x800, Constants.subdomainId_x800));
+                    robots.add(new CleanningRobot(R.drawable.n_x800_white, robotName + " • 白", Constants.subdomain_x800, Constants.subdomainId_x800));
                     break;
                 case Constants.X787:
                     robots.add(new CleanningRobot(R.drawable.n_x787, robotName, Constants.subdomain_x787, Constants.subdomainId_x787));
@@ -127,6 +129,11 @@ public class SelectActivity_x extends BackBaseActivity {
         adapter.setOnItemClickListener((adapter, view, position) -> {
             SpUtils.saveString(context, KEY_SUBDOMAIN, robots.get(position).getSubdomain());
             SpUtils.saveLong(context, KEEY_SUBDOMAIN_ID, robots.get(position).getSubdomainId());
+            if (robots.get(position).getName().contains("白")) {
+                SpUtils.saveBoolean(context, KEY_BIND_WHITE, true);
+            }else {
+                SpUtils.saveBoolean(context, KEY_BIND_WHITE, false);
+            }
             Intent i = new Intent(context, FirstApActivity.class);
             startActivity(i);
         });

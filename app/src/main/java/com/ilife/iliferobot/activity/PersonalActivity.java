@@ -37,6 +37,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.MyLogger;
@@ -418,6 +419,9 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
             String physicalDeviceId = mDeviceList.get(i).getPhysicalDeviceId();
             long devId = mDeviceList.get(i).getDeviceId();
             if (!TextUtils.isEmpty(devName)) {
+                if (devName.contains(Constants.ROBOT_WHITE_TAG)) {
+                    devName = devName.replace(Constants.ROBOT_WHITE_TAG, "");
+                }
                 textView.setText(devName);
             } else {
                 textView.setText(physicalDeviceId);

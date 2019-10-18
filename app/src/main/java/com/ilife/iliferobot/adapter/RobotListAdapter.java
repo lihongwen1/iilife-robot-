@@ -5,11 +5,19 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
+import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.activity.BindSucActivity;
+import com.ilife.iliferobot.activity.MainActivity;
+import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.base.BaseViewHolder;
+import com.ilife.iliferobot.listener.ReNameListener;
+import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.ToastUtils;
 
 import java.util.List;
 
@@ -55,7 +63,11 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x787);
                     break;
                 case Constants.subdomain_x800:
-                    holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
+                    if (data.get(position).getName().contains(Constants.ROBOT_WHITE_TAG)||SpUtils.getLong(context, BindSucActivity.KEY_BIND_WHITE_DEV_ID) == data.get(position).getDeviceId()) {
+                        holder.setImageResource(context, R.id.image_product, R.drawable.n_x800_white);
+                    } else {
+                        holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
+                    }
                     break;
                 case Constants.subdomain_x910:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x910);
@@ -83,8 +95,29 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);
                     break;
             }
-            holder.setText(R.id.tv_name, TextUtils.isEmpty(data.get(position).getName()) ? data.get(position).physicalDeviceId :
-                    data.get(position).getName());
+
+            String name = data.get(position).getName();
+            if (TextUtils.isEmpty(name)) {
+                name = data.get(position).physicalDeviceId;
+                if (SpUtils.getLong(context, BindSucActivity.KEY_BIND_WHITE_DEV_ID) == data.get(position).getDeviceId()) {
+                    name += Constants.ROBOT_WHITE_TAG;
+                    DeviceUtils.renameDevice(data.get(position).getDeviceId(), name, subdomain, new ReNameListener() {
+                        @Override
+                        public void onSuccess() {
+                           SpUtils.saveLong(context,BindSucActivity.KEY_BIND_WHITE_DEV_ID,-1);
+                        }
+
+                        @Override
+                        public void onError(ACException e) {
+                        }
+                    });
+                }
+                data.get(position).setName(name);
+            }
+            if (name.contains(Constants.ROBOT_WHITE_TAG)) {
+                name = name.replace(Constants.ROBOT_WHITE_TAG, "");
+            }
+            holder.setText(R.id.tv_name, name);
             int states = data.get(position).getStatus();
             holder.setText(R.id.tv_status2, states == 0 ? R.string.device_adapter_device_offline : R.string.device_adapter_device_online);
             holder.setTextColor(R.id.tv_status2, states == 0 ? context.getResources().getColor(R.color.color_81) :

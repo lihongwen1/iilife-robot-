@@ -271,7 +271,7 @@
     <string name="retry">Riprovare</string>
     <string name="ap_wifi_timeout">Il tempo di collegamento è stato superato</string>
     <string name="ota_preupdate_title">Verificare prima dell\'update: </string>
-    <string name="ota_preupdate_tip">1.La batteria \è sufficientemente carica \n2. La connessione Wi-Fi funziona \n3. Il robot \è in standby</string>
+    <string name="ota_preupdate_tip">1.La batteria \è sufficientemente carica \n2. La connessione Wi-Fi funziona \n3. Il robot \è in charging</string>
     <string name="updating">Update in corso… Non utilizzare il robot</string>
     <string name="updating_btn">Update in corso…</string>
     <string name="choose_your_action">Selezionare la modalità di impiego</string>

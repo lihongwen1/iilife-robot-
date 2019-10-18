@@ -262,7 +262,7 @@
     <string name="retry">重试</string>
     <string name="ap_wifi_timeout">配网超时</string>
     <string name="ota_preupdate_title">升级前请确保</string>
-    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于待机模式</string>
+    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于充电模式</string>
     <string name="updating">升级中，请勿操作扫地机</string>
     <string name="updating_btn">升级中</string>
     <string name="choose_your_action">选择您的操作</string>

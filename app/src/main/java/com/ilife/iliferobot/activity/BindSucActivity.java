@@ -46,6 +46,7 @@ public class BindSucActivity extends BackBaseActivity {
     @BindView(R.id.iv_bind_device)
     ImageView iv_bind_device;
     private ReNameListener listener;
+    public static final String KEY_BIND_WHITE_DEV_ID = "key_bind_white_dev_id";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,13 @@ public class BindSucActivity extends BackBaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
+            if (SpUtils.getBoolean(this, SelectActivity_x.KEY_BIND_WHITE)) {
+                SpUtils.saveLong(this, KEY_BIND_WHITE_DEV_ID, deviceId);
+            }
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
-        String devName = BuildConfig.BRAND+" "+DeviceUtils.getRobotType(subdomain);//ILIFE X800
-        iv_bind_device.setImageResource(DeviceUtils.getRechargeImageSrc(DeviceUtils.getRobotType(subdomain)));
+        iv_bind_device.setImageResource(DeviceUtils.getRechargeImageSrc(DeviceUtils.getRobotType(subdomain), SpUtils.getBoolean(this, SelectActivity_x.KEY_BIND_WHITE)));
+        String devName = BuildConfig.BRAND + " " + DeviceUtils.getRobotType(subdomain);//ILIFE X800
         et_devName.setText(devName);
         et_devName.setSelection(et_devName.getText().toString().trim().length());
         UserUtils.setInputFilter(et_devName, Utils.getInputMaxLength());
@@ -115,7 +119,11 @@ public class BindSucActivity extends BackBaseActivity {
                 if (TextUtils.isEmpty(name)) {
                     ToastUtils.showToast(context, getString(R.string.setting_aty_hit));
                 } else {
-                    DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                    if (SpUtils.getBoolean(this, SelectActivity_x.KEY_BIND_WHITE)) {
+                        DeviceUtils.renameDevice(deviceId, name + Constants.ROBOT_WHITE_TAG, subdomain, listener);
+                    } else {
+                        DeviceUtils.renameDevice(deviceId, name, subdomain, listener);
+                    }
                 }
                 break;
         }

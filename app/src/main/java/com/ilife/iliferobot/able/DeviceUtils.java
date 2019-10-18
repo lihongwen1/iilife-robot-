@@ -242,7 +242,7 @@ public class DeviceUtils {
      * @param robotType
      * @return
      */
-    public static int getRechargeImageSrc(String robotType) {
+    public static int getRechargeImageSrc(String robotType, boolean isWhite) {
         int src;
         switch (robotType) {
             case Constants.X910:
@@ -254,7 +254,11 @@ public class DeviceUtils {
             case Constants.A9:
             case Constants.A9s:
             case Constants.X800:
-                src = R.drawable.rechage_device_x800;
+                if (isWhite) {
+                    src = R.drawable.rechage_device_x800w;
+                } else {
+                    src = R.drawable.rechage_device_x800;
+                }
                 break;
             case Constants.A7:
             case Constants.X787:
@@ -317,7 +321,7 @@ public class DeviceUtils {
                 strError = context.getString(R.string.adapter_error_ybs);
                 break;
             case 0x43:
-                strError=context.getString(R.string.adapter_error_bs);
+                strError = context.getString(R.string.adapter_error_bs);
                 break;
             case 0x51:
                 if (robotType.equals(Constants.A9)) {

@@ -271,7 +271,6 @@
     <string name="retry">Réessayer</string>
     <string name="ap_wifi_timeout">Temps de connexion dépassé</string>
     <string name="ota_preupdate_title">Avant la mise à jour, vérifiez :</string>
-    <string name="ota_preupdate_tip">1.La batterie est suffisamment chargée.\n2. La connexion Wi-Fi fonctionne.\n3. Le robot est en veille.</string>
     <string name="updating">Mise à jour… Ne pas utiliser le robot</string>
     <string name="updating_btn">Mise à jour…</string>
     <string name="choose_your_action">Veuillez sélectionner le mode de fonctionnement</string>
@@ -312,4 +311,5 @@
     <string name="spanish_server_time_sat">(Sam. 10h00–14h00)\t</string>
     <string name="adapter_error_bs">Erreur de brosse</string>
     <string name="consume_aty_text_2_v85">Rappel: Nettoyez la brosse latérale et le filtre haute performance après chaque utilisation. Remplacez les brosses latérales tous les 3 à 6 mois et le filtre haute performance pendant 3 à 5 mois.</string>
+    <string name="ota_preupdate_tip">1.La batterie est suffisamment charg\ée.\n2. La connexion Wi-Fi fonctionne.\n3. Le robot est en charge.</string>
 </resources>

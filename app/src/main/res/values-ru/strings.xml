@@ -271,7 +271,6 @@
     <string name="retry">Заново</string>
     <string name="ap_wifi_timeout">Время подключения истекло</string>
     <string name="ota_preupdate_title">Перед обновлением проверьте:</string>
-    <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме ожидания</string>
     <string name="updating">Обновление … Не управляйте роботом.</string>
     <string name="updating_btn">Обновление …</string>
     <string name="choose_your_action">Пожалуйста, выберите операцию</string>
@@ -312,5 +311,6 @@
     <string name="spanish_server_time_sat">(Суббота 10:00 – 14:00)</string>
     <string name="adapter_error_bs">Ошибка кисти</string>
     <string name="consume_aty_text_2_v85">Напоминание:чистите боковую щетку и высокопроизводительный фильтр после каждого использования. Заменяйте боковые щетки каждые 3–6 месяцев, а высокопроизводительный фильтр - 3–5 месяцев.</string>
+    <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме зарядки</string>
 
 </resources>

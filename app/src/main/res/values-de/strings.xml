@@ -181,7 +181,7 @@
     <string name="setting_aty_confirm_reset">Jetzt auf Fabrikeinstellungen zurücksetzen</string>
     <string name="setting_aty_reset_hint">Alle Daten werden gelöscht</string>
     <string name="setting_aty_devName">Robotername</string>
-    <string name="setting_aty_hit">Geben Sie Ihrem Roboter einen Namen</string>
+    <string name="setting_aty_hit">Roboterspitzname</string>
     <string name="setting_aty_only_admin">Betrieb: nur Manager</string>
     <string name="clock_aty_sun">Sonntag</string>
     <string name="clock_aty_mon">Montag</string>
@@ -261,7 +261,7 @@
     <string name="retry">Erneut versuchen</string>
     <string name="ap_wifi_timeout">Vebindungszeit überschritten</string>
     <string name="ota_preupdate_title">Überprüfen Sie vor dem Aktualisieren</string>
-    <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Standby-Modus.</string>
+    <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.</string>
     <string name="updating">Updating… Bitte den Roboter nicht benutzen</string>
     <string name="updating_btn">Updating…</string>
     <string name="choose_your_action">Bitte die Betriebsart auswählen</string>

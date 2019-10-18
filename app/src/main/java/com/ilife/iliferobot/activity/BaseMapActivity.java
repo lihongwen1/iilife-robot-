@@ -554,7 +554,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 if (exitVirtualWallPop == null) {
                     CustomPopupWindow.Builder builder = new CustomPopupWindow.Builder(this);
                     exitVirtualWallPop = builder.enableOutsideTouchableDissmiss(false).setView(R.layout.pop_virtual_wall).
-                            size(R.dimen.dp_315, 0).setBgDarkAlpha(0.6f).create();
+                            size(getResources().getDimensionPixelOffset(R.dimen.dp_315), 0).setBgDarkAlpha(0.6f).create();
                     exitVirtualWallPop.addViewOnclick(R.id.tv_cancel_virtual_x9, v1 -> {
                         mMapView.undoAllOperation();
                         /**

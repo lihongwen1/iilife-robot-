@@ -260,7 +260,6 @@
     <string name="retry">重試</string>
     <string name="ap_wifi_timeout">配網超時</string>
     <string name="ota_preupdate_title">升級前請確保</string>
-    <string name="ota_preupdate_tip">1.掃地機有足夠的電量\n2.網路連接正常\n3.掃地機處於待機模式</string>
     <string name="updating">升級中，請勿操作掃地機</string>
     <string name="updating_btn">升級中</string>
     <string name="choose_your_action">選擇您的操作</string>
@@ -311,4 +310,5 @@
     <string name="spanish_server_time_sat">(周六 10:00 – 14:00)</string>
     <string name="adapter_error_bs">邊刷異常</string>
     <string name="consume_aty_text_2_v85">溫馨提示：每次使用後，請及時清理邊刷、高效濾網。 3-6個月可更換邊刷、3-5個月可更換高效濾網。</string>
+    <string name="ota_preupdate_tip">1.掃地機有足夠的電量 \n2.網絡連接正常 \n3.掃地機處於充電模式</string>
 </resources>
