@@ -26,6 +26,7 @@ import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.contract.MapX9Contract;

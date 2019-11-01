@@ -11,10 +11,13 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.activity.MainActivity;
+import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.listener.ReNameListener;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.MyLogger;
+import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
 
 /**
@@ -103,8 +106,14 @@ public class DeviceUtils {
                                 robotType = Constants.A9;
                                 break;
                             case AC.REGIONAL_CENTRAL_EUROPE:
-                            case AC.REGIONAL_SOUTHEAST_ASIA:
                                 robotType = Constants.A9s;
+                                break;
+                            case AC.REGIONAL_SOUTHEAST_ASIA:
+                                if (SpUtils.getBoolean(MyApplication.getInstance(), MainActivity.KEY_DEV_WHITE) || SpUtils.getBoolean(MyApplication.getInstance(), SelectActivity_x.KEY_BIND_WHITE)) {
+                                    robotType = Constants.A9;
+                                } else {
+                                    robotType = Constants.A9s;
+                                }
                                 break;
                             case AC.REGIONAL_CHINA:
                                 robotType = Constants.X800;

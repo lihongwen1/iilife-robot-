@@ -1,26 +1,17 @@
 package com.ilife.iliferobot.activity;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import androidx.core.util.Consumer;
-
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.presenter.QuickLoginPresenter;
-import com.ilife.iliferobot.utils.LanguageUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.SuperEditText;
 import com.ilife.iliferobot.R;
@@ -28,8 +19,6 @@ import com.ilife.iliferobot.contract.QuickLoginContract;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.ToggleRadioButton;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;

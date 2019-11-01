@@ -29,6 +29,7 @@ import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
 import com.ilife.iliferobot.able.Constants;

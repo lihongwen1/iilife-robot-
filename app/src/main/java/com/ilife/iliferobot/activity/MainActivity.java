@@ -1,11 +1,9 @@
 package com.ilife.iliferobot.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.adapter.RobotListAdapter;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BaseActivity;
@@ -37,7 +36,6 @@ import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -221,6 +219,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         }
         AC.deviceDataMgr().unSubscribeAllProperty();
         AC.classDataMgr().unSubscribeAll();
+        SpUtils.saveBoolean(this,KEY_DEV_WHITE,false);
+        SpUtils.saveBoolean(this,SelectActivity_x.KEY_BIND_WHITE,false);
     }
 
     @Override

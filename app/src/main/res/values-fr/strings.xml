@@ -312,4 +312,6 @@
     <string name="adapter_error_bs">Erreur de brosse</string>
     <string name="consume_aty_text_2_v85">Rappel: Nettoyez la brosse latérale et le filtre haute performance après chaque utilisation. Remplacez les brosses latérales tous les 3 à 6 mois et le filtre haute performance pendant 3 à 5 mois.</string>
     <string name="ota_preupdate_tip">1.La batterie est suffisamment charg\ée.\n2. La connexion Wi-Fi fonctionne.\n3. Le robot est en charge.</string>
+    <string name="ap_guide_loading">Après avoir allumé le bouton d\'alimentation, Le robot commence à Chargement du système.Et s\'il vous plaît attendez jusqu\'à \"prêt à nettoyer\" .Alors passez à l\'étape suivante.</string>
+    <string name="guide_aty_loading_next">Suivant</string>
 </resources>

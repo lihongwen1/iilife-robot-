@@ -5,6 +5,7 @@
     <string-array name="device_name_ilife_as">
         <item>"A7"</item>
         <item>"A9s"</item>
+        <item>"A9"</item>
     </string-array>
     <!--欧洲-->
     <string-array name="device_name_ilife_eu">

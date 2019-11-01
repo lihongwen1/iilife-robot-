@@ -311,4 +311,6 @@
     <string name="spanish_server_time_sat">(Sa. 10:00 - 14:00 Uhr)</string>
     <string name="adapter_error_bs">Bürstenfehler</string>
     <string name="consume_aty_text_2_v85">Erinnerung: Reinigen Sie die Seitenbürste und den Hochleistungsfilter nach jedem Gebrauch. Ersetzen Sie die Seitenbürsten alle 3 bis 6 Monate und den Hochleistungsfilter alle 3 bis 5 Monate.</string>
+    <string name="ap_guide_loading">Nach dem Einschalten der Power-Taste,Der Roboter beginnt zu laden. Warten Sie, bis \"Reinigungsbereit\" angezeigt wird. Fahren Sie dann mit dem nächsten Schritt fort.</string>
+    <string name="guide_aty_loading_next">Weiter</string>
 </resources>

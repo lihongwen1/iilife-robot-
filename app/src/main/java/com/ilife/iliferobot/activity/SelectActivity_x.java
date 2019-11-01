@@ -84,7 +84,7 @@ public class SelectActivity_x extends BackBaseActivity {
                     robots.add(new CleanningRobot(R.drawable.n_x900, robotName, Constants.subdomain_x900, Constants.subdomainId_x900));
                     break;
                 case Constants.X800://国内X800包含 黑色款和白色款
-                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName+" • 黑", Constants.subdomain_x800, Constants.subdomainId_x800));
+                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName + " • 黑", Constants.subdomain_x800, Constants.subdomainId_x800));
                     robots.add(new CleanningRobot(R.drawable.n_x800_white, robotName + " • 白", Constants.subdomain_x800, Constants.subdomainId_x800));
                     break;
                 case Constants.X787:
@@ -117,7 +117,11 @@ public class SelectActivity_x extends BackBaseActivity {
                     robots.add(new CleanningRobot(R.drawable.n_v5x, robotName, Constants.subdomain_v5x, Constants.subdomaiId_v5x));
                     break;
                 case Constants.A9:
-                    robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//日规A9为白色图
+                        robots.add(new CleanningRobot(R.drawable.n_x800_white, Constants.A9, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    } else {
+                        robots.add(new CleanningRobot(R.drawable.n_x800, robotName, Constants.subdomain_x800, Constants.subdomainId_x800));
+                    }
                     break;
                 case Constants.A7:
                     robots.add(new CleanningRobot(R.drawable.n_x787, robotName, Constants.subdomain_a7, Constants.subdomainId_A7));
@@ -129,11 +133,12 @@ public class SelectActivity_x extends BackBaseActivity {
         adapter.setOnItemClickListener((adapter, view, position) -> {
             SpUtils.saveString(context, KEY_SUBDOMAIN, robots.get(position).getSubdomain());
             SpUtils.saveLong(context, KEEY_SUBDOMAIN_ID, robots.get(position).getSubdomainId());
-            if (robots.get(position).getName().contains("白")) {
+            if (robots.get(position).getName().contains("白") || (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA && robots.get(position).getName().equals(Constants.A9))) {
                 SpUtils.saveBoolean(context, KEY_BIND_WHITE, true);
-            }else {
+            } else {
                 SpUtils.saveBoolean(context, KEY_BIND_WHITE, false);
             }
+
             Intent i = new Intent(context, FirstApActivity.class);
             startActivity(i);
         });

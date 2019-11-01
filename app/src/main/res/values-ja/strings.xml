@@ -312,5 +312,7 @@
     <string name="adapter_error_bs">のブラシエラー</string>
     <string name="consume_aty_text_2_v85">注意：使用するたびにサイドブラシと高性能フィルターを清掃してください。 サイドブラシは3〜6か月ごとに、高性能フィルターは3〜5か月ごとに交換してください。</string>
     <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです</string>
+    <string name="ap_guide_loading">電源ボタンをオンにした後、ロボットがロードを開始し、「クリーニングを開始する場合はボタンを押してください 」になるまで待ってから、次のステップを開始してください。</string>
+    <string name="guide_aty_loading_next">次に</string>
 
 </resources>
