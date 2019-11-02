@@ -12,38 +12,31 @@ import com.accloud.service.ACDeviceBind;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.accloud.utils.LogUtil;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.utils.UserUtils;
-import com.ilife.iliferobot.R;
-import com.ilife.iliferobot.activity.SelectActivity_x;
 import com.ilife.iliferobot.contract.ApWifiContract;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.utils.WifiUtils;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.content.Context.WIFI_SERVICE;

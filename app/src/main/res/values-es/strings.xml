@@ -314,5 +314,9 @@
     <string name="ota_preupdate_tip">1.La batería est\á suficientemente cargada\n2.La conexi\ón wifi funciona\n3.Robot est\á  en modo de carga</string>
     <string name="ap_guide_loading">Después de encender el botón de encendido,el robot iniciará el sistema.Y por favor espere hasta escuchar \"listo para limpiar\".Luego vaya al siguiente paso.</string>
     <string name="guide_aty_loading_next">Siguiente</string>
+    <string name="shedule_dialog_content">El robot no puede lograr el mejor efecto de trabajo en el entorno oscuro. No se recomienda iniciar el robot para limpiar de 20:00 a 5:00.</string>
+    <string name="shedule_dialog_cancel">"Cancelar  "</string>
+    <string name="shedule_dialog_finish">"Confirmar  "</string>
+    <string name="shedule_dialog_title">"Consejos  "</string>
 
 </resources>

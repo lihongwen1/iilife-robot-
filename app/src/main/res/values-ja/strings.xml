@@ -314,5 +314,9 @@
     <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです</string>
     <string name="ap_guide_loading">電源ボタンをオンにした後、ロボットがロードを開始し、「クリーニングを開始する場合はボタンを押してください 」になるまで待ってから、次のステップを開始してください。</string>
     <string name="guide_aty_loading_next">次に</string>
+    <string name="shedule_dialog_content">ロボットは、暗い環境では最高の作業効果を達成できません。20：00から5時までにロボットを開始することは推奨されません。</string>
+    <string name="shedule_dialog_cancel">キャンセル</string>
+    <string name="shedule_dialog_finish">確認する</string>
+    <string name="shedule_dialog_title">プロンプト</string>
 
 </resources>

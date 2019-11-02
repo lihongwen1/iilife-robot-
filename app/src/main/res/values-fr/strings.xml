@@ -314,4 +314,8 @@
     <string name="ota_preupdate_tip">1.La batterie est suffisamment charg\ée.\n2. La connexion Wi-Fi fonctionne.\n3. Le robot est en charge.</string>
     <string name="ap_guide_loading">Après avoir allumé le bouton d\'alimentation, Le robot commence à Chargement du système.Et s\'il vous plaît attendez jusqu\'à \"prêt à nettoyer\" .Alors passez à l\'étape suivante.</string>
     <string name="guide_aty_loading_next">Suivant</string>
+    <string name="shedule_dialog_title">"Remarque "</string>
+    <string name="shedule_dialog_finish">"Confirmer  "</string>
+    <string name="shedule_dialog_cancel">"Annuler  "</string>
+    <string name="shedule_dialog_content">Le robot  ne peut pas obtenir le meilleur effet de travail dans un environnement sombre. Il est déconseillé de démarrer le robot pour le nettoyer entre 20h00 et 17h00.</string>
 </resources>

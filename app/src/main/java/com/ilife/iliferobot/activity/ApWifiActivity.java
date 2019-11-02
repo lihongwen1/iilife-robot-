@@ -8,7 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.accloud.cloudservice.AC;
 import com.accloud.service.ACUserDevice;
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.contract.ApWifiContract;
 import com.ilife.iliferobot.presenter.ApWifiPresenter;
@@ -103,7 +105,9 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
 
     @Override
     public void bindFail(String message) {
-        CrashReport.postCatchedException(new Exception(message));
+        if (BuildConfig.Area != AC.REGIONAL_CENTRAL_EUROPE) {
+            CrashReport.postCatchedException(new Exception(message));
+        }
         MyLogger.d(TAG, "配网失败：    " + message);
         startActivity(new Intent(this, BindFailActivity.class));
         removeActivity();

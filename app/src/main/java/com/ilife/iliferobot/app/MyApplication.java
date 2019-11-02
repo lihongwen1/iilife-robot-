@@ -61,7 +61,9 @@ public class MyApplication extends MultiDexApplication {
         /**
          * tencent bugly crash日志上传
          */
-        CrashReport.initCrashReport(getApplicationContext(),BuildConfig.BUGLY_ID, false);
+        if (BuildConfig.Area != AC.REGIONAL_CENTRAL_EUROPE) {
+            CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_ID, false);
+        }
         /**
          * 日志打印
          */
@@ -155,7 +157,7 @@ public class MyApplication extends MultiDexApplication {
      */
     public void addActivity_(Activity activity) {
         if (!activities.contains(activity)) {
-            MyLogger.d("添加页面","----"+activity.getClass().getName());
+            MyLogger.d("添加页面", "----" + activity.getClass().getName());
             activities.add(activity);//把当前Activity添加到集合中
         }
     }

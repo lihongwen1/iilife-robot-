@@ -317,4 +317,8 @@
     <string name="consume_aty_text_2_v85">Promemoria:pulire la spazzola laterale e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituisci le spazzole laterali ogni 3-6 mesi e il filtro ad alte prestazioni 3–5 mesi.</string>
     <string name="ap_guide_loading">Dopo l\'accensione sul pulsante di accensione, il robot si avvia loading. E attendere fino a \"pronto per la pulizia\" .Poi andare al passo successivo.</string>
     <string name="guide_aty_loading_next">Avanti</string>
+    <string name="shedule_dialog_content">Il robot non può realizzare il migliore effetto di lavoro nell\'ambiente scuro .Non si raccomanda di iniziare il robot per pulire in 20:00-05:00.</string>
+    <string name="shedule_dialog_cancel">"Annulla  "</string>
+    <string name="shedule_dialog_finish">"Confermare  "</string>
+    <string name="shedule_dialog_title">"Consigli  "</string>
 </resources>

@@ -313,4 +313,8 @@
     <string name="ota_preupdate_tip">1.掃地機有足夠的電量 \n2.網絡連接正常 \n3.掃地機處於充電模式</string>
     <string name="ap_guide_loading">"機器正在啟動中，請耐心等待約20秒，直至聽到語音\"請按鍵開始清掃\"，再進行下壹步。 "</string>
     <string name="guide_aty_loading_next">我知道了</string>
+    <string name="shedule_dialog_cancel">取消預約</string>
+    <string name="shedule_dialog_content">機器無法在黑暗環境下達到最佳的工作效果，不建議在20:00-5:00使用ILIFE掃地機清掃。</string>
+    <string name="shedule_dialog_title">預約提醒</string>
+    <string name="shedule_dialog_finish">完成預約</string>
 </resources>

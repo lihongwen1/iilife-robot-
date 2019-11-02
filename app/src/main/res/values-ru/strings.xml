@@ -314,5 +314,9 @@
     <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме зарядки</string>
     <string name="ap_guide_loading">После включения выключатель питания，Робот загрузку системы.Пожалуйста, подождите, пока не услышите \"Готов убирать\"，Затем перейдите к следующему шагу.</string>
     <string name="guide_aty_loading_next">Далее</string>
+    <string name="shedule_dialog_content">Робот не может достичь лучшего рабочего эффекта в темноте .Это не рекомендуется начинать робота для очистки в 20:00 до 5:00.</string>
+    <string name="shedule_dialog_cancel">"Отмена "</string>
+    <string name="shedule_dialog_finish">Подтвердить</string>
+    <string name="shedule_dialog_title">Hапоминание</string>
 
 </resources>

@@ -317,4 +317,8 @@
     <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
     <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
     <string name="guide_aty_loading_next">Next</string>
+    <string name="shedule_dialog_cancel">"Cancel  "</string>
+    <string name="shedule_dialog_content">The ILIFE robot can\'t achieve the best working effect in the dark environment .It is not recommended to start the ILIFE robot to clean in 20:00 to 5:00.</string>
+    <string name="shedule_dialog_finish">"Confirm  "</string>
+    <string name="shedule_dialog_title">"Note  "</string>
 </resources>

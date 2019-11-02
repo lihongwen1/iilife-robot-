@@ -185,6 +185,10 @@ public class UniversalDialog extends DialogFragment {
     public UniversalDialog setHintTip(String tip) {
         this.hintTip = tip;
         return this;
+    } public UniversalDialog setHintTip(String tip,int color) {
+        this.hintTip = tip;
+        this.hintColor = color;
+        return this;
     }
 
     public UniversalDialog setHintTip(String tip, int gravity, int color) {
