@@ -317,4 +317,5 @@
     <string name="shedule_dialog_title">預約提醒</string>
     <string name="shedule_dialog_cancel">取消預約</string>
     <string name="shedule_dialog_finish">完成預約</string>
+    <string name="settiing_change_suction_tip">在該模式下不能改變吸力</string>
 </resources>

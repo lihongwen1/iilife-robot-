@@ -59,8 +59,9 @@ import butterknife.OnClick;
 public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
-    public static final String KEY_MODE = "KEY_MODE";
-    int mopForce, mode, index;
+    public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
+    public static final String KEY_CUR_WORK_MODE = "KEY_MODE";//设备当前状态
+    int mopForce, mode, index, curWorkMode;
     boolean isMaxMode, voiceOpen;
     Context context;
     Intent intent;
@@ -245,6 +246,7 @@ public class SettingActivity extends BackBaseActivity {
         ownerId = SpUtils.getLong(context, MainActivity.KEY_OWNER);
         userId = AC.accountMgr().getUserId();
         mode = SpUtils.getInt(context, physicalId + KEY_MODE);
+        curWorkMode = SpUtils.getInt(context, physicalId + KEY_CUR_WORK_MODE);
         mopForce = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE);
         isMaxMode = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX);
         voiceOpen = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
@@ -478,8 +480,12 @@ public class SettingActivity extends BackBaseActivity {
             acDeviceMsg.setCode(MsgCodeUtils.CleanForce);
             switch (v.getId()) {
                 case R.id.rl_suction:
-                    max = (byte) (isMaxMode ? 0x00 : 0x01);
-                    acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                    if (canOperateSuction()) {
+                        max = (byte) (isMaxMode ? 0x00 : 0x01);
+                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                    } else {
+                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
+                    }
                     break;
                 case R.id.rl_soft:
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
@@ -496,6 +502,10 @@ public class SettingActivity extends BackBaseActivity {
             }
             sendToDeviceWithOption(acDeviceMsg, physicalId);
         }
+    }
+
+    private boolean canOperateSuction() {
+        return curWorkMode != MsgCodeUtils.STATUE_POINT || (!subdomain.equals(Constants.subdomain_x787) && !subdomain.equals(Constants.subdomain_x785) && !subdomain.equals(Constants.subdomain_a7) && !subdomain.equals(Constants.subdomain_V3x));
     }
 
     private void showRenameDialog() {

@@ -318,4 +318,5 @@
     <string name="shedule_dialog_finish">"Confirmer  "</string>
     <string name="shedule_dialog_cancel">"Annuler  "</string>
     <string name="shedule_dialog_content">Le robot  ne peut pas obtenir le meilleur effet de travail dans un environnement sombre. Il est déconseillé de démarrer le robot pour le nettoyer entre 20h00 et 17h00.</string>
+    <string name="settiing_change_suction_tip">Impossible de modifier le niveau d\'aspiration dans ce mode</string>
 </resources>

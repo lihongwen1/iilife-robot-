@@ -317,4 +317,5 @@
     <string name="shedule_dialog_content">机器无法在黑暗环境下达到最佳的工作效果,不建议在20:00-5:00使用ILIFE扫地机清扫。</string>
     <string name="shedule_dialog_finish">完成预约</string>
     <string name="shedule_dialog_title">预约提醒</string>
+    <string name="settiing_change_suction_tip">在该模式下不能改变吸力</string>
 </resources>

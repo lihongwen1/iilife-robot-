@@ -322,4 +322,5 @@
     <string name="shedule_dialog_finish">"Confirm  "</string>
     <string name="shedule_dialog_cancel">"Cancel  "</string>
     <string name="shedule_dialog_content">The ILIFE robot can\'t achieve the best working effect in the dark environment .It is not recommended to start the ILIFE robot to clean in 20:00 to 5:00.</string>
+    <string name="settiing_change_suction_tip">Unable to change suction level in current mode</string>
 </resources>

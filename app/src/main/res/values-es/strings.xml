@@ -318,5 +318,6 @@
     <string name="shedule_dialog_cancel">"Cancelar  "</string>
     <string name="shedule_dialog_finish">"Confirmar  "</string>
     <string name="shedule_dialog_title">"Consejos  "</string>
+    <string name="settiing_change_suction_tip">No es posible cambiar el nivel de aspiración en el modo actual</string>
 
 </resources>

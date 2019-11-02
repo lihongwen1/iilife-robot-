@@ -789,6 +789,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RANDOM) {//保存清掃模式
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, curStatus);
         }
+
+        SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_CUR_WORK_MODE, curStatus);
         MyLogger.d(TAG, "setStatus----------curStatus" + curStatus);
         if (!isViewAttached()) {
             return;

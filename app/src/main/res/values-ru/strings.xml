@@ -318,5 +318,6 @@
     <string name="shedule_dialog_cancel">"Отмена "</string>
     <string name="shedule_dialog_finish">Подтвердить</string>
     <string name="shedule_dialog_title">Hапоминание</string>
+    <string name="settiing_change_suction_tip">Невозможно изменить мощность всасывания в текущем режиме</string>
 
 </resources>

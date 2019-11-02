@@ -321,4 +321,5 @@
     <string name="shedule_dialog_cancel">"Annulla  "</string>
     <string name="shedule_dialog_finish">"Confermare  "</string>
     <string name="shedule_dialog_title">"Consigli  "</string>
+    <string name="settiing_change_suction_tip">In questa modalità non è possibile modificare il livello di aspirazione</string>
 </resources>

@@ -317,4 +317,5 @@
     <string name="shedule_dialog_cancel">"Stornieren  "</string>
     <string name="shedule_dialog_finish">"Bestätigen  "</string>
     <string name="shedule_dialog_title">"Tipps "</string>
+    <string name="settiing_change_suction_tip">Nicht möglich, in diesem Modus die Saugstufe zu verändern</string>
 </resources>

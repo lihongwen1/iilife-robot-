@@ -318,5 +318,6 @@
     <string name="shedule_dialog_cancel">キャンセル</string>
     <string name="shedule_dialog_finish">確認する</string>
     <string name="shedule_dialog_title">プロンプト</string>
+    <string name="settiing_change_suction_tip">現在のモードでは吸引レベルを変更できません</string>
 
 </resources>
