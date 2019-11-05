@@ -260,7 +260,7 @@
     <string name="tip_troubles">1.Ist das WLAN-Passwort korrekt?\n\n2.Ist der Roboter im AP-Modus?\n\n3.Ist das Mobiltelefon mit einem nicht-5G-WLAN verbunden?\n\n4.Ist die WLAN-Router-Black / Whitelist-Funktion deaktiviert (MAC-Filterung)?</string>
     <string name="retry">Erneut versuchen</string>
     <string name="ap_wifi_timeout">Vebindungszeit überschritten</string>
-    <string name="ota_preupdate_title">Überprüfen Sie vor dem Aktualisieren</string>
+    <string name="ota_preupdate_title">"Prüfen Sie vor dem Update: "</string>
     <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.</string>
     <string name="updating">Updating… Bitte den Roboter nicht benutzen</string>
     <string name="updating_btn">Updating…</string>

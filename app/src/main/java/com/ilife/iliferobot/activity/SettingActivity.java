@@ -320,9 +320,14 @@ public class SettingActivity extends BackBaseActivity {
                 rl_water.setVisibility(View.GONE);
                 break;
             case Constants.A9:
-                product = R.drawable.n_x800;
+                if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//日规A9有水量调节功能
+                    rl_water.setVisibility(View.VISIBLE);
+                    product = R.drawable.n_x800_white;
+                } else {
+                    rl_water.setVisibility(View.GONE);
+                    product = R.drawable.n_x800;
+                }
                 rl_mode.setVisibility(View.GONE);
-                rl_water.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -480,12 +485,14 @@ public class SettingActivity extends BackBaseActivity {
             acDeviceMsg.setCode(MsgCodeUtils.CleanForce);
             switch (v.getId()) {
                 case R.id.rl_suction:
-                    if (canOperateSuction()) {
-                        max = (byte) (isMaxMode ? 0x00 : 0x01);
-                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
-                    } else {
-                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
-                    }
+//                    if (canOperateSuction()) {
+//                        max = (byte) (isMaxMode ? 0x00 : 0x01);
+//                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+//                    } else {
+//                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
+//                    }
+                    max = (byte) (isMaxMode ? 0x00 : 0x01);
+                    acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
                     break;
                 case R.id.rl_soft:
                     max = (byte) (isMaxMode ? 0x01 : 0x00);

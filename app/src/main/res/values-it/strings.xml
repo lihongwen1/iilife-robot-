@@ -270,7 +270,7 @@
     <string name="tip_troubles">1. La password WiFi è corretta? \n\n. Il robot è in modalità AP? \n\n3. Il telefono cellulare è collegato a un WiFi non 5G? \n\n4. La funzione black / whitelist del router wireless è disabilitata (filtro MAC) ?</string>
     <string name="retry">Riprovare</string>
     <string name="ap_wifi_timeout">Il tempo di collegamento è stato superato</string>
-    <string name="ota_preupdate_title">Verificare prima dell\'update: </string>
+    <string name="ota_preupdate_title">"Verificare prima dell'update: "</string>
     <string name="ota_preupdate_tip">1.La batteria \è sufficientemente carica \n2. La connessione Wi-Fi funziona \n3. Il robot \è in charging</string>
     <string name="updating">Update in corso… Non utilizzare il robot</string>
     <string name="updating_btn">Update in corso…</string>

@@ -259,7 +259,7 @@
     <string name="tip_troubles">1.確保輸入的WiFi密碼正確無誤；\n\n2.確保您的設備已經進入到配網模式；\n\n3.確保手機不是連接5G信號的 WiFi；\n\n4.確保無線路由器已關閉黑白名單(mac地址過濾功能)。</string>
     <string name="retry">重試</string>
     <string name="ap_wifi_timeout">配網超時</string>
-    <string name="ota_preupdate_title">升級前請確保</string>
+    <string name="ota_preupdate_title">升級前請確保:</string>
     <string name="updating">升級中，請勿操作掃地機</string>
     <string name="updating_btn">升級中</string>
     <string name="choose_your_action">選擇您的操作</string>

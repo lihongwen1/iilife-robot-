@@ -262,7 +262,7 @@
     <string name="tip_troubles">1.确保输入的WiFi密码正确无误;\n\n2.确保您的设备已经进入到配网模式;\n\n3.确保手机不是连接5G信号的 WiFi;\n\n4.确保无线路由器已关闭黑白名单(mac地址过滤功能)。</string>
     <string name="retry">重试</string>
     <string name="ap_wifi_timeout">配网超时</string>
-    <string name="ota_preupdate_title">升级前请确保</string>
+    <string name="ota_preupdate_title">升级前请确保:</string>
     <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于充电模式</string>
     <string name="updating">升级中，请勿操作扫地机</string>
     <string name="updating_btn">升级中</string>

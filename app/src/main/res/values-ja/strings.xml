@@ -246,7 +246,7 @@
     <string name="quick_login">クイック登録</string>
     <string name="set_password">パスワードを設定します</string>
     <string name="no_device_tip_hi">お久しぶりです</string>
-    <string name="no_device_tip_cleaning">あなたの掃除の旅を始めましょう</string>
+    <string name="no_device_tip_cleaning">あなたの掃除の旅を始めましょう~</string>
     <string name="map_aty_temp_keypoint">スポット</string>
     <string name="robot_connected">接続済み</string>
     <string name="back_to_recharge">充電スタンドに戻る</string>
@@ -269,7 +269,7 @@
     <string name="tip_troubles">1.入力したWiFiパスワードが正しいかどうかをご確認ください。\n\n2.デバイスが配信モードに入っているかどうかをご確認ください。\n\n3.電話が5G以外の信号のWiFiに接続されていることをご確認ください。\n\n4.無線ルーターが白黒リスト機能（MACアドレスフィルタリング機能）をオフにしていることをご確認ください。</string>
     <string name="retry">リトライ</string>
     <string name="ap_wifi_timeout">接続がタイムアウトしました</string>
-    <string name="ota_preupdate_title">アップグレードする前に確認してください。</string>
+    <string name="ota_preupdate_title">アップグレードする前に確認してください:</string>
     <string name="updating">アップグレード中に掃除機を操作しないでください</string>
     <string name="updating_btn">更新中</string>
     <string name="choose_your_action">操作を選択してください</string>

@@ -78,6 +78,8 @@ public class BindSucActivity extends BackBaseActivity {
             deviceId = bundle.getLong(ApWifiActivity.EXTAR_DEVID);
             if (SpUtils.getBoolean(this, SelectActivity_x.KEY_BIND_WHITE)) {
                 SpUtils.saveLong(this, KEY_BIND_WHITE_DEV_ID, deviceId);
+            } else {
+                SpUtils.saveLong(this, KEY_BIND_WHITE_DEV_ID, -1);
             }
         }
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
