@@ -11,6 +11,7 @@ import com.ilife.iliferobot.able.ACSkills;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
+import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 
 /**
@@ -29,7 +30,7 @@ public class MapActivity_X8_ extends BaseMapActivity {
         if (mPresenter.getRobotType().equals(Constants.A8s)) {
             ll_map_container.setBackground(getResources().getDrawable(R.drawable.shape_gradient_map_bg_mokka));
         }
-        iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType()));
+        iv_recharge_model.setImageResource(DeviceUtils.getRechargeImageSrc(mPresenter.getRobotType(), SpUtils.getBoolean(this,MainActivity.KEY_DEV_WHITE)));
         if (mPresenter.getRobotType().equals(Constants.V5x)) {//V5X的充电底座单独不一样
             iv_recharge_stand.setImageResource(R.drawable.recharge_stand_v5x);
         }

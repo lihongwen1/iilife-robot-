@@ -271,7 +271,6 @@
     <string name="retry">Reintentar</string>
     <string name="ap_wifi_timeout">Tiempo de espera para la conexión agotado</string>
     <string name="ota_preupdate_title">Antes de la actualización, compruebe:</string>
-    <string name="ota_preupdate_tip">1.La batería está suficientemente cargada\n2.La conexión WiFi está funcionando\n3.El robot está en modo standby</string>
     <string name="updating">Actualizando… No utilizar el robot</string>
     <string name="updating_btn">Actualizando…</string>
     <string name="choose_your_action">Seleccione su modo operativo</string>
@@ -312,5 +311,8 @@
     <string name="spanish_server_time_sat">(Sábado 10:00 – 14:00)</string>
     <string name="adapter_error_bs">Error de pincel</string>
     <string name="consume_aty_text_2_v85">Recordatorio:Limpie el cepillo lateral y el filtro de alto rendimiento después de cada uso. Reemplace los cepillos laterales cada 3–6 meses, y el filtro de alto rendimiento de 3 a 5 meses.</string>
+    <string name="ota_preupdate_tip">1.La batería est\á suficientemente cargada\n2.La conexi\ón wifi funciona\n3.Robot est\á  en modo de carga</string>
+    <string name="ap_guide_loading">Después de encender el botón de encendido,el robot iniciará el sistema.Y por favor espere hasta escuchar \"listo para limpiar\".Luego vaya al siguiente paso.</string>
+    <string name="guide_aty_loading_next">Siguiente</string>
 
 </resources>

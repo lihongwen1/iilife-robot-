@@ -50,7 +50,7 @@
     <string name="add_aty_no_wifi">WiFi not connected</string>
     <string name="ap_aty_robot_wifi">Robot Hotspot:</string>
     <string name="third_ap_tip2">Note:</string>
-    <string name="third_ap_aty_tip1">Select \"Robot-XXXX\" connection. Enter default password: 123456789. Return to current page and press \"Start connecting\".</string>
+    <string name="third_ap_aty_tip1">Please click right top \"Settings\", go back to cellphone WiFi setting.Select \"Robot-XXXX\" connection. Enter default password: 123456789. Return to current page and press \"Start connecting\".</string>
     <string name="third_ap_aty_port_">Connect to WiFi starting with \"Robot-\"</string>
     <string name="bind_suc_aty_name">Name your robot</string>
     <string name="bind_suc_sty_robot_done">Completed</string>
@@ -316,4 +316,6 @@
     <string name="country_or_area">Country and region</string>
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sat 10:00 – 14:00)</string>
+    <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
+    <string name="guide_aty_loading_next">Next</string>
 </resources>

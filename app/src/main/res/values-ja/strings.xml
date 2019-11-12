@@ -31,7 +31,7 @@
     <string name="guide_ap_prepare">ネットワークを見つけるための準備</string>
     <string name="guide_aty_next">次に</string>
     <string name="ap_aty_input_pass">WiFiパスワード</string>
-    <string name="ap_aty_input_wifi_ssid">WiFiネットワークを選択してください</string>
+    <string name="ap_aty_input_wifi_ssid">WiFiを選択してください</string>
     <string name="add_aty_start_connect">接続中</string>
     <string name="add_aty_wrong_wifi_pass">パスワードに不正な文字が含まれています</string>
     <string name="ap_guide_aty_tip1_x900">本機側面の電源スイッチを入れてください。（注：充電スタンドに本​​機を置かないでください）</string>
@@ -170,7 +170,7 @@
     <string name="adapter_error_xj">ビリティエラー</string>
     <string name="adapter_error_qt">その他のエラー</string>
     <string name="setting_aty_type">モデル番号:</string>
-    <string name="clock_aty_appoint">ロボット名</string>
+    <string name="clock_aty_appoint">スケジュール</string>
     <string name="setting_aty_clean_record">クリーニング履歴</string>
     <string name="setting_aty_consume_detail">部品の消費</string>
     <string name="setting_aty_water_control">水位のコントロール</string>
@@ -270,7 +270,6 @@
     <string name="retry">リトライ</string>
     <string name="ap_wifi_timeout">接続がタイムアウトしました</string>
     <string name="ota_preupdate_title">アップグレードする前に確認してください。</string>
-    <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.掃除機はスタンバイモードです</string>
     <string name="updating">アップグレード中に掃除機を操作しないでください</string>
     <string name="updating_btn">更新中</string>
     <string name="choose_your_action">操作を選択してください</string>
@@ -312,5 +311,8 @@
     <string name="spanish_server_time_sat">（土曜日10:00-14:00）</string>
     <string name="adapter_error_bs">のブラシエラー</string>
     <string name="consume_aty_text_2_v85">注意：使用するたびにサイドブラシと高性能フィルターを清掃してください。 サイドブラシは3〜6か月ごとに、高性能フィルターは3〜5か月ごとに交換してください。</string>
+    <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです</string>
+    <string name="ap_guide_loading">電源ボタンをオンにした後、ロボットがロードを開始し、「クリーニングを開始する場合はボタンを押してください 」になるまで待ってから、次のステップを開始してください。</string>
+    <string name="guide_aty_loading_next">次に</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.activity.fragment.LoadingDialogFragment;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.GifView;
@@ -51,6 +52,7 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     int start, strId, iconId;
     private int curStep;
     private int tip3_id;
+    private LoadingDialogFragment loadingDialogFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,13 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                     tv_guide_tip4.setVisibility(View.VISIBLE);
                     rb_next_tip.setChecked(false);
                     curStep = 2;
+                    if (subdomain.equals(Constants.subdomain_a9s) || subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_x900) || subdomain.equals(Constants.subdomain_x910)) {
+                        if (loadingDialogFragment == null) {
+                            loadingDialogFragment = new LoadingDialogFragment();
+                        }
+                        loadingDialogFragment.showNow(getSupportFragmentManager(), "loading");
+
+                    }
                 } else {
                     if (Utils.isIlife() && Utils.isChinaEnvironment() && Constants.IS_FIRST_AP) {
                         Intent i = new Intent(context, ApWifiActivity.class);
@@ -193,6 +202,9 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     @Override
     public void clickBackBtn() {
         if (curStep == 2) {
+            if (loadingDialogFragment != null) {
+                loadingDialogFragment.dismiss();
+            }
             curStep = 1;
             ll_ap_step1.setVisibility(View.VISIBLE);
             ll_ap_step2.setVisibility(View.GONE);

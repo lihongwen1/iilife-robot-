@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;

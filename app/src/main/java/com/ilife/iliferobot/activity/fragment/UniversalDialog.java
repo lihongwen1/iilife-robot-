@@ -1,4 +1,4 @@
-package com.ilife.iliferobot.activity;
+package com.ilife.iliferobot.activity.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

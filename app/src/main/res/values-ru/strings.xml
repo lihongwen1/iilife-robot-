@@ -122,7 +122,7 @@
     <string name="map_aty_time">Площадь</string>
     <string name="map_aty_remaining_charge">батареи</string>
     <string name="map_aty_exception">Ошибка</string>
-    <string name="map_aty_sleep">Гибернация</string>
+    <string name="map_aty_sleep">Спать</string>
     <string name="map_aty_standby_mode">ждать</string>
     <string name="map_aty_random">Авто</string>
     <string name="map_aty_along">Край</string>
@@ -182,7 +182,7 @@
     <string name="setting_aty_standard">Стандартный</string>
     <string name="setting_aty_soft">Слабый</string>
     <string name="setting_aty_strong">Сильный</string>
-    <string name="setting_aty_nav_clean">S-образный</string>
+    <string name="setting_aty_nav_clean">S-форма</string>
     <string name="setting_aty_random_clean">Авто</string>
     <string name="setting_aty_confirm_reset">Сброс к заводским настройкам </string>
     <string name="setting_aty_reset_hint">Все данные будут удалены</string>
@@ -271,7 +271,6 @@
     <string name="retry">Заново</string>
     <string name="ap_wifi_timeout">Время подключения истекло</string>
     <string name="ota_preupdate_title">Перед обновлением проверьте:</string>
-    <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме ожидания</string>
     <string name="updating">Обновление … Не управляйте роботом.</string>
     <string name="updating_btn">Обновление …</string>
     <string name="choose_your_action">Пожалуйста, выберите операцию</string>
@@ -312,5 +311,8 @@
     <string name="spanish_server_time_sat">(Суббота 10:00 – 14:00)</string>
     <string name="adapter_error_bs">Ошибка кисти</string>
     <string name="consume_aty_text_2_v85">Напоминание:чистите боковую щетку и высокопроизводительный фильтр после каждого использования. Заменяйте боковые щетки каждые 3–6 месяцев, а высокопроизводительный фильтр - 3–5 месяцев.</string>
+    <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме зарядки</string>
+    <string name="ap_guide_loading">После включения выключатель питания，Робот загрузку системы.Пожалуйста, подождите, пока не услышите \"Готов убирать\"，Затем перейдите к следующему шагу.</string>
+    <string name="guide_aty_loading_next">Далее</string>
 
 </resources>

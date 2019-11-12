@@ -90,4 +90,6 @@ public class Constants {
 
     public static final String BRAND_ILIFE = "ILIFE";
     public static final String BRAND_ZACO = "ZACO";
+
+    public static final String ROBOT_WHITE_TAG="#0XFFFFFF";
 }

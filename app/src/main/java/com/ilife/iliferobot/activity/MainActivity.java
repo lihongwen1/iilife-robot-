@@ -1,11 +1,9 @@
 package com.ilife.iliferobot.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.adapter.RobotListAdapter;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BaseActivity;
@@ -37,7 +36,6 @@ import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,6 +51,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public static final String KEY_SUBDOMAIN = "KEY_SUBDOMAIN";
     public static final String KEY_DEVICEID = "KEY_DEVICEID";
     public static final String KEY_DEVNAME = "KEY_DEVNAME";
+    public static final String KEY_DEV_WHITE = "KEY_DEV_WHITE";
     public static final String KEY_OWNER = "KEY_OWNER";
     final int TAG_REFRESH_OVER = 0x01;
     Context context;
@@ -111,7 +110,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     @Override
     public void initView() {
         context = this;
-        mAcUserDevices=MyApplication.getInstance().getmAcUserDevices();
+        mAcUserDevices = MyApplication.getInstance().getmAcUserDevices();
         rect = new Rect();
         loadingDialog = DialogUtils.createLoadingDialog_(context);
         bt_add.setOnClickListener(this);
@@ -127,20 +126,27 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     private void initAdapter() {
         adapter = new RobotListAdapter(context, mAcUserDevices);
         adapter.setOnItemClickListener((adapter, view, position) -> {
-            if (recyclerView.closeMenu()){
+            if (recyclerView.closeMenu()) {
                 return;
             }
-            if (mAcUserDevices!=null&&position==mAcUserDevices.size()){//Add button
+            if (mAcUserDevices != null && position == mAcUserDevices.size()) {//Add button
                 return;
             }
-            if (mAcUserDevices!=null&&mAcUserDevices.size()>position&&mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
+            if (mAcUserDevices != null && mAcUserDevices.size() > position && mPresenter.isDeviceOnLine(mAcUserDevices.get(position))) {
                 String subdomain = mAcUserDevices.get(position).getSubDomain();
                 SpUtils.saveString(context, KEY_PHYCIALID, mAcUserDevices.get(position).getPhysicalDeviceId());
                 SpUtils.saveLong(context, KEY_DEVICEID, mAcUserDevices.get(position).getDeviceId());
-                SpUtils.saveString(context, KEY_DEVNAME, mAcUserDevices.get(position).getName());
+                String name = mAcUserDevices.get(position).getName();
+                boolean white = false;
+                if (name.contains(Constants.ROBOT_WHITE_TAG)) {
+                    white = true;
+                    name=name.replace(Constants.ROBOT_WHITE_TAG, "");
+                }
+                SpUtils.saveString(context, KEY_DEVNAME, name);
+                SpUtils.saveBoolean(context, KEY_DEV_WHITE, white);
                 SpUtils.saveLong(context, KEY_OWNER, mAcUserDevices.get(position).getOwner());
                 SpUtils.saveString(context, KEY_SUBDOMAIN, subdomain);
-                if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
+                if (subdomain.equals(Constants.subdomain_x900) || subdomain.equals(Constants.subdomain_x910)) {
                     Intent i = new Intent(context, MapActivity_X9_.class);
                     startActivity(i);
                 } else {
@@ -154,7 +160,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.item_delete:
-                    if (mAcUserDevices.size()<=position){
+                    if (mAcUserDevices.size() <= position) {
                         return;
                     }
                     recyclerView.closeMenu();
@@ -176,7 +182,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
 
                                 @Override
                                 public void error(ACException e) {
-                                    MyLogger.d(TAG,"绑定失败："+e.toString());
+                                    MyLogger.d(TAG, "绑定失败：" + e.toString());
                                     ToastUtils.showToast(context, getString(R.string.main_aty_unbind_fail));
                                     DialogUtils.closeDialog(loadingDialog);
                                 }
@@ -213,6 +219,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         }
         AC.deviceDataMgr().unSubscribeAllProperty();
         AC.classDataMgr().unSubscribeAll();
+        SpUtils.saveBoolean(this,KEY_DEV_WHITE,false);
+        SpUtils.saveBoolean(this,SelectActivity_x.KEY_BIND_WHITE,false);
     }
 
     @Override

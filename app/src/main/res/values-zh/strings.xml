@@ -30,6 +30,7 @@
     <string name="select_x_aty_add">添加机器人</string>
     <string name="guide_ap_prepare">配网准备</string>
     <string name="guide_aty_next">下一步</string>
+    <string name="guide_aty_loading_next">我知道了</string>
     <string name="ap_aty_input_pass">请输入WiFi密码</string>
     <string name="ap_aty_input_wifi_ssid">选择您的家庭WiFi</string>
     <string name="add_aty_start_connect">开始连接</string>
@@ -262,7 +263,7 @@
     <string name="retry">重试</string>
     <string name="ap_wifi_timeout">配网超时</string>
     <string name="ota_preupdate_title">升级前请确保</string>
-    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于待机模式</string>
+    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于充电模式</string>
     <string name="updating">升级中，请勿操作扫地机</string>
     <string name="updating_btn">升级中</string>
     <string name="choose_your_action">选择您的操作</string>
@@ -311,4 +312,5 @@
     <string name="country_or_area">国家与地区</string>
     <string name="adapter_error_bs">边刷异常</string>
     <string name="consume_aty_text_2_v85">温馨提示：每次使用后，请及时清理边刷、高效滤网。3-6个月可更换边刷、3-5个月可更换高效滤网。</string>
+    <string name="ap_guide_loading">"机器正在启动中，请耐心等待约20秒，直至听到语音\"请按键开始清扫\"，再进行下一步。 "</string>
 </resources>

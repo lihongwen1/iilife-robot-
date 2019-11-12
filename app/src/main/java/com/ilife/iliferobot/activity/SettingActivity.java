@@ -29,6 +29,7 @@ import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
 import com.google.gson.Gson;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
 import com.ilife.iliferobot.able.Constants;
@@ -266,7 +267,11 @@ public class SettingActivity extends BackBaseActivity {
                 rl_voice.setVisibility(View.GONE);
                 break;
             case Constants.X800:
-                product = R.drawable.n_x800;
+                if (SpUtils.getBoolean(this, MainActivity.KEY_DEV_WHITE)) {
+                    product = R.drawable.n_x800_white;
+                } else {
+                    product = R.drawable.n_x800;
+                }
                 rl_mode.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
@@ -287,6 +292,7 @@ public class SettingActivity extends BackBaseActivity {
                     product = R.drawable.n_a9s;
                     rl_mode.setVisibility(View.GONE);
                 }
+                rl_update.setVisibility(View.VISIBLE);
                 break;
             case Constants.V85:
                 product = R.drawable.n_v85;
@@ -315,6 +321,7 @@ public class SettingActivity extends BackBaseActivity {
                 product = R.drawable.n_x800;
                 rl_mode.setVisibility(View.GONE);
                 rl_water.setVisibility(View.GONE);
+                rl_update.setVisibility(View.VISIBLE);
                 break;
             default:
                 product = R.drawable.n_x800;
@@ -512,10 +519,16 @@ public class SettingActivity extends BackBaseActivity {
                         return;
                     }
                     universalDialog.dismiss();
+                    if (SpUtils.getBoolean(this, MainActivity.KEY_DEV_WHITE)) {
+                        name += Constants.ROBOT_WHITE_TAG;
+                    }
                     DeviceUtils.renameDevice(deviceId, name, subdomain, new ReNameListener() {
                         @Override
                         public void onSuccess() {
                             ToastUtils.showToast(context, context.getString(R.string.bind_aty_reName_suc));
+                            if (name.contains(Constants.ROBOT_WHITE_TAG)) {
+                                name = name.replace(Constants.ROBOT_WHITE_TAG, "");
+                            }
                             SpUtils.saveString(context, MainActivity.KEY_DEVNAME, name);
                             tv_name.setText(name);
                         }

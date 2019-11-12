@@ -12,8 +12,8 @@ import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
-import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
@@ -93,7 +93,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
         acDeviceMsg.setContent(new byte[]{0x00});
         sendToDeviceWithOption(acDeviceMsg, physicalId);
         tv_top_title.setText(R.string.setting_aty_consume_detail);
-        if (DeviceUtils.getRobotType(subdomain).equals(Constants.V85)) {//V85是吸口型，没有滚刷。
+        if (DeviceUtils.getRobotType(subdomain).equals(Constants.V85)||DeviceUtils.getRobotType(subdomain).equals(Constants.V5x)||DeviceUtils.getRobotType(subdomain).equals(Constants.V3x)) {//V85是吸口型，没有滚刷。
             rl_roll.setVisibility(View.GONE);
             tv_tips.setText(Utils.getString(R.string.consume_aty_text_2_v85));
         }

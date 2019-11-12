@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,11 +36,12 @@ import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
-import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.BitmapUtils;
@@ -57,7 +57,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import androidx.appcompat.app.AlertDialog;
@@ -418,6 +417,9 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
             String physicalDeviceId = mDeviceList.get(i).getPhysicalDeviceId();
             long devId = mDeviceList.get(i).getDeviceId();
             if (!TextUtils.isEmpty(devName)) {
+                if (devName.contains(Constants.ROBOT_WHITE_TAG)) {
+                    devName = devName.replace(Constants.ROBOT_WHITE_TAG, "");
+                }
                 textView.setText(devName);
             } else {
                 textView.setText(physicalDeviceId);
