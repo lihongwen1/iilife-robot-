@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import androidx.annotation.NonNull;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +22,11 @@ import com.accloud.cloudservice.PayloadCallback;
 import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
-import com.ilife.iliferobot.base.BaseQuickAdapter;
+import com.ilife.iliferobot.fragment.ScheduleTipDialogFragment;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.TimePickerUIUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
@@ -39,12 +38,7 @@ import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.TimeUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
@@ -78,9 +72,8 @@ public class ClockingActivity extends BackBaseActivity {
     String last, strTimeFormat;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
-//    ContentResolver cv;
-
-
+    private ScheduleTipDialogFragment workTimeDialog;
+    private int selectMinte, selectHour, selecPostion;
     WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -199,8 +192,9 @@ public class ClockingActivity extends BackBaseActivity {
         timePicker.setCurrentHour((int) hour);
         timePicker.setCurrentMinute((int) minute);
     }
+
     class MyListener implements View.OnClickListener {
-        int position;
+        private int position;
 
         public MyListener(int position) {
             this.position = position;
@@ -214,30 +208,63 @@ public class ClockingActivity extends BackBaseActivity {
 
                     break;
                 case R.id.tv_confirm:
-                    int hour = timePicker.getCurrentHour();
-                    int minute = timePicker.getCurrentMinute();
-                    String current = String.valueOf(hour) + UNDER_LINE + String.valueOf(minute);
-                    if (!current.equals(last)) {
-                        int startIndex;
-                        if (position != 0) {
-                            startIndex = (position - 1) * 5;
-                        } else {
-                            startIndex = 30;
-                        }
-                        bytes[startIndex + 1] = 1;
-                        bytes[startIndex + 2] = TimeUtil.getWeeks(position);
-                        bytes[startIndex + 3] = (byte) hour;
-                        bytes[startIndex + 4] = (byte) minute;
+                    selectHour = timePicker.getCurrentHour();
+                    selectMinte = timePicker.getCurrentMinute();
+                    selecPostion = position;
+                    if (!isNoAtNight()) {
+                        finishShedule();
+                    } else if ((selectHour > 5 && selectHour < 20)||(selectHour==5&&selectMinte>0)) {//可用时间段
+                        finishShedule();
+                    } else {//不可用时间
+                        if (workTimeDialog == null) {
+                            workTimeDialog = new ScheduleTipDialogFragment();
+                            workTimeDialog.setOnClickListener(new ScheduleTipDialogFragment.OnClickListener() {
+                                @Override
+                                public void onCancelClick() {
+                                    workTimeDialog.dismiss();
+                                }
 
-                        acDeviceMsg.setContent(bytes);
-                        acDeviceMsg.setCode(MsgCodeUtils.Appointment);
-                        sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
+                                @Override
+                                public void onCommitClick() {
+                                    workTimeDialog.dismiss();
+                                    finishShedule();
+                                }
+                            });
+                        }
+                        workTimeDialog.show(getSupportFragmentManager(), "work_time");
+
                     }
                     break;
             }
 
         }
     }
+
+    private boolean isNoAtNight() {
+        String robotType = DeviceUtils.getRobotType(subdomain);
+        return robotType.equals(Constants.A9) || robotType.equals(Constants.A9s) || robotType.equals(Constants.X800) || robotType.equals(Constants.A8s);
+    }
+
+    private void finishShedule() {
+        String current = selectHour + UNDER_LINE + selectMinte;
+        if (!current.equals(last)) {
+            int startIndex;
+            if (selecPostion != 0) {
+                startIndex = (selecPostion - 1) * 5;
+            } else {
+                startIndex = 30;
+            }
+            bytes[startIndex + 1] = 1;
+            bytes[startIndex + 2] = TimeUtil.getWeeks(selecPostion);
+            bytes[startIndex + 3] = (byte) selectHour;
+            bytes[startIndex + 4] = (byte) selectMinte;
+
+            acDeviceMsg.setContent(bytes);
+            acDeviceMsg.setCode(MsgCodeUtils.Appointment);
+            sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
+        }
+    }
+
     private void adjustTime() {
         ACDeviceMsg msg_adjustTime = new ACDeviceMsg(MsgCodeUtils.AdjustTime, TimeUtil.getTimeBytes());
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, msg_adjustTime, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {

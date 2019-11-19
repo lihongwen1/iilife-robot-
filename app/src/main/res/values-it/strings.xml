@@ -270,8 +270,7 @@
     <string name="tip_troubles">1. La password WiFi è corretta? \n\n. Il robot è in modalità AP? \n\n3. Il telefono cellulare è collegato a un WiFi non 5G? \n\n4. La funzione black / whitelist del router wireless è disabilitata (filtro MAC) ?</string>
     <string name="retry">Riprovare</string>
     <string name="ap_wifi_timeout">Il tempo di collegamento è stato superato</string>
-    <string name="ota_preupdate_title">Verificare prima dell\'update: </string>
-    <string name="ota_preupdate_tip">1.La batteria \è sufficientemente carica \n2. La connessione Wi-Fi funziona \n3. Il robot \è in charging</string>
+    <string name="ota_preupdate_title">"Verificare prima dell'update: "</string>
     <string name="updating">Update in corso… Non utilizzare il robot</string>
     <string name="updating_btn">Update in corso…</string>
     <string name="choose_your_action">Selezionare la modalità di impiego</string>
@@ -317,4 +316,10 @@
     <string name="consume_aty_text_2_v85">Promemoria:pulire la spazzola laterale e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituisci le spazzole laterali ogni 3-6 mesi e il filtro ad alte prestazioni 3–5 mesi.</string>
     <string name="ap_guide_loading">Dopo l\'accensione sul pulsante di accensione, il robot si avvia loading. E attendere fino a \"pronto per la pulizia\" .Poi andare al passo successivo.</string>
     <string name="guide_aty_loading_next">Avanti</string>
+    <string name="shedule_dialog_content">Il robot non funziona bene al buio. Si prega di utilizzare il robot alla luce del giorno o alla luce normale per navigare correttamente all\'orario programmato.</string>
+    <string name="shedule_dialog_cancel">"Annulla  "</string>
+    <string name="shedule_dialog_finish">"Confermare  "</string>
+    <string name="shedule_dialog_title">"Consigli  "</string>
+    <string name="settiing_change_suction_tip">In questa modalità non è possibile modificare il livello di aspirazione</string>
+    <string name="ota_preupdate_tip">1.La batteria è sufficientemente carica. \n2. La connessione Wi-Fi funziona. \n3. Il robot è in charging.\n4.Al termine dell\'aggiornamento, il robot si riavvierà automaticamente. Dopo aver sentito \"Ready to clean\", rimuovere il robot dal dock di ricarica.\n5.Spegnere l\'interruttore di alimentazione e attendere 10 secondi prima di riaccenderlo.</string>
 </resources>

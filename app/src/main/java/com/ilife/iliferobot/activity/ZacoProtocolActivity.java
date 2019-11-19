@@ -35,7 +35,7 @@ public class ZacoProtocolActivity extends BackBaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         tv_title.setText(R.string.personal_aty_protocol);
-        image_back = (ImageView) findViewById(R.id.image_back);
+        image_back = findViewById(R.id.image_back);
         image_back.setOnClickListener(v -> removeActivity());
         webView = findViewById(R.id.web_view);
         WebSettings settings = webView.getSettings();

@@ -59,8 +59,9 @@ import butterknife.OnClick;
 public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
-    public static final String KEY_MODE = "KEY_MODE";
-    int mopForce, mode, index;
+    public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
+    public static final String KEY_CUR_WORK_MODE = "KEY_MODE";//设备当前状态
+    int mopForce, mode, index, curWorkMode;
     boolean isMaxMode, voiceOpen;
     Context context;
     Intent intent;
@@ -245,6 +246,7 @@ public class SettingActivity extends BackBaseActivity {
         ownerId = SpUtils.getLong(context, MainActivity.KEY_OWNER);
         userId = AC.accountMgr().getUserId();
         mode = SpUtils.getInt(context, physicalId + KEY_MODE);
+        curWorkMode = SpUtils.getInt(context, physicalId + KEY_CUR_WORK_MODE);
         mopForce = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE);
         isMaxMode = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX);
         voiceOpen = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
@@ -318,9 +320,14 @@ public class SettingActivity extends BackBaseActivity {
                 rl_water.setVisibility(View.GONE);
                 break;
             case Constants.A9:
-                product = R.drawable.n_x800;
+                if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//日规A9有水量调节功能
+                    rl_water.setVisibility(View.VISIBLE);
+                    product = R.drawable.n_x800_white;
+                } else {
+                    rl_water.setVisibility(View.GONE);
+                    product = R.drawable.n_x800;
+                }
                 rl_mode.setVisibility(View.GONE);
-                rl_water.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -474,27 +481,46 @@ public class SettingActivity extends BackBaseActivity {
         @Override
         public void onClick(View v) {
             byte max;
-            dialog.show();
             acDeviceMsg.setCode(MsgCodeUtils.CleanForce);
             switch (v.getId()) {
                 case R.id.rl_suction:
-                    max = (byte) (isMaxMode ? 0x00 : 0x01);
-                    acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                    if (canOperateSuction()) {
+                        dialog.show();
+                        max = (byte) (isMaxMode ? 0x00 : 0x01);
+                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                        sendToDeviceWithOption(acDeviceMsg, physicalId);
+                    } else {
+                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
+                    }
                     break;
                 case R.id.rl_soft:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x00});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
                 case R.id.rl_standard:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x01});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
                 case R.id.rl_strong:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x02});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
             }
-            sendToDeviceWithOption(acDeviceMsg, physicalId);
+
+        }
+    }
+
+    private boolean canOperateSuction() {
+        if (curWorkMode == MsgCodeUtils.STATUE_POINT && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) ||  subdomain.equals(Constants.subdomain_v5x) ||subdomain.equals(Constants.subdomain_V3x))) {
+            return false;
+        } else {
+            return true;
         }
     }
 

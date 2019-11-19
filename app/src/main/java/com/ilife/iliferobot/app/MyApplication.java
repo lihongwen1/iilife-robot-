@@ -16,6 +16,9 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -61,7 +64,9 @@ public class MyApplication extends MultiDexApplication {
         /**
          * tencent bugly crash日志上传
          */
-        CrashReport.initCrashReport(getApplicationContext(),BuildConfig.BUGLY_ID, false);
+        if (BuildConfig.Area != AC.REGIONAL_CENTRAL_EUROPE) {
+            CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_ID, false);
+        }
         /**
          * 日志打印
          */
@@ -69,8 +74,33 @@ public class MyApplication extends MultiDexApplication {
                 .tag(BuildConfig.FLAVOR)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+//        initYM();
 
     }
+
+
+    private void initYM() {
+        /**
+         * 美规集成友盟推送
+         */
+        if (BuildConfig.Area == AC.REGIONAL_NORTH_AMERICA) {//
+            UMConfigure.init(this, "5dc4d96b0cafb2e50a000044", "ilife_as", UMConfigure.DEVICE_TYPE_PHONE, "307335e78be46675bfdc3f42dbf5451b");
+        }
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+                MyLogger.i(TAG, "注册成功：deviceToken：-------->  " + deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                MyLogger.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
+            }
+        });
+    }
+
 
     public void initTypeface() {
         appInitLanguage = LanguageUtils.getDefaultLanguage();
@@ -155,7 +185,7 @@ public class MyApplication extends MultiDexApplication {
      */
     public void addActivity_(Activity activity) {
         if (!activities.contains(activity)) {
-            MyLogger.d("添加页面","----"+activity.getClass().getName());
+            MyLogger.d("添加页面", "----" + activity.getClass().getName());
             activities.add(activity);//把当前Activity添加到集合中
         }
     }

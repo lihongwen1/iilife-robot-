@@ -702,7 +702,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     if (robotType.equals(Constants.X800) && device_type == 0 && bytes.length > 9) {
                         device_type = bytes[9] & 0xff;
                     }
-                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------");
+                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------"+"------battery   "+batteryNo);
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                     mView.updateCleanArea(getAreaValue());
                     mView.updateCleanTime(getTimeValue());
@@ -789,6 +789,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RANDOM) {//保存清掃模式
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, curStatus);
         }
+
+        SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_CUR_WORK_MODE, curStatus);
         MyLogger.d(TAG, "setStatus----------curStatus" + curStatus);
         if (!isViewAttached()) {
             return;

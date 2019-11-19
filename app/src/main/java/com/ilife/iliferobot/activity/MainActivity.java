@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
                 boolean white = false;
                 if (name.contains(Constants.ROBOT_WHITE_TAG)) {
                     white = true;
-                    name=name.replace(Constants.ROBOT_WHITE_TAG, "");
+                    name = name.replace(Constants.ROBOT_WHITE_TAG, "");
                 }
                 SpUtils.saveString(context, KEY_DEVNAME, name);
                 SpUtils.saveBoolean(context, KEY_DEV_WHITE, white);
@@ -219,8 +219,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         }
         AC.deviceDataMgr().unSubscribeAllProperty();
         AC.classDataMgr().unSubscribeAll();
-        SpUtils.saveBoolean(this,KEY_DEV_WHITE,false);
-        SpUtils.saveBoolean(this,SelectActivity_x.KEY_BIND_WHITE,false);
+        SpUtils.saveBoolean(this, KEY_DEV_WHITE, false);
+        SpUtils.saveBoolean(this, SelectActivity_x.KEY_BIND_WHITE, false);
     }
 
     @Override
@@ -284,6 +284,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
         UniversalDialog offLineDialog = new UniversalDialog();
         offLineDialog.setDialogType(UniversalDialog.TYPE_NORMAL_MID_BUTTON).setTitle(Utils.getString(R.string.dev_frag_offline))
                 .setHintTip(Utils.getString(R.string.dev_frag_try)).setMidText(Utils.getString(R.string.dialog_del_confirm))
+                .setOnMidButtonClck(() -> {
+                    //刷新设备状态
+                    loadingDialog.show();
+                    mPresenter.getDeviceList();
+                })
                 .show(getSupportFragmentManager(), "offline");
     }
 

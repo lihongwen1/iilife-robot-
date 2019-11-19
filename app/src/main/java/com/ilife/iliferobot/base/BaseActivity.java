@@ -15,6 +15,7 @@ import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.StatusBarUtil;
 import com.ilife.iliferobot.utils.ToastUtils;
+import com.umeng.message.PushAgent;
 
 import java.util.Locale;
 
@@ -54,6 +55,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         oContext = this;
         addActivity();
+        /**
+         * YM日活统计
+         */
+//        PushAgent.getInstance(this).onAppStart();
     }
 
     /**
@@ -165,7 +170,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 初始化传递过来的变量，序列化到本地的变量
      */
-    public void initVariables(){
+    public void initVariables() {
 
     }
 
@@ -237,7 +242,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onStop() {
         super.onStop();
-        isActivityInteraction=false;
+        isActivityInteraction = false;
     }
 
 }

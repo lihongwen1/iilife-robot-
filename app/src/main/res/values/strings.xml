@@ -35,20 +35,20 @@
     <string name="add_aty_start_connect">Start connecting</string>
     <string name="add_aty_wrong_wifi_pass">Password contains illegal characters</string>
     <string name="ap_guide_aty_tip1_x900">Turn on power switch on the side of the main body. (Note: Don\'t place main body on charging dock)</string>
-    <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi Pairing\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi paring\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9s"> Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
     <string name="ap_guide_already_open_device">Robot already switched on</string>
-    <string name="ap_guide_already_open_wifi">\"Start WiFi pairing\" already announced</string>
-    <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
-    <string name="ap_guide_already_open_wifi_a9s">\"Start WiFi pairing\" already announced</string>
+    <string name="ap_guide_already_open_wifi">\"Starting WiFi pairing mode\" already announced</string>
+    <string name="ap_guide_already_open_wifi_a9s">\"Starting WiFi pairing mode\" already announced</string>
     <string name="ap_guide_have_heard_didi">\"beep\" is heard.</string>
     <string name="ap_aty_setting">Settings</string>
     <string name="wifi_guide_aty_tip2">Note: Robot can\'t connect to 5G WiFi</string>
     <string name="add_aty_no_wifi">WiFi not connected</string>
-    <string name="ap_aty_robot_wifi">Robot Hotspot:</string>
+    <string name="ap_aty_robot_wifi">Robot WiFi:</string>
     <string name="third_ap_tip2">Note:</string>
     <string name="third_ap_aty_tip1">Please click right top \"Settings\", go back to cellphone WiFi setting.Select \"Robot-XXXX\" connection. Enter default password: 123456789. Return to current page and press \"Start connecting\".</string>
     <string name="third_ap_aty_port_">Connect to WiFi starting with \"Robot-\"</string>
@@ -146,18 +146,13 @@
     <string name="adapter_error_obs">OBS parts error</string>
     <string name="adapter_error_yq">Edge cleaning parts error</string>
     <string name="adapter_error_td">Detectors error</string>
-    <string name="adapter_error_td_a9">Cliff sensors error</string>
     <string name="dev_error_xuankong">Robot isn\'t on a flat surface</string>
     <string name="adapter_error_wxl">Nose wheel error</string>
     <string name="adapter_error_zbs">Left brush error</string>
-    <string name="adapter_error_bs">Brush error</string>
     <string name="adapter_error_ybs">Right brush error</string>
     <string name="adapter_error_zbl">Left side wheel error</string>
-    <string name="adapter_error_zbl_a9">Left wheel error</string>
     <string name="adapter_error_ybl">Right side wheel error</string>
-    <string name="adapter_error_ybl_a9">Right wheel error</string>
     <string name="adapter_error_gs">Roller brush error</string>
-    <string name="adapter_error_gs_a9">Main brush error</string>
     <string name="adapter_error_fs">Fan error</string>
     <string name="adapter_error_sb">Water pump error</string>
     <string name="adapter_error_qb">Air pump error</string>
@@ -204,22 +199,16 @@
     <string name="consume_aty_tips">Tips: Long press to reset material service life</string>
     <string name="consume_aty_side_time">Brush life</string>
     <string name="consume_aty_roll_time">Roller brush life</string>
-    <string name="consume_aty_roll_time_a9">Main brush life</string>
     <string name="consume_aty_filter_time">Filter life</string>
     <string name="consume_aty_resetSide">Reset side brush life now</string>
     <string name="consume_aty_resetSide_over">Side brush status will be updated after reset</string>
     <string name="consume_aty_resetRoll">Reset roller brush life now</string>
-    <string name="consume_aty_resetRoll_a9">Reset main brush life now</string>
     <string name="consume_aty_resetRoll_over">Roller brush status will be updated after reset</string>
-    <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
     <string name="consume_aty_resetFilter">Reset high performance filter life now</string>
     <string name="consume_aty_resetFilter_over">Filter status will be updated after reset</string>
     <string name="consume_aty_reset_suc">Reset completed</string>
     <string name="clock_aty_dev_offline">Device is offline</string>
-
     <string name="setting_aty_hit_">User name</string>
-    <string name="consume_aty_text_2">Reminder:Clean side brush, main brush and high performance filter after each use. Replace side brushes every 3–6 months, main brush 5–12 months, and high performance filter 3–5 months.</string>
-    <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
     <string name="access_camera">Please allow camera access</string>
     <string name="access_location">Please allow location access</string>
     <string name="access_storage">Please allow internal storage write access</string>
@@ -245,7 +234,7 @@
     <string name="verification_code_tip">Verification code</string>
     <string name="get_ver_code_tip"> Get verification code</string>
     <string name="have_account_and_login">Already have an account?</string>
-    <string name="have_account_and_login1">Login now</string>
+    <string name="have_account_and_login1"> Login now</string>
     <string name="quick_login">Quick registration</string>
     <string name="set_password">Set a password</string>
     <string name="no_device_tip_hi">Hi, good to see you again</string>
@@ -261,7 +250,7 @@
     <string name="stop_work_reason5">App-controlled pause</string>
     <string name="stop_work_reason6">Error alert disabled</string>
     <string name="resend">Resend</string>
-    <string name="user_nickname">Please set the username</string>
+    <string name="user_nickname">Please set the user name</string>
     <string name="setting_aty_ota_upadta_success">Upgrade completed</string>
     <string name="ota_aty_back">Back</string>
     <string name="ota_aty_confirm">OK</string>
@@ -272,8 +261,7 @@
     <string name="tip_troubles">1. Is WiFi password correct?\n\n2. Is robot in AP mode?\n\n3. Is mobile phone connected to non-5G WiFi?\n\n4. Is wireless router black/whitelist function disabled (MAC filtering)?</string>
     <string name="retry">Retry</string>
     <string name="ap_wifi_timeout">Connection timed out</string>
-    <string name="ota_preupdate_title">Before updating, check: </string>
-    <string name="ota_preupdate_tip">1.Battery is sufficiently charged\n2.WiFi connection is working\n3.Robot is on standby</string>
+    <string name="ota_preupdate_title">Before updating, check: </string>++++++++++++++++
     <string name="updating">Updating…Don\'t operate the robot.</string>
     <string name="updating_btn">Updating…</string>
     <string name="choose_your_action">Please select your operation</string>
@@ -281,10 +269,10 @@
     <string name="finsh_cur_task">Finish</string>
     <string name="pause_cur_task">Pause</string>
     <string name="virtual_wall_use_tip">1.Please do not separate unsafe zone with ElectroWall
-\n\n2.ElectroWall is still a beta version. It has the risk of instability.
-\n\n3.ElectroWall settings will be erased if the main body is moved or restarted.
-\n\n4.The environment changes at home will cause malfunctions of the map and ElectroWall.
-\n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the ElectroWall will apply to next cleaning mission.</string>
+             \n\n2.ElectroWall is still a beta version. It has the risk of instability.
+          \n\n3.ElectroWall settings will be erased if the main body is moved or restarted.
+          \n\n4.The environment changes at home will cause malfunctions of the map and ElectroWall.
+           \n\n5.Only when the robot completes the current cleaning and go back to the charging dock successfully, the ElectroWall will apply to next cleaning mission.</string>
     <string name="virtual_tip_title">ElectroWall tips:</string>
     <string name="help_aty_all_eu">(European Free Call)</string>
     <string name="help_aty_dir_de">(Direct Line DE)</string>
@@ -300,22 +288,38 @@
     <string name="name_max_length">Enter up to %1$s characters</string>
     <string name="low_power">Low battery, please charge.</string>
     <string name="login_invalid">Login failed. Retry.</string>
-    <string name="zaco_phone_server_time">Monday - Friday 09:00 – 17:00</string>
+    <string name="zaco_phone_server_time">Mon - Fri 09:00 – 17:00</string>
     <string name="start_random_cleaning">Auto mode activated</string>
     <string name="ap_guide_have_heard_didi_v85">\"beep\" is heard.</string>
     <string name="login_aty_email">Email address</string>
     <string name="login_aty_input_email">Enter email</string>
-    <string name="agree_privacy_policy">Agree</string>
+    <string name="adapter_error_ybl_a9">Right wheel error</string>
+    <string name="adapter_error_zbl_a9">Left wheel error</string>
+    <string name="adapter_error_gs_a9">Main brush error</string>
+    <string name="adapter_error_td_a9">Cliff sensors error</string>
+    <string name="consume_aty_resetRoll_a9">Reset main brush life now</string>
+    <string name="consume_aty_resetRoll_over_a9">Main brush status will be updated after reset</string>
+    <string name="consume_aty_roll_time_a9">Main brush life</string>
+    <string name="consume_aty_text_2">Reminder:Clean side brush, main brush and high performance filter after each use. Replace side brushes every 3–6 months, main brush 5–12 months, and high performance filter 3–5 months.</string>
     <string name="please_agree_policy">Please agree%1$s</string>
-    <string name="ap_guide_aty_tip2_a9">"Press and hold for 3 seconds and you will hear a buzz. Don't release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  "</string>
+    <string name="agree_privacy_policy">Agree</string>
+    <string name="ap_guide_already_open_wifi_a9">\"Starting WiFi pairing mode\" already announced</string>
     <string name="service_time_ja">(Workday 10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(* Except legal holidays)</string>
+    <string name="area_other">Other</string>
     <string name="area_russia">Russia</string>
     <string name="area_spanish">Spain</string>
-    <string name="area_other">Other</string>
     <string name="country_or_area">Country and region</string>
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
     <string name="spanish_server_time_sat">(Sat 10:00 – 14:00)</string>
-    <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
+    <string name="adapter_error_bs">Brush error</string>
+    <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
+    <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
     <string name="guide_aty_loading_next">Next</string>
+    <string name="shedule_dialog_cancel">"Cancel  "</string>
+    <string name="shedule_dialog_content">The Robot is not working well in darkness.Please operate the Robot in daylight or at least dim light in order to navigate properly at your schedule time.</string>
+    <string name="shedule_dialog_finish">"Confirm  "</string>
+    <string name="shedule_dialog_title">"Note  "</string>
+    <string name="settiing_change_suction_tip">Unable to change suction level in current mode</string>
+    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock.\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
 </resources>

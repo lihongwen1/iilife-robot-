@@ -14,6 +14,7 @@ import com.accloud.service.ACException;
 import com.accloud.service.ACUserInfo;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.UserUtils;
 import com.ilife.iliferobot.view.SuperEditText;
@@ -22,6 +23,8 @@ import com.ilife.iliferobot.contract.LoginContract;
 import com.ilife.iliferobot.presenter.LoginPresenter;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.Utils;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -96,8 +99,8 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
             case R.id.bt_login:
                 String str_account = et_email.getText().toString().trim();
                 String str_pass = et_pass.getText().toString().trim();
-                if (Utils.checkAccountUseful(str_account)){
-                   login(str_account, str_pass);
+                if (Utils.checkAccountUseful(str_account)) {
+                    login(str_account, str_pass);
                 }
                 break;
         }
@@ -107,6 +110,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
         AC.accountMgr().login(account, str_pass, new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo userInfo) {
+//                addAbleAlia(String.valueOf(userInfo.getUserId()));
                 String email = userInfo.getEmail();
                 SpUtils.saveString(context, KEY_EMAIL, email);
                 Intent i = new Intent(context, MainActivity.class);
@@ -114,9 +118,21 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
                 removeActivity();
             }
 
+
             @Override
             public void error(ACException e) {
                 ToastUtils.showErrorToast(context, e.getErrorCode());
+            }
+        });
+    }
+
+    @Override
+    public void addAbleAlia(String userId) {
+        //userId为用户ID，通过AbleCloud登录接口返回的ACUserInfo可以获取到userId；第二个参数写死ablecloud即可。
+        PushAgent.getInstance(this).addAlias(userId, "ablecloud", new UTrack.ICallBack() {
+            @Override
+            public void onMessage(boolean isSuccess, String message) {
+                MyLogger.d(TAG, "able关联友盟  message:" + message);
             }
         });
     }
