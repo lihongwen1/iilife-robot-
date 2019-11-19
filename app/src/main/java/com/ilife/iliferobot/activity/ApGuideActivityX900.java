@@ -121,6 +121,12 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                 click_wifi_id = R.drawable.gif_click_wifi_v85;
                 break;
             case Constants.V3x:
+                tip1_id = R.string.ap_guide_aty_tip1_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_x7;
+                tip3_id = R.string.ap_guide_have_heard_didi;
+                open_key_id = R.drawable.gif_open_key_787;
+                click_wifi_id = R.drawable.gif_click_wifi_v3x;
+                break;
             case Constants.V5x:
                 tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;

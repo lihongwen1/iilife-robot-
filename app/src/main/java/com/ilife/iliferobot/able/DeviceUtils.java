@@ -283,6 +283,8 @@ public class DeviceUtils {
                 src = R.drawable.rechage_device_v85;
                 break;
             case Constants.V3x:
+                src = R.drawable.rechage_device_v3x;
+                break;
             case Constants.V5x:
                 src = R.drawable.rechage_device_v5x;
                 break;
