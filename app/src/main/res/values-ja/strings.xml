@@ -311,13 +311,13 @@
     <string name="spanish_server_time_sat">（土曜日10:00-14:00）</string>
     <string name="adapter_error_bs">のブラシエラー</string>
     <string name="consume_aty_text_2_v85">注意：使用するたびにサイドブラシと高性能フィルターを清掃してください。 サイドブラシは3〜6か月ごとに、高性能フィルターは3〜5か月ごとに交換してください。</string>
-    <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです</string>
     <string name="ap_guide_loading">電源ボタンをオンにした後、ロボットがロードを開始し、「クリーニングを開始する場合はボタンを押してください 」になるまで待ってから、次のステップを開始してください。</string>
     <string name="guide_aty_loading_next">次に</string>
-    <string name="shedule_dialog_content">ロボットは、暗い環境では最高の作業効果を達成できません。20：00から5時までにロボットを開始することは推奨されません。</string>
+    <string name="shedule_dialog_content">ロボットは暗闇の中でうまく機能していません。スケジュール時間に適切にナビゲートするために、ロボットを昼間または少なくとも薄暗い場所で操作してください。</string>
     <string name="shedule_dialog_cancel">キャンセル</string>
     <string name="shedule_dialog_finish">確認する</string>
     <string name="shedule_dialog_title">プロンプト</string>
     <string name="settiing_change_suction_tip">現在のモードでは吸引レベルを変更できません</string>
+    <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです。\n4.アップグレードが完了すると、ロボットは自動的に再起動します。 「クリーニングを開始する場合はボタンを押してください」と聞こえたら、ロボットを充電ドックから取り外します。\n5.電源スイッチをオフにし、10秒待ってから電源スイッチをオンにします。</string>
 
 </resources>

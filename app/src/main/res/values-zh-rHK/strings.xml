@@ -260,7 +260,6 @@
     <string name="retry">重試</string>
     <string name="ap_wifi_timeout">配網超時</string>
     <string name="ota_preupdate_title">升級前請確保:</string>
-    <string name="ota_preupdate_tip">1.掃地機有足夠的電量 \n2.網絡連接正常 \n3.掃地機處於充電模式</string>
     <string name="updating">升級中，請勿操作掃地機</string>
     <string name="updating_btn">升級中</string>
     <string name="choose_your_action">選擇您的操作</string>
@@ -311,11 +310,12 @@
     <string name="spanish_server_time_sat">(周六 10:00 - 14:00)</string>
     <string name="adapter_error_bs">邊刷異常</string>
     <string name="consume_aty_text_2_v85">溫馨提示：每次使用後，請及時清理邊刷、高效濾網。 3-6個月可更換邊刷、3-5個月可更換高效濾網。</string>
-    <string name="ap_guide_loading">"機器正在啟動中，請耐心等待約20秒，直至聽到語音\"請按鍵開始清掃\"，再進行下壹步。 "</string>
+    <string name="ap_guide_loading">機器正在啟動中，請等待大約20秒，直到聽到語音\"請按鍵開始清掃\"，就可以開始您的配網。</string>
     <string name="guide_aty_loading_next">我知道了</string>
-    <string name="shedule_dialog_content">機器無法在黑暗環境下達到最佳的工作效果，不建議在20:00-5:00使用ILIFE掃地機清掃。</string>
+    <string name="shedule_dialog_content">機器在黑暗環境下無法達到最佳工作效果。如果此時需要清掃，請確保清掃環境有足夠的光線亮度。</string>
     <string name="shedule_dialog_title">預約提醒</string>
     <string name="shedule_dialog_cancel">取消預約</string>
     <string name="shedule_dialog_finish">完成預約</string>
     <string name="settiing_change_suction_tip">在該模式下不能改變吸力</string>
+    <string name="ota_preupdate_tip">1.掃地機有足夠的電量\n2.網絡連接正常\n3.掃地機處於充電模式\n4.升級完成時主機會自動啟動，聽到語音提示:\"請按鍵開始清掃\"後，將主機從充電座上拿下來\n5.關閉主機電源開關，等待10秒後再重新打開電源開關</string>
 </resources>

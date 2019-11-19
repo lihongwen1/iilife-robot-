@@ -481,38 +481,47 @@ public class SettingActivity extends BackBaseActivity {
         @Override
         public void onClick(View v) {
             byte max;
-            dialog.show();
             acDeviceMsg.setCode(MsgCodeUtils.CleanForce);
             switch (v.getId()) {
                 case R.id.rl_suction:
-//                    if (canOperateSuction()) {
-//                        max = (byte) (isMaxMode ? 0x00 : 0x01);
-//                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
-//                    } else {
-//                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
-//                    }
-                    max = (byte) (isMaxMode ? 0x00 : 0x01);
-                    acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                    if (canOperateSuction()) {
+                        dialog.show();
+                        max = (byte) (isMaxMode ? 0x00 : 0x01);
+                        acDeviceMsg.setContent(new byte[]{max, (byte) mopForce});
+                        sendToDeviceWithOption(acDeviceMsg, physicalId);
+                    } else {
+                        ToastUtils.showToast(getString(R.string.settiing_change_suction_tip));
+                    }
                     break;
                 case R.id.rl_soft:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x00});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
                 case R.id.rl_standard:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x01});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
                 case R.id.rl_strong:
+                    dialog.show();
                     max = (byte) (isMaxMode ? 0x01 : 0x00);
                     acDeviceMsg.setContent(new byte[]{max, 0x02});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
                     break;
             }
-            sendToDeviceWithOption(acDeviceMsg, physicalId);
+
         }
     }
 
     private boolean canOperateSuction() {
-        return curWorkMode != MsgCodeUtils.STATUE_POINT || (!subdomain.equals(Constants.subdomain_x787) && !subdomain.equals(Constants.subdomain_x785) && !subdomain.equals(Constants.subdomain_a7) && !subdomain.equals(Constants.subdomain_V3x));
+        if (curWorkMode == MsgCodeUtils.STATUE_POINT && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) ||  subdomain.equals(Constants.subdomain_v5x) ||subdomain.equals(Constants.subdomain_V3x))) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void showRenameDialog() {

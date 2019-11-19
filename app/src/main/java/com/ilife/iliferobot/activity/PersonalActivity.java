@@ -52,6 +52,8 @@ import com.ilife.iliferobot.utils.Utils;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -268,12 +270,20 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 setTitle(Utils.getString(R.string.personal_acy_exit)).setHintTip(Utils.getString(R.string.personal_aty_exit_content)).
                 setOnRightButtonClck(() -> {
                     if (AC.accountMgr().isLogin()) {
+//                        removeAbleAlia();
                         AC.accountMgr().logout();
                         Intent i = new Intent(context, QuickLoginActivity.class);
                         startActivity(i);
                         removeALLActivity();
                     }
                 }).show(getSupportFragmentManager(), "logout");
+    }
+
+    private void removeAbleAlia() {
+        //userId为用户ID，通过AbleCloud登录接口返回的ACUserInfo可以获取到userId；第二个参数写死ablecloud即可。
+        PushAgent.getInstance(this).deleteAlias(String.valueOf(AC.accountMgr().getUserId()), "ablecloud", (b, s) -> {
+            MyLogger.d(TAG, "移除able推送别名，message :" + s);
+        });
     }
 
     private void showRenameDialog() {

@@ -263,7 +263,7 @@
     <string name="retry">重试</string>
     <string name="ap_wifi_timeout">配网超时</string>
     <string name="ota_preupdate_title">升级前请确保:</string>
-    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于充电模式</string>
+    <string name="ota_preupdate_tip">1.扫地机有足够的电量\n2.网络连接正常\n3.扫地机处于充电模式\n4.升级完成时主机会自动启动，听到语音提示:\"请按键开始清扫\"后，将主机从充电座上拿下来\n5.关闭主机电源开关，等待10秒后再重新打开电源开关</string>
     <string name="updating">升级中，请勿操作扫地机</string>
     <string name="updating_btn">升级中</string>
     <string name="choose_your_action">选择您的操作</string>
@@ -299,7 +299,7 @@
     <string name="consume_aty_resetRoll_a9">是否重置滚刷寿命</string>
     <string name="consume_aty_resetRoll_over_a9">重置后滚刷会更新到最新状态</string>
     <string name="consume_aty_roll_time_a9">滚刷寿命</string>
-    <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网。3-6个月可更换边刷、5-12个月可更换滚刷、3-5个月可更换高效滤网。</string>
+    <string name="consume_aty_text_2">温馨提示：每次使用后，请及时清理边刷、滚刷、高效滤网。3–6个月可更换边刷、5–12个月可更换滚刷、3–5个月可更换高效滤网。</string>
     <string name="agree_privacy_policy">注册登录表示同意</string>
     <string name="please_agree_policy">请同意%1$s</string>
     <string name="ap_guide_aty_tip2_a9">长按机器的启动键，3秒后听到\"嘀\"的一声，继续长按听到\"WiFi连接中\"后松开，WiFi指示灯闪烁。 </string>
@@ -311,10 +311,10 @@
     <string name="area_spanish">西班牙</string>
     <string name="country_or_area">国家与地区</string>
     <string name="adapter_error_bs">边刷异常</string>
-    <string name="consume_aty_text_2_v85">温馨提示：每次使用后，请及时清理边刷、高效滤网。3-6个月可更换边刷、3-5个月可更换高效滤网。</string>
-    <string name="ap_guide_loading">"机器正在启动中，请耐心等待约20秒，直至听到语音\"请按键开始清扫\"，再进行下一步。 "</string>
+    <string name="consume_aty_text_2_v85">温馨提示：每次使用后，请及时清理边刷、高效滤网。3–6个月可更换边刷、3–5个月可更换高效滤网。</string>
+    <string name="ap_guide_loading">机器正在启动中，请耐心等待约20秒，直至听到语音\"请按键开始清扫\"，再进行下一步。</string>
     <string name="shedule_dialog_cancel">取消预约</string>
-    <string name="shedule_dialog_content">机器无法在黑暗环境下达到最佳的工作效果,不建议在20:00-5:00使用ILIFE扫地机清扫。</string>
+    <string name="shedule_dialog_content">机器在黑暗环境下无法达到最佳工作效果。如果此时需要清扫，请确保清扫环境有足够的光线亮度。</string>
     <string name="shedule_dialog_finish">完成预约</string>
     <string name="shedule_dialog_title">预约提醒</string>
     <string name="settiing_change_suction_tip">在该模式下不能改变吸力</string>

@@ -49,7 +49,7 @@
                     style="@style/Image_Style_30"
                     android:background="@drawable/n_icon_help" />
 
-                <com.ilife.iliferobot.view.RegularTextView
+                <TextView
                     style="@style/Text_16sp_33"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"

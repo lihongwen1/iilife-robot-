@@ -261,7 +261,6 @@
     <string name="retry">Erneut versuchen</string>
     <string name="ap_wifi_timeout">Vebindungszeit überschritten</string>
     <string name="ota_preupdate_title">"Prüfen Sie vor dem Update: "</string>
-    <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.</string>
     <string name="updating">Updating… Bitte den Roboter nicht benutzen</string>
     <string name="updating_btn">Updating…</string>
     <string name="choose_your_action">Bitte die Betriebsart auswählen</string>
@@ -313,9 +312,10 @@
     <string name="consume_aty_text_2_v85">Erinnerung: Reinigen Sie die Seitenbürste und den Hochleistungsfilter nach jedem Gebrauch. Ersetzen Sie die Seitenbürsten alle 3 bis 6 Monate und den Hochleistungsfilter alle 3 bis 5 Monate.</string>
     <string name="ap_guide_loading">Nach dem Einschalten der Power-Taste,Der Roboter beginnt zu laden. Warten Sie, bis \"Reinigungsbereit\" angezeigt wird. Fahren Sie dann mit dem nächsten Schritt fort.</string>
     <string name="guide_aty_loading_next">Weiter</string>
-    <string name="shedule_dialog_content">Der roboter kann in dunkler Umgebung nicht den besten Arbeitseffekt erzielen. Es wird nicht empfohlen, den roboter zwischen 20:00 und 5:00 Uhr zum Reinigen zu starten.</string>
+    <string name="shedule_dialog_content">Der Roboter funktioniert bei Dunkelheit nicht gut. Bitte betreiben Sie den Roboter bei Tageslicht oder normalem Licht, um zu Ihrer geplanten Zeit ordnungsgemäß zu navigieren.</string>
     <string name="shedule_dialog_cancel">"Stornieren  "</string>
     <string name="shedule_dialog_finish">"Bestätigen  "</string>
     <string name="shedule_dialog_title">"Tipps "</string>
     <string name="settiing_change_suction_tip">Nicht möglich, in diesem Modus die Saugstufe zu verändern</string>
+    <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.\n4.Nach Abschluss des Upgrades wird der Roboter automatisch neu gestartet. Entfernen Sie den Roboter von der Ladestation, nachdem Sie \"Ready to clean\" gehört haben.\n5.Schalten Sie den Netzschalter aus und warten Sie 10 Sekunden, bevor Sie den Netzschalter wieder einschalten.</string>
 </resources>

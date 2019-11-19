@@ -702,7 +702,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     if (robotType.equals(Constants.X800) && device_type == 0 && bytes.length > 9) {
                         device_type = bytes[9] & 0xff;
                     }
-                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------");
+                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------"+"------battery   "+batteryNo);
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                     mView.updateCleanArea(getAreaValue());
                     mView.updateCleanTime(getTimeValue());

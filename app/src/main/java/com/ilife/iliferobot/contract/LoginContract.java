@@ -9,6 +9,7 @@ public interface LoginContract {
     interface View extends BaseView {
         void unUsableBtnLogin();
         void reuseBtnLogin();
+        void addAbleAlia(String userId);
     }
 
     interface Presenter {

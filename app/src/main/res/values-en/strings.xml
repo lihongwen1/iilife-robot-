@@ -35,15 +35,15 @@
     <string name="add_aty_start_connect">Start connecting</string>
     <string name="add_aty_wrong_wifi_pass">Password contains illegal characters</string>
     <string name="ap_guide_aty_tip1_x900">Turn on power switch on the side of the main body. (Note: Don\'t place main body on charging dock)</string>
-    <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s"> Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Start WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9s"> Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
     <string name="ap_guide_already_open_device">Robot already switched on</string>
-    <string name="ap_guide_already_open_wifi">\"Start WiFi pairing mode\" already announced</string>
-    <string name="ap_guide_already_open_wifi_a9s">\"Start WiFi pairing mode\" already announced</string>
+    <string name="ap_guide_already_open_wifi">\"Starting WiFi pairing mode\" already announced</string>
+    <string name="ap_guide_already_open_wifi_a9s">\"Starting WiFi pairing mode\" already announced</string>
     <string name="ap_guide_have_heard_didi">\"beep\" is heard.</string>
     <string name="ap_aty_setting">Settings</string>
     <string name="wifi_guide_aty_tip2">Note: Robot can\'t connect to 5G WiFi</string>
@@ -262,7 +262,6 @@
     <string name="retry">Retry</string>
     <string name="ap_wifi_timeout">Connection timed out</string>
     <string name="ota_preupdate_title">Before updating, check: </string>++++++++++++++++
-    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging</string>
     <string name="updating">Updating…Don\'t operate the robot.</string>
     <string name="updating_btn">Updating…</string>
     <string name="choose_your_action">Please select your operation</string>
@@ -315,11 +314,12 @@
     <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
     <string name="adapter_error_bs">Brush error</string>
     <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
-    <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
+    <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
     <string name="guide_aty_loading_next">Next</string>
     <string name="shedule_dialog_cancel">"Cancel  "</string>
-    <string name="shedule_dialog_content">The ILIFE robot can\'t achieve the best working effect in the dark environment .It is not recommended to start the ILIFE robot to clean in 20:00 to 5:00.</string>
+    <string name="shedule_dialog_content">The Robot is not working well in darkness.Please operate the Robot in daylight or at least dim light in order to navigate properly at your schedule time.</string>
     <string name="shedule_dialog_finish">"Confirm  "</string>
     <string name="shedule_dialog_title">"Note  "</string>
     <string name="settiing_change_suction_tip">Unable to change suction level in current mode</string>
+    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock.\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
 </resources>

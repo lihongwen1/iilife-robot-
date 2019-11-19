@@ -73,7 +73,7 @@ public class ClockingActivity extends BackBaseActivity {
     @BindView(R.id.tv_top_title)
     TextView tv_title;
     private ScheduleTipDialogFragment workTimeDialog;
-    private int selectMinte,selectHour,selecPostion;
+    private int selectMinte, selectHour, selecPostion;
     WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -209,11 +209,11 @@ public class ClockingActivity extends BackBaseActivity {
                     break;
                 case R.id.tv_confirm:
                     selectHour = timePicker.getCurrentHour();
-                   selectMinte = timePicker.getCurrentMinute();
-                   selecPostion=position;
+                    selectMinte = timePicker.getCurrentMinute();
+                    selecPostion = position;
                     if (!isNoAtNight()) {
                         finishShedule();
-                    } else if (selectHour > 5 && selectHour < 20) {//可用时间段
+                    } else if ((selectHour > 5 && selectHour < 20)||(selectHour==5&&selectMinte>0)) {//可用时间段
                         finishShedule();
                     } else {//不可用时间
                         if (workTimeDialog == null) {
