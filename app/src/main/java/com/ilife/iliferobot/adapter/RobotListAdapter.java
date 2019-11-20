@@ -89,7 +89,7 @@ public class RobotListAdapter extends BaseQuickAdapter<ACUserDevice, BaseViewHol
                     break;
                 case Constants.subdomain_V3x:
                     //TODO 修改为V3 Pro的图片
-                    holder.setImageResource(context, R.id.image_product, R.drawable.n_v5x);
+                    holder.setImageResource(context, R.id.image_product, R.drawable.n_v3x);
                     break;
                 default:
                     holder.setImageResource(context, R.id.image_product, R.drawable.n_x800);

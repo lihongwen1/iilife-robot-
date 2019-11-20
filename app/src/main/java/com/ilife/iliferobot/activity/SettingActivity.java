@@ -60,7 +60,7 @@ public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
     public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
-    public static final String KEY_CUR_WORK_MODE = "KEY_MODE";//设备当前状态
+    public static final String KEY_CUR_WORK_MODE = "CUR_WORK_MODE";//设备当前状态
     int mopForce, mode, index, curWorkMode;
     boolean isMaxMode, voiceOpen;
     Context context;

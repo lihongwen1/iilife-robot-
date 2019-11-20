@@ -37,13 +37,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "environment", "\"product\"")
+            buildConfigField("String", "environment", "\"debug\"")
 
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "environment", "\"product\"")
+            buildConfigField("String", "environment", "\"debug\"")
         }
     }
     repositories {
@@ -61,7 +61,7 @@ android {
             versionName = '1.3.2'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO Robot"
-            buildConfigField("int", "Area", "4")
+            buildConfigField("int", "Area", "0")
             buildConfigField("String", "BRAND", "\"ZACO\"")
             buildConfigField("String", "BUGKY_KEY", "\"51aa5419-3c1a-4036-9295-e47d336ab7d0\"")
             buildConfigField("String", "BUGLY_ID", "\"7caa78b9ea\"")
