@@ -584,6 +584,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     private Disposable remoteDisposable;
+    private long lastClickTime = 0;
 
     /**
      * x785 x787支持长按持续前进旋转cleanMapView
@@ -596,27 +597,30 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     public void onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: //手指按下
-                if (v.getId() != R.id.image_control_back) {
+                if (v.getId() != R.id.image_control_back) {//MAX键抬起才有功能
                     v.setSelected(true);
-                }
-                if (mPresenter.isLongPressControl()) {
-                    remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
-                        MyLogger.d(TAG, "下发方向移动指令");
-                        switch (v.getId()) {
-                            /* 遥控器方向键*/
-                            case R.id.image_left:
-                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
-                                break;
-                            case R.id.image_right:
-                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
-                                break;
-                            case R.id.image_forward:
-                                mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
-                                break;
-                        }
-                    });
+                    long interval=System.currentTimeMillis()-lastClickTime;
+                    if (interval>3000&&mPresenter.isLongPressControl()) {//连续点击超过3s才会响应命令
+                        lastClickTime=System.currentTimeMillis();
+                        remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
+                            MyLogger.d(TAG, "下发方向移动指令");
+                            switch (v.getId()) {
+                                /* 遥控器方向键*/
+                                case R.id.image_left:
+                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
+                                    break;
+                                case R.id.image_right:
+                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
+                                    break;
+                                case R.id.image_forward:
+                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
+                                    break;
+                            }
+                        });
 
+                    }
                 }
+
                 break;
             case MotionEvent.ACTION_MOVE: //手指移动（从手指按下到抬起 move多次执行）
                 break;
