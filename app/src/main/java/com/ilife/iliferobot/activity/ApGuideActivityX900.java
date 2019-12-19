@@ -173,9 +173,6 @@ public class ApGuideActivityX900 extends BackBaseActivity {
                     ll_ap_step1.setVisibility(View.GONE);
                     ll_ap_step2.setVisibility(View.VISIBLE);
                     rb_next_tip.setText(tip3_id);
-                    if (Utils.isIlife() && Utils.isChinaEnvironment() && Constants.IS_FIRST_AP) {
-                        bt_next.setText(R.string.add_aty_start_connect);
-                    }
                     tv_guide_tip4.setVisibility(View.VISIBLE);
                     rb_next_tip.setChecked(false);
                     curStep = 2;
@@ -187,13 +184,8 @@ public class ApGuideActivityX900 extends BackBaseActivity {
 
                     }
                 } else {
-                    if (Utils.isIlife() && Utils.isChinaEnvironment() && Constants.IS_FIRST_AP) {
-                        Intent i = new Intent(context, ApWifiActivity.class);
-                        startActivity(i);
-                    } else {
-                        Intent i = new Intent(context, ConnectDeviceApActivity.class);
-                        startActivity(i);
-                    }
+                    Intent i = new Intent(context, ConnectDeviceApActivity.class);
+                    startActivity(i);
                 }
                 break;
         }

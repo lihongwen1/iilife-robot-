@@ -270,7 +270,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 setTitle(Utils.getString(R.string.personal_acy_exit)).setHintTip(Utils.getString(R.string.personal_aty_exit_content)).
                 setOnRightButtonClck(() -> {
                     if (AC.accountMgr().isLogin()) {
-//                        removeAbleAlia();
+                        removeAbleAlia();
                         AC.accountMgr().logout();
                         Intent i = new Intent(context, QuickLoginActivity.class);
                         startActivity(i);

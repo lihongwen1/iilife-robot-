@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.RectF;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 900系列采用直接繪製s
+ * 900系列采用直接繪製
+ * //TODO 绘制X800地图偶尔会导致图片清空（同步问题，清空bitmap时重新绘制了UI）
+ * //TODO 坐标不再缩放时，增量绘制地图
  */
 public class MapView extends View {
     private int width, height;
@@ -70,7 +73,8 @@ public class MapView extends View {
     private int extraWH = 60;//额外的宽高
     private Runnable restoreRunnable;//控制延迟15s后恢复地图
     private boolean isNeedRestore = true;
-    private  int paddingBottom;//改变地图居中中心点
+    private int paddingBottom;//改变地图居中中心点
+
     public MapView(Context context) {
         super(context);
         init();
@@ -266,17 +270,22 @@ public class MapView extends View {
         invalidateUI();
     }
 
+
     public void drawMapX8(ArrayList<Integer> dataList) {
-        MyLogger.d(TAG, "----------drawMapX8---------");
-        drawBoxMapX8(dataList);
-        //draw end point with yellow color
-//        boxCanvas.drawColor(getResources().getColor(R.color.colorPrimary));
-        boxCanvas.drawPath(boxPath, boxPaint);
-        if (endX != 0 || endY != 0) {
-            positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-            boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 12), positionCirclePaint);
+        synchronized (this) {
+            drawBoxMapX8(dataList);
+            boxCanvas.drawPath(boxPath, boxPaint);
+            if (endX != 0 || endY != 0) {
+                positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
+                boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 12), positionCirclePaint);
+            }
+            if (Looper.getMainLooper() == Looper.myLooper()) {
+                invalidate();
+            } else {
+                postInvalidate();
+            }
+            MyLogger.d(TAG, "----drawMapX8----");
         }
-        invalidateUI();
     }
 
 
@@ -301,7 +310,7 @@ public class MapView extends View {
     public void resetCenter(int paddingBottom) {
         if (!isSetExtraDrag) {
             isSetExtraDrag = true;
-            this.paddingBottom=paddingBottom;
+            this.paddingBottom = paddingBottom;
             sCenter.set(width / 2f, (height - paddingBottom) / 2f);
         }
     }
@@ -342,7 +351,7 @@ public class MapView extends View {
                 systemScale = 0.5f;
             }
         }
-        MyLogger.d(TAG, "xLength----" + xLength + "----yLength-----" + yLength+"---------height"+height+"---------width--------"+width);
+        MyLogger.d(TAG, "xLength----" + xLength + "----yLength-----" + yLength + "---------height" + height + "---------width--------" + width);
         MyLogger.d(TAG, "--systemScale--:" + systemScale + "------baseScare----:" + baseScare + "------userScale-------" + userScale);
         slamRect.set(xMin, yMin, xMax, yMax);
         if (robotSeriesX9) {
@@ -359,18 +368,20 @@ public class MapView extends View {
                 unconditionalRecreate = false;
             }
             drawVirtualWall();//刷新虚拟墙
-        } else {
-            int needWidth = (int) ((xMax - xMin + 1) * baseScare) + extraWH;
-            int needHeight = (int) ((yMax - yMin + 1) * baseScare) + extraWH;
-            if (boxCanvas == null && boxBitmap == null) {
-                boxBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
-                boxCanvas = new Canvas(boxBitmap);
-            } else if (boxBitmap != null && ((needWidth != boxBitmap.getWidth() || needHeight != boxBitmap.getHeight()) || unconditionalRecreate)) {
-                MyLogger.d(TAG, "reCreate the bitmap................");
-                boxBitmap.recycle();
-                boxBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
-                boxCanvas.setBitmap(boxBitmap);
-                unconditionalRecreate = false;
+        } else {//X800系列
+            synchronized (this) {
+                int needWidth = (int) ((xMax - xMin + 1) * baseScare) + extraWH;
+                int needHeight = (int) ((yMax - yMin + 1) * baseScare) + extraWH;
+                if (boxCanvas == null && boxBitmap == null) {
+                    boxBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
+                    boxCanvas = new Canvas(boxBitmap);
+                } else if (boxBitmap != null && ((needWidth != boxBitmap.getWidth() || needHeight != boxBitmap.getHeight()) || unconditionalRecreate)) {
+                    MyLogger.d(TAG, "reCreate the bitmap................");
+                    boxBitmap.recycle();
+                    boxBitmap = Bitmap.createBitmap(needWidth, needHeight, Bitmap.Config.ARGB_8888);
+                    boxCanvas.setBitmap(boxBitmap);
+                    unconditionalRecreate = false;
+                }
             }
         }
 
@@ -425,38 +436,41 @@ public class MapView extends View {
     // TODO 手势缩放移动的时候延迟刷新实时地图数据/或者生成刷新队列
     @Override
     protected void onDraw(Canvas canvas) {
-        if (!robotSeriesX9) {//X800 series
-            if (boxCanvas != null && boxBitmap != null) {
-                matrix.reset();
-                matrix.postTranslate(dragX + sCenter.x - boxBitmap.getWidth() / 2f, dragY + sCenter.y - boxBitmap.getHeight() / 2f);
-                matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
-                canvas.drawBitmap(boxBitmap, matrix, boxPaint);
-            }
-        } else {//x900 series
-            if (slamCanvas != null && slamBitmap != null) {
-                matrix.reset();
-                matrix.postTranslate(dragX + sCenter.x - slamBitmap.getWidth() / 2f, dragY + sCenter.y - slamBitmap.getHeight() / 2f);
-                matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
-                canvas.drawBitmap(slamBitmap, matrix, null);
-                /**
-                 * draw virtual wall
-                 */
-                canvas.concat(matrix);
-                canvas.drawPath(existVirtualPath, virtualPaint);
+        synchronized (this) {
+            if (!robotSeriesX9) {//X800 series
+                if (boxCanvas != null && boxBitmap != null) {
+                    matrix.reset();
+                    matrix.postTranslate(dragX + sCenter.x - boxBitmap.getWidth() / 2f, dragY + sCenter.y - boxBitmap.getHeight() / 2f);
+                    matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
+                    canvas.drawBitmap(boxBitmap, matrix, boxPaint);
+                }
+            } else {//x900 series
+                if (slamCanvas != null && slamBitmap != null) {
+                    matrix.reset();
+                    matrix.postTranslate(dragX + sCenter.x - slamBitmap.getWidth() / 2f, dragY + sCenter.y - slamBitmap.getHeight() / 2f);
+                    matrix.postScale(getRealScare(), getRealScare(), sCenter.x, sCenter.y);
+                    canvas.drawBitmap(slamBitmap, matrix, null);
+                    /**
+                     * draw virtual wall
+                     */
+                    canvas.concat(matrix);
+                    canvas.drawPath(existVirtualPath, virtualPaint);
 
-                if (MODE == MODE_DELETE_VIRTUAL || MODE == MODE_DELETE_VIRTUAL * MODE_DRAG || MODE == MODE_DELETE_VIRTUAL * MODE_ZOOM) {
-                    for (RectF rf : deleteIconRectFs) {
-                        canvas.drawBitmap(deleteBitmap, rf.left, rf.top, virtualPaint);
+                    if (MODE == MODE_DELETE_VIRTUAL || MODE == MODE_DELETE_VIRTUAL * MODE_DRAG || MODE == MODE_DELETE_VIRTUAL * MODE_ZOOM) {
+                        for (RectF rf : deleteIconRectFs) {
+                            canvas.drawBitmap(deleteBitmap, rf.left, rf.top, virtualPaint);
+                        }
                     }
-                }
-                if (curVirtualWall.left != 0) {
-                    canvas.drawLine(curVirtualWall.left, curVirtualWall.top, curVirtualWall.right, curVirtualWall.bottom, virtualPaint);
-                }
+                    if (curVirtualWall.left != 0) {
+                        canvas.drawLine(curVirtualWall.left, curVirtualWall.top, curVirtualWall.right, curVirtualWall.bottom, virtualPaint);
+                    }
 
+                }
             }
+
+            super.onDraw(canvas);
         }
 
-        super.onDraw(canvas);
     }
 
     @Override

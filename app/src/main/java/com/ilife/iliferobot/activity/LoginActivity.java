@@ -110,7 +110,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
         AC.accountMgr().login(account, str_pass, new PayloadCallback<ACUserInfo>() {
             @Override
             public void success(ACUserInfo userInfo) {
-//                addAbleAlia(String.valueOf(userInfo.getUserId()));
+                addAbleAlia(String.valueOf(userInfo.getUserId()));
                 String email = userInfo.getEmail();
                 SpUtils.saveString(context, KEY_EMAIL, email);
                 Intent i = new Intent(context, MainActivity.class);

@@ -57,8 +57,8 @@ android {
         zaco {
             dimension "default"
             applicationId "com.zacorobot_eu"
-            versionCode = 7
-            versionName = '1.3.1'
+            versionCode = 8
+            versionName = '1.3.4'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO Robot"
             buildConfigField("int", "Area", "4")
@@ -116,8 +116,8 @@ android {
         /* 中国*/
         china {
             dimension "default"
-            versionCode = 34
-            versionName = '3.3.2'
+            versionCode = 35
+            versionName = '3.3.4'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -147,7 +147,7 @@ android {
         _SouthEast_Asia {
             dimension "default"
             versionCode = 38
-            versionName = '3.1.1'
+            versionName = '3.1.3'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE Robot AS"
@@ -176,11 +176,11 @@ android {
         /*美国*/
         _America {
             dimension "default"
-            versionCode = 42
-            versionName = '3.1.3'
+            versionCode = 43
+            versionName = '3.1.5'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFE Robot"
+            resValue "string", "app_name", "ILIFERobot"
             buildConfigField("int", "Area", "3")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"66ff1a7c-c9bf-4d3b-9733-d1cbf4d866bd\"")
@@ -206,7 +206,7 @@ android {
         /*欧洲*/
         _Europe {
             dimension "default"
-            versionCode = 38
+            versionCode = 39
             versionName = '3.0.3'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")

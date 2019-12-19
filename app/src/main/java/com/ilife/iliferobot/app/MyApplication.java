@@ -74,8 +74,7 @@ public class MyApplication extends MultiDexApplication {
                 .tag(BuildConfig.FLAVOR)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-//        initYM();
-
+        initYM();
     }
 
 

@@ -9,6 +9,7 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BasePresenter;
 import com.ilife.iliferobot.contract.MainContract;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 
@@ -24,6 +25,9 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
             @Override
             public void success(List<ACUserDevice> acUserDevices) {
                 if (isViewAttached()) {
+                    for (ACUserDevice ac:acUserDevices) {
+                        MyLogger.d("拉取设备","设备数据："+ac.toString());
+                    }
                     mView.updateDeviceList(acUserDevices);
                     mView.setRefreshOver();
                 }

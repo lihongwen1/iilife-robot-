@@ -60,7 +60,7 @@ public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
     public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
-    public static final String KEY_CUR_WORK_MODE = "KEY_MODE";//设备当前状态
+    public static final String KEY_CUR_WORK_MODE = "KEY_CUR_WORK_MODE";//设备当前状态
     int mopForce, mode, index, curWorkMode;
     boolean isMaxMode, voiceOpen;
     Context context;
@@ -258,7 +258,7 @@ public class SettingActivity extends BackBaseActivity {
             tv_name.setText(physicalId);
         }
         String robotType = DeviceUtils.getRobotType(subdomain);
-        int product;
+        int product=R.drawable.n_x800;
         switch (robotType) {
             case Constants.X785:
                 product = R.drawable.n_x785;
@@ -306,8 +306,8 @@ public class SettingActivity extends BackBaseActivity {
                 rl_update.setVisibility(View.VISIBLE);
                 rl_mode.setVisibility(View.GONE);
                 break;
-            case Constants.V3x:
             case Constants.V5x:
+            case Constants.V3x:
                 product = R.drawable.n_v5x;
                 rl_record.setVisibility(View.GONE);
                 rl_voice.setVisibility(View.GONE);
@@ -323,10 +323,7 @@ public class SettingActivity extends BackBaseActivity {
                 if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//日规A9有水量调节功能
                     rl_water.setVisibility(View.VISIBLE);
                     product = R.drawable.n_x800_white;
-                } else {
-                    rl_water.setVisibility(View.GONE);
-                    product = R.drawable.n_x800;
-                }
+                } else
                 rl_mode.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
@@ -517,7 +514,7 @@ public class SettingActivity extends BackBaseActivity {
     }
 
     private boolean canOperateSuction() {
-        if (curWorkMode == MsgCodeUtils.STATUE_POINT && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) ||  subdomain.equals(Constants.subdomain_v5x) ||subdomain.equals(Constants.subdomain_V3x))) {
+        if ((curWorkMode == MsgCodeUtils.STATUE_POINT||curWorkMode == MsgCodeUtils.STATUE_RECHARGE) && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) ||  subdomain.equals(Constants.subdomain_v5x) ||subdomain.equals(Constants.subdomain_V3x))) {
             return false;
         } else {
             return true;

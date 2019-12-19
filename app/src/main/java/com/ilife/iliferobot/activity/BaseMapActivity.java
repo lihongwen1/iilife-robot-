@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.able.ACSkills;
@@ -143,12 +146,28 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     protected int USE_MODE = USE_MODE_NORMAL;
     @BindView(R.id.tv_test)
     TextView textView;
+    private WeakHandler weakHandler;
 
     @Override
     public void attachPresenter() {
-        super.attachPresenter();
         mPresenter = new MapX9Presenter();
         mPresenter.attachView(this);
+        super.attachPresenter();
+        weakHandler = new WeakHandler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1://更新清扫面积
+                        tv_area.setText((String) msg.obj);
+                        break;
+                    case 2://清扫时长
+                        tv_time.setText((String) msg.obj);
+                        break;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -211,12 +230,18 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
 
     @Override
     public void updateCleanArea(String value) {
-        tv_area.setText(value);
+        Message message = new Message();
+        message.what = 1;
+        message.obj = value;
+        weakHandler.sendMessage(message);
     }
 
     @Override
     public void updateCleanTime(String value) {
-        tv_time.setText(value);
+        Message message = new Message();
+        message.what = 2;
+        message.obj = value;
+        weakHandler.sendMessage(message);
     }
 
     @Override
@@ -599,9 +624,9 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case MotionEvent.ACTION_DOWN: //手指按下
                 if (v.getId() != R.id.image_control_back) {//MAX键抬起才有功能
                     v.setSelected(true);
-                    long interval=System.currentTimeMillis()-lastClickTime;
-                    if (interval>3000&&mPresenter.isLongPressControl()) {//连续点击超过3s才会响应命令
-                        lastClickTime=System.currentTimeMillis();
+                    long interval = System.currentTimeMillis() - lastClickTime;
+                    if (interval > 3000 && mPresenter.isLongPressControl()) {//连续点击超过3s才会响应命令
+                        lastClickTime = System.currentTimeMillis();
                         remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
                             MyLogger.d(TAG, "下发方向移动指令");
                             switch (v.getId()) {

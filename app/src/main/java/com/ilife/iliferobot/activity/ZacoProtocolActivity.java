@@ -50,7 +50,6 @@ public class ZacoProtocolActivity extends BackBaseActivity {
             }
         });
         webView.loadUrl("https://www.zacorobot.eu/privacy/");
-
     }
 
     //监听BACK按键，有可以返回的页面时返回页面
