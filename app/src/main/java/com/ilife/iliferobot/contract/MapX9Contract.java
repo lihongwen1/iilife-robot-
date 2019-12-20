@@ -2,6 +2,7 @@ package com.ilife.iliferobot.contract;
 
 import com.accloud.service.ACDeviceMsg;
 import com.ilife.iliferobot.base.BaseView;
+import com.ilife.iliferobot.entity.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public interface MapX9Contract {
 
         void showVirtualWallTip();
         void drawMapX9(ArrayList<Integer> roadList, ArrayList<Integer> historyRoadList, byte[] slamBytes);
-        void drawMapX8(ArrayList<Integer> dataList);
+        void drawMapX8(ArrayList<Coordinate> dataList);
         boolean isActivityInteraction();
         void setUnconditionalRecreate(boolean recreate);
     }
@@ -135,7 +136,7 @@ public interface MapX9Contract {
          */
         boolean isDrawMap();
 
-        void updateSlamX8(ArrayList<Integer> src, int offset);
+        void updateSlamX8(ArrayList<Coordinate> src, int offset);
 
         boolean isX900Series();
 

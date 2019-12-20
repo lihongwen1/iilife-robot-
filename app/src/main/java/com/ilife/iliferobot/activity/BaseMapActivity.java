@@ -33,6 +33,7 @@ import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.contract.MapX9Contract;
+import com.ilife.iliferobot.entity.Coordinate;
 import com.ilife.iliferobot.presenter.MapX9Presenter;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
@@ -753,7 +754,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     }
 
     @Override
-    public void drawMapX8(ArrayList<Integer> dataList) {
+    public void drawMapX8(ArrayList<Coordinate> dataList) {
         mMapView.drawMapX8(dataList);
     }
 

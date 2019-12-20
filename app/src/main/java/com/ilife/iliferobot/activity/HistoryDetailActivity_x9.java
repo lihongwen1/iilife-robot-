@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.entity.Coordinate;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.MapView;
 import com.ilife.iliferobot.R;
@@ -22,6 +23,13 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by chenjiaping on 2017/8/18.
@@ -49,6 +57,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
     TextView tv_lean_area;
     private String subdomain;
     private boolean isDrawMap;
+    private Disposable disposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +112,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         if (subdomain.equals(Constants.subdomain_x900) || subdomain.equals(Constants.subdomain_x910)) {
             drawHistoryMap();
         } else {
-            drawHistoryMapX8();
+            disposable = Observable.just(1).subscribeOn(Schedulers.single()).subscribe(integer -> drawHistoryMapX8());
         }
     }
 
@@ -111,7 +120,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         //decode data
         int length = 0;
         List<Byte> byteList = new ArrayList<>();
-        ArrayList<Integer> pointList = new ArrayList<>();
+        ArrayList<Coordinate> pointList = new ArrayList<>();
         if (mapList != null) {
             if (mapList.size() > 0) {
                 for (int i = 0; i < mapList.size(); i++) {
@@ -126,6 +135,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         }
         byte tempdata = 0;
         byte mapdata = 0;
+        Coordinate coordinate;
         //decode x, y
         if (byteList.size() > 0 && length > 0) {
             for (int i = 0; i < byteList.size() / length; i++) {
@@ -137,11 +147,12 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                         float y = (j * 8 + k - length * 4);
                         if ((mapdata & tempdata) == tempdata) {
                             if (subdomain.equals(Constants.subdomain_x800) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_v85) || subdomain.equals(Constants.subdomain_a8s) || subdomain.equals(Constants.subdomain_a9s)) {
-                                pointList.add((int) y);
-                                pointList.add((int) (1500 - x));
+                                coordinate = new Coordinate((int) y, (int) (1500 - x));
                             } else {
-                                pointList.add((int) x);
-                                pointList.add((int) (1500 - y));
+                                coordinate = new Coordinate((int) x, (int) (1500 - y));
+                            }
+                            if (!pointList.contains(coordinate)) {
+                                pointList.add(coordinate);
                             }
 
                         }
@@ -152,11 +163,11 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
         if (pointList.size() < 2) {
             return;
         }
-        int minX = -pointList.get(0), maxX = -pointList.get(0), minY = -pointList.get(1), maxY = -pointList.get(1);
+        int minX = -pointList.get(0).getX(), maxX = -pointList.get(0).getX(), minY = -pointList.get(0).getY(), maxY = -pointList.get(0).getY();
         int x, y;
-        for (int i = 1; i < pointList.size(); i += 2) {
-            x = -pointList.get(i - 1);
-            y = -pointList.get(i);
+        for (int i = 0; i < pointList.size(); i++) {
+            x = -pointList.get(i).getX();
+            y = -pointList.get(i).getY();
             if (minX > x) {
                 minX = x;
             }
@@ -241,4 +252,11 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (disposable != null) {
+            disposable.dispose();
+        }
+    }
 }

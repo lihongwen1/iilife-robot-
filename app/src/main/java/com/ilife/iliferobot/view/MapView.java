@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.app.MyApplication;
+import com.ilife.iliferobot.entity.Coordinate;
 import com.ilife.iliferobot.model.bean.SlamLineBean;
 import com.ilife.iliferobot.model.bean.VirtualWallBean;
 import com.ilife.iliferobot.utils.BitmapUtils;
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * 900系列采用直接繪製
  * //TODO 绘制X800地图偶尔会导致图片清空（同步问题，清空bitmap时重新绘制了UI）
- * //TODO 坐标不再缩放时，增量绘制地图
+ * //TODO 坐标不再缩放时，增量绘制地图-基于属性(isSlamChange)，避免数据清空重置打导致地图重叠
  */
 public class MapView extends View {
     private int width, height;
@@ -62,7 +63,7 @@ public class MapView extends View {
     private List<SlamLineBean> lastLineBeans = new ArrayList<>();
     private Paint boxPaint;
     private RectF curVirtualWall = new RectF();
-    private ArrayList<Integer> pointList = new ArrayList<>();
+    private ArrayList<Coordinate> pointList = new ArrayList<>();//X800机型地图数据存储
     private boolean isSetExtraDrag;
     private float startX = 0, startY = 0, endX = 0, endY = 0;
     private Canvas boxCanvas, slamCanvas;
@@ -74,6 +75,7 @@ public class MapView extends View {
     private Runnable restoreRunnable;//控制延迟15s后恢复地图
     private boolean isNeedRestore = true;
     private int paddingBottom;//改变地图居中中心点
+    private boolean isSlamChange;//标记map边界是否改变
 
     public MapView(Context context) {
         super(context);
@@ -271,20 +273,23 @@ public class MapView extends View {
     }
 
 
-    public void drawMapX8(ArrayList<Integer> dataList) {
+    public void drawMapX8(ArrayList<Coordinate> dataList) {
         synchronized (this) {
+            if (pointList == null || dataList == null) {
+                return;
+            }
             drawBoxMapX8(dataList);
             boxCanvas.drawPath(boxPath, boxPaint);
             if (endX != 0 || endY != 0) {
                 positionCirclePaint.setColor(getResources().getColor(R.color.color_f08300));
-                boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 12), positionCirclePaint);
+                boxCanvas.drawCircle(endX, endY, Utils.dip2px(MyApplication.getInstance(), 12 * baseScare / 30f), positionCirclePaint);
             }
             if (Looper.getMainLooper() == Looper.myLooper()) {
                 invalidate();
             } else {
                 postInvalidate();
             }
-            MyLogger.d(TAG, "----drawMapX8----");
+            MyLogger.d(TAG, "----drawMapX8----" + dataList.size() + "-----" + (Looper.getMainLooper() == Looper.myLooper()));
         }
     }
 
@@ -325,6 +330,13 @@ public class MapView extends View {
     // TODO it should't be created ,when it's size is less than the old
     //the value of baseScare can affects the  sharpness of the map
     public void updateSlam(int xMin, int xMax, int yMin, int yMax) {
+        MyLogger.e(TAG, "xM:" + xMin + "  xMax:  " + xMax + " yMin: " + yMin + "  yMax:   " + yMax);
+        if (slamRect.left == xMin && slamRect.right == xMax && slamRect.top == yMin && slamRect.bottom == yMax) {
+            isSlamChange = false;
+            return;
+        } else {
+            isSlamChange = true;
+        }
         int xLength = xMax - xMin;
         int yLength = yMax - yMin;
         if (xLength <= 0 || yLength <= 0) {
@@ -959,7 +971,7 @@ public class MapView extends View {
      *
      * @param dataList
      */
-    private void drawBoxMapX8(ArrayList<Integer> dataList) {
+    private void drawBoxMapX8(ArrayList<Coordinate> dataList) {
         if (boxCanvas == null && boxBitmap == null) {
             boxCanvas = new Canvas();
             boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -981,14 +993,14 @@ public class MapView extends View {
         boxPaint.setStrokeWidth(1);
         float space = new BigDecimal(baseScare * 0.1f).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
         if (pointList.size() > 0) {
-            for (int i = 1; i < pointList.size(); i += 2) {
-                x = -pointList.get(i - 1);
-                y = -pointList.get(i);
+            for (int i = 0; i < pointList.size(); i++) {
+                x = -pointList.get(i).getX();
+                y = -pointList.get(i).getY();
                 boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
             }
         }
-        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1)) + (baseScare - space) / 2f;
-        endX = matrixCoordinateX(-pointList.get(pointList.size() - 2)) + (baseScare - space) / 2f;
+        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1).getY()) + (baseScare - space) / 2f;
+        endX = matrixCoordinateX(-pointList.get(pointList.size() - 1).getX()) + (baseScare - space) / 2f;
     }
 
     private void invalidateUI() {
@@ -1005,6 +1017,10 @@ public class MapView extends View {
         if (boxBitmap != null) {
             boxBitmap.recycle();
             boxBitmap = null;
+        }
+        if (pointList != null) {
+            pointList.clear();
+            pointList = null;
         }
 
     }
