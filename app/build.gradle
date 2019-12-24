@@ -147,7 +147,7 @@ android {
         _SouthEast_Asia {
             dimension "default"
             versionCode = 38
-            versionName = '3.1.5'
+            versionName = '3.1.7'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE Robot AS"

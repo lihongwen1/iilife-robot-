@@ -305,7 +305,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             isGetHistory = true;
             if (pageNo == -1) {//-1代表历史清扫数据已经查询完毕
                 singleThread.execute(() -> {
+                    if (!isViewAttached()) {
+                        return;
+                    }
                     for (String cleanData : historyDatas) {
+                        if (!isViewAttached()){
+                            return;
+                        }
                         parseRealTimeMapX8(cleanData);
                     }
                     updateSlamX8(pointList, 0);
@@ -573,8 +579,13 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     maxY = 0;
                 } else {
                     coordinate = new Coordinate(x, 1500 - y);
-                    if (j + 4 >= bytes.length || !pointList.contains(coordinate)) {//最后一个点不去重
-                        pointList.add(coordinate);
+                    if (pointList == null) {
+                        MyLogger.e(TAG,"页面已经被销毁，the data deal will make no sense!");
+                        break;
+                    } else {
+                        if (j + 4 >= bytes.length || !pointList.contains(coordinate)) {//最后一个点不去重
+                            pointList.add(coordinate);
+                        }
                     }
                 }
             }
@@ -1330,7 +1341,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         if (pointList != null) {
             pointList.clear();
-            pointList = null;
+//            pointList = null;//直接置为null会产生异常
         }
         super.detachView();
     }

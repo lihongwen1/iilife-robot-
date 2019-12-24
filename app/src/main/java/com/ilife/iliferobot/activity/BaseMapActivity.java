@@ -51,6 +51,7 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> implements MapX9Contract.View {
@@ -609,8 +610,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
         }
     }
 
-    private Disposable remoteDisposable;
-    private long lastClickTime = 0;
+    private Disposable remoteDisposable, pauseDisposable;
 
     /**
      * x785 x787支持长按持续前进旋转cleanMapView
@@ -625,25 +625,27 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case MotionEvent.ACTION_DOWN: //手指按下
                 if (v.getId() != R.id.image_control_back) {//MAX键抬起才有功能
                     v.setSelected(true);
-                    long interval = System.currentTimeMillis() - lastClickTime;
-                    if (interval > 3000 && mPresenter.isLongPressControl()) {//连续点击超过3s才会响应命令
-                        lastClickTime = System.currentTimeMillis();
-                        remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
-                            MyLogger.d(TAG, "下发方向移动指令");
-                            switch (v.getId()) {
-                                /* 遥控器方向键*/
-                                case R.id.image_left:
-                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
-                                    break;
-                                case R.id.image_right:
-                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
-                                    break;
-                                case R.id.image_forward:
-                                    mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
-                                    break;
-                            }
-                        });
-
+                    if (mPresenter.isLongPressControl()) {
+                        if (pauseDisposable != null && !pauseDisposable.isDisposed()) {
+                            pauseDisposable.dispose();//取消未发出的暂停
+                        }
+                        if (remoteDisposable == null || remoteDisposable.isDisposed()) {
+                            remoteDisposable = Observable.interval(0, 3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(aLong -> {
+                                MyLogger.d(TAG, "下发方向移动指令");
+                                switch (v.getId()) {
+                                    /* 遥控器方向键*/
+                                    case R.id.image_left:
+                                        mPresenter.sendToDeviceWithOption(ACSkills.get().turnLeft());
+                                        break;
+                                    case R.id.image_right:
+                                        mPresenter.sendToDeviceWithOption(ACSkills.get().turnRight());
+                                        break;
+                                    case R.id.image_forward:
+                                        mPresenter.sendToDeviceWithOption(ACSkills.get().turnForward());
+                                        break;
+                                }
+                            });
+                        }
                     }
                 }
 
@@ -655,13 +657,17 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                     v.setSelected(false);
                 }
                 if (mPresenter.isLongPressControl()) {
-                    if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
-                        remoteDisposable.dispose();
-                    }
                     if (v.getId() == R.id.image_control_back) {//max吸力
                         mPresenter.reverseMaxMode();
-                    } else {
-                        mPresenter.sendToDeviceWithOption(ACSkills.get().turnPause());
+                    } else {//延迟400ms暂停
+                        pauseDisposable = Observable.just(1).delay(400, TimeUnit.MILLISECONDS).subscribe(integer -> {
+                            if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
+                                remoteDisposable.dispose();
+                            }
+                            mPresenter.sendToDeviceWithOption(ACSkills.get().turnPause());
+                            MyLogger.d(TAG, "下发方向暂停指令");
+                        });
+
                     }
                 } else {
                     switch (v.getId()) {
@@ -774,6 +780,12 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.sendToDeviceWithOption(ACSkills.get().upLoadRealMsg(0x00));
+        if (pauseDisposable != null && !pauseDisposable.isDisposed()) {
+            pauseDisposable.dispose();
+        }
+        if (remoteDisposable != null && !remoteDisposable.isDisposed()) {
+            remoteDisposable.dispose();
+        }
     }
 
     @Override

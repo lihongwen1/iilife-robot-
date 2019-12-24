@@ -994,8 +994,7 @@ public class MapView extends View {
         float space = new BigDecimal(baseScare * 0.1f).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
         if (pointList.size() > 0) {
             for (int i = 0; i < pointList.size(); i++) {
-                x = -pointList.get(i).getX();
-                y = -pointList.get(i).getY();
+                x = -pointList.get(i).getX();y = -pointList.get(i).getY();
                 boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
             }
         }
