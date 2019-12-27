@@ -49,7 +49,7 @@
     <string name="add_aty_no_wifi">Wifi ist nicht verbunden</string>
     <string name="ap_aty_robot_wifi">Roboter-WiFi:</string>
     <string name="third_ap_tip2">Tipps:</string>
-    <string name="third_ap_aty_tip1">„Roboter-XXXX“ wird erzeugt, sobald der Roboter mit dem WiFi verbunden ist. Standardpasswort: 123456789.</string>
+    <string name="third_ap_aty_tip1">„Roboter-XXXX“ wird erzeugt, sobald der Roboter mit dem WiFi verbunden ist. Standardpasswort: 123456789</string>
     <string name="third_ap_aty_port_">Verbinden Sie sich mit dem WiFi: \"Robot-\"</string>
     <string name="bind_suc_aty_name">Benennen Sie Ihren Roboter</string>
     <string name="bind_suc_sty_robot_done">Abgeschlossen</string>
@@ -85,8 +85,8 @@
     <string name="personal_aty_reset_suc">Benutzenamensänderung abgeschlossen</string>
     <string name="personal_aty_reset_fail">Benutzernamensänderung fehlgeschlagen</string>
     <string name="personal_aty_exit_content">Abmelden und Vorgangsgeschichte speichern</string>
-    <string name="personal_acy_del">Konto löschen</string>
-    <string name="personal_aty_del_content">Konto und sämtliche persönlichen Daten löschen</string>
+    <string name="personal_acy_del">Benutzerkonto deaktivieren löschen</string>
+    <string name="personal_aty_del_content">"Ihr Konto ist drei Tage später nicht mehr auf ILIFE ROBOT für iOS oder ILIFE ROBOT für Android verfügbar. "</string>
     <string name="personal_aty_no_shareable">Sie haben kein Gerät zum Teilen</string>
     <string name="personal_aty_login_first">Bitte einloggen</string>
     <string name="personal_aty_avatar_suc">Profilbild wurde geändert</string>
@@ -318,4 +318,5 @@
     <string name="shedule_dialog_title">"Tipps "</string>
     <string name="settiing_change_suction_tip">Nicht möglich, in diesem Modus die Saugstufe zu verändern</string>
     <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.\n4.Nach Abschluss des Upgrades wird der Roboter automatisch neu gestartet. Entfernen Sie den Roboter von der Ladestation, nachdem Sie \"Ready to clean\" gehört haben.\n5.Schalten Sie den Netzschalter aus und warten Sie 10 Sekunden, bevor Sie den Netzschalter wieder einschalten.</string>
+    <string name="adapter_error_gx">Die Reinigung Helligkeit ist unzureichend, bitte öffnen Sie das Licht</string>
 </resources>

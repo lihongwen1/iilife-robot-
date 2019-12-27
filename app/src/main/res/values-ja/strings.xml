@@ -86,8 +86,8 @@
     <string name="personal_aty_reset_suc">ユーザー名の変更が完了しました</string>
     <string name="personal_aty_reset_fail">ユーザー名の変更に失敗しました</string>
     <string name="personal_aty_exit_content">ログオフしてすべての履歴が消えません</string>
-    <string name="personal_acy_del">アカウントを削除する</string>
-    <string name="personal_aty_del_content">アカウントを削除してすべての個人情報を消去する</string>
+    <string name="personal_acy_del">"アカウントを無効化し "</string>
+    <string name="personal_aty_del_content">"iOSのILIFE ROBOT、またはAndroidのILIFE ROBOTで3日後にアカウントが利用できなくなります。 "</string>
     <string name="personal_aty_no_shareable">共有するデバイスがありません</string>
     <string name="personal_aty_login_first">まずログインしてください</string>
     <string name="personal_aty_avatar_suc">プロフィール写真の変更が完了しました</string>
@@ -319,5 +319,6 @@
     <string name="shedule_dialog_title">プロンプト</string>
     <string name="settiing_change_suction_tip">現在のモードでは吸引レベルを変更できません</string>
     <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです。\n4.アップグレードが完了すると、ロボットは自動的に再起動します。 「クリーニングを開始する場合はボタンを押してください」と聞こえたら、ロボットを充電ドックから取り外します。\n5.電源スイッチをオフにし、10秒待ってから電源スイッチをオンにします。</string>
+    <string name="adapter_error_gx">クリーニングの明るさが不十分です、光を開いてください</string>
 
 </resources>

@@ -87,8 +87,8 @@
     <string name="personal_aty_reset_suc">Изменение имени пользователя выполнено</string>
     <string name="personal_aty_reset_fail">Ошибка изменения имени пользователя</string>
     <string name="personal_aty_exit_content">Выйти и сохранить всю историю</string>
-    <string name="personal_acy_del">Удалить аккаунт</string>
-    <string name="personal_aty_del_content">Удаление аккаунта и стирание личных данных</string>
+    <string name="personal_acy_del">"Деактивировать аккаунт "</string>
+    <string name="personal_aty_del_content">"Ваш аккаунт больше не будет доступен в ILIFE ROBOT для iOS или ILIFE ROBOT для Android через три дня. "</string>
     <string name="personal_aty_no_shareable">У вас нет устройств чтобы поделиться</string>
     <string name="personal_aty_login_first">Пожалуйста, войдите</string>
     <string name="personal_aty_avatar_suc">Изменение фотографии профиля завершено</string>
@@ -319,5 +319,6 @@
     <string name="shedule_dialog_title">Hапоминание</string>
     <string name="settiing_change_suction_tip">Невозможно изменить мощность всасывания в текущем режиме</string>
     <string name="ota_preupdate_tip">1.Аккумулятор заряжен достаточно\n2.WiFi соединение работает\n3.Робот находится в режиме зарядки\n4.Когда обновление будет завершено, робот перезапустится автоматически. Услышав «Ready to clean», выньте робота из зарядного устройства\n5.Выключите выключатель питания и подождите 10 секунд, прежде чем снова включать выключатель питания</string>
+    <string name="adapter_error_gx">Яркость очистки недостаточна, пожалуйста, откройте свет</string>
 
 </resources>

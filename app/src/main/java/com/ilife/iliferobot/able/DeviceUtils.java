@@ -390,7 +390,7 @@ public class DeviceUtils {
                 strError = context.getString(R.string.adapter_error_xj);
                 break;
             case 0xE1:
-                strError = context.getString(R.string.adapter_error_qt);
+                strError = context.getString(R.string.adapter_error_gx);
                 break;
             case 0xF1:
                 strError = context.getString(R.string.adapter_error_qt);

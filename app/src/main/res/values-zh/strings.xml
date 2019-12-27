@@ -87,8 +87,8 @@
     <string name="personal_aty_reset_suc">修改用户名成功</string>
     <string name="personal_aty_reset_fail">修改?户名失败</string>
     <string name="personal_aty_exit_content">退出后不会删除任何历史记录</string>
-    <string name="personal_acy_del">删除账号</string>
-    <string name="personal_aty_del_content">删除后系统会清空您的个人数据</string>
+    <string name="personal_acy_del">删除账户</string>
+    <string name="personal_aty_del_content">"若您确认要删除此账户，请点击“确定”按钮。 "</string>
     <string name="personal_aty_no_shareable">您没有可以分享的机器</string>
     <string name="personal_aty_login_first">请先登录</string>
     <string name="personal_aty_avatar_suc">修改头像成功</string>
@@ -318,4 +318,5 @@
     <string name="shedule_dialog_finish">完成预约</string>
     <string name="shedule_dialog_title">预约提醒</string>
     <string name="settiing_change_suction_tip">在该模式下不能改变吸力</string>
+    <string name="adapter_error_gx">清扫环境光线不足,请开灯</string>
 </resources>

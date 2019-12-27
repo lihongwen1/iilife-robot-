@@ -1,9 +1,7 @@
 package com.ilife.iliferobot.presenter;
 
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.PayloadCallback;
@@ -30,6 +28,7 @@ import com.ilife.iliferobot.contract.MapX9Contract;
 import com.ilife.iliferobot.entity.Coordinate;
 import com.ilife.iliferobot.entity.PropertyInfo;
 import com.ilife.iliferobot.entity.RealTimeMapInfo;
+import com.ilife.iliferobot.model.bean.CleaningDataX8;
 import com.ilife.iliferobot.utils.DataUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
@@ -41,12 +40,12 @@ import org.reactivestreams.Publisher;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -59,7 +58,6 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -107,8 +105,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private CompositeDisposable mComDisposable;
     private int retryTimes = 1;//the retry times of gaining the device status
     private ExecutorService singleThread;
+
     private List<String> unAnalysisData; //多包数据
     private ACClassDataMgr.ClassDataReceiver mDataReceiver;
+    private MapX9PresenterHelper presenterHelper;
 
     @Override
     public void attachView(MapX9Contract.View view) {
@@ -216,6 +216,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void updateSlamX8(ArrayList<Coordinate> src, int offset) {
+        MyLogger.e(TAG,"------------计算slam start");
         if (src == null || src.size() < 2) {
             return;
         }
@@ -247,6 +248,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (isViewAttached()) {
             mView.updateSlam(minX, maxX, minY, maxY);
         }
+        MyLogger.e(TAG,"------------计算slam end");
     }
 
     private int pageNo = 1;// 900 800等机器分页请求历史地图
@@ -255,81 +257,60 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
      * Repetition only happens after each success.
      */
     private void getHistoryDataX8() {
-        List<String> historyDatas = new ArrayList<>();
-        pageNo = 1;
-        Disposable d = Single.create((SingleOnSubscribe<ACMsg>) emitter -> {
-            if (!isViewAttached()) {//page has been destroyed
-                emitter.onError(new Exception("you need to retry after a while as the view is not attach"));
-            } else {
-                MyLogger.d(TAG, "getHistoryDataX8-------------------------------pageNo:" + pageNo);
-                MyLogger.d(TAG, "111111111     " + (Looper.getMainLooper() == Looper.myLooper()));
-                ACMsg req = new ACMsg();
-                req.setName("searchCleanRealTimeMore");
-                req.put("device_id", deviceId);
-                req.put("pageNo", pageNo);
-                AC.sendToServiceWithoutSign(DeviceUtils.getServiceName(subdomain), Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
-                    @Override
-                    public void success(ACMsg resp) {
-                        MyLogger.d(TAG, "getHistoryDataX8,and success to get the data of page " + pageNo);
-                        MyLogger.d(TAG, "22222222     " + (Looper.getMainLooper() == Looper.myLooper()));
-                        emitter.onSuccess(resp);
-                    }
+        MyLogger.e(TAG, "获取历史记录---------------");
+        if (presenterHelper == null) {
+            presenterHelper = new MapX9PresenterHelper(new MapX9PresenterHelper.OnHistoryDataResponse() {
 
-                    @Override
-                    public void error(ACException e) {
-                        // TODO 需处理当历史地图请求失败时，需重新请求
-                        emitter.onError(e);
-                    }
-                });
-            }
-
-
-        }).observeOn(Schedulers.single()).map(acMsg -> {
-            MyLogger.d(TAG, "333333     " + (Looper.getMainLooper() == Looper.myLooper()));
-            ArrayList<ACObject> data = acMsg.get("data");
-            if (data != null && data.size() > 0) {
-                for (int i = 0; i < data.size(); i++) {
-                    historyDatas.add(data.get(i).getString("clean_data"));
-                }
-            }
-            if (data == null || data.size() != 1000) {//1000是单包数据上限
-                pageNo = -1;
-            } else {
-                pageNo++;
-            }
-            return true;
-        }).retry(2).repeatUntil(() -> {
-            MyLogger.e(TAG, "Ready to get the data of page " + pageNo + ", it won't work if the pageNo is -1");
-            return pageNo == -1;
-        }).subscribe(aBoolean -> {
-            isGetHistory = true;
-            if (pageNo == -1) {//-1代表历史清扫数据已经查询完毕
-                singleThread.execute(() -> {
-                    if (!isViewAttached()) {
+                @Override
+                public void onHistoryData(CleaningDataX8[] data) {
+                    if (data == null || data.length == 0) {
+                        MyLogger.d(TAG, "没有历史数据哦。。。。。。");
                         return;
                     }
-                    for (String cleanData : historyDatas) {
-                        if (!isViewAttached()){
+                    List<CleaningDataX8> dataX8List = new ArrayList<>(Arrays.asList(data));
+                    singleThread.execute(() -> {
+                        isGetHistory = true;
+                        MyLogger.e(TAG, "拿到历史记录---------------");
+                        if (!isViewAttached()) {
                             return;
                         }
-                        parseRealTimeMapX8(cleanData);
-                    }
-                    updateSlamX8(pointList, 0);
-                    if (isViewAttached()) {
-                        mView.updateCleanTime(getTimeValue());
-                        mView.updateCleanArea(getAreaValue());
-                    }
-                    if (haveMap && pointList != null && isDrawMap()) {
-                        mView.drawMapX8(pointList);
-                    }
-                });
+                        for (CleaningDataX8 dataX8 : dataX8List) {
+                            if (dataX8 == null) {
+                                continue;
+                            }
+                            if (dataX8.isHaveClearFlag()) {
+                                pointList.clear();
+                            }
+                            workTime = dataX8.getWorkTime();
+                            cleanArea = dataX8.getCleanArea();
+                            if (dataX8.getCoordinates() != null) {
+                                for (Coordinate coor : dataX8.getCoordinates()) {//去重
+                                    if (!pointList.contains(coor)) {
+                                        pointList.add(coor);
+                                    }
+                                }
+                            }
+                        }
+                        updateSlamX8(pointList, 0);
+                        if (isViewAttached()) {
+                            mView.updateCleanTime(getTimeValue());
+                            mView.updateCleanArea(getAreaValue());
+                        }
+                        if (haveMap && pointList != null && isDrawMap()) {
+                            mView.drawMapX8(pointList);
+                        }
+                    });
+                }
 
-            }
-        }, throwable -> {
-            isGetHistory = false;
-            MyLogger.e(TAG, "Failed to get history map data,and you need to retry sometime");
-        });
-        mComDisposable.add(d);
+                @Override
+                public void onFail() {
+                    isGetHistory = false;
+                    MyLogger.e(TAG, "Failed to get history map data,and you need to retry sometime");
+                }
+            });
+        }
+
+        presenterHelper.getHistoryData(deviceId, subdomain);
     }
 
     /**
@@ -515,7 +496,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     unAnalysisData.add(mapInfo.getClean_data());
                     if (mapInfo.getPackage_id() == mapInfo.getPackage_num() - 1 || mapInfo.getPackage_id() == mapInfo.getPackage_num()) {//获取到最后一包数据再进行解析画图(国内的package id start from 1,but us is 0)
                         singleThread.execute(() -> {
-                            if (pointList == null) {//避免页面销毁，子线程仍然在处理地图数据
+                            if (!isViewAttached() || pointList == null) {//避免页面销毁，子线程仍然在处理地图数据
                                 return;
                             }
                             int offset = pointList.size();
@@ -580,7 +561,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 } else {
                     coordinate = new Coordinate(x, 1500 - y);
                     if (pointList == null) {
-                        MyLogger.e(TAG,"页面已经被销毁，the data deal will make no sense!");
+                        MyLogger.e(TAG, "页面已经被销毁，the data deal will make no sense!");
                         break;
                     } else {
                         if (j + 4 >= bytes.length || !pointList.contains(coordinate)) {//最后一个点不去重
@@ -1312,6 +1293,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         }
         if (mComDisposable != null) {
             mComDisposable.dispose();
+        }
+        if (presenterHelper != null) {//退出数据处理线程池
+            presenterHelper.cancelOrFinish();
         }
         try {
             if (isSubscribeRealMap) {

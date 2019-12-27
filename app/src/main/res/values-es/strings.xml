@@ -51,7 +51,7 @@
     <string name="add_aty_no_wifi">Wifi no está conectado</string>
     <string name="ap_aty_robot_wifi">WiFi del robot:</string>
     <string name="third_ap_tip2">Consejos:</string>
-    <string name="third_ap_aty_tip1">Una vez el robot está conectado con la red WiFi se genera un punto de acceso \"Robot-XXXX\", la contraseña por defecto es: 123456789.</string>
+    <string name="third_ap_aty_tip1">Una vez el robot está conectado con la red WiFi se genera un punto de acceso \"Robot-XXXX\", la contraseña por defecto es: 123456789</string>
     <string name="third_ap_aty_port_">Conéctese con la red WiFi \"Robot-\"</string>
     <string name="bind_suc_aty_name">Póngale un nombre a su robot</string>
     <string name="bind_suc_sty_robot_done">Completado</string>
@@ -87,8 +87,8 @@
     <string name="personal_aty_reset_suc">Cambio de nombre de usuario completado</string>
     <string name="personal_aty_reset_fail">Cambio de nombre de usuario fallido</string>
     <string name="personal_aty_exit_content">Cerrar sesión y conservar todo el historial </string>
-    <string name="personal_acy_del">Eliminar cuenta</string>
-    <string name="personal_aty_del_content">Borrar la cuenta y todos los datos personales</string>
+    <string name="personal_acy_del">"Desactivar cuenta "</string>
+    <string name="personal_aty_del_content">"Su cuenta ya no estará disponible en ILIFE ROBOT para iOS o ILIFE ROBOT para Android tres días después. "</string>
     <string name="personal_aty_no_shareable">No tiene ningún dispositivo para compartir</string>
     <string name="personal_aty_login_first">Inicie sesión</string>
     <string name="personal_aty_avatar_suc">La foto del perfil ha sido cambiada</string>
@@ -319,5 +319,6 @@
     <string name="shedule_dialog_title">"Consejos  "</string>
     <string name="settiing_change_suction_tip">No es posible cambiar el nivel de aspiración en el modo actual</string>
     <string name="ota_preupdate_tip">1.La batería está suficientemente cargada\n2.La conexión wifi funciona\n3.Robot está en en modo de carga\n4.Cuando se complete la actualización, el robot se reiniciará automáticamente. Después de escuchar \"Ready to clean\", retire el robot de la estación de carga\n5.Apague el interruptor de encendido y espere 10 segundos antes de volver a encenderlo</string>
+    <string name="adapter_error_gx">El brillo de limpieza es insuficiente, Por favor enciende la luz abra</string>
 
 </resources>

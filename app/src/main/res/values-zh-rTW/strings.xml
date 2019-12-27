@@ -84,8 +84,8 @@
     <string name="personal_aty_reset_suc">修改用戶名成功</string>
     <string name="personal_aty_reset_fail">修改?戶名失敗</string>
     <string name="personal_aty_exit_content">退出後不會刪除任何歷史記錄</string>
-    <string name="personal_acy_del">刪除賬號</string>
-    <string name="personal_aty_del_content">刪除後系統會清空您的個人數據</string>
+    <string name="personal_acy_del">"刪除賬戶 "</string>
+    <string name="personal_aty_del_content">"若您確認要刪除此賬戶，請點擊“確定”按鈕。 "</string>
     <string name="personal_aty_no_shareable">您沒有可以分享的機器</string>
     <string name="personal_aty_login_first">請先登錄</string>
     <string name="personal_aty_avatar_suc">修改頭像成功</string>
@@ -318,4 +318,5 @@
     <string name="shedule_dialog_finish">完成預約</string>
     <string name="settiing_change_suction_tip">在該模式下不能改變吸力</string>
     <string name="ota_preupdate_tip">1.掃地機有足夠的電量\n2.網路連接正常\n3.掃地機處於充電模式 \n4.升級完成時主機會自動啟動，聽到語音提示:\"請按鍵開始清掃\"後，將主機從充電座上拿下來\n5.關閉主機電源開關，等待10秒後再重新打開電源開關</string>
+    <string name="adapter_error_gx">清掃環境光線不足,請開燈</string>
 </resources>

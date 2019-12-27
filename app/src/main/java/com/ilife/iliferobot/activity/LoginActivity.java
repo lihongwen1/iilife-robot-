@@ -111,8 +111,7 @@ public class LoginActivity extends BackBaseActivity<LoginPresenter> implements L
             @Override
             public void success(ACUserInfo userInfo) {
                 addAbleAlia(String.valueOf(userInfo.getUserId()));
-                String email = userInfo.getEmail();
-                SpUtils.saveString(context, KEY_EMAIL, email);
+                SpUtils.saveString(context, KEY_EMAIL, account);
                 Intent i = new Intent(context, MainActivity.class);
                 startActivity(i);
                 removeActivity();

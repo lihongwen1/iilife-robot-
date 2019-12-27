@@ -92,6 +92,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     RelativeLayout rl_scan;
     RelativeLayout rl_share;
     RelativeLayout rl_logout;
+    RelativeLayout rl_delete_account;
     RelativeLayout rl_protocol;
     RelativeLayout rootView;
     LinearLayout ll_device;
@@ -129,6 +130,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         rootView = (RelativeLayout) findViewById(R.id.rootView);
         ll_device = (LinearLayout) findViewById(R.id.ll_device);
         rl_logout = (RelativeLayout) findViewById(R.id.rl_logout);
+        rl_delete_account = (RelativeLayout) findViewById(R.id.rl_delete_account);
         rl_protocol = (RelativeLayout) findViewById(R.id.rl_protocol);
 
         rl_help.setOnClickListener(this);
@@ -136,6 +138,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         rl_share.setOnClickListener(this);
         tv_userName.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
+        rl_delete_account.setOnClickListener(this);
         image_avatar.setOnClickListener(this);
         rl_protocol.setOnClickListener(this);
         ((TextView) findViewById(R.id.tv_top_title)).setText(R.string.personal_aty_personal_center);
@@ -204,17 +207,17 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 startActivity(i);
                 break;
             case R.id.rl_scan:
-                new RxPermissions(this).requestEach(Manifest.permission.CAMERA).subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(@NonNull Permission permission) throws Exception {
-                        if (permission.granted) {
-                            Intent i = new Intent(context, CaptureActivity.class);
-                            startActivityForResult(i, CaptureActivity.RESULT_CODE_QR_SCAN);
-                        } else {
-                            ToastUtils.showToast(context, getString(R.string.access_camera));
-                        }
+                new RxPermissions(this).requestEach(Manifest.permission.CAMERA).subscribe(permission -> {
+                    if (permission.granted) {
+                        Intent i12 = new Intent(context, CaptureActivity.class);
+                        startActivityForResult(i12, CaptureActivity.RESULT_CODE_QR_SCAN);
+                    } else {
+                        ToastUtils.showToast(context, getString(R.string.access_camera));
                     }
                 });
+                break;
+            case R.id.rl_delete_account:
+                showDeleteAccountDialog();
                 break;
             case R.id.rl_logout:
                 showLogoutDialog();
@@ -262,6 +265,41 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                 startActivityForResult(i2, LOCAL_PIC);
                 break;
         }
+    }
+
+    /**
+     * 拿到账号
+     */
+    private void showDeleteAccountDialog() {
+        UniversalDialog deleteAccount = new UniversalDialog();
+        String hint = Utils.getString(R.string.personal_aty_del_content);
+        if (!Utils.isIlife()&&hint.contains("ILIFE")) {
+            hint = hint.replace("ILIFE", Constants.BRAND_ZACO);
+        }
+        deleteAccount.setDialogType(UniversalDialog.TYPE_NORMAL).setTitleColor(getResources().getColor(R.color.color_f08300)).
+                setTitle(email.isEmpty()?Utils.getString(R.string.personal_acy_del):email).setHintTip(hint).
+                setOnRightButtonClck(() -> {
+                    if (AC.accountMgr().isLogin()) {
+                        ACFeedback feedback = new ACFeedback();
+                        feedback.addFeedback("description", "请求删除账号");
+                        feedback.addFeedback("telephoneNumber", email);
+                        feedback.addFeedback("deviceType", "android");
+                        AC.feedbackMgr().submitFeedback(feedback, new VoidCallback() {
+                            @Override
+                            public void success() {
+                                Intent i = new Intent(context, QuickLoginActivity.class);
+                                startActivity(i);
+                                removeALLActivity();
+                            }
+
+                            @Override
+                            public void error(ACException e) {
+                                ToastUtils.showToast(context, getString(R.string.help_aty_commit));
+                            }
+                        });
+
+                    }
+                }).show(getSupportFragmentManager(), "logout");
     }
 
     private void showLogoutDialog() {
@@ -515,23 +553,6 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         }
     }
 
-
-    private void commit(String email, String contents) {
-        ACFeedback feedback = new ACFeedback();
-        feedback.addFeedback("description", contents);
-        feedback.addFeedback("telephoneNumber", email);
-        AC.feedbackMgr().submitFeedback(feedback, new VoidCallback() {
-            @Override
-            public void success() {
-                ToastUtils.showToast(context, getString(R.string.help_aty_commit_suc));
-            }
-
-            @Override
-            public void error(ACException e) {
-                ToastUtils.showToast(context, getString(R.string.help_aty_commit));
-            }
-        });
-    }
 
     public String getVersion() {
         PackageManager manager = context.getPackageManager();

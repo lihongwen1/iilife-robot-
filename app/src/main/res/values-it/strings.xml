@@ -51,7 +51,7 @@
     <string name="add_aty_no_wifi">WiFi non collegato</string>
     <string name="ap_aty_robot_wifi">WiFi del robot:</string>
     <string name="third_ap_tip2">Consigli:</string>
-    <string name="third_ap_aty_tip1"> Il \"Robot-XXXX\"sarà generato non appena il robot sarà connesso con il WiFi. Password standard: 123456789.</string>
+    <string name="third_ap_aty_tip1"> Il \"Robot-XXXX\"sarà generato non appena il robot sarà connesso con il WiFi. Password standard: 123456789</string>
     <string name="third_ap_aty_port_">Collegarsi con il WiFi: \"Robot-\"</string>
     <string name="bind_suc_aty_name">Denominare il proprio robot</string>
     <string name="bind_suc_sty_robot_done">Completato</string>
@@ -87,8 +87,8 @@
     <string name="personal_aty_reset_suc">Modifica del nome utente completata</string>
     <string name="personal_aty_reset_fail">Impossibile modificare il nome utente</string>
     <string name="personal_aty_exit_content">Log-out e salva tutta la cronologia</string>
-    <string name="personal_acy_del">Eliminare l\'account</string>
-    <string name="personal_aty_del_content">Eliminare il conto e tutti i dati personali</string>
+    <string name="personal_acy_del">"Disattiva Account "</string>
+    <string name="personal_aty_del_content">"Il tuo account non sarà più disponibile su ILIFE ROBOT per iOS o ILIFE ROBOT per Android tre giorni dopo. "</string>
     <string name="personal_aty_no_shareable">Non c\'è alcuna apparecchiatura da condividere</string>
     <string name="personal_aty_login_first">Effettuare il log-in</string>
     <string name="personal_aty_avatar_suc">La foto del profilo è stata modificata</string>
@@ -322,4 +322,5 @@
     <string name="shedule_dialog_title">"Consigli  "</string>
     <string name="settiing_change_suction_tip">In questa modalità non è possibile modificare il livello di aspirazione</string>
     <string name="ota_preupdate_tip">1.La batteria è sufficientemente carica. \n2. La connessione Wi-Fi funziona. \n3. Il robot è in charging.\n4.Al termine dell\'aggiornamento, il robot si riavvierà automaticamente. Dopo aver sentito \"Ready to clean\", rimuovere il robot dal dock di ricarica.\n5.Spegnere l\'interruttore di alimentazione e attendere 10 secondi prima di riaccenderlo.</string>
+    <string name="adapter_error_gx">La luminosità della pulizia è insufficiente, si prega di aprire la luce</string>
 </resources>

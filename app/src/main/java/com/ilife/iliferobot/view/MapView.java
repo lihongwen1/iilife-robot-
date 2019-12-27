@@ -76,6 +76,7 @@ public class MapView extends View {
     private boolean isNeedRestore = true;
     private int paddingBottom;//改变地图居中中心点
     private boolean isSlamChange;//标记map边界是否改变
+    private boolean isDetached;
 
     public MapView(Context context) {
         super(context);
@@ -972,6 +973,9 @@ public class MapView extends View {
      * @param dataList
      */
     private void drawBoxMapX8(ArrayList<Coordinate> dataList) {
+        if (isDetached) {//页面销毁，不在绘制
+            return;
+        }
         if (boxCanvas == null && boxBitmap == null) {
             boxCanvas = new Canvas();
             boxBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -992,14 +996,25 @@ public class MapView extends View {
         boxPaint.setColor(getResources().getColor(R.color.white));
         boxPaint.setStrokeWidth(1);
         float space = new BigDecimal(baseScare * 0.1f).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
+        Coordinate coordinate;
         if (pointList.size() > 0) {
             for (int i = 0; i < pointList.size(); i++) {
-                x = -pointList.get(i).getX();y = -pointList.get(i).getY();
-                boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
+                coordinate = pointList.get(i);
+                if (coordinate != null) {
+                    x = -coordinate.getX();
+                    y = -coordinate.getY();
+                    boxPath.addRect(matrixCoordinateX(x), matrixCoordinateY(y), matrixCoordinateX(x) + baseScare - space, matrixCoordinateY(y) + baseScare - space, Path.Direction.CCW);
+
+                }
             }
         }
-        endY = matrixCoordinateY(-pointList.get(pointList.size() - 1).getY()) + (baseScare - space) / 2f;
-        endX = matrixCoordinateX(-pointList.get(pointList.size() - 1).getX()) + (baseScare - space) / 2f;
+        if (pointList.size() > 0) {
+            coordinate = pointList.get(pointList.size() - 1);
+            if (coordinate != null) {
+                endY = matrixCoordinateY(-coordinate.getY()) + (baseScare - space) / 2f;
+                endX = matrixCoordinateX(-coordinate.getX()) + (baseScare - space) / 2f;
+            }
+        }
     }
 
     private void invalidateUI() {
@@ -1019,8 +1034,15 @@ public class MapView extends View {
         }
         if (pointList != null) {
             pointList.clear();
-            pointList = null;
+//            pointList = null;直接置空会空指针异常
         }
+        isDetached = true;
 
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        isDetached = false;
     }
 }
