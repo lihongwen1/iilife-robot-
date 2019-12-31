@@ -2,6 +2,8 @@ package com.ilife.iliferobot.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -67,6 +69,7 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
             case R.id.tv_set:
                 Intent i = new Intent();
                 i.setAction("android.net.wifi.PICK_WIFI_NETWORK");
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 break;
         }
