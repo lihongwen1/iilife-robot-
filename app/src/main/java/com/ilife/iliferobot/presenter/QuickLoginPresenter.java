@@ -64,13 +64,15 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
                     @Override
                     public void error(ACException e) {
-                        completableEmitter.onError(new Exception(Utils.getString(R.string.login_aty_timeout)));
+                        completableEmitter.onError(e);
                         //发送验证码失败
                     }
                 }))).andThen(countDown()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
             //发送验证码成功
         }, throwable -> {
-            ToastUtils.showToast(throwable.getMessage());
+            if (throwable instanceof ACException) {
+                ToastUtils.showToast(Utils.getString(R.string.login_aty_timeout));
+            }
             //发送验证码失败
         });
 
@@ -81,7 +83,19 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
     public Completable countDown() {
         return Completable.fromPublisher(Flowable.intervalRange(0, 59, 0, 1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(aLong -> mView.setCountDownValue((60 - aLong) + "s")).doOnComplete(() -> mView.onCountDownFinish()).doOnSubscribe(subscription -> mView.onStartCountDown()));
+                .doOnNext(aLong -> {
+                    if (isViewAttached()) {
+                        mView.setCountDownValue((60 - aLong) + "s");
+                    }
+                }).doOnComplete(() -> {
+                    if (isViewAttached()) {
+                        mView.onCountDownFinish();
+                    }
+                }).doOnSubscribe(subscription -> {
+                    if (isViewAttached()) {
+                        mView.onStartCountDown();
+                    }
+                }));
     }
 
     @Override
@@ -106,7 +120,7 @@ public class QuickLoginPresenter extends BasePresenter<QuickLoginContract.View> 
 
     @Override
     public void checkVerificationCode() {
-        if (!Utils.checkAccountUseful(mView.getPhone())){//账户格式错误
+        if (!Utils.checkAccountUseful(mView.getPhone())) {//账户格式错误
             return;
         }
         acAccountMgr.checkVerifyCode(mView.getPhone(), mView.getVerificationCode(), new PayloadCallback<Boolean>() {

@@ -90,9 +90,9 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
             tv_slogan.setVisibility(View.GONE);
         }
 
-        if (Utils.isChinaEnvironment()){
+        if (Utils.isChinaEnvironment()) {
             iv_logo.setBackground(getResources().getDrawable(R.drawable.logo_zh));
-        }else {
+        } else {
             iv_logo.setBackground(getResources().getDrawable(R.drawable.logo));
         }
 
@@ -162,15 +162,19 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
 
     @Override
     public void setCountDownValue(String value) {
-        tv_count_down.setText(value);
+        if (tv_count_down != null) {
+            tv_count_down.setText(value);
+        }
     }
 
     @Override
     public void onCountDownFinish() {
         MyLogger.d("QuickLogin", "是否是主线程：" + (Looper.getMainLooper() == Looper.myLooper()));
-        tv_count_down.setVisibility(View.GONE);
-        tv_send_code.setVisibility(View.VISIBLE);
-        tv_send_code.setText(R.string.resend);
+        if (tv_count_down != null) {
+            tv_count_down.setVisibility(View.GONE);
+            tv_send_code.setVisibility(View.VISIBLE);
+            tv_send_code.setText(R.string.resend);
+        }
     }
 
     @Override

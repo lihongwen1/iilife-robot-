@@ -3,7 +3,6 @@ package com.ilife.iliferobot.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -13,11 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.accloud.cloudservice.AC;
 import com.accloud.cloudservice.VoidCallback;
 import com.accloud.service.ACException;
 import com.accloud.service.ACUserDevice;
 import com.badoo.mobile.util.WeakHandler;
+import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.adapter.RobotListAdapter;
 import com.ilife.iliferobot.app.MyApplication;
@@ -25,21 +29,16 @@ import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.contract.MainContract;
 import com.ilife.iliferobot.presenter.MainPresenter;
-import com.ilife.iliferobot.able.Constants;
-import com.ilife.iliferobot.utils.MyLogger;
-import com.ilife.iliferobot.utils.ToastUtils;
-import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.DialogUtils;
+import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.utils.SpUtils;
+import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.SlideRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 
@@ -73,7 +72,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     LinearLayout rootView;
     @BindView(R.id.layout_no_device)
     RelativeLayout layout_no_device;
-    Rect rect;
     UniversalDialog unbindDialog;
     private WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
@@ -111,7 +109,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements View.On
     public void initView() {
         context = this;
         mAcUserDevices = MyApplication.getInstance().getmAcUserDevices();
-        rect = new Rect();
         loadingDialog = DialogUtils.createLoadingDialog_(context);
         bt_add.setOnClickListener(this);
         initAdapter();
