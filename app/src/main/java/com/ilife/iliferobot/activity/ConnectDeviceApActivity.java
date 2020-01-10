@@ -69,7 +69,6 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
             case R.id.tv_set:
                 Intent i = new Intent();
                 i.setAction("android.net.wifi.PICK_WIFI_NETWORK");
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 break;
         }
