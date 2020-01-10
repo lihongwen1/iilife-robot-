@@ -165,7 +165,6 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                         pb_side.setProgress(resp[2]);
                         pb_roll.setProgress(resp[3]);
                         pb_filter.setProgress(resp[4]);
-
                         tv_percent_side.setText(resp[2] + "%");
                         tv_percent_roll.setText(resp[3] + "%");
                         tv_percent_filter.setText(resp[4] + "%");
