@@ -482,7 +482,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         isSubscribeRealMap = true;
         if (mDataReceiver == null) {
             mDataReceiver = (s, i, s1) -> {
-                MyLogger.d(TAG, "received map data------");
+                MyLogger.d(TAG, "received map data------数据："+s1);
                 if (!isViewAttached()) {
                     return;
                 }

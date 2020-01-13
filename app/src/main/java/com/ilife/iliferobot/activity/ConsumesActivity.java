@@ -113,7 +113,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
 //                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7)) {
 //                    title = Utils.getString(R.string.consume_aty_resetRoll_a9);
 //                    hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
-//                } else {
+//                } else {0
 //                    title = Utils.getString(R.string.consume_aty_resetRoll);
 //                    hint = Utils.getString(R.string.consume_aty_resetRoll_over);
 //                }
