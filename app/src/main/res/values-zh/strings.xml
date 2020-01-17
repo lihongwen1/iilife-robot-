@@ -186,6 +186,7 @@
     <string name="setting_aty_hit">请为您的机器人设置昵称</string>
     <string name="setting_aty_only_admin">只有管理员才有操作权限</string>
     <string name="clock_aty_sun">星期日</string>
+    <string name="clock_aty_every_day">每天</string>
     <string name="clock_aty_mon">星期一</string>
     <string name="clock_aty_tues">星期二</string>
     <string name="clock_aty_wed">星期三</string>

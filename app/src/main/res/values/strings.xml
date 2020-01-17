@@ -323,4 +323,5 @@
     <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock.\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
     <string name="personal_aty_del_content">"Your account will no longer be available on ILIFE ROBOT for iOS,or ILIFE ROBOT for Android three days later. "</string>
     <string name="adapter_error_gx">The cleaning brightness is insufficient,please open the light</string>
+    <string name="clock_aty_every_day">Every day</string>
 </resources>

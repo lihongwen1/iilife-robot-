@@ -37,6 +37,7 @@ import com.ilife.iliferobot.utils.AlertDialogUtils;
 import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.TimeUtil;
+import com.ilife.iliferobot.utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
@@ -74,6 +75,7 @@ public class ClockingActivity extends BackBaseActivity {
     TextView tv_title;
     private ScheduleTipDialogFragment workTimeDialog;
     private int selectMinte, selectHour, selecPostion;
+    private boolean isEveryDay;
     WeakHandler handler = new WeakHandler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -147,6 +149,10 @@ public class ClockingActivity extends BackBaseActivity {
         bytes = new byte[50];
         acDeviceMsg = new ACDeviceMsg();
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
+        isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x);//V5x是单条预约，每天触发
+        if (adapter!=null){
+            adapter.setEveryDaya(isEveryDay);
+        }
         physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
         weeks = getResources().getStringArray(R.array.array_week);
         for (int i = 0; i < 7; i++) {
@@ -213,7 +219,7 @@ public class ClockingActivity extends BackBaseActivity {
                     selecPostion = position;
                     if (!isNoAtNight()) {
                         finishShedule();
-                    } else if ((selectHour > 5 && selectHour < 20)||(selectHour==5&&selectMinte>0)) {//可用时间段
+                    } else if ((selectHour > 5 && selectHour < 20) || (selectHour == 5 && selectMinte > 0)) {//可用时间段
                         finishShedule();
                     } else {//不可用时间
                         if (workTimeDialog == null) {
@@ -245,6 +251,9 @@ public class ClockingActivity extends BackBaseActivity {
         return robotType.equals(Constants.A9) || robotType.equals(Constants.A9s) || robotType.equals(Constants.X800) || robotType.equals(Constants.A8s);
     }
 
+    /**
+     * ZACO V5X 预约改为单条，整周。
+     */
     private void finishShedule() {
         String current = selectHour + UNDER_LINE + selectMinte;
         if (!current.equals(last)) {
@@ -255,7 +264,11 @@ public class ClockingActivity extends BackBaseActivity {
                 startIndex = 30;
             }
             bytes[startIndex + 1] = 1;
-            bytes[startIndex + 2] = TimeUtil.getWeeks(selecPostion);
+            if (isEveryDay) {//V5x只有一条预约，且预约为everyday
+                bytes[startIndex + 2] = 0x7f;
+            } else {
+                bytes[startIndex + 2] = TimeUtil.getWeeks(selecPostion);
+            }
             bytes[startIndex + 3] = (byte) selectHour;
             bytes[startIndex + 4] = (byte) selectMinte;
 

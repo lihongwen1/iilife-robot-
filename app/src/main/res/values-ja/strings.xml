@@ -320,5 +320,6 @@
     <string name="settiing_change_suction_tip">現在のモードでは吸引レベルを変更できません</string>
     <string name="ota_preupdate_tip">1.バッテリーは十分チャージされています。\n2.ネットワーク接続は正常です。\n3.スイーパーは充電モードです。\n4.アップグレードが完了すると、ロボットは自動的に再起動します。 「クリーニングを開始する場合はボタンを押してください」と聞こえたら、ロボットを充電ドックから取り外します。\n5.電源スイッチをオフにし、10秒待ってから電源スイッチをオンにします。</string>
     <string name="adapter_error_gx">クリーニングの明るさが不十分です、光を開いてください</string>
+    <string name="clock_aty_every_day">毎日</string>
 
 </resources>

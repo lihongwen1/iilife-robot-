@@ -16,6 +16,7 @@ import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.base.BaseViewHolder;
 import com.ilife.iliferobot.entity.NewClockInfo;
+import com.ilife.iliferobot.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ import java.util.List;
  */
 
 public class ClockAdapter extends BaseQuickAdapter<NewClockInfo, BaseViewHolder> {
+    private boolean isEveryDaya;
+
     public ClockAdapter(int layoutId, @NonNull List<NewClockInfo> data) {
         super(layoutId, data);
     }
@@ -39,11 +42,23 @@ public class ClockAdapter extends BaseQuickAdapter<NewClockInfo, BaseViewHolder>
         String minute = info.getMinute() < 10 ? "0" + info.getMinute() : "" + info.getMinute();
         holder.setText(R.id.tv_time, hour + ":" + minute);
         holder.setSelect(R.id.tv_time, isOpen);
-
-        holder.setText(R.id.tv_week, info.getWeek());
+        if (isEveryDaya) {
+            holder.setText(R.id.tv_week, Utils.getString(R.string.clock_aty_every_day));
+        } else {
+            holder.setText(R.id.tv_week, info.getWeek());
+        }
         holder.setSelect(R.id.tv_week, isOpen);
 
         holder.setSelect(R.id.image_status, isOpen);
         holder.addOnClickListener(R.id.image_status);
+    }
+
+    @Override
+    public int getItemCount() {
+        return isEveryDaya ? 1 : super.getItemCount();
+    }
+
+    public void setEveryDaya(boolean everyDaya) {
+        isEveryDaya = everyDaya;
     }
 }

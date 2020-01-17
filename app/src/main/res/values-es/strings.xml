@@ -320,5 +320,6 @@
     <string name="settiing_change_suction_tip">No es posible cambiar el nivel de aspiración en el modo actual</string>
     <string name="ota_preupdate_tip">1.La batería está suficientemente cargada\n2.La conexión wifi funciona\n3.Robot está en en modo de carga\n4.Cuando se complete la actualización, el robot se reiniciará automáticamente. Después de escuchar \"Ready to clean\", retire el robot de la estación de carga\n5.Apague el interruptor de encendido y espere 10 segundos antes de volver a encenderlo</string>
     <string name="adapter_error_gx">El brillo de limpieza es insuficiente, Por favor enciende la luz abra</string>
+    <string name="clock_aty_every_day">Todos los días</string>
 
 </resources>

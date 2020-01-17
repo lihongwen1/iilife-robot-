@@ -323,4 +323,5 @@
     <string name="settiing_change_suction_tip">In questa modalità non è possibile modificare il livello di aspirazione</string>
     <string name="ota_preupdate_tip">1.La batteria è sufficientemente carica. \n2. La connessione Wi-Fi funziona. \n3. Il robot è in charging.\n4.Al termine dell\'aggiornamento, il robot si riavvierà automaticamente. Dopo aver sentito \"Ready to clean\", rimuovere il robot dal dock di ricarica.\n5.Spegnere l\'interruttore di alimentazione e attendere 10 secondi prima di riaccenderlo.</string>
     <string name="adapter_error_gx">La luminosità della pulizia è insufficiente, si prega di aprire la luce</string>
+    <string name="clock_aty_every_day">Ogni giorno</string>
 </resources>
