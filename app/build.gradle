@@ -58,7 +58,7 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 8
-            versionName = '1.3.6'
+            versionName = '1.3.9'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO Robot"
             buildConfigField("int", "Area", "4")
@@ -88,7 +88,7 @@ android {
             dimension "default"
             applicationId "com.ilife.iliferobot_test"
             versionCode = 32
-            versionName = '3.0.0'
+            versionName = '3.0.1'
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人TEST"
             buildConfigField("int", "Area", "0")
@@ -117,7 +117,7 @@ android {
         china {
             dimension "default"
             versionCode = 35
-            versionName = '3.3.8'
+            versionName = '3.4.0'
             applicationId "com.ilife.iliferobot_cn"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "智意机器人"
@@ -146,8 +146,8 @@ android {
         /*东南亚*/
         _SouthEast_Asia {
             dimension "default"
-            versionCode = 38
-            versionName = '3.1.8'
+            versionCode = 39
+            versionName = '3.1.9'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFE Robot AS"
@@ -177,7 +177,7 @@ android {
         _America {
             dimension "default"
             versionCode = 43
-            versionName = '3.1.5'
+            versionName = '3.1.6'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFERobot"
@@ -207,7 +207,7 @@ android {
         _Europe {
             dimension "default"
             versionCode = 39
-            versionName = '3.0.3'
+            versionName = '3.0.4'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife

@@ -2,6 +2,12 @@ package com.ilife.iliferobot.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -36,14 +42,54 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     private String homeSsid;
     private String robot_ssid;
     private String homePassword;
+    private boolean isStartBinding;
+    private ConnectivityManager.NetworkCallback networkCallback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        initData();
-        bindDevice();
+        preCheckAndBindDevice();
     }
+
+    private void preCheckAndBindDevice() {
+        MyLogger.e("ConnectDeviceApActivity", "checkAndBindWifi");
+        final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo inf = cm.getActiveNetworkInfo();
+            MyLogger.e("ConnectDeviceApActivity", "test Wifi Type==:" + inf.getType() + "," + inf.isConnected() + "," + inf.isAvailable());
+            if (inf.getType() == ConnectivityManager.TYPE_MOBILE) {//网络类型为4G,则需要绑定应用到特定WIFI网络
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    NetworkRequest.Builder builder = new NetworkRequest.Builder();
+                    builder.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+                    builder.removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+                    networkCallback = new ConnectivityManager.NetworkCallback() {
+                        @Override
+                        public void onAvailable(Network network) {
+                            MyLogger.d(TAG, "-----网络可用，bind wifi");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                MyLogger.d("NetworkRequest", "-----网络可用，bind wifi");
+                                cm.bindProcessToNetwork(network);
+                            }
+                            if (!isStartBinding) {
+                                bindDevice();
+                                isStartBinding = true;
+                            }
+                        }
+                    };
+
+                    cm.requestNetwork(builder.build(), networkCallback);
+                } else {
+                    bindDevice();
+                }
+            } else {
+                bindDevice();
+            }
+        } else {
+            bindDevice();
+        }
+    }
+
 
     @Override
     public void attachPresenter() {
@@ -57,6 +103,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
     }
 
     public void initData() {
+        isStartBinding = false;
         context = this;
         robot_ssid = getIntent().getStringExtra(EXTAR_ROBOT_SSID);
         homeSsid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
@@ -77,6 +124,7 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
      */
     @Override
     public void bindDevice() {
+        MyLogger.d(TAG,"开始绑定网络----");
         if (robot_ssid == null || !robot_ssid.contains("Robot")) {
             mPresenter.connectToDevice();
         } else {
@@ -134,4 +182,15 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         mPresenter.cancelApWifi();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm != null && networkCallback != null) {
+                cm.bindProcessToNetwork(null);
+                cm.unregisterNetworkCallback(networkCallback);
+            }
+        }
+    }
 }

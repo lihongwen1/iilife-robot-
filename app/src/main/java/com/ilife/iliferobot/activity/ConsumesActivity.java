@@ -113,7 +113,7 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
 //                if (DeviceUtils.getRobotType(subdomain).equals(Constants.A9) || DeviceUtils.getRobotType(subdomain).equals(Constants.A7)) {
 //                    title = Utils.getString(R.string.consume_aty_resetRoll_a9);
 //                    hint = Utils.getString(R.string.consume_aty_resetRoll_over_a9);
-//                } else {
+//                } else {0
 //                    title = Utils.getString(R.string.consume_aty_resetRoll);
 //                    hint = Utils.getString(R.string.consume_aty_resetRoll_over);
 //                }
@@ -165,7 +165,6 @@ public class ConsumesActivity extends BackBaseActivity implements View.OnLongCli
                         pb_side.setProgress(resp[2]);
                         pb_roll.setProgress(resp[3]);
                         pb_filter.setProgress(resp[4]);
-
                         tv_percent_side.setText(resp[2] + "%");
                         tv_percent_roll.setText(resp[3] + "%");
                         tv_percent_filter.setText(resp[4] + "%");

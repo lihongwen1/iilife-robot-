@@ -2,6 +2,8 @@ package com.ilife.iliferobot.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
