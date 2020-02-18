@@ -4,7 +4,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.R;
+import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.base.BaseQuickAdapter;
 import com.ilife.iliferobot.base.BaseViewHolder;
 import com.ilife.iliferobot.entity.HistoryRecord_x9;
@@ -25,8 +27,13 @@ public class HistoryAdapter extends BaseQuickAdapter<HistoryRecord_x9, BaseViewH
         holder.setText(R.id.tv_duration, historyRecord.getWork_time() / 60 + "min");
         holder.setText(R.id.tv_area, historyRecord.getClean_area() + "㎡");
         long time_ = historyRecord.getStart_time();
-        holder.setText(R.id.tv_date, generateTime(time_, Utils.getString(R.string.history_adapter_month_day)));
-        holder.setText(R.id.tv_time, generateTime(time_, Utils.getString(R.string.history_adapter_hour_minute)));
+        if (BuildConfig.BRAND.equals(Constants.BRAND_ZACO)) {
+            holder.setText(R.id.tv_date, generateTime(time_,"dd/MM/yyyy"));
+            holder.setText(R.id.tv_time, generateTime(time_, Utils.getString(R.string.history_adapter_hour_minute)));
+        } else {
+            holder.setText(R.id.tv_date, generateTime(time_, Utils.getString(R.string.history_adapter_month_day)));
+            holder.setText(R.id.tv_time, generateTime(time_, Utils.getString(R.string.history_adapter_hour_minute)));
+        }
     }
 
 

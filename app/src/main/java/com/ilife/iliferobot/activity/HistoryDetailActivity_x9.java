@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.BuildConfig;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
@@ -118,7 +119,7 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
 
     private void drawHistoryMapX8() {
         //decode data
-        int length = 0;
+        int length = -1;
         List<Byte> byteList = new ArrayList<>();
         ArrayList<Coordinate> pointList = new ArrayList<>();
         if (mapList != null) {
@@ -126,6 +127,9 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
                 for (int i = 0; i < mapList.size(); i++) {
                     String data = mapList.get(i);
                     byte[] bytes = Base64.decode(data, Base64.DEFAULT);
+                    if (length != -1 && length != bytes[0]) {//单条记录多个包的length与第一包不一致的丢弃
+                       break;
+                    }
                     length = bytes[0];
                     for (int j = 1; j < bytes.length; j++) {
                         byteList.add(bytes[j]);
@@ -205,7 +209,12 @@ public class HistoryDetailActivity_x9 extends BackBaseActivity {
             yMin = 1500 - record.getSlam_yMax();
             MyLogger.e(TAG, "getDate===:" + xMin + "<--->" + xMax + "<--->" + yMin + "<--->" + yMax + "<--->");
             long time_ = record.getStart_time();
-            String date = generateTime(time_, getString(R.string.history_adapter_month_day));
+            String date;
+            if (BuildConfig.BRAND.equals(Constants.BRAND_ZACO)) {
+                date = generateTime(time_, "dd/MM/yyyy");
+            } else {
+                date = generateTime(time_, getString(R.string.history_adapter_month_day));
+            }
             tv_title.setText(date);
             tv_end_reason.setText(getResources().getString(R.string.setting_aty_end_reason, gerRealErrortTip(record.getStop_reason())));
             tv_clean_time.setText(record.getWork_time() / 60 + "min");

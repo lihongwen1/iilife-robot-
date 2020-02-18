@@ -85,7 +85,7 @@
     <string name="personal_aty_reset_suc">Benutzenamensänderung abgeschlossen</string>
     <string name="personal_aty_reset_fail">Benutzernamensänderung fehlgeschlagen</string>
     <string name="personal_aty_exit_content">Abmelden und Vorgangsgeschichte speichern</string>
-    <string name="personal_acy_del">Benutzerkonto deaktivieren löschen</string>
+    <string name="personal_acy_del">Benutzerkonto löschen</string>
     <string name="personal_aty_del_content">"Ihr Konto ist drei Tage später nicht mehr auf ILIFE ROBOT für iOS oder ILIFE ROBOT für Android verfügbar. "</string>
     <string name="personal_aty_no_shareable">Sie haben kein Gerät zum Teilen</string>
     <string name="personal_aty_login_first">Bitte einloggen</string>

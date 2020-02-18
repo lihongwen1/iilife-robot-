@@ -112,7 +112,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
         AC.sendToService("", serviceName, Constants.SERVICE_VERSION, req, new PayloadCallback<ACMsg>() {
             @Override
             public void success(ACMsg resp) {
-                if (subdomain.equals(Constants.subdomain_x900)||subdomain.equals(Constants.subdomain_x910)) {
+                if (subdomain.equals(Constants.subdomain_x900) || subdomain.equals(Constants.subdomain_x910)) {
                     if (resp.get("data") != null) {
                         ArrayList<ACObject> data = resp.get("data");
                         ACObject acObject = data.get(0);
@@ -140,7 +140,7 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
                         ArrayList<ACObject> data = resp.get("data");
                         ACObject obj = data.get(0);
                         String clean_data0 = obj.getString("clean_data");
-                        MyLogger.d(TAG,"history road list:          "+clean_data0);
+                        MyLogger.d(TAG, "history road list:          " + clean_data0);
                         HistoryRecord_x9 record = new HistoryRecord_x9();
                         record.setLineSpace(String.valueOf(clean_data0.charAt(0)));
                         record.setWork_time(obj.getInt("work_time"));
@@ -153,8 +153,10 @@ public class HistoryActivity_x9 extends BackBaseActivity implements View.OnClick
                             mapList.add(clean_data);
                         }
                         record.setHistoryData(mapList);
-                        recordList.add(record);
-                        showList(recordList);
+                        if (String.valueOf(record.getStart_time()).length() >= 10) {//start time小于10的数据属于时间上报错误的异常数据
+                            recordList.add(record);
+                            showList(recordList);
+                        }
                     }
                 }
 

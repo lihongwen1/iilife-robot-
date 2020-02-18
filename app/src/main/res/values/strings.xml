@@ -86,7 +86,7 @@
     <string name="personal_aty_reset_suc">User name change completed</string>
     <string name="personal_aty_reset_fail">User name change failed</string>
     <string name="personal_aty_exit_content">Log out and retain all history</string>
-    <string name="personal_acy_del">Deactivate account</string>
+    <string name="personal_acy_del">Delete account</string>
     <string name="personal_aty_no_shareable">You don\'t have any device to share</string>
     <string name="personal_aty_login_first">Please login</string>
     <string name="personal_aty_avatar_suc">Profile photo change completed</string>
