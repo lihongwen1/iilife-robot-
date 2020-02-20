@@ -59,6 +59,9 @@ public class MsgCodeUtils {
     public static final int VIRTUAL_WALL_OPEN=0x01;
     public static final int VIRTUAL_WALL_CLOSE=0x00;
 
+    //设置主机语音选项
+    public static final int VOICE_LANGUAGE_OPTION=0x5B;
+
 
 
 }

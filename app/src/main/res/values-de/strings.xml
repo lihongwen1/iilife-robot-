@@ -320,4 +320,5 @@
     <string name="ota_preupdate_tip">1. Der Akku ist ausreichend aufgeladen.\n2. Die Wi-Fi-Verbindung funktioniert.\n3. Der Roboter ist im Lademodus.\n4.Nach Abschluss des Upgrades wird der Roboter automatisch neu gestartet. Entfernen Sie den Roboter von der Ladestation, nachdem Sie \"Ready to clean\" gehört haben.\n5.Schalten Sie den Netzschalter aus und warten Sie 10 Sekunden, bevor Sie den Netzschalter wieder einschalten.</string>
     <string name="adapter_error_gx">Die Reinigung Helligkeit ist unzureichend, bitte öffnen Sie das Licht</string>
     <string name="clock_aty_every_day">Jeden Tag</string>
+    <string name="setting_aty_robot_voice">Sprachsprache</string>
 </resources>

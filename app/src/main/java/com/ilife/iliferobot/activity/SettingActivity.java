@@ -61,6 +61,7 @@ public class SettingActivity extends BackBaseActivity {
     final int TAG_FIND_DONE = 0x01;
     public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
     public static final String KEY_CUR_WORK_MODE = "KEY_CUR_WORK_MODE";//设备当前状态
+    public static final String KEY_DEFAULT_LANGUAGE = "KEY_DEFAULT_LANGUAGE";//主机默认语音选项
     int mopForce, mode, index, curWorkMode;
     boolean isMaxMode, voiceOpen;
     Context context;
@@ -119,6 +120,8 @@ public class SettingActivity extends BackBaseActivity {
     RelativeLayout rl_consume;
     @BindView(R.id.rl_mode)
     RelativeLayout rl_mode;
+    @BindView(R.id.rl_robot_voice)
+    RelativeLayout rl_robot_voice;
     @BindView(R.id.rl_suction)
     RelativeLayout rl_suction;
     @BindView(R.id.rl_find)
@@ -147,6 +150,8 @@ public class SettingActivity extends BackBaseActivity {
     ImageView imageView;
     @BindView(R.id.iv_find_robot)
     ImageView iv_find_robot;
+    @BindView(R.id.tv_robot_voice)
+    TextView tv_robot_voice;
     LayoutInflater inflater;
     AlertDialog alterDialog;
     Dialog dialog;
@@ -196,6 +201,18 @@ public class SettingActivity extends BackBaseActivity {
         registerMsg();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (rl_robot_voice.getVisibility() == View.VISIBLE) {
+            int defaultLanguage = SpUtils.getInt(this, physicalId + SettingActivity.KEY_DEFAULT_LANGUAGE);
+            String[] languages = getResources().getStringArray(R.array.array_voice_language);
+            int index = defaultLanguage - 6;
+            if (index > 0 && languages.length > index) {
+                tv_robot_voice.setText(languages[index]);
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -258,7 +275,7 @@ public class SettingActivity extends BackBaseActivity {
             tv_name.setText(physicalId);
         }
         String robotType = DeviceUtils.getRobotType(subdomain);
-        int product=R.drawable.n_x800;
+        int product = R.drawable.n_x800;
         switch (robotType) {
             case Constants.X785:
                 product = R.drawable.n_x785;
@@ -287,11 +304,12 @@ public class SettingActivity extends BackBaseActivity {
                 rl_mode.setVisibility(View.GONE);
                 break;
             case Constants.A9s:
-                if (Utils.isIlife()) {
+                if (Utils.isIlife()) {// ILIFE EU
                     product = R.drawable.n_x800;
                     rl_mode.setVisibility(View.GONE);
-                } else {
+                } else {//ZACO EU
                     product = R.drawable.n_a9s;
+                    rl_robot_voice.setVisibility(View.VISIBLE);
                     rl_mode.setVisibility(View.GONE);
                 }
                 rl_update.setVisibility(View.VISIBLE);
@@ -324,7 +342,7 @@ public class SettingActivity extends BackBaseActivity {
                     rl_water.setVisibility(View.VISIBLE);
                     product = R.drawable.n_x800_white;
                 } else
-                rl_mode.setVisibility(View.GONE);
+                    rl_mode.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -391,7 +409,7 @@ public class SettingActivity extends BackBaseActivity {
     }
 
     @OnClick({R.id.tv_name, R.id.rl_water, R.id.rl_clock, R.id.rl_record, R.id.rl_consume, R.id.rl_mode, R.id.rl_find,
-            R.id.rl_plan, R.id.rl_random, R.id.rl_facReset, R.id.rl_voice, R.id.rl_update})
+            R.id.rl_plan, R.id.rl_random, R.id.rl_facReset, R.id.rl_voice, R.id.rl_update, R.id.rl_robot_voice})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_name:
@@ -430,6 +448,10 @@ public class SettingActivity extends BackBaseActivity {
                     image_down_2.setRotation(90);
                     ll_mode.setVisibility(View.GONE);
                 }
+                break;
+            case R.id.rl_robot_voice://Voice language setting(only for ZACO X800)
+                intent = new Intent(context, VoiceLanguageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rl_find:
                 acDeviceMsg.setCode(MsgCodeUtils.WorkMode);
@@ -514,7 +536,7 @@ public class SettingActivity extends BackBaseActivity {
     }
 
     private boolean canOperateSuction() {
-        if ((curWorkMode == MsgCodeUtils.STATUE_POINT||curWorkMode == MsgCodeUtils.STATUE_RECHARGE) && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) ||  subdomain.equals(Constants.subdomain_v5x) ||subdomain.equals(Constants.subdomain_V3x))) {
+        if ((curWorkMode == MsgCodeUtils.STATUE_POINT || curWorkMode == MsgCodeUtils.STATUE_RECHARGE) && (subdomain.equals(Constants.subdomain_x787) || subdomain.equals(Constants.subdomain_x785) || subdomain.equals(Constants.subdomain_a7) || subdomain.equals(Constants.subdomain_v5x) || subdomain.equals(Constants.subdomain_V3x))) {
             return false;
         } else {
             return true;

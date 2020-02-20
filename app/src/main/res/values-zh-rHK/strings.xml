@@ -320,4 +320,5 @@
     <string name="ota_preupdate_tip">1.掃地機有足夠的電量\n2.網絡連接正常\n3.掃地機處於充電模式\n4.升級完成時主機會自動啟動，聽到語音提示:\"請按鍵開始清掃\"後，將主機從充電座上拿下來\n5.關閉主機電源開關，等待10秒後再重新打開電源開關</string>
     <string name="adapter_error_gx">清掃環境光線不足,請開燈</string>
     <string name="clock_aty_every_day">每天</string>
+    <string name="setting_aty_robot_voice">語音語言</string>
 </resources>

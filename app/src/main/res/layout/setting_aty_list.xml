@@ -80,8 +80,8 @@
         android:id="@+id/ll_water"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/color_f6"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <RelativeLayout
@@ -206,15 +206,14 @@
         android:id="@+id/ll_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/color_f6"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_plan"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-           >
+            android:layout_height="@dimen/dp_60">
 
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_plan"
@@ -243,8 +242,7 @@
         <RelativeLayout
             android:id="@+id/rl_random"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-           >
+            android:layout_height="@dimen/dp_60">
 
             <com.ilife.iliferobot.view.LightTextView
                 android:id="@+id/tv_random"
@@ -272,8 +270,7 @@
     <RelativeLayout
         android:id="@+id/rl_voice"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        >
+        android:layout_height="@dimen/dp_60">
 
         <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33_center"
@@ -289,7 +286,46 @@
             android:background="@drawable/image_max_bg" />
     </RelativeLayout>
 
-    <!--<View style="@style/View_Line_Style" />-->
+    <View style="@style/View_Line_Style" />
+
+    <!--    目前只有ZACO X800支持-->
+    <RelativeLayout
+        android:id="@+id/rl_robot_voice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:visibility="gone">
+
+        <com.ilife.iliferobot.view.RegularTextView
+            android:id="@+id/tv_language"
+            style="@style/Text_16sp_33_center"
+            android:text="@string/setting_aty_robot_voice" />
+
+        <com.ilife.iliferobot.view.LightTextView
+            android:id="@+id/tv_robot_voice"
+            style="@style/Text_14sp_ac"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_toStartOf="@+id/iv_robot_voice"
+            android:layout_toEndOf="@+id/tv_language"
+            android:gravity="end" />
+
+
+        <ImageView
+            android:id="@+id/iv_robot_voice"
+            style="@style/Image_Style_Forward" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_19"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:src="@drawable/n_icon_progress_yellow"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
 
     <RelativeLayout
         android:id="@+id/rl_suction"
@@ -327,9 +363,11 @@
         <com.ilife.iliferobot.view.RegularTextView
             style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_find_robot" />
+
         <ImageView
             android:id="@+id/iv_find_robot"
             style="@style/Image_Style_Forward" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dp_18"
@@ -346,17 +384,17 @@
 
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rl_update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60">
+        android:layout_height="@dimen/dp_60"
+        android:visibility="gone">
 
         <com.ilife.iliferobot.view.RegularTextView
             android:id="@+id/tv_ota_update"
             style="@style/Text_16sp_33_center"
             android:text="@string/setting_aty_ota_update" />
+
         <com.ilife.iliferobot.view.LightTextView
-            android:visibility="gone"
             android:id="@+id/tv_ota_ver"
             style="@style/Text_14sp_ac"
             android:layout_marginStart="@dimen/dp_20"
@@ -364,7 +402,8 @@
             android:layout_toStartOf="@+id/ota_right"
             android:layout_toEndOf="@+id/tv_ota_update"
             android:gravity="end"
-            android:text="@string/setting_ota_current_version" />
+            android:text="@string/setting_ota_current_version"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/ota_right"

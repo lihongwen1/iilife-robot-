@@ -109,6 +109,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.ilife.iliferobot.activity.VoiceLanguageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.ilife.iliferobot.activity.HelpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

@@ -216,7 +216,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void updateSlamX8(ArrayList<Coordinate> src, int offset) {
-        MyLogger.e(TAG,"------------计算slam start");
+        MyLogger.e(TAG, "------------计算slam start");
         if (src == null || src.size() < 2) {
             return;
         }
@@ -248,7 +248,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         if (isViewAttached()) {
             mView.updateSlam(minX, maxX, minY, maxY);
         }
-        MyLogger.e(TAG,"------------计算slam end");
+        MyLogger.e(TAG, "------------计算slam end");
     }
 
     private int pageNo = 1;// 900 800等机器分页请求历史地图
@@ -482,7 +482,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
         isSubscribeRealMap = true;
         if (mDataReceiver == null) {
             mDataReceiver = (s, i, s1) -> {
-                MyLogger.d(TAG, "received map data------数据："+s1);
+                MyLogger.d(TAG, "received map data------数据：" + s1);
                 if (!isViewAttached()) {
                     return;
                 }
@@ -752,7 +752,9 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     if (robotType.equals(Constants.X800) && device_type == 0 && bytes.length > 9) {
                         device_type = bytes[9] & 0xff;
                     }
-                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------" + "------battery   " + batteryNo);
+                    int defaultLanguage = bytes[2] & 0xff;//language option
+                    SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_DEFAULT_LANGUAGE, defaultLanguage);
+                    MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------" + "------battery   " + batteryNo + "-----language------  " + defaultLanguage);
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
                     mView.updateCleanArea(getAreaValue());
                     mView.updateCleanTime(getTimeValue());

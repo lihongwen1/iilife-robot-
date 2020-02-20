@@ -42,4 +42,21 @@
         <item>@string/clock_aty_fri</item>
         <item>@string/clock_aty_sat</item>
     </string-array>
+    <string-array name="array_voice_language">
+        <item>Čština</item>
+        <item>"Dansk"</item>
+        <item>"Nederlands"</item>
+        <item>"English"</item>
+        <item>"Suomi"</item>
+        <item>"Français"</item>
+        <item>"Deutsch"</item>
+        <item>"Ελληνικά"</item>
+        <item>"Italiano"</item>
+        <item>"Norsk"</item>
+        <item>"Polski"</item>
+        <item>"Português"</item>
+        <item>"Español"</item>
+        <item>"Svenska"</item>
+
+    </string-array>
 </resources>

@@ -131,4 +131,10 @@ public class ACSkills {
         return mAcDevMsg;
     }
 
+    public ACDeviceMsg setVoiceLanguage(int language) {
+        mAcDevMsg.setCode(MsgCodeUtils.VOICE_LANGUAGE_OPTION);
+        mAcDevMsg.setContent(new byte[]{(byte) language});
+        return mAcDevMsg;
+    }
+
 }

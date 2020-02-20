@@ -320,4 +320,5 @@
     <string name="shedule_dialog_title">预约提醒</string>
     <string name="settiing_change_suction_tip">在该模式下不能改变吸力</string>
     <string name="adapter_error_gx">清扫环境光线不足,请开灯</string>
+    <string name="setting_aty_robot_voice">提示音语言</string>
 </resources>

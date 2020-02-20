@@ -58,7 +58,7 @@ android {
             dimension "default"
             applicationId "com.zacorobot_eu"
             versionCode = 8
-            versionName = '1.4.2'
+            versionName = '1.4.3.1'
             signingConfig signingConfigs.zaco
             resValue "string", "app_name", "ZACO Robot"
             buildConfigField("int", "Area", "4")
@@ -207,7 +207,7 @@ android {
         _Europe {
             dimension "default"
             versionCode = 39
-            versionName = '3.0.4'
+            versionName = '3.0.4.1'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife
