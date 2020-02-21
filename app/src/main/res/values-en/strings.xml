@@ -34,10 +34,11 @@
     <string name="ap_aty_input_wifi_ssid">Choose a WiFi network</string>
     <string name="add_aty_start_connect">Start connecting</string>
     <string name="add_aty_wrong_wifi_pass">Password contains illegal characters</string>
-    <string name="ap_guide_aty_tip1_x900">Turn on power switch on the side of the main body. (Note: Don\'t place main body on charging dock)</string>
+    <string name="ap_guide_aty_tip1_x900">Turn on power switch on the side of the main body.</string>
+    <string name="ap_guide_aty_tip1_1_x900">Note: Don\'t place main body on charging dock or leave the robot near the charging Station.</string>
     <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s"> Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
+    <string name="ap_guide_aty_tip2_a9s">Press and hold the start button until you hear a "Beep" and "starting Wifi Pairing mode". Then the Wifi lights starts blinking.</string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>

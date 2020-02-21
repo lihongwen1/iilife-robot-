@@ -31,8 +31,6 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     @BindView(R.id.bt_next)
     Button bt_next;
     String subdomain;
-    @BindView(R.id.text_tip1)
-    TextView text_tip1;
     @BindView(R.id.text_tip2)
     TextView text_tip2;
     @BindView(R.id.rb_next_tip)
@@ -67,68 +65,59 @@ public class ApGuideActivityX900 extends BackBaseActivity {
     @Override
     public void initView() {
         context = this;
-        int open_key_id, click_wifi_id, tip1_id, tip2_id;
+        int open_key_id, click_wifi_id, tip2_id;
         subdomain = SpUtils.getSpString(context, SelectActivity_x.KEY_SUBDOMAIN);
         String robotType = DeviceUtils.getRobotType(subdomain);
         switch (robotType) {
             case Constants.A9:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_a9;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
             case Constants.X800://800 a9
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x900;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
             case Constants.X910:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x900;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key_910;
                 click_wifi_id = R.drawable.gif_click_wifi_910;
                 break;
             case Constants.X900:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x900;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key;
                 click_wifi_id = R.drawable.gif_click_wifi;
                 break;
             case Constants.A9s:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9s;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
             case Constants.A8s:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9s;
                 open_key_id = R.drawable.gif_open_key_a8s;
                 click_wifi_id = R.drawable.gif_click_wifi_a8s;
                 break;
             case Constants.V85: //v85
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_v85;
                 tip3_id = R.string.ap_guide_have_heard_didi_v85;
                 open_key_id = R.drawable.gif_open_key_v85;
                 click_wifi_id = R.drawable.gif_click_wifi_v85;
                 break;
             case Constants.V3x:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;
                 tip3_id = R.string.ap_guide_have_heard_didi;
                 open_key_id = R.drawable.gif_open_key_787;
                 click_wifi_id = R.drawable.gif_click_wifi_v3x;
                 break;
             case Constants.V5x:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;
                 tip3_id = R.string.ap_guide_have_heard_didi;
                 open_key_id = R.drawable.gif_open_key_787;
@@ -137,21 +126,18 @@ public class ApGuideActivityX900 extends BackBaseActivity {
             case Constants.X785:
             case Constants.X787:
             case Constants.A7:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;
                 tip3_id = R.string.ap_guide_have_heard_didi;
                 open_key_id = R.drawable.gif_open_key_787;
                 click_wifi_id = R.drawable.gif_click_wifi_787;
                 break;
             default:
-                tip1_id = R.string.ap_guide_aty_tip1_x900;
                 tip2_id = R.string.ap_guide_aty_tip2_x7;
                 tip3_id = R.string.ap_guide_have_heard_didi;
                 open_key_id = R.drawable.gif_open_key_787;
                 click_wifi_id = R.drawable.gif_click_wifi_787;
                 break;
         }
-        text_tip1.setText(tip1_id);
         text_tip2.setText(tip2_id);
         gif_open_key.setMovieResource(open_key_id);
         gif_click_wifi.setMovieResource(click_wifi_id);

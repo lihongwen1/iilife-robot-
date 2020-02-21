@@ -749,7 +749,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     voiceOpen = bytes[6] == 0x01;
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
-                    if (robotType.equals(Constants.X800) && device_type == 0 && bytes.length > 9) {
+                    if (device_type == 0 && bytes.length > 9) {
                         device_type = bytes[9] & 0xff;
                     }
                     int defaultLanguage = bytes[2] & 0xff;//language option

@@ -521,6 +521,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
                 break;
             case R.id.fl_top_menu:
                 Intent i = new Intent(this, SettingActivity.class);
+                i.putExtra(SettingActivity.KEY_DEVICE_TYPE,mPresenter.getDevice_type());
                 startActivity(i);
                 break;
             case R.id.tv_recharge_x9://回冲

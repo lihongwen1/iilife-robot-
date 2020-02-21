@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.activity.fragment.CodeSentDialogFragment;
 import com.ilife.iliferobot.activity.fragment.UniversalDialog;
 import com.ilife.iliferobot.base.BaseActivity;
 import com.ilife.iliferobot.presenter.QuickLoginPresenter;
+import com.ilife.iliferobot.utils.DialogUtils;
 import com.ilife.iliferobot.utils.MyLogger;
 import com.ilife.iliferobot.view.SuperEditText;
 import com.ilife.iliferobot.R;
@@ -54,6 +59,10 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     TextView tv_privacy_policy;
     @BindView(R.id.rb_privacy_policy)
     ToggleRadioButton rb_privacy_policy;
+    @BindView(R.id.tv_registration_topic)
+    TextView tv_registration_topic;
+
+    private CodeSentDialogFragment codeSentDialogFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +95,9 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
         }
         et_phone_number.addOnInputEndListener(s -> mPresenter.isMobileEmpty());
         et_verification_code.addOnInputEndListener(s -> mPresenter.isCodeEmpty());
-        if (!Utils.isIlife()) {
+        if (!Utils.isIlife()) {//ZACO
             tv_slogan.setVisibility(View.GONE);
+            tv_registration_topic.setVisibility(View.VISIBLE);
         }
 
         if (Utils.isChinaEnvironment()) {
@@ -158,6 +168,14 @@ public class QuickLoginActivity extends BaseActivity<QuickLoginPresenter> implem
     public void onStartCountDown() {
         tv_count_down.setVisibility(View.VISIBLE);
         tv_send_code.setVisibility(View.GONE);
+        if (BuildConfig.BRAND.equals(Constants.BRAND_ZACO)) {//ZACO need show a "code sent" dialog after code sent
+            if (codeSentDialogFragment == null) {
+                codeSentDialogFragment = new CodeSentDialogFragment();
+            }
+            if (!codeSentDialogFragment.isAdded()) {
+                codeSentDialogFragment.show(getSupportFragmentManager(), "code_sent");
+            }
+        }
     }
 
     @Override

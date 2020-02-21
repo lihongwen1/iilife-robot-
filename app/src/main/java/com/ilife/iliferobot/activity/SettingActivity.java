@@ -62,7 +62,8 @@ public class SettingActivity extends BackBaseActivity {
     public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
     public static final String KEY_CUR_WORK_MODE = "KEY_CUR_WORK_MODE";//设备当前状态
     public static final String KEY_DEFAULT_LANGUAGE = "KEY_DEFAULT_LANGUAGE";//主机默认语音选项
-    int mopForce, mode, index, curWorkMode;
+    public static final String KEY_DEVICE_TYPE = "KEY_DEVICE_TYPE";//主机类型选项 128-有暂停选项 129-有机器语音语言选项
+    int mopForce, mode, index, curWorkMode, deviceType;
     boolean isMaxMode, voiceOpen;
     Context context;
     Intent intent;
@@ -253,6 +254,7 @@ public class SettingActivity extends BackBaseActivity {
     }
 
     public void initData() {
+        deviceType = getIntent().getIntExtra(KEY_DEVICE_TYPE, -1);
         animation = AnimationUtils.loadAnimation(context, R.anim.anims);
         animation.setInterpolator(new LinearInterpolator());
         acDeviceMsg = new ACDeviceMsg();
@@ -309,7 +311,6 @@ public class SettingActivity extends BackBaseActivity {
                     rl_mode.setVisibility(View.GONE);
                 } else {//ZACO EU
                     product = R.drawable.n_a9s;
-                    rl_robot_voice.setVisibility(View.VISIBLE);
                     rl_mode.setVisibility(View.GONE);
                 }
                 rl_update.setVisibility(View.VISIBLE);
@@ -354,6 +355,9 @@ public class SettingActivity extends BackBaseActivity {
         }
         tv_type.setText(robotType);
         image_product.setImageResource(product);
+        if (deviceType == 0x83) {//目前只有ZACO A9s支持
+            rl_robot_voice.setVisibility(View.VISIBLE);
+        }
     }
 
     public void setMode(int mode) {

@@ -34,7 +34,8 @@
     <string name="ap_aty_input_wifi_ssid">WiFiを選択してください</string>
     <string name="add_aty_start_connect">接続中</string>
     <string name="add_aty_wrong_wifi_pass">パスワードに不正な文字が含まれています</string>
-    <string name="ap_guide_aty_tip1_x900">本機側面の電源スイッチを入れてください。（注：充電スタンドに本​​機を置かないでください）</string>
+    <string name="ap_guide_aty_tip1_x900">本機側面の電源スイッチを入れてください。</string>
+    <string name="ap_guide_aty_tip1_1_x900">注：充電スタンドに本​​機を置かないでください。</string>
     <string name="ap_guide_aty_tip2_x900">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFi接続中」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_a9s">3秒間押し続けると、カチッという音がします。 音声アナウンスが「WiFi接続中」と表示されるまでリリースしないでください。ロボットがAPモードに入ると、WiFiライトが点滅し始めます。</string>
     <string name="ap_guide_aty_tip2_x7">APネットワーク配布キーを3秒間押し続けると、カチッという音がします。 2回鳴るまでリリースしないでください。 ロボットがAPモードに入り、WiFiライトが点滅し始めます。</string>

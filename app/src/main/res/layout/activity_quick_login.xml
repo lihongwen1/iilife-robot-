@@ -31,6 +31,13 @@
                 android:text="@string/ilife_slogan" />
         </LinearLayout>
 
+        <com.ilife.iliferobot.view.RegularTextView
+            android:id="@+id/tv_registration_topic"
+            style="@style/Text_18sp_f08300"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="Registration"
+            android:visibility="gone" />
+
         <com.ilife.iliferobot.view.SuperEditText
             android:id="@+id/et_phone_number"
             style="@style/super_edit_text_16sp"
@@ -111,10 +118,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:layout_marginTop="@dimen/dp_24"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <com.ilife.iliferobot.view.RegularTextView
                     style="@style/Text_16sp_33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="@string/have_account_and_login" />
 
                 <com.ilife.iliferobot.view.RegularTextView
@@ -125,19 +135,19 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/dp_100"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_100"
             android:layout_marginBottom="@dimen/dp_24"
             android:orientation="horizontal">
 
             <com.ilife.iliferobot.view.ToggleRadioButton
-                android:buttonTint="@color/radio_button_tint_color"
                 android:id="@+id/rb_privacy_policy"
                 style="@style/Text_12sp_33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/radio_button_tint_color"
                 android:checked="true"
                 android:text="@string/agree_privacy_policy" />
 

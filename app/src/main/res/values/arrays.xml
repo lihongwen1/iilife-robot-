@@ -43,7 +43,7 @@
         <item>@string/clock_aty_sat</item>
     </string-array>
     <string-array name="array_voice_language">
-        <item>Čština</item>
+        <item>Čeština</item>
         <item>"Dansk"</item>
         <item>"Nederlands"</item>
         <item>"English"</item>

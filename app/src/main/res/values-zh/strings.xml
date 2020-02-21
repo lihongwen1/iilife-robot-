@@ -35,7 +35,8 @@
     <string name="ap_aty_input_wifi_ssid">选择您的家庭WiFi</string>
     <string name="add_aty_start_connect">开始连接</string>
     <string name="add_aty_wrong_wifi_pass">密码含有非法字符</string>
-    <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关。(注：不要将机器放在充电座上)</string>
+    <string name="ap_guide_aty_tip1_x900">打开机器侧边电源开关。</string>
+    <string name="ap_guide_aty_tip1_1_x900">注：不要将机器放在充电座上。</string>
     <string name="ap_guide_aty_tip2_x900">长按机器的启动键，3秒后听到\"嘀\"的一声，继续长按听到\"WiFi连接中\"后松开，WiFi指示灯闪烁。</string>
     <string name="ap_guide_aty_tip2_a9s">长按机器的启动键，3秒后听到\"嘀\"的一声，继续长按听到\"WiFi连接中\"后松开，WiFi指示灯闪烁。</string>
     <string name="ap_guide_aty_tip2_x7">长按机器的配网键，3秒后听到\"嘀\"的一声，继续长按听到两声\"嘀嘀\"后松开，WiFi图标闪烁。</string>

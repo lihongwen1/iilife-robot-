@@ -299,6 +299,27 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="universal_no_shadow_dialog" parent="Theme.AppCompat.DayNight.Dialog">
+        <!-- 窗口背景色 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否有覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--进出动画-->
+        <item name="android:windowAnimationStyle">@style/PopWindowAnimStyle</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
     <style name="AlertDialog_Style">
         <item name="android:editTextStyle">@style/Timer_Edit_Style</item>
         <item name="android:windowBackground">@android:color/transparent</item>

@@ -35,7 +35,8 @@
     <string name="ap_aty_input_wifi_ssid">Selezionare una rete WiFi</string>
     <string name="add_aty_start_connect">Iniziare la connessione</string>
     <string name="add_aty_wrong_wifi_pass">La password contiene caratteri non consentiti</string>
-    <string name="ap_guide_aty_tip1_x900">Attivare sul lato del corpo principale (Avvertenza: non mettere il corpo principale sulla stazione di ricarica)</string>
+    <string name="ap_guide_aty_tip1_x900">Attivare sul lato del corpo principale .</string>
+    <string name="ap_guide_aty_tip1_1_x900">Avvertenza: non mettere il corpo principale sulla stazione di ricarica.</string>
     <string name="ap_guide_aty_tip2_x900">Tenere premuto per 3 secondi e si sentirà un ronzio. Non rilasciare fino a quando l\'annuncio vocale non dice \"Start WiFi pairing\". La spia WiFi inizia a lampeggiare quando il robot entra in modalità AP.</string>
     <string name="ap_guide_aty_tip2_a9s">Tenere premuto per 3 secondi e si sentirà un ronzio. Non rilasciare fino a quando l\'annuncio vocale non dice \"Start WiFi pairing\". La spia WiFi inizia a lampeggiare quando il robot entra in modalità AP.</string>
     <string name="ap_guide_aty_tip2_x7">Tieni premuto il tasto di distribuzione della rete AP per 3 secondi e sentirai un ronzio. Non rilasciare fino a quando non senti due ronzii. Il robot entra in modalità AP e la spia WiFi inizia a lampeggiare.</string>

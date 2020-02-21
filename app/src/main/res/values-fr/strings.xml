@@ -35,7 +35,8 @@
     <string name="ap_aty_input_wifi_ssid">Sélectionnez un réseau WiFi</string>
     <string name="add_aty_start_connect">Démarrer la connexion</string>
     <string name="add_aty_wrong_wifi_pass">Le mot de passe contient des caractères invalides</string>
-    <string name="ap_guide_aty_tip1_x900">Veuillez activer sur le côté du boîtier (remarque : ne posez pas le boîtier sur la station de charge)</string>
+    <string name="ap_guide_aty_tip1_x900">Veuillez activer sur le côté du boîtier.</string>
+    <string name="ap_guide_aty_tip1_1_x900">remarque : ne posez pas le boîtier sur la station de charge.</string>
     <string name="ap_guide_aty_tip2_x900">Appuyez et maintenez pendant 3 secondes et vous entendrez un bourdonnement. Ne libérez pas avant que l’annonce vocale indique \"Start WiFi pairing\". Le voyant WiFi commence à clignoter une fois que le robot passe en mode AP.</string>
     <string name="ap_guide_aty_tip2_a9s">Appuyez et maintenez pendant 3 secondes et vous entendrez un bourdonnement. Ne libérez pas avant que l’annonce vocale indique \"Start WiFi pairing\". Le voyant WiFi commence à clignoter une fois que le robot passe en mode AP.</string>
     <string name="ap_guide_aty_tip2_x7">Appuyez sur la touche de distribution du réseau AP et maintenez-la enfoncée pendant 3 secondes pour entendre un bourdonnement. Ne relâchez pas jusqu\'à ce que vous entendez deux bourdonnements. Le robot entre en mode AP et le voyant WiFi commence à clignoter.</string>
