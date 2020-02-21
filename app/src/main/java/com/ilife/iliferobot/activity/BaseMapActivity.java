@@ -478,7 +478,7 @@ public abstract class BaseMapActivity extends BackBaseActivity<MapX9Presenter> i
             case R.id.tv_start_x9: //done
                 if (mPresenter.isWork(mPresenter.getCurStatus())) {
                     if ((BuildConfig.BRAND.equals(Constants.BRAND_ZACO) && (mPresenter.getRobotType().equals(Constants.A9s) || mPresenter.getRobotType().equals(Constants.A8s)) ||
-                            mPresenter.getDevice_type() == 128) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
+                            mPresenter.getDevice_type() == 128||mPresenter.getDevice_type() ==0x83) && mPresenter.getCurStatus() != MsgCodeUtils.STATUE_RECHARGE) {//128只会出现在日规的x800中,ZACO的 a9s/a8s默认含有此标志
                         UniversalDialog universalDialog = new UniversalDialog();
                         universalDialog.setTitle(Utils.getString(R.string.choose_your_action)).setHintTip(Utils.getString(R.string.please_set_task))
                                 .setLeftText(Utils.getString(R.string.finsh_cur_task)).setRightText(Utils.getString(R.string.pause_cur_task)).exchangeButtonColor()
