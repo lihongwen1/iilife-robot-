@@ -15,7 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ilife.iliferobot.BuildConfig;
+import com.ilife.iliferobot.able.Constants;
+import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.base.BackBaseActivity;
+import com.ilife.iliferobot.utils.SpUtils;
 import com.ilife.iliferobot.utils.ToastUtils;
 import com.ilife.iliferobot.R;
 import com.ilife.iliferobot.utils.Utils;
@@ -43,7 +47,11 @@ public class ConnectDeviceApActivity extends BackBaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_ap_third;
+        if (SpUtils.getInt(this,SelectActivity_x.KEY_BIND_PROCESS_TYPE)==2) {
+            return R.layout.activity_ap_third_zaco;
+        } else {
+            return R.layout.activity_ap_third;
+        }
     }
 
     @Override

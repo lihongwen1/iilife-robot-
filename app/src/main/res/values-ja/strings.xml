@@ -323,5 +323,13 @@
     <string name="adapter_error_gx">クリーニングの明るさが不十分です、光を開いてください</string>
     <string name="clock_aty_every_day">毎日</string>
     <string name="setting_aty_robot_voice">音声言語</string>
+    <string name="cnt_device_wifi_tip1">Click below on \"Setting\", to go to your cellphone\'s Wifi settings.  \n\nSelect the Wifi \"Robot-XXXX\". \n\nEnter the password \"123456789\".  \n\nReturn to this page.</string>
+    <string name="cnt_device_wifi_tip2">Press \"Start connecting\"</string>
+    <string name="prepare_find_net_tip1">Now we connect the robot with your WiFi.</string>
+    <string name="cnt_home_wifi_tip1">1. Choose your Wifi at home and type in your Wifi password.</string>
+    <string name="cnt_home_wifi_tip2">Tip: the maximum length of your WiFi Password should be 32 characters.</string>
+    <string name="cnt_home_wifi_tip3">Note: Please choose a 2.4GHz Wifi. Robot can\'t connect to 5GHz WiFi.</string>
+    <string name="prepare_find_net_tip2">Three easy steps to connect:  \n\n1. Choose your Wifi at home and type in your WiFi password  \n\n2. The robot creates it\'s own WiFi, connect with it  \n\n3. Ready! Your robot is connected.</string>
+    <string name="cnt_device_wifi_tip3">2. The robot creates it\'s own WiFi, connect with it.</string>
 
 </resources>

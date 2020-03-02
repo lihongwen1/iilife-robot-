@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.activity.fragment.LoadingDialogFragment;
 import com.ilife.iliferobot.base.BackBaseActivity;
-import com.ilife.iliferobot.utils.Utils;
 import com.ilife.iliferobot.view.GifView;
 import com.ilife.iliferobot.view.ToggleRadioButton;
 import com.ilife.iliferobot.R;
@@ -176,8 +175,13 @@ public class ApGuideActivityX900 extends BackBaseActivity {
 
                     }
                 } else {
-                    Intent i = new Intent(context, ConnectDeviceApActivity.class);
-                    startActivity(i);
+                    if (SpUtils.getInt(this, SelectActivity_x.KEY_BIND_PROCESS_TYPE) == 2) {
+                        Intent i = new Intent(context, PrepareFindNetActivity.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(context, ConnectDeviceApActivity.class);
+                        startActivity(i);
+                    }
                 }
                 break;
         }

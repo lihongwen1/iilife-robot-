@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/template_top_title" />
+
+    <com.ilife.iliferobot.view.MediumTextView
+       style="@style/Text_18sp_33"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:text="@string/cnt_home_wifi_tip1"
+        />
+
+    <com.ilife.iliferobot.view.LightTextView
+        style="@style/Text_14sp_33"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_48"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:text="@string/cnt_home_wifi_tip2"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_50"
+        android:id="@+id/rl_select_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/tv_wifi"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:contentDescription="@null"
+            android:src="@drawable/n_icon_wifi" />
+
+        <com.ilife.iliferobot.view.LightTextView
+            android:id="@+id/tv_ssid"
+            style="@style/Text_16sp_33"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_toEndOf="@+id/tv_wifi"
+            android:hint="@string/ap_aty_input_wifi_ssid" />
+
+        <com.ilife.iliferobot.view.RegularTextView
+            style="@style/Text_14sp_f08300"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:text="@string/ap_aty_setting" />
+    </RelativeLayout>
+
+    <View style="@style/View_Line_Style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/tv_pass"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_30"
+            android:src="@drawable/n_icon_password" />
+
+        <com.ilife.iliferobot.view.LightEditText
+            android:id="@+id/et_pass"
+            style="@style/EditText_16sp_33"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_toStartOf="@+id/image_show_pass"
+            android:layout_toEndOf="@+id/tv_pass"
+            android:hint="@string/ap_aty_input_pass"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/image_show_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:background="@drawable/selector_image_show" />
+    </RelativeLayout>
+
+    <com.ilife.iliferobot.view.LightTextView
+        style="@style/Text_14sp_ac"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/cnt_home_wifi_tip3"
+        android:textColor="#ff1b92e2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.ilife.iliferobot.view.ShadowContainer
+        app:containerCornerRadius="@dimen/dp_25"
+        app:containerDeltaLength="@dimen/dp_8"
+        app:containerShadowColor="@color/color_f08300_66"
+        app:containerShadowRadius="@dimen/dp_6"
+        app:deltaY="@dimen/dp_2"
+        app:enable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_136">
+
+        <com.ilife.iliferobot.view.RegularButton
+            android:id="@+id/bt_next"
+            style="@style/Button_Style_quick_login"
+            android:shadowColor="@color/clock_aty_tv_unpressed"
+            android:text="@string/guide_aty_next" />
+    </com.ilife.iliferobot.view.ShadowContainer>
+
+</LinearLayout>

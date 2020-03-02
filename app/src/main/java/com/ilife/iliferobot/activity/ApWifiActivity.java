@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.accloud.cloudservice.AC;
 import com.accloud.service.ACUserDevice;
@@ -106,8 +105,8 @@ public class ApWifiActivity extends BackBaseActivity<ApWifiPresenter> implements
         isStartBinding = false;
         context = this;
         robot_ssid = getIntent().getStringExtra(EXTAR_ROBOT_SSID);
-        homeSsid = (String) SpUtils.get(this, FirstApActivity.EXTRA_SSID, "unknown");
-        homePassword = (String) SpUtils.get(this, FirstApActivity.EXTRA_PASS, "unknown");
+        homeSsid = (String) SpUtils.get(this, ConnectHomeWifiActivity.EXTRA_SSID, "unknown");
+        homePassword = (String) SpUtils.get(this, ConnectHomeWifiActivity.EXTRA_PASS, "unknown");
     }
 
     @Override

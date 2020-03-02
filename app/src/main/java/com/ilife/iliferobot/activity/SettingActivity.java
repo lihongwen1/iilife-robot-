@@ -64,7 +64,8 @@ public class SettingActivity extends BackBaseActivity {
     public static final String KEY_DEFAULT_LANGUAGE = "KEY_DEFAULT_LANGUAGE";//主机默认语音选项
     public static final String KEY_DEVICE_TYPE = "KEY_DEVICE_TYPE";//主机类型选项 128-有暂停选项 129-有机器语音语言选项
     int mopForce, mode, index, curWorkMode, deviceType;
-    boolean isMaxMode, voiceOpen;
+    boolean isMaxMode;
+    private int voiceVolume;
     Context context;
     Intent intent;
     long deviceId, userId, ownerId;
@@ -192,11 +193,10 @@ public class SettingActivity extends BackBaseActivity {
             PropertyInfo info = gson.fromJson(s1, PropertyInfo.class);
             if (info != null) {
                 int cleanForce = info.getVacuum_cleaning();
-                int voiceMode = info.getVoice_mode();
+                voiceVolume = info.getVoice_mode();
                 isMaxMode = cleanForce == 0x01;
-                voiceOpen = voiceMode == 0x01;
                 mopForce = info.getCleaning_cleaning();
-                setStatus(1, mopForce, isMaxMode, voiceOpen);
+                setStatus(1, mopForce, isMaxMode, voiceVolume);
             }
         };
         registerMsg();
@@ -268,9 +268,9 @@ public class SettingActivity extends BackBaseActivity {
         curWorkMode = SpUtils.getInt(context, physicalId + KEY_CUR_WORK_MODE);
         mopForce = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE);
         isMaxMode = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX);
-        voiceOpen = SpUtils.getBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
+        voiceVolume = SpUtils.getInt(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
         setMode(mode);
-        setStatus(1, mopForce, isMaxMode, voiceOpen);
+        setStatus(1, mopForce, isMaxMode, voiceVolume);
         if (!TextUtils.isEmpty(devName)) {
             tv_name.setText(devName);
         } else {
@@ -370,13 +370,13 @@ public class SettingActivity extends BackBaseActivity {
         tv_random.setSelected(isRandom);
     }
 
-    public void setStatus(int tag, int mopForce, boolean isMaxMode, boolean voiceOpen) {
+    public void setStatus(int tag, int mopForce, boolean isMaxMode, int volume) {
         SpUtils.saveBoolean(context, physicalId + MapX9Presenter.KEY_IS_MAX, isMaxMode);
         SpUtils.saveInt(context, physicalId + MapX9Presenter.KEY_MOP_FORCE, mopForce);
-        SpUtils.saveBoolean(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN, voiceOpen);
+        SpUtils.saveInt(context, physicalId + MapX9Presenter.KEY_VOICE_OPEN, volume);
         image_max.setSelected(isMaxMode);
         if (tag == 1) {
-            image_voice.setSelected(voiceOpen);
+            image_voice.setSelected(volume == 0x01);
         }
         clearAll();
         switch (mopForce) {
@@ -488,10 +488,15 @@ public class SettingActivity extends BackBaseActivity {
                 }
                 break;
             case R.id.rl_voice:
-                acDeviceMsg.setCode(MsgCodeUtils.NoDisturbing);
-                byte b = (byte) (voiceOpen ? 0x00 : 0x01);
-                acDeviceMsg.setContent(new byte[]{b, 0x00});
-                sendToDeviceWithOption(acDeviceMsg, physicalId);
+                if (deviceType == 0x83) {//ZACO X800是设置音量
+                    Intent intent = new Intent(SettingActivity.this, VoiceVolumeActivity.class);
+                    startActivity(intent);
+                } else {
+                    acDeviceMsg.setCode(MsgCodeUtils.NoDisturbing);
+                    byte b = (byte) (voiceVolume == 0x01 ? 0x00 : 0x01);
+                    acDeviceMsg.setContent(new byte[]{b, 0x00});
+                    sendToDeviceWithOption(acDeviceMsg, physicalId);
+                }
                 break;
             case R.id.rl_update:
                 Intent intent = new Intent(context, OtaUpdateActivity.class);
@@ -616,7 +621,7 @@ public class SettingActivity extends BackBaseActivity {
                     case MsgCodeUtils.CleanForce:
                         isMaxMode = resp[0] == 0x01;
                         mopForce = resp[1];
-                        setStatus(-1, mopForce, isMaxMode, voiceOpen);
+                        setStatus(-1, mopForce, isMaxMode, voiceVolume);
                         break;
                     case MsgCodeUtils.WorkMode:
 //                        if (subdomain.equals(Constants.subdomain_x800)){
@@ -631,8 +636,8 @@ public class SettingActivity extends BackBaseActivity {
                         handler.sendEmptyMessageDelayed(TAG_FIND_DONE, 10 * 1000);
                         break;
                     case MsgCodeUtils.NoDisturbing:
-                        voiceOpen = resp[0] == 0x01;
-                        setStatus(1, mopForce, isMaxMode, voiceOpen);
+                        voiceVolume = resp[0];
+                        setStatus(1, mopForce, isMaxMode, voiceVolume);
                         break;
                 }
             }

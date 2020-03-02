@@ -91,7 +91,7 @@ public interface MapX9Contract {
 
         void getDevStatus();
 
-        void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen);
+        void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, int voiceVolume);
 
         boolean isWork(int curStatus);
 

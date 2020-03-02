@@ -36,11 +36,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.ilife.iliferobot.activity.FirstActivity"
-            android:theme="@style/AppTheme.Full"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Full">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -63,15 +64,15 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ilife.iliferobot.activity.FirstApActivity"
+            android:name="com.ilife.iliferobot.activity.ConnectHomeWifiActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name="com.ilife.iliferobot.activity.MainActivity"
-            android:theme="@style/AppTheme"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.ilife.iliferobot.activity.ClockingActivity"
             android:launchMode="singleTop"
@@ -113,6 +114,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.ilife.iliferobot.activity.VoiceVolumeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.ilife.iliferobot.activity.HelpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -127,6 +132,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.ilife.iliferobot.activity.ApGuideActivityX900"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ilife.iliferobot.activity.PrepareFindNetActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -181,14 +190,14 @@
         <!--生产环境-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59a3bdba07fe65300000089a"/>
+            android:value="59a3bdba07fe65300000089a" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="3be416dbde2c9ddbf8c7563dfbe1c473"/>
+            android:value="3be416dbde2c9ddbf8c7563dfbe1c473" />
 
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="wskgyvtdj201314"/>
+            android:value="wskgyvtdj201314" />
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />

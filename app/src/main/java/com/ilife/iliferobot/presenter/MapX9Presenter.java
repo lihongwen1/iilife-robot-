@@ -78,7 +78,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
     private ArrayList<Integer> realTimePoints, historyRoadList;
     private List<int[]> wallPointList = new ArrayList<>();
     private List<int[]> existPointList = new ArrayList<>();
-    private boolean isMaxMode, voiceOpen;
+    private boolean isMaxMode;
+    private int voiceVolume;
     private static final int STATUS_FLAG_COMPLETION = 3;
     private int statusFlag = STATUS_FLAG_COMPLETION;
     /**
@@ -746,7 +747,8 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     batteryNo = bytes[5];
                     mopForce = bytes[4];
                     isMaxMode = bytes[3] == 0x01;
-                    voiceOpen = bytes[6] == 0x01;
+                    voiceVolume = bytes[6];
+                    MyLogger.d("VoiceVolumeActivity","获取的音量："+voiceVolume);
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
                     if (device_type == 0 && bytes.length > 9) {
@@ -755,7 +757,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     int defaultLanguage = bytes[2] & 0xff;//language option
                     SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_DEFAULT_LANGUAGE, defaultLanguage);
                     MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------" + "------battery   " + batteryNo + "-----language------  " + defaultLanguage);
-                    setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
+                    setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceVolume);
                     mView.updateCleanArea(getAreaValue());
                     mView.updateCleanTime(getTimeValue());
                     mView.showErrorPopup(errorCode);
@@ -834,10 +836,10 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     @Override
     public void refreshStatus() {
-        setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
+        setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceVolume);
     }
 
-    public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, boolean voiceOpen) {
+    public void setStatus(int curStatus, int batteryNo, int mopForce, boolean isMaxMode, int volume) {
 //        if (curStatus == MsgCodeUtils.STATUE_PLANNING || curStatus == MsgCodeUtils.STATUE_RANDOM) {//保存清掃模式
 //            SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, curStatus);
 //        }
@@ -850,7 +852,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             mView.setBatteryImage(curStatus, batteryNo);
             SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_IS_MAX, isMaxMode);
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + KEY_MOP_FORCE, mopForce);
-            SpUtils.saveBoolean(MyApplication.getInstance(), physicalId + KEY_VOICE_OPEN, voiceOpen);
+            SpUtils.saveInt(MyApplication.getInstance(), physicalId + KEY_VOICE_OPEN, voiceVolume);
         }
         mView.clearAll(curStatus);//清空所有不常显示布局，以便根据status更新显示布局
         boolean isWork = isWork(curStatus);
@@ -967,7 +969,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             batteryNo = info.getBattery_level();
             isMaxMode = info.getVacuum_cleaning() == MsgCodeUtils.CLEANNING_CLEANING_MAX;
             mopForce = info.getCleaning_cleaning();
-            voiceOpen = info.getVoice_mode() == 0x01;
+            voiceVolume = info.getVoice_mode();
             if (device_type == 0) {
                 device_type = info.getDevice_type();
             }
@@ -978,7 +980,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                 queryVirtualWall();
             }
             if (lastStatus != MsgCodeUtils.STATUE_VIRTUAL_EDIT || curStatus != lastStatus) {
-                setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceOpen);
+                setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceVolume);
             }
             mView.updateCleanArea(getAreaValue());
             mView.updateCleanTime(getTimeValue());

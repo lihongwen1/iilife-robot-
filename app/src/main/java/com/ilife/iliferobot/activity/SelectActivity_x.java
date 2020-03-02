@@ -35,6 +35,7 @@ public class SelectActivity_x extends BackBaseActivity {
     public static final String KEY_SUBDOMAIN = "key_subdomain";
     public static final String KEEY_SUBDOMAIN_ID = "key_subdomain_id";
     public static final String KEY_BIND_WHITE = "key_bind_white";
+    public static final String KEY_BIND_PROCESS_TYPE = "key_bind_process_type";//1-通用流程 2-ZACO A9s的优化流程
     Context context;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -138,9 +139,16 @@ public class SelectActivity_x extends BackBaseActivity {
             } else {
                 SpUtils.saveBoolean(context, KEY_BIND_WHITE, false);
             }
-
-            Intent i = new Intent(context, FirstApActivity.class);
-            startActivity(i);
+            String robotType = DeviceUtils.getRobotType(robots.get(position).getSubdomain());
+            int bindProcessType=BuildConfig.BRAND.equals(Constants.BRAND_ZACO) && robotType.equals(Constants.A9s)?2:1;
+            SpUtils.saveInt(this,KEY_BIND_PROCESS_TYPE,bindProcessType);
+            if (bindProcessType==2) {//ZACO A9s优化流程
+                Intent i = new Intent(context, ApGuideActivityX900.class);
+                startActivity(i);
+            } else {//通用流程
+                Intent i = new Intent(context, ConnectHomeWifiActivity.class);
+                startActivity(i);
+            }
         });
     }
 

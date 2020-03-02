@@ -1018,7 +1018,12 @@ public class MapView extends View {
     }
 
     private void invalidateUI() {
-        invalidate();
+        MyLogger.d(TAG, "invalidateUI");
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            invalidate();
+        } else {
+            postInvalidate();
+        }
     }
 
     @Override

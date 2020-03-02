@@ -32,9 +32,12 @@ import butterknife.OnClick;
 /**
  * Created by c on 2017/7/15.
  */
-//Done
-public class FirstApActivity extends BackBaseActivity {
-    private final String TAG = FirstApActivity.class.getSimpleName();
+
+/**
+ * ZACI A9s拥有独特的配网流程
+ */
+public class ConnectHomeWifiActivity extends BackBaseActivity {
+    private final String TAG = ConnectHomeWifiActivity.class.getSimpleName();
     public static final String EXTRA_SSID = "EXTRA_SSID";
     public static final String EXTRA_PASS = "EXTRA_PASS";
     Context context;
@@ -50,8 +53,8 @@ public class FirstApActivity extends BackBaseActivity {
     @BindView(R.id.bt_next)
     Button bt_next;
 
-    String ssid;
-    String pass;
+    private String ssid;
+    private String pass;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,12 @@ public class FirstApActivity extends BackBaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_ap_first;
+
+        if (SpUtils.getInt(this,SelectActivity_x.KEY_BIND_PROCESS_TYPE)==2) {
+            return R.layout.activity_connect_home_wifi_zaco;
+        } else {
+            return R.layout.activity_connect_home_wifi;
+        }
     }
 
     @Override
@@ -159,8 +167,13 @@ public class FirstApActivity extends BackBaseActivity {
                         } else {
                             SpUtils.put(this, EXTRA_SSID, ssid);
                             SpUtils.put(this, EXTRA_PASS, pass);
-                            Intent i_ap = new Intent(context, ApGuideActivityX900.class);
-                            startActivity(i_ap);
+                            if (SpUtils.getInt(this,SelectActivity_x.KEY_BIND_PROCESS_TYPE)==2) {
+                                Intent i_ap = new Intent(context, ConnectDeviceApActivity.class);
+                                startActivity(i_ap);
+                            } else {
+                                Intent i_ap = new Intent(context, ApGuideActivityX900.class);
+                                startActivity(i_ap);
+                            }
                         }
                     }
                 }
