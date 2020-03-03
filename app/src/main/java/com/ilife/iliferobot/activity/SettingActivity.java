@@ -310,6 +310,7 @@ public class SettingActivity extends BackBaseActivity {
                     product = R.drawable.n_x800;
                     rl_mode.setVisibility(View.GONE);
                 } else {//ZACO EU
+                    image_voice.setVisibility(View.INVISIBLE);
                     product = R.drawable.n_a9s;
                     rl_mode.setVisibility(View.GONE);
                 }

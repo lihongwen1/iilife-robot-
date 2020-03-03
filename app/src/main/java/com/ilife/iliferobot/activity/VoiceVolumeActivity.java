@@ -1,7 +1,7 @@
 package com.ilife.iliferobot.activity;
 
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 public class VoiceVolumeActivity extends BackBaseActivity {
     private String physicalId;
-    @BindView(R.id.tv_save_volume)
+    @BindView(R.id.bt_save_volume)
     TextView tv_save_volume;
     @BindView(R.id.tv_top_title)
     TextView tv_title;
@@ -29,8 +29,10 @@ public class VoiceVolumeActivity extends BackBaseActivity {
     SeekBar sk_voice_volume;
     @BindView(R.id.tv_voice_volume)
     TextView tv_voice_volume;
+    @BindView(R.id.iv_volume_switch)
+    ImageView iv_volume_switch;
     private ACDeviceMsg acDeviceMsg;
-    private String subdomain;
+    private String subDomain;
 
     @Override
     public int getLayoutId() {
@@ -39,11 +41,11 @@ public class VoiceVolumeActivity extends BackBaseActivity {
 
     @Override
     public void initView() {
-        tv_title.setText("提示音");
+        tv_title.setText(R.string.setting_aty_voice_mode);
         sk_voice_volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tv_voice_volume.setText(String.valueOf(progress));
+                tv_voice_volume.setText(progress + "%");
                 tv_save_volume.setSelected(true);
             }
 
@@ -63,37 +65,51 @@ public class VoiceVolumeActivity extends BackBaseActivity {
     public void initData() {
         super.initData();
         acDeviceMsg = new ACDeviceMsg();
-        subdomain = SpUtils.getSpString(this, MainActivity.KEY_SUBDOMAIN);
+        subDomain = SpUtils.getSpString(this, MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(this, MainActivity.KEY_PHYCIALID);
         int voiceByte = SpUtils.getInt(this, physicalId + MapX9Presenter.KEY_VOICE_OPEN);
         sk_voice_volume.setProgress(parseVoiceByte(voiceByte));
-        tv_voice_volume.setText(String.valueOf(parseVoiceByte(voiceByte)));
+        tv_voice_volume.setText(parseVoiceByte(voiceByte) + "%");
+        boolean isOpen=voiceByte % 2 == 1;
+        iv_volume_switch.setSelected(isOpen);
+        sk_voice_volume.setEnabled(isOpen);
+        tv_voice_volume.setEnabled(isOpen);
     }
 
-    @OnClick(R.id.tv_save_volume)
+    @OnClick({R.id.bt_save_volume, R.id.iv_volume_switch})
     public void onClick(View view) {
-        if (view.getId() == R.id.tv_save_volume) {
-            showLoadingDialog();
-            acDeviceMsg.setCode(MsgCodeUtils.NoDisturbing);
-            byte b = (byte) transformVolume();
-            acDeviceMsg.setContent(new byte[]{b, 0x00});
-            AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, acDeviceMsg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
-                @Override
-                public void success(ACDeviceMsg acDeviceMsg) {
-                    int voiceByte = acDeviceMsg.getContent()[0];
-                    SpUtils.saveInt(VoiceVolumeActivity.this, physicalId + MapX9Presenter.KEY_VOICE_OPEN, voiceByte);
-                    hideLoadingDialog();
-                    if (isDestroyed()) {
-                        return;
+        switch (view.getId()) {
+            case R.id.bt_save_volume:
+                showLoadingDialog();
+                acDeviceMsg.setCode(MsgCodeUtils.NoDisturbing);
+                byte b = (byte) transformVolume();
+                acDeviceMsg.setContent(new byte[]{b, 0x00});
+                AC.bindMgr().sendToDeviceWithOption(subDomain, physicalId, acDeviceMsg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
+                    @Override
+                    public void success(ACDeviceMsg acDeviceMsg) {
+                        int voiceByte = acDeviceMsg.getContent()[0];
+                        SpUtils.saveInt(VoiceVolumeActivity.this, physicalId + MapX9Presenter.KEY_VOICE_OPEN, voiceByte);
+                        hideLoadingDialog();
+                        if (isDestroyed()) {
+                            return;
+                        }
+                        finish();
                     }
-                    finish();
-                }
 
-                @Override
-                public void error(ACException e) {
-                    hideLoadingDialog();
-                }
-            });
+                    @Override
+                    public void error(ACException e) {
+                        hideLoadingDialog();
+                    }
+                });
+                break;
+            case R.id.iv_volume_switch:
+                boolean isOpen = !iv_volume_switch.isSelected();
+                iv_volume_switch.setSelected(isOpen);
+                sk_voice_volume.setEnabled(isOpen);
+                tv_voice_volume.setEnabled(isOpen);
+                break;
+
+
         }
     }
 
@@ -104,12 +120,7 @@ public class VoiceVolumeActivity extends BackBaseActivity {
 
     private int transformVolume() {
         int curVolume = sk_voice_volume.getProgress();
-        if (curVolume == 0) {
-            return 0;
-        } else {
-            int value = ((curVolume & 0xff) << 1) + 0x01;
-            return value;
-        }
+        return ((curVolume & 0xff) << 1) + (iv_volume_switch.isSelected() ? 1 : 0);
     }
 
 }
