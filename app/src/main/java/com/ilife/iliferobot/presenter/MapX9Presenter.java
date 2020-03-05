@@ -20,6 +20,7 @@ import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.DeviceUtils;
 import com.ilife.iliferobot.able.MsgCodeUtils;
 import com.ilife.iliferobot.activity.BaseMapActivity;
+import com.ilife.iliferobot.activity.ClockingActivity;
 import com.ilife.iliferobot.activity.MainActivity;
 import com.ilife.iliferobot.activity.SettingActivity;
 import com.ilife.iliferobot.app.MyApplication;
@@ -755,6 +756,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                         device_type = bytes[9] & 0xff;
                     }
                     int defaultLanguage = bytes[2] & 0xff;//language option
+                    SpUtils.saveInt(MyApplication.getInstance(),physicalId +ClockingActivity.KEY_DEVICE_TYPE,device_type);
                     SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_DEFAULT_LANGUAGE, defaultLanguage);
                     MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------" + "------battery   " + batteryNo + "-----language------  " + defaultLanguage);
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceVolume);

@@ -23,6 +23,7 @@ import com.accloud.service.ACDeviceMsg;
 import com.accloud.service.ACException;
 import com.badoo.mobile.util.WeakHandler;
 import com.ilife.iliferobot.able.DeviceUtils;
+import com.ilife.iliferobot.app.MyApplication;
 import com.ilife.iliferobot.base.BackBaseActivity;
 import com.ilife.iliferobot.able.Constants;
 import com.ilife.iliferobot.able.MsgCodeUtils;
@@ -53,6 +54,7 @@ import butterknife.BindView;
 public class ClockingActivity extends BackBaseActivity {
     final String TAG = ClockingActivity.class.getSimpleName();
     final String UNDER_LINE = "_";
+    public static final String KEY_DEVICE_TYPE="key_device_type";
     final int TAG_REFRESH_OVER = 0x01;
     Context context;
     Dialog dialog;
@@ -149,11 +151,12 @@ public class ClockingActivity extends BackBaseActivity {
         bytes = new byte[50];
         acDeviceMsg = new ACDeviceMsg();
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
-        isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x);//V5x是单条预约，每天触发
+        physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
+        int deviceType=SpUtils.getInt(MyApplication.getInstance(),KEY_DEVICE_TYPE);
+        isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x)&&deviceType!=0x31;//V5x是单条预约，每天触发,everyday
         if (adapter!=null){
             adapter.setEveryDaya(isEveryDay);
         }
-        physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
         weeks = getResources().getStringArray(R.array.array_week);
         for (int i = 0; i < 7; i++) {
             NewClockInfo info = new NewClockInfo();
