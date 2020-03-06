@@ -152,7 +152,7 @@ public class ClockingActivity extends BackBaseActivity {
         acDeviceMsg = new ACDeviceMsg();
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
-        int deviceType=SpUtils.getInt(MyApplication.getInstance(),KEY_DEVICE_TYPE);
+        int deviceType=SpUtils.getInt(MyApplication.getInstance(),physicalId+KEY_DEVICE_TYPE);
         isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x)&&deviceType!=0x31;//V5x是单条预约，每天触发,everyday
         if (adapter!=null){
             adapter.setEveryDaya(isEveryDay);
