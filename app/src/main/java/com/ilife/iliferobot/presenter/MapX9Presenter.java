@@ -136,6 +136,7 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
             SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_MODE, MsgCodeUtils.STATUE_RANDOM);
         }
         adjustTime();
+        getDeviceType();
     }
 
     @Override
@@ -690,6 +691,28 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
 
     }
 
+    /**
+     * 获取设备类型 128暂停
+     */
+    private void getDeviceType() {
+        AC.deviceDataMgr().fetchCurrentProperty(subdomain, deviceId, new PayloadCallback<String>() {
+            @Override
+            public void success(String s) {
+                if (isViewAttached()) {
+                    PropertyInfo info = gson.fromJson(s, PropertyInfo.class);
+                    if (device_type == 0) {
+                        device_type = info.getDevice_type();
+                    }
+                    MyLogger.d(TAG, "getDeviceType:       " +device_type);
+                }
+            }
+
+            @Override
+            public void error(ACException e) {
+                MyLogger.d(TAG, "getDeviceProperty:       " + e.getMessage());
+            }
+        });
+    }
 
     /**
      * 获取设备状态
@@ -749,14 +772,14 @@ public class MapX9Presenter extends BasePresenter<MapX9Contract.View> implements
                     mopForce = bytes[4];
                     isMaxMode = bytes[3] == 0x01;
                     voiceVolume = bytes[6];
-                    MyLogger.d("VoiceVolumeActivity","获取的音量："+voiceVolume);
+                    MyLogger.d("VoiceVolumeActivity", "获取的音量：" + voiceVolume);
                     curStatus = bytes[0];
                     virtualStatus = bytes[7];
-                    if (device_type == 0 && bytes.length > 9) {
-                        device_type = bytes[9] & 0xff;
-                    }
+//                    if (device_type == 0 && bytes.length > 9) {
+//                        device_type = bytes[9] & 0xff;
+//                    }
                     int defaultLanguage = bytes[2] & 0xff;//language option
-                    SpUtils.saveInt(MyApplication.getInstance(),physicalId +ClockingActivity.KEY_DEVICE_TYPE,device_type);
+                    SpUtils.saveInt(MyApplication.getInstance(), physicalId + ClockingActivity.KEY_DEVICE_TYPE, device_type);
                     SpUtils.saveInt(MyApplication.getInstance(), physicalId + SettingActivity.KEY_DEFAULT_LANGUAGE, defaultLanguage);
                     MyLogger.d(TAG, "gain the device status success and the status is :" + curStatus + "--------" + "------battery   " + batteryNo + "-----language------  " + defaultLanguage);
                     setStatus(curStatus, batteryNo, mopForce, isMaxMode, voiceVolume);
