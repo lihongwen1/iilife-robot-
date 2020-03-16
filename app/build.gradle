@@ -150,7 +150,7 @@ android {
             versionName = '3.1.9'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "LIFERobot AS"
+            resValue "string", "app_name", "ILIFERobot AS"
             buildConfigField("int", "Area", "1")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"9293f6da-a078-4f71-ac5c-e994941ce255\"")
@@ -211,7 +211,7 @@ android {
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "LIFERobot EU"
+            resValue "string", "app_name", "ILIFERobot EU"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"3a02ebba-97c1-4c06-8568-4183a0760ada\"")
             buildConfigField("String", "BUGLY_ID", "\"aaffb5e34d\"")

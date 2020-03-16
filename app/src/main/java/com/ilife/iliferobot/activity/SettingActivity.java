@@ -343,8 +343,8 @@ public class SettingActivity extends BackBaseActivity {
                 if (BuildConfig.Area == AC.REGIONAL_SOUTHEAST_ASIA) {//日规A9有水量调节功能
                     rl_water.setVisibility(View.VISIBLE);
                     product = R.drawable.n_x800_white;
-                } else
-                    rl_mode.setVisibility(View.GONE);
+                }
+                rl_mode.setVisibility(View.GONE);
                 rl_update.setVisibility(View.VISIBLE);
                 break;
             default:
