@@ -150,7 +150,7 @@ android {
             versionName = '3.1.9'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFE Robot AS"
+            resValue "string", "app_name", "LIFERobot AS"
             buildConfigField("int", "Area", "1")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"9293f6da-a078-4f71-ac5c-e994941ce255\"")
@@ -177,10 +177,10 @@ android {
         _America {
             dimension "default"
             versionCode = 43
-            versionName = '3.1.6'
+            versionName = '3.1.6.1'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFERobot"
+            resValue "string", "app_name", "ILIFERobot NA"
             buildConfigField("int", "Area", "3")
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"66ff1a7c-c9bf-4d3b-9733-d1cbf4d866bd\"")
@@ -199,7 +199,7 @@ android {
             buildConfigField("String", "SERVICE_NAME_X800", "\"ILife-X800-US\"")
             buildConfigField("String", "SERVICE_NAME_X900", "\"ILife-X900-US\"")
             buildConfigField("String", "SERVICE_NAME_X320", "\"ILife-X320-US\"")
-            buildConfigField("String", "FLAVOR_NAME", "\"US\"")
+            buildConfigField("String", "FLAVOR_NAME", "\"NA\"")
             buildConfigField("String", "MAJOR_DOMAIN", "\"china-ilife\"")
             buildConfigField("int", "MAJOR_DOMAIN_ID", "5479")
         }
@@ -207,11 +207,11 @@ android {
         _Europe {
             dimension "default"
             versionCode = 39
-            versionName = '3.0.4.2'
+            versionName = '3.0.4.3'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife
-            resValue "string", "app_name", "ILIFE Robot EU"
+            resValue "string", "app_name", "LIFERobot EU"
             buildConfigField("String", "BRAND", "\"ILIFE\"")
             buildConfigField("String", "BUGKY_KEY", "\"3a02ebba-97c1-4c06-8568-4183a0760ada\"")
             buildConfigField("String", "BUGLY_ID", "\"aaffb5e34d\"")

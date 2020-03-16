@@ -47,9 +47,9 @@ public class FirstActivity extends BaseActivity {
     @Override
     public void initView() {
         if (Utils.isChinaEnvironment()) {
-            iv_launcher.setImageResource(R.drawable.launcher_page_zh);
+            iv_launcher.setImageResource(R.drawable.logo);
         } else {
-            iv_launcher.setImageResource(R.drawable.launcher_page);
+            iv_launcher.setImageResource(R.drawable.logo);
         }
     }
 
