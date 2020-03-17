@@ -38,7 +38,7 @@
     <string name="ap_guide_aty_tip1_1_x900">Note: Don\'t place main body on charging dock or leave the robot near the charging Station.</string>
     <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s">Press and hold the start button until you hear a "Beep" and "starting Wifi Pairing mode". Then the Wifi lights starts blinking.</string>
+    <string name="ap_guide_aty_tip2_a9s">Press and hold the start button until you hear a \"Beep\" and \"Starting Wifi pairing mode\". Then the Wifi lights starts blinking.</string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
@@ -322,7 +322,7 @@
     <string name="shedule_dialog_finish">"Confirm  "</string>
     <string name="shedule_dialog_title">"Note  "</string>
     <string name="settiing_change_suction_tip">Unable to change suction level in current mode</string>
-    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock.\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
+    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
     <string name="adapter_error_gx">The cleaning brightness is insufficient,please open the light</string>
     <string name="clock_aty_every_day">Every day</string>
     <string name="setting_aty_robot_voice">Voice language</string>

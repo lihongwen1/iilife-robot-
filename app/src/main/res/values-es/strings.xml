@@ -37,8 +37,8 @@
     <string name="add_aty_wrong_wifi_pass">La contraseña contiene caracteres no válidos</string>
     <string name="ap_guide_aty_tip1_x900">Activar el interruptor principal en el costado del aparato .</string>
     <string name="ap_guide_aty_tip1_1_x900">Nota: no colocarlo en la estación de carga.</string>
-    <string name="ap_guide_aty_tip2_x900">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Start WiFi pairing\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
-    <string name="ap_guide_aty_tip2_a9s">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Start WiFi pairing\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
+    <string name="ap_guide_aty_tip2_x900">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Starting WiFi pairing mode\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
+    <string name="ap_guide_aty_tip2_a9s">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Starting WiFi pairing mode\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
     <string name="ap_guide_aty_tip2_x7">Mantenga presionada la tecla de distribución de red AP durante 3 segundos y escuchará un zumbido. No sueltes hasta que escuches dos zumbidos. El robot ingresa al modo AP y la luz de WiFi comienza a parpadear.</string>
     <string name="ap_guide_aty_tip2_v85">Mantenga presionada la tecla de distribución de red AP durante 8 segundos y escuchará un zumbido. El robot ingresa al modo AP y la luz de WiFi comienza a parpadear.</string>
     <string name="ap_guide_tip4">Ningún aviso de voz, repita los pasos previos</string>
@@ -213,12 +213,12 @@
     <string name="consume_aty_resetRoll_a9">¿Restablecer la vida útil del cepillo giratorio ahora</string>
     <string name="consume_aty_resetRoll_over">El estado del cepillo giratorio se restablecerá tras efectuar el reset</string>
     <string name="consume_aty_resetRoll_over_a9">El estado del cepillo giratorio se restablecerá tras efectuar el reset</string>
-    <string name="consume_aty_resetFilter">¿Restablecer la vida útil del filtro HEPA ahora</string>
+    <string name="consume_aty_resetFilter">¿Restablecer la vida útil del filtro ahora</string>
     <string name="consume_aty_resetFilter_over">El estado del filtro se restablecerá tras efectuar el reset</string>
     <string name="consume_aty_reset_suc">Acción de restablecer completada</string>
     <string name="clock_aty_dev_offline">El dispositivo está offline</string>
     <string name="setting_aty_hit_">Nombre de usuario</string>
-    <string name="consume_aty_text_2">Recordatorio:Limpiar el cepillo lateral, el cepillo giratorio y el filtro de alto rendimiento después de cada uso. Sustituir los cepillos cada 3–6 meses, el cepillo giratorio cada 5–12 meses y el filtro HEPA cada 3–5 meses.</string>
+    <string name="consume_aty_text_2">Recordatorio:Limpiar el cepillo lateral, el cepillo giratorio y el filtro de alto rendimiento después de cada uso. Sustituir los cepillos cada 3–6 meses, el cepillo giratorio cada 5–12 meses y el filtro cada 3–5 meses.</string>
     <string name="access_camera">Permita el acceso a su cámara</string>
     <string name="access_location">Permita el acceso a su ubicación</string>
     <string name="access_storage">Permita el acceso a la memoria interna</string>
@@ -301,7 +301,7 @@
     <string name="login_aty_input_email">Introducir correo electrónico</string>
     <string name="agree_privacy_policy">De acuerdo</string>
     <string name="please_agree_policy">Por favor acepta%1$s</string>
-    <string name="ap_guide_aty_tip2_a9">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Start WiFi pairing mode\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
+    <string name="ap_guide_aty_tip2_a9">Mantenga presionado durante 3 segundos y escuchará un zumbido. No suelte hasta que el anuncio de voz diga \"Starting WiFi pairing mode\". La luz de WiFi comienza a parpadear una vez que el robot ingresa al modo AP.</string>
     <string name="service_time1_ja">(* Excepto feriados legales)</string>
     <string name="service_time_ja">(Día laborable 10:00~12:00 | 13:00~16:00)</string>
     <string name="area_russia">Rusia</string>

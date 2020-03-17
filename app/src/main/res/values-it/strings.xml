@@ -213,12 +213,12 @@
     <string name="consume_aty_resetRoll_a9">Resettare ora la spazzola rotante</string>
     <string name="consume_aty_resetRoll_over">Lo status della spazzola rotante sarà rinnovato dopo il reset</string>
     <string name="consume_aty_resetRoll_over_a9">Lo status della spazzola rotante sarà rinnovato dopo il reset</string>
-    <string name="consume_aty_resetFilter">Resettare ora il filtro HEPA</string>
+    <string name="consume_aty_resetFilter">Resettare ora il filtro</string>
     <string name="consume_aty_resetFilter_over">Lo status del filtro sarà rinnovato dopo il reset</string>
     <string name="consume_aty_reset_suc">Reset completato</string>
     <string name="clock_aty_dev_offline">L\'apparecchiatura \è offline</string>
     <string name="setting_aty_hit_">Nome utente</string>
-    <string name="consume_aty_text_2">Reminder:Pulire le spazzole laterali, la spazzola rotante e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituire le spazzole laterali ogni 3–6 mesi, la spazzola laterale ogni 5–12 mesi e il filtro HEPA ogni 3–5 mesi.</string>
+    <string name="consume_aty_text_2">Reminder:Pulire le spazzole laterali, la spazzola rotante e il filtro ad alte prestazioni dopo ogni utilizzo. Sostituire le spazzole laterali ogni 3–6 mesi, la spazzola laterale ogni 5–12 mesi e il filtro ogni 3–5 mesi.</string>
     <string name="access_camera">Permettere l\'accesso alla propria fotocamera</string>
     <string name="access_location">Permettere l\'accesso alla propria posizione</string>
     <string name="access_storage">Permettere l\'accesso memoria interna</string>

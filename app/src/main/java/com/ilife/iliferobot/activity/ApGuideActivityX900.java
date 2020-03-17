@@ -69,13 +69,13 @@ public class ApGuideActivityX900 extends BackBaseActivity {
         String robotType = DeviceUtils.getRobotType(subdomain);
         switch (robotType) {
             case Constants.A9:
-                tip2_id = R.string.ap_guide_aty_tip2_a9;
+                tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi_a9;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;
                 break;
             case Constants.X800://800 a9
-                tip2_id = R.string.ap_guide_aty_tip2_x900;
+                tip2_id = R.string.ap_guide_aty_tip2_a9s;
                 tip3_id = R.string.ap_guide_already_open_wifi;
                 open_key_id = R.drawable.gif_open_key_800;
                 click_wifi_id = R.drawable.gif_click_wifi_800;

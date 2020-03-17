@@ -36,8 +36,8 @@
     <string name="add_aty_wrong_wifi_pass">Passwort enthält ungültige Zeichen </string>
     <string name="ap_guide_aty_tip1_x900">Bitte an der Gehäuseseite einschalten.</string>
     <string name="ap_guide_aty_tip1_1_x900">Hinweis: Bitte das Gehäuse nicht auf die Ladestation stellen</string>
-    <string name="ap_guide_aty_tip2_x900">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
-    <string name="ap_guide_aty_tip2_a9s">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Start WiFi pairing.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
+    <string name="ap_guide_aty_tip2_x900">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Starting WiFi pairing mode.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
+    <string name="ap_guide_aty_tip2_a9s">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Starting WiFi pairing mode.\" (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
     <string name="ap_guide_aty_tip2_x7">Halten Sie die AP-Netzwerkverteilungstaste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie nicht los, bis Sie zwei Summtöne hören. Der Roboter wechselt in den AP-Modus und die WiFi-Anzeige beginnt zu blinken.</string>
     <string name="ap_guide_aty_tip2_v85">Halten Sie die AP-Netzwerkverteilungstaste 8 Sekunden lang gedrückt, und Sie hören ein Summen. Der Roboter wechselt in den AP-Modus und die WiFi-Anzeige beginnt zu blinken.</string>
     <string name="ap_guide_tip4">Nicht gehört, bitte wiederholen</string>
@@ -299,7 +299,7 @@
     <string name="consume_aty_text_2">Erinnerung:Seitenbürsten, Rollbürste und high performance filter nach jeder Benutzung reinigen. Seitenbürsten alle 3-6 Monate, Rollbürste alle 5-12 Monate und high performance filter alle 3-5 Monate ersetzen.</string>
     <string name="please_agree_policy">Bitte stimme zu%1$s</string>
     <string name="agree_privacy_policy">zustimmen</string>
-    <string name="ap_guide_aty_tip2_a9">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage Start WiFi pairing. (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
+    <string name="ap_guide_aty_tip2_a9">Halten Sie die Taste 3 Sekunden lang gedrückt, und Sie hören ein Summen. Lassen Sie die Taste erst los, wenn die Sprachansage \"Starting WiFi pairing mode\". (WLAN-Kopplung starten) anzeigt. Die WLAN-LED beginnt zu blinken, sobald der Roboter in den AP-Modus wechselt.</string>
     <string name="ap_guide_already_open_wifi_a9">WiFi-Verbindung bereits aktiviert</string>
     <string name="service_time_ja">(Werktag 10:00~12:00 | 13:00~16:00)</string>
     <string name="service_time1_ja">(* Außer an gesetzlichen Feiertagen)</string>

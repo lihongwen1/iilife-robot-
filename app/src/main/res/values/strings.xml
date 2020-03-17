@@ -38,7 +38,7 @@
     <string name="ap_guide_aty_tip1_1_x900">Note: Don\'t place main body on charging dock or leave the robot near the charging Station.</string>
     <string name="ap_guide_aty_tip2_x900">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
     <string name="ap_guide_aty_tip2_a9">Press and hold for 3 seconds and you will hear a buzz. Don\'t release until voice announcement says \"Starting WiFi pairing mode\". WiFi light starts blinking once robot enters AP mode.  </string>
-    <string name="ap_guide_aty_tip2_a9s">Press and hold the start button until you hear a "Beep" and "starting Wifi Pairing mode". Then the Wifi lights starts blinking.</string>
+    <string name="ap_guide_aty_tip2_a9s">Press and hold the start button until you hear a \"Beep\" and \"Starting Wifi pairing mode\". Then the Wifi lights starts blinking.</string>
     <string name="ap_guide_aty_tip2_x7">Press and hold AP network distribution key for 3 seconds and you will hear a buzz. Don\'t release until you hear two buzzes. Robot enters AP mode and WiFi light starts blinking. </string>
     <string name="ap_guide_aty_tip2_v85">Press and hold AP network distribution key for 8 seconds and you will hear a buzz. Robot enters AP mode and WiFi light starts blinking.</string>
     <string name="ap_guide_tip4">No voice announcement. Retry previous steps.</string>
@@ -88,6 +88,7 @@
     <string name="personal_aty_reset_fail">User name change failed</string>
     <string name="personal_aty_exit_content">Log out and retain all history</string>
     <string name="personal_acy_del">Delete account</string>
+    <string name="personal_aty_del_content">"Your account will no longer be available on ILIFE ROBOT for iOS,or ILIFE ROBOT for Android three days later. "</string>
     <string name="personal_aty_no_shareable">You don\'t have any device to share</string>
     <string name="personal_aty_login_first">Please login</string>
     <string name="personal_aty_avatar_suc">Profile photo change completed</string>
@@ -311,7 +312,7 @@
     <string name="area_spanish">Spain</string>
     <string name="country_or_area">Country and region</string>
     <string name="russia_phone_server_time">(Monday - Friday 09:00 – 18:00)</string>
-    <string name="spanish_server_time_sat">(Sat 10:00 – 14:00)</string>
+    <string name="spanish_server_time_sat">(Sat 10:00 - 14:00)</string>
     <string name="adapter_error_bs">Brush error</string>
     <string name="consume_aty_text_2_v85">Reminder:Clean side brush and high performance filter after each use. Replace side brushes every 3–6 months, and high performance filter 3–5 months.</string>
     <string name="ap_guide_loading">After switch on power button, the robot start loading.And please wait until \"ready to clean\".Then go to next step.</string>
@@ -321,8 +322,7 @@
     <string name="shedule_dialog_finish">"Confirm  "</string>
     <string name="shedule_dialog_title">"Note  "</string>
     <string name="settiing_change_suction_tip">Unable to change suction level in current mode</string>
-    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock.\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
-    <string name="personal_aty_del_content">"Your account will no longer be available on ILIFE ROBOT for iOS,or ILIFE ROBOT for Android three days later. "</string>
+    <string name="ota_preupdate_tip">1.Battery is sufficiently charged \n2.WiFi connection is working \n3.Robot is in charging\n4.When the upgrade is complete, the robot will restart automatically. After hearing \"Ready to clean\", remove the robot from the charging dock\n5.Turn off the power switch and wait 10 seconds before turning the power switch back on</string>
     <string name="adapter_error_gx">The cleaning brightness is insufficient,please open the light</string>
     <string name="clock_aty_every_day">Every day</string>
     <string name="setting_aty_robot_voice">Voice language</string>
