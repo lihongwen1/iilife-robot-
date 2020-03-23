@@ -176,8 +176,8 @@ android {
         /*美国*/
         _America {
             dimension "default"
-            versionCode = 43
-            versionName = '3.1.6.2'
+            versionCode = 44
+            versionName = '3.1.5'
             applicationId "com.ilife.iliferobot"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFERobot NA"
