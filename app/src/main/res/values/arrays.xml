@@ -23,7 +23,7 @@
         <item>"X800"</item>
         <item>"X787"</item>
         <item>"X785"</item>
-        <item>"V3x"</item>
+<!--        <item>"V3x"</item>-->
     </string-array>
     <!--ZACO-->
     <string-array name="device_name_zaco">

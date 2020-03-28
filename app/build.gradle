@@ -147,7 +147,7 @@ android {
         _SouthEast_Asia {
             dimension "default"
             versionCode = 39
-            versionName = '3.1.9'
+            versionName = '3.2.0'
             applicationId "com.ilife.iliferobot_as"
             signingConfig signingConfigs.ilife
             resValue "string", "app_name", "ILIFERobot AS"
@@ -206,8 +206,8 @@ android {
         /*欧洲*/
         _Europe {
             dimension "default"
-            versionCode = 39
-            versionName = '3.0.4.4'
+            versionCode = 40
+            versionName = '3.0.4'
             applicationId "com.ilife.iliferobot_eu"
             buildConfigField("int", "Area", "4")
             signingConfig signingConfigs.ilife

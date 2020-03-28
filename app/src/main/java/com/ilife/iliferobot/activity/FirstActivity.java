@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.accloud.cloudservice.AC;
 import com.badoo.mobile.util.WeakHandler;
@@ -26,6 +27,8 @@ public class FirstActivity extends BaseActivity {
     private final int GOTOMAIN = 0x11;
     @BindView(R.id.iv_launcher)
     ImageView iv_launcher;
+    @BindView(R.id.tv_slogan)
+    TextView tv_slogan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class FirstActivity extends BaseActivity {
         if (Utils.isChinaEnvironment()) {
             iv_launcher.setImageResource(R.drawable.logo);
         } else {
+            tv_slogan.setVisibility(View.GONE);
             iv_launcher.setImageResource(R.drawable.logo);
         }
     }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_launcher"
@@ -9,5 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@drawable/launcher_page" />
-</merge>
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/tv_slogan"
+        android:visibility="visible"
+         style="@style/Text_16sp_33"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/ilife_slogan"
+      />
+</LinearLayout>
