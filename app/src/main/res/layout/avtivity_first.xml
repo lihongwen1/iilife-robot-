@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/logo" />
 
-    <TextView
+    <com.ilife.iliferobot.view.LightTextView
         android:id="@+id/tv_slogan"
         android:visibility="visible"
          style="@style/Text_16sp_33"
