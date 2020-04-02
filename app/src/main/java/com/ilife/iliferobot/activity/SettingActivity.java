@@ -59,6 +59,7 @@ import butterknife.OnClick;
 public class SettingActivity extends BackBaseActivity {
     final String TAG = SettingActivity.class.getSimpleName();
     final int TAG_FIND_DONE = 0x01;
+    final int TAG_GO_MAIN = 0x02;
     public static final String KEY_MODE = "KEY_MODE";//工作模式（规划、随机）
     public static final String KEY_CUR_WORK_MODE = "KEY_CUR_WORK_MODE";//设备当前状态
     public static final String KEY_DEFAULT_LANGUAGE = "KEY_DEFAULT_LANGUAGE";//主机默认语音选项
@@ -171,6 +172,9 @@ public class SettingActivity extends BackBaseActivity {
                     iv_find_robot.setVisibility(View.VISIBLE);
                 }
 
+            }
+            if (msg.what==TAG_GO_MAIN){
+                goToMain();
             }
             return false;
         }
@@ -659,15 +663,14 @@ public class SettingActivity extends BackBaseActivity {
         AC.bindMgr().sendToDeviceWithOption(subdomain, physicalId, deviceMsg, Constants.CLOUD_ONLY, new PayloadCallback<ACDeviceMsg>() {
             @Override
             public void error(ACException e) {
-                index = 0;
-                listDevices();
+                ToastUtils.showErrorToast(0);
             }
 
             @Override
             public void success(ACDeviceMsg acDeviceMsg) {
-                if (!isDestroyed()) {
-                    goToMain();
-                }
+                Message message=new Message();
+                message.what=TAG_GO_MAIN;
+                  handler.sendMessageDelayed(message,3000);
             }
         });
     }
