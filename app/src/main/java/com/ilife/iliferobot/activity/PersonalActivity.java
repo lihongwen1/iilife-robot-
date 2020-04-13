@@ -87,6 +87,7 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     String userName, content, email, type;
     TextView tv_userName, del_tv_title, tv_version, tv_content;
     ImageView image_forward, image_avatar;
+    TextView user_agreement, user_privacy_protocol;
     LayoutInflater inflater;
     RelativeLayout rl_help;
     RelativeLayout rl_scan;
@@ -132,7 +133,11 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
         rl_logout = (RelativeLayout) findViewById(R.id.rl_logout);
         rl_delete_account = (RelativeLayout) findViewById(R.id.rl_delete_account);
         rl_protocol = (RelativeLayout) findViewById(R.id.rl_protocol);
+        user_agreement = findViewById(R.id.tv_user_agreement);
+        user_privacy_protocol = findViewById(R.id.tv_protocol_privacy);
 
+        user_agreement.setOnClickListener(this);
+        user_privacy_protocol.setOnClickListener(this);
         rl_help.setOnClickListener(this);
         rl_scan.setOnClickListener(this);
         rl_share.setOnClickListener(this);
@@ -231,6 +236,17 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
                     startActivity(i);
                 }
                 break;
+            case R.id.tv_user_agreement:
+                i = new Intent(context, ProtocolActivity.class);
+                i.putExtra(ProtocolActivity.KEY_TYPE, 1);
+                startActivity(i);
+                break;
+            case R.id.tv_protocol_privacy:
+                i = new Intent(context, ProtocolActivity.class);
+                i.putExtra(ProtocolActivity.KEY_TYPE, 2);
+                startActivity(i);
+                break;
+
             case R.id.tv_userName:
                 showRenameDialog();
                 break;
@@ -273,11 +289,11 @@ public class PersonalActivity extends BackBaseActivity implements View.OnClickLi
     private void showDeleteAccountDialog() {
         UniversalDialog deleteAccount = new UniversalDialog();
         String hint = Utils.getString(R.string.personal_aty_del_content);
-        if (!Utils.isIlife()&&hint.contains("ILIFE")) {
+        if (!Utils.isIlife() && hint.contains("ILIFE")) {
             hint = hint.replace("ILIFE", Constants.BRAND_ZACO);
         }
         deleteAccount.setDialogType(UniversalDialog.TYPE_NORMAL).setTitleColor(getResources().getColor(R.color.color_f08300)).
-                setTitle(email.isEmpty()?Utils.getString(R.string.personal_acy_del):email).setHintTip(hint).
+                setTitle(email.isEmpty() ? Utils.getString(R.string.personal_acy_del) : email).setHintTip(hint).
                 setOnRightButtonClck(() -> {
                     if (AC.accountMgr().isLogin()) {
                         ACFeedback feedback = new ACFeedback();

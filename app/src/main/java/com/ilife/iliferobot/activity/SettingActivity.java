@@ -173,7 +173,7 @@ public class SettingActivity extends BackBaseActivity {
                 }
 
             }
-            if (msg.what==TAG_GO_MAIN){
+            if (msg.what == TAG_GO_MAIN) {
                 goToMain();
             }
             return false;
@@ -668,9 +668,9 @@ public class SettingActivity extends BackBaseActivity {
 
             @Override
             public void success(ACDeviceMsg acDeviceMsg) {
-                Message message=new Message();
-                message.what=TAG_GO_MAIN;
-                  handler.sendMessageDelayed(message,3000);
+                Message message = new Message();
+                message.what = TAG_GO_MAIN;
+                handler.sendMessageDelayed(message, 3000);
             }
         });
     }

@@ -83,7 +83,7 @@
     <string name="confirm">完成</string>
     <string name="setting_aty_devName_null">請輸入用戶名</string>
     <string name="personal_aty_reset_suc">修改用戶名成功</string>
-    <string name="personal_aty_reset_fail">修改?戶名失敗</string>
+    <string name="personal_aty_reset_fail">修改用戶名失敗</string>
     <string name="personal_aty_exit_content">退出後不會刪除任何歷史記錄</string>
     <string name="personal_acy_del">"刪除賬戶 "</string>
     <string name="personal_aty_del_content">"若您確認要刪除此賬戶，請點擊“確定”按鈕。 "</string>
@@ -330,4 +330,8 @@
     <string name="cnt_home_wifi_tip3">Note: Please choose a 2.4GHz Wifi. Robot can\'t connect to 5GHz WiFi.</string>
     <string name="prepare_find_net_tip2">Three easy steps to connect:  \n\n1. Choose your Wifi at home and type in your WiFi password  \n\n2. The robot creates it\'s own WiFi, connect with it  \n\n3. Ready! Your robot is connected.</string>
     <string name="cnt_device_wifi_tip3">2. The robot creates it\'s own WiFi, connect with it.</string>
+    <string name="personal_aty_protocol_privacy">隱私政策</string>
+    <string name="personal_aty_protocol_agreement">服务协议</string>
+    <string name="dialog_privacy_agreement_title">智意機器人隱私政策與用戶協議</string>
+    <string name="dialog_privacy_agreement_content">您即將使用ILIFE的智能設備，並通過智意機器人應用程序享受服務。為了您在使用ILIFE服務時得到充分的信任，請您仔細閱讀《服務協議》和《隱私政策》。如您同意，請點擊“接受”開始享受我們的服務。</string>
 </resources>

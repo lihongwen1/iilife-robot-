@@ -54,7 +54,7 @@ import butterknife.BindView;
 public class ClockingActivity extends BackBaseActivity {
     final String TAG = ClockingActivity.class.getSimpleName();
     final String UNDER_LINE = "_";
-    public static final String KEY_DEVICE_TYPE="key_device_type";
+    public static final String KEY_DEVICE_TYPE = "key_device_type";
     final int TAG_REFRESH_OVER = 0x01;
     Context context;
     Dialog dialog;
@@ -135,6 +135,11 @@ public class ClockingActivity extends BackBaseActivity {
                 } else {
                     bytes[startIndex_ + 1] = 0;
                 }
+                if (isEveryDay) {//V5x只有一条预约，且预约为everyday
+                    bytes[startIndex_ + 2] = 0x7f;
+                } else {
+                    bytes[startIndex_ + 2] = TimeUtil.getWeeks(position);
+                }
                 acDeviceMsg.setContent(bytes);
                 acDeviceMsg.setCode(MsgCodeUtils.Appointment);
                 sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
@@ -152,9 +157,9 @@ public class ClockingActivity extends BackBaseActivity {
         acDeviceMsg = new ACDeviceMsg();
         subdomain = SpUtils.getSpString(context, MainActivity.KEY_SUBDOMAIN);
         physicalId = SpUtils.getSpString(context, MainActivity.KEY_PHYCIALID);
-        int deviceType=SpUtils.getInt(MyApplication.getInstance(),physicalId+KEY_DEVICE_TYPE);
-        isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x)&&deviceType!=0x31;//V5x是单条预约，每天触发,everyday
-        if (adapter!=null){
+        int deviceType = SpUtils.getInt(MyApplication.getInstance(), physicalId + KEY_DEVICE_TYPE);
+        isEveryDay = DeviceUtils.getRobotType(subdomain).equals(Constants.V5x) && deviceType != 0x31;//V5x是单条预约，每天触发,everyday
+        if (adapter != null) {
             adapter.setEveryDaya(isEveryDay);
         }
         weeks = getResources().getStringArray(R.array.array_week);
@@ -259,26 +264,24 @@ public class ClockingActivity extends BackBaseActivity {
      */
     private void finishShedule() {
         String current = selectHour + UNDER_LINE + selectMinte;
-        if (!current.equals(last)) {
-            int startIndex;
-            if (selecPostion != 0) {
-                startIndex = (selecPostion - 1) * 5;
-            } else {
-                startIndex = 30;
-            }
-            bytes[startIndex + 1] = 1;
-            if (isEveryDay) {//V5x只有一条预约，且预约为everyday
-                bytes[startIndex + 2] = 0x7f;
-            } else {
-                bytes[startIndex + 2] = TimeUtil.getWeeks(selecPostion);
-            }
-            bytes[startIndex + 3] = (byte) selectHour;
-            bytes[startIndex + 4] = (byte) selectMinte;
-
-            acDeviceMsg.setContent(bytes);
-            acDeviceMsg.setCode(MsgCodeUtils.Appointment);
-            sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
+        int startIndex;
+        if (selecPostion != 0) {
+            startIndex = (selecPostion - 1) * 5;
+        } else {
+            startIndex = 30;
         }
+        bytes[startIndex + 1] = 1;
+        if (isEveryDay) {//V5x只有一条预约，且预约为everyday
+            bytes[startIndex + 2] = 0x7f;
+        } else {
+            bytes[startIndex + 2] = TimeUtil.getWeeks(selecPostion);
+        }
+        bytes[startIndex + 3] = (byte) selectHour;
+        bytes[startIndex + 4] = (byte) selectMinte;
+
+        acDeviceMsg.setContent(bytes);
+        acDeviceMsg.setCode(MsgCodeUtils.Appointment);
+        sendToDeviceWithOption(acDeviceMsg, physicalId, 1);
     }
 
     private void adjustTime() {

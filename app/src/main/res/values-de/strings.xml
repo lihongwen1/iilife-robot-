@@ -330,4 +330,8 @@
     <string name="cnt_home_wifi_tip3">Note: Please choose a 2.4GHz Wifi. Robot can\'t connect to 5GHz WiFi.</string>
     <string name="prepare_find_net_tip2">Three easy steps to connect:  \n\n1. Choose your Wifi at home and type in your WiFi password  \n\n2. The robot creates it\'s own WiFi, connect with it  \n\n3. Ready! Your robot is connected.</string>
     <string name="cnt_device_wifi_tip3">2. The robot creates it\'s own WiFi, connect with it.</string>
+    <string name="personal_aty_protocol_privacy">Privacy policy</string>
+    <string name="personal_aty_protocol_agreement">Service agreement</string>
+    <string name="dialog_privacy_agreement_title">ILIFE Robot Privacy Policy and User Agreement</string>
+    <string name="dialog_privacy_agreement_content">You are about to use ILIFE\'s smart devices and enjoy the service through the ILIFE robot app. In order to gain full trust when using ILIFE services, please read the \"Service Agreement\" and \"Privacy Policy\" carefully. If you agree, please click \"Confirm\" to start enjoying our services.</string>
 </resources>

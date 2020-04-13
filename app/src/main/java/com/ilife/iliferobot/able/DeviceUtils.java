@@ -466,6 +466,4 @@ public class DeviceUtils {
         }
         return types;
     }
-
-
 }

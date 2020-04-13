@@ -49,4 +49,6 @@
     <color name="normalColor">#4c4c4c</color>
     <color name="foregroundColor">#774c4c4c</color>
     <color name="moka_color">#45362E</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

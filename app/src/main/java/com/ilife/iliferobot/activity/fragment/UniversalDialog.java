@@ -1,6 +1,8 @@
 package com.ilife.iliferobot.activity.fragment;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class UniversalDialog extends DialogFragment {
     private int type;
     private int titleColor = -1;
     private boolean exchangeColor, canEdit;
-
+    private SpannableString sbString;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +93,13 @@ public class UniversalDialog extends DialogFragment {
             if (hintTip != null && !hintTip.isEmpty()) {
                 et_hint_tip.setText(hintTip);
             }
+            if (sbString!=null){
+                et_hint_tip.setText(sbString);
+                et_hint_tip.setHighlightColor(getResources().getColor(R.color.transparent));
+                et_hint_tip.setMovementMethod(LinkMovementMethod.getInstance());
+            }
         }
+
         if (hintGravity != -1) {
             et_hint_tip.setGravity(hintGravity);
         }
@@ -198,6 +206,12 @@ public class UniversalDialog extends DialogFragment {
         return this;
     }
 
+    public UniversalDialog setHintTip(SpannableString tip, int gravity, int color) {
+        this.sbString = tip;
+        this.hintColor = color;
+        this.hintGravity = gravity;
+        return this;
+    }
     public UniversalDialog setMidText(String midText) {
         this.midText = midText;
         return this;
