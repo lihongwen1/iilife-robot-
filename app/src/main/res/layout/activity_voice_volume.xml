@@ -39,7 +39,7 @@
             android:layout_height="@dimen/dp_60"
             android:layout_marginStart="@dimen/dp_24"
             android:gravity="center_vertical"
-            android:text="音量调节" />
+            android:text="@string/setting_set_volumn_number" />
 
 
         <LinearLayout
@@ -87,6 +87,6 @@
         <com.ilife.iliferobot.view.RegularButton
             android:id="@+id/bt_save_volume"
             style="@style/Button_Style"
-            android:text="保存" />
+            android:text="@string/btn_save" />
     </com.ilife.iliferobot.view.ShadowContainer>
 </LinearLayout>

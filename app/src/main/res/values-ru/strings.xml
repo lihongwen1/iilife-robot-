@@ -335,5 +335,9 @@
     <string name="personal_aty_protocol_agreement">Service agreement</string>
     <string name="dialog_privacy_agreement_title">ILIFE Robot Privacy Policy and User Agreement</string>
     <string name="dialog_privacy_agreement_content">You are about to use ILIFE\'s smart devices and enjoy the service through the ILIFE robot app. In order to gain full trust when using ILIFE services, please read the \"Service Agreement\" and \"Privacy Policy\" carefully. If you agree, please click \"Confirm\" to start enjoying our services.</string>
+    <string name="setting_set_volumn_number">Volume Control</string>
+    <string name="btn_save">Save</string>
+    <string name="registration">Registration</string>
+    <string name="title_prapare_find_net">Preparing to find a notwork</string>
 
 </resources>

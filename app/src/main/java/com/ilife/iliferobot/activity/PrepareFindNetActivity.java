@@ -2,7 +2,6 @@ package com.ilife.iliferobot.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.ilife.iliferobot.R;
@@ -22,7 +21,7 @@ public class PrepareFindNetActivity extends BackBaseActivity {
 
     @Override
     public void initView() {
-        tv_top_title.setText("Preparing to fnd a notwork");
+        tv_top_title.setText(R.string.title_prapare_find_net);
     }
 
     @OnClick(R.id.bt_prepare_ok)

@@ -334,4 +334,8 @@
     <string name="personal_aty_protocol_agreement">服务协议</string>
     <string name="dialog_privacy_agreement_title">智意机器人隐私政策与用户协议</string>
     <string name="dialog_privacy_agreement_content">您即将使用ILIFE的智能设备，并通过智意机器人应用程序享受服务。为了您在使用ILIFE服务时得到充分的信任，请您仔细阅读《服务协议》和《隐私政策》。如您同意，请点击“接受”开始享受我们的服务。</string>
+    <string name="setting_set_volumn_number">音量调节</string>
+    <string name="btn_save">保存</string>
+    <string name="registration">注册</string>
+    <string name="title_prapare_find_net">Preparing to find a notwork</string>
 </resources>
